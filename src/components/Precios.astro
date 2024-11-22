@@ -1,0 +1,141 @@
+---
+const plans = [
+  {
+    name: "Landing Page",
+    price: "400.000",
+    popular: false,
+    features: [
+      "Página única con scroll",
+      "Diseño web responsive",
+      "Formulario de contacto",
+      "Dominio .com gratis por 1 año",
+      "Hosting gratis por 1 año", 
+      "Integración con redes sociales",
+      "Galería de imágenes",
+      "Botones de llamada a la acción",
+      "Mapa de ubicación",
+      "Optimización para móviles",
+      "Animaciones suaves"
+    ]
+  },
+  {
+    name: "Sitio Empresarial",
+    price: "600.000",
+    popular: true,
+    features: [
+      "Todo lo incluido en Landing Page +",
+      "4-8 secciones personalizadas",
+      "Diseño web responsive premium", 
+      "Formularios avanzados",
+      "Hosting premium",
+      "Optimización SEO básica",
+      "Integración con Google Analytics",
+      "Galería multimedia avanzada",
+      "Integración con redes sociales",
+    ]
+  },
+  {
+    name: "Tienda Online",
+    price: "1.050.000", 
+    popular: false,
+    features: [
+      "Todo lo incluido en Sitio Empresarial +",
+      "Catálogo de productos ilimitado",
+      "Sistema de registro y login",
+      "Perfiles de clientes",
+      "Historial de compras",
+      "Integración con MercadoPago",
+      "Gestión de stock automática",
+      "Sistema de descuentos",
+      "Reportes de ventas",
+      "Sistema de reseñas"
+    ]
+  }
+];
+---
+
+<section class="py-20 bg-gradient-to-b from-azure-radiance-950 to-black">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center text-white mb-4">Planes de Diseño Web</h2>
+    <p class="text-center text-white/60 mb-12 max-w-2xl mx-auto">
+      Todos nuestros planes incluyen dominio .com y hosting gratis por 1 año. Pago único, sin costos mensuales.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {plans.map((plan) => (
+        <div class="relative group h-full flex">
+          {plan.popular && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-sm font-medium z-10">
+              Más Elegido
+            </div>
+          )}
+          <div class={`
+            bg-white/5 backdrop-blur-sm p-8 rounded-xl 
+            border border-white/10 hover:border-azure-radiance-500 
+            transition-all duration-300 flex flex-col w-full
+            ${plan.popular ? 'bg-white/10' : ''}
+          `}>
+            <div class="flex-grow">
+              <h3 class="text-2xl font-bold text-white mb-4">{plan.name}</h3>
+              <div class="mb-6">
+                <p class="text-4xl font-bold text-azure-radiance-400">
+                  ${plan.price}
+                </p>
+                <p class="text-sm text-white/60">Pago único</p>
+              </div>
+              
+              <ul class="space-y-4 mb-8">
+                {plan.features.map((feature) => (
+                  <li class="flex items-start text-white/80">
+                    <svg class="w-5 h-5 text-emerald-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <a 
+              href="#contacto"
+              class={`
+                w-full py-3 px-6 rounded-full font-medium text-center
+                transition-all duration-300 mt-auto
+                ${plan.popular 
+                  ? 'bg-gradient-to-r from-emerald-500 to-azure-radiance-500 text-white hover:shadow-lg hover:scale-105' 
+                  : 'bg-white/10 text-white hover:bg-white/20'
+                }
+              `}
+            >
+              Solicitar presupuesto
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center space-y-4">
+      <p class="text-white/60">
+        ¿Necesitás una web autogestionable con WordPress? 
+        <a href="#contacto" class="text-azure-radiance-400 hover:text-azure-radiance-300">
+          Consultá por nuestro plan de $700.000
+        </a>
+      </p>
+      <p class="text-white/60 text-sm">
+        Todos los precios están expresados en pesos argentinos (ARS)
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .group:hover {
+    animation: float 3s ease-in-out infinite;
+  }
+</style>

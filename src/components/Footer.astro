@@ -1,0 +1,59 @@
+---
+const currentYear = new Date().getFullYear();
+
+const menuItems = [
+  { href: "#sobre-nosotros", label: "Sobre Nosotros" },
+  { href: "#servicios-digitales", label: "Servicios" },
+  { href: "#portfolio", label: "Portfolio" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
+
+<footer class="relative bg-gradient-to-br from-azure-radiance-950 to-black text-white py-8">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Logo y descripción */}
+      <div class="text-center md:text-left space-y-4">
+        <div class="flex flex-col items-center md:items-start">
+          <img
+            src="/logo3.png"
+            alt="Selva Digital Logo"
+            class="w-auto h-12 object-contain mb-2 bg-white/90 p-1 rounded"
+          />
+          <p class="text-gray-300 text-base font-geist">Transformando ideas en realidad digital</p>
+        </div>
+        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-sm text-gray-400">
+          <a href="mailto:selvadigitaliguazu@gmail.com" class="hover:text-azure-radiance-400 transition-colors duration-200">
+            selvadigitaliguazu@gmail.com
+          </a>
+          <span class="hidden md:inline">|</span>
+          <span>+54 9 3757 210123</span>
+        </div>
+      </div>
+
+      {/* Enlaces rápidos */}
+      <div class="text-center md:text-right">
+        <h4 class="text-lg font-semibold mb-4 text-azure-radiance-300 font-geist">Enlaces rápidos</h4>
+        <ul class="space-y-2">
+          {menuItems.map((item) => (
+            <li>
+              <a 
+                href={item.href}
+                class="text-gray-300 hover:text-white transition-colors duration-200"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {/* Footer bottom */}
+    <div class="mt-8 pt-4 border-t border-azure-radiance-700/30 text-center">
+      <p class="text-sm text-gray-400 font-geist">
+        &copy; {currentYear} <span class="text-white">Selva Digital</span>. Todos los derechos reservados.
+      </p>
+    </div>
+  </div>
+</footer>

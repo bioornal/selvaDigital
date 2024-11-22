@@ -65,8 +65,6 @@ export const POST: APIRoute = async ({ request }) => {
         `
       });
 
-      // Log para debugging
-      console.log('Respuesta de Resend:', emailResponse);
 
       if (error) {
         throw error;

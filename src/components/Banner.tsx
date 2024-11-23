@@ -8,6 +8,11 @@ const Banner: React.FC = () => {
     seconds: 59
   });
 
+  const handleWhatsAppClick = () => {
+    const mensaje = encodeURIComponent('¡Hola! Vi la oferta de lanzamiento del 20% de descuento en su sitio web y me gustaría obtener más información. 😊');
+    window.open(`https://wa.me/5493757210123?text=${mensaje}`, '_blank');
+  };
+
   useEffect(() => {
     // Mostrar banner después de 2 segundos
     const timer = setTimeout(() => {
@@ -87,7 +92,7 @@ const Banner: React.FC = () => {
             className="w-full bg-white text-red-600 px-6 py-2 rounded-full 
                      text-sm font-bold hover:bg-red-100 transition-all duration-300
                      transform hover:scale-105"
-            onClick={() => document.getElementById('contacto')?.scrollIntoView({behavior: 'smooth'})}
+            onClick={handleWhatsAppClick}
             type="button"
           >
             ¡Aprovecha ahora!

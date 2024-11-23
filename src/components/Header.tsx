@@ -34,23 +34,33 @@ const Header = () => {
     >
       <div className="absolute inset-0 bg-gray-50 shadow-md"></div>
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex justify-between items-center h-32">
-          {/* Columna izquierda */}
+        <div className="flex justify-between items-center h-20 md:h-32">
+          {/* Logo */}
           <div className="flex-1 flex items-center justify-start h-full">
-            <a href="/" className="flex items-center ml-36">
+            <a href="/" className="flex items-center ml-2 md:ml-36">
               <img
                 src="/logo3.png"
                 alt="Selva Digital Logo"
-                className="w-auto h-[80px] object-contain"
+                className="w-auto h-[50px] md:h-[80px] object-contain"
                 style={{ maxHeight: '80px', marginTop: '-110px', marginBottom: '-110px' }}
               />
             </a>
           </div>
 
-          {/* Columna derecha */}
-          <div className="flex-1 flex flex-col justify-between items-end h-full py-2">
-            {/* Fila superior */}
-            <div className=' flex items-center justify-center mr-10'>
+          {/* Botón menú móvil */}
+          <button 
+            onClick={toggleMobileMenu}
+            className="md:hidden p-2"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Contenido derecho - visible solo en desktop */}
+          <div className="hidden md:flex-1 md:flex md:flex-col md:justify-between md:items-end md:h-full md:py-2">
+            {/* Información de contacto */}
+            <div className='flex items-center justify-center mr-10'>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <motion.button
                   onClick={handleWhatsAppClick}
@@ -64,11 +74,11 @@ const Header = () => {
               </motion.div>
               <span className='text-sm text-gray-900 mr-1 hover:text-azure-radiance-400 hover:underline transition-all duration-200 font-bold cursor-default'>+54 9 3757 210123</span>
               <span className='text-sm text-gray-900 mr-1'>|</span>
-              <span className='text-sm text-gray-900 hover:text-azure-radiance-400 hover:underline transition-all duration-200  cursor-default'>selvadigitaliguazu@gmail.com</span>
+              <span className='text-sm text-gray-900 hover:text-azure-radiance-400 hover:underline transition-all duration-200 cursor-default'>selvadigitaliguazu@gmail.com</span>
             </div>
 
-            {/* Fila inferior */}
-            <nav className="hidden md:flex space-x-6 mb-4 mr-10">
+            {/* Menú de navegación desktop */}
+            <nav className="space-x-6 mb-4 mr-10">
               {menuItems.map((item) => (
                 <motion.a
                   key={item.href}
@@ -85,29 +95,44 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Menú móvil */}
+      {/* Menú móvil mejorado */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.nav 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-white dark:bg-gray-900 py-4"
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white shadow-lg absolute w-full top-20"
           >
-            {menuItems.map((item, index) => (
-              <motion.a
-                key={item.href}
-                href={item.href}
-                className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
+            <div className="px-4 py-4 space-y-4">
+              <motion.button
+                onClick={handleWhatsAppClick}
+                className="w-full px-4 py-3 text-sm bg-azure-radiance-500 text-white rounded font-semibold"
+                whileHover={{ backgroundColor: "#0056b3" }}
               >
-                {item.label}
-              </motion.a>
-            ))}
-          </motion.nav>
+                PIDA PRESUPUESTO
+              </motion.button>
+              
+              <div className="py-2 text-center space-y-2">
+                <p className="text-sm text-gray-900 font-medium">+54 9 3757 210123</p>
+                <p className="text-sm text-gray-900">selvadigitaliguazu@gmail.com</p>
+              </div>
+
+              <div className="space-y-2">
+                {menuItems.map((item) => (
+                  <motion.a
+                    key={item.href}
+                    href={item.href}
+                    className="block w-full px-4 py-3 text-gray-700 hover:bg-gray-100 text-center rounded transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    whileHover={{ backgroundColor: "#f3f4f6" }}
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.header>

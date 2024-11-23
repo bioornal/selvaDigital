@@ -54,14 +54,71 @@ const plans = [
 ];
 ---
 
-<section class="py-20 bg-gradient-to-b from-azure-radiance-950 to-black">
-  <div class="container mx-auto px-4">
-    <h2 class="text-4xl font-bold text-center text-white mb-4">Planes de Diseño Web</h2>
-    <p class="text-center text-white/60 mb-12 max-w-2xl mx-auto">
+<section class="py-12 sm:py-20 bg-gradient-to-b from-azure-radiance-950 to-black">
+  <div class="container mx-auto px-3 sm:px-4">
+    <h2 class="text-2xl sm:text-4xl font-bold text-center text-white mb-3 sm:mb-4">Planes de Diseño Web</h2>
+    <p class="text-center text-white/60 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
       Todos nuestros planes incluyen dominio .com y hosting gratis por 1 año. Pago único, sin costos mensuales.
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    {/* Vista móvil - Slider horizontal */}
+    <div class="md:hidden overflow-x-auto pb-6 -mx-3">
+      <div class="flex flex-col gap-4 px-3">
+        {plans.map((plan) => (
+          <div class="relative w-full">
+            {plan.popular && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-3 py-0.5 rounded-full text-xs font-medium z-10">
+                Más Elegido
+              </div>
+            )}
+            <div class={`
+              bg-white/5 backdrop-blur-sm p-4 rounded-lg 
+              border border-white/10
+              h-full flex flex-col
+              ${plan.popular ? 'bg-white/10' : ''}
+            `}>
+              <div class="flex-grow">
+                <h3 class="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                <div class="mb-4">
+                  <p class="text-2xl font-bold text-azure-radiance-400">
+                    ${plan.price}
+                  </p>
+                  <p class="text-xs text-white/60">Pago único</p>
+                </div>
+                
+                <ul class="space-y-2 mb-6 text-sm">
+                  {plan.features.map((feature) => (
+                    <li class="flex items-start text-white/80">
+                      <svg class="w-4 h-4 text-emerald-500 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <a 
+                href="#contacto"
+                class={`
+                  w-full py-2 px-4 rounded-full font-medium text-sm text-center
+                  transition-all duration-300
+                  ${plan.popular 
+                    ? 'bg-gradient-to-r from-emerald-500 to-azure-radiance-500 text-white' 
+                    : 'bg-white/10 text-white hover:bg-white/20'
+                  }
+                `}
+              >
+                Solicitar presupuesto
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Vista desktop - Grid */}
+    <div class="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
       {plans.map((plan) => (
         <div class="relative group h-full flex">
           {plan.popular && (
@@ -114,14 +171,14 @@ const plans = [
       ))}
     </div>
 
-    <div class="mt-12 text-center space-y-4">
-      <p class="text-white/60">
+    <div class="mt-8 sm:mt-12 text-center space-y-3 sm:space-y-4">
+      <p class="text-white/60 text-sm sm:text-base">
         ¿Necesitás una web autogestionable con WordPress? 
         <a href="#contacto" class="text-azure-radiance-400 hover:text-azure-radiance-300">
           Consultá por nuestro plan de $700.000
         </a>
       </p>
-      <p class="text-white/60 text-sm">
+      <p class="text-white/60 text-xs sm:text-sm">
         Todos los precios están expresados en pesos argentinos (ARS)
       </p>
     </div>
@@ -137,5 +194,16 @@ const plans = [
 
   .group:hover {
     animation: float 3s ease-in-out infinite;
+  }
+
+  /* Estilizado del scrollbar horizontal para móvil */
+  .overflow-x-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
   }
 </style>

@@ -89,34 +89,34 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="relative py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-6">
+      <div className="relative py-16 sm:py-32">
+        <div className="container mx-auto px-3 sm:px-4">
+          <div className="max-w-4xl mx-auto text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-6">
               Contactanos
             </h2>
-            <p className="text-gray-300 text-lg font-geist">
+            <p className="text-gray-300 text-sm sm:text-lg font-geist">
               Estamos listos para hacer realidad tu próximo proyecto
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 max-w-6xl mx-auto">
             {/* Información de contacto */}
-            <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg h-full">
+            <div className="bg-white p-4 sm:p-8 rounded-lg sm:rounded-xl border border-gray-200 shadow-lg">
               {contactInfo.map((item, index) => (
                 <a 
                   key={index}
                   href={item.link}
-                  className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300 group"
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300 group"
                 >
-                  <div className="p-3 rounded-lg bg-azure-radiance-500/10 group-hover:bg-azure-radiance-500/20 transition-colors duration-300">
-                    <item.icon className="w-6 h-6 text-azure-radiance-500" />
+                  <div className="p-2 sm:p-3 rounded-lg bg-azure-radiance-500/10 group-hover:bg-azure-radiance-500/20 transition-colors duration-300">
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-azure-radiance-500" />
                   </div>
                   <div>
-                    <h3 className="text-gray-900 font-semibold group-hover:text-azure-radiance-500 transition-colors duration-300">
+                    <h3 className="text-gray-900 font-semibold text-sm sm:text-base group-hover:text-azure-radiance-500 transition-colors duration-300">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 text-sm">{item.value}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm">{item.value}</p>
                   </div>
                 </a>
               ))}
@@ -129,50 +129,50 @@ const Contact = () => {
               onSubmit={handleSubmit}
             >
               {({ errors, touched, isSubmitting, isValid, dirty }) => (
-                <Form className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg space-y-6 h-full">
+                <Form className="bg-white p-4 sm:p-8 rounded-lg sm:rounded-xl border border-gray-200 shadow-lg space-y-4 sm:space-y-6">
                   <div>
-                    <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="nombre" className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                       Nombre Completo
                     </label>
                     <Field
                       name="nombre"
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
                       placeholder="Ej: Juan Pérez"
                     />
                     {errors.nombre && touched.nombre && (
-                      <span className="text-red-500 text-sm">{errors.nombre}</span>
+                      <span className="text-red-500 text-xs sm:text-sm mt-1">{errors.nombre}</span>
                     )}
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                       Email
                     </label>
                     <Field
                       name="email"
                       type="email"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
                       placeholder="tu@email.com"
                     />
                     {errors.email && touched.email && (
-                      <span className="text-red-500 text-sm">{errors.email}</span>
+                      <span className="text-red-500 text-xs sm:text-sm mt-1">{errors.email}</span>
                     )}
                   </div>
 
                   <div>
-                    <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="mensaje" className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                       Mensaje
                     </label>
                     <Field
                       as="textarea"
                       name="mensaje"
-                      rows={4}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
+                      rows={3}
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:border-azure-radiance-400 focus:ring-1 focus:ring-azure-radiance-400 transition-colors duration-300"
                       placeholder="¿En qué podemos ayudarte?"
                     />
                     {errors.mensaje && touched.mensaje && (
-                      <span className="text-red-500 text-sm">{errors.mensaje}</span>
+                      <span className="text-red-500 text-xs sm:text-sm mt-1">{errors.mensaje}</span>
                     )}
                   </div>
 

@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       
       <div className="container mx-auto px-4 relative z-20">
-        <div className="mt-[0px] xs:mt-[-10px] sm:mt-[10px] md:mt-48 lg:mt-[-48px] 2xl:mt-[120px]">
+        <div className="mt-[20px] xs:mt-[-10px] sm:mt-[10px] md:mt-48 lg:mt-[-48px] 2xl:mt-[120px]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Columna izquierda */}
             <div className="lg:col-span-8 mx-4 md:ml-16">

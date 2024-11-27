@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { sendAnalyticsEvent } from '../utils/analytics';
 
 const contactInfo = [
   {
@@ -66,15 +67,26 @@ const Contact = () => {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Error al enviar el mensaje');
+        throw new Error('Error al enviar el mensaje');
       }
+
+      // Enviar evento a Analytics
+      sendAnalyticsEvent(
+        'form_submission',
+        'Contact',
+        'Contact Form Success'
+      );
 
       alert('Mensaje enviado con éxito');
       resetForm();
     } catch (error) {
-      console.error('Error en el envío:', error);
-      alert(error instanceof Error ? error.message : 'Error al enviar el mensaje');
+      // Trackear error
+      sendAnalyticsEvent(
+        'form_error',
+        'Contact',
+        'Contact Form Error'
+      );
+      console.error('Error:', error);
     } finally {
       setSubmitting(false);
     }

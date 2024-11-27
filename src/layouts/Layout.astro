@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -32,6 +33,19 @@ const { title } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100&display=swap" rel="stylesheet">
+    {googleAnalyticsId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+        <script define:vars={{ googleAnalyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', googleAnalyticsId);
+        </script>
+      </>
+    )}
   </head>
   <body class="bg-site-background text-azure-radiance-950">
     <Header client:load />

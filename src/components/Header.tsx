@@ -4,6 +4,7 @@ import { CONTACT_PHONE, CONTACT_EMAIL, WHATSAPP_URL } from '../lib/constants';
 
 const menuItems = [
   { href: "#sobre-nosotros", label: "Sobre Mí" },
+  { href: "#planes", label: "Planes y Precios" },
   { href: "#portfolio", label: "Portfolio" },
   { href: "#faq", label: "FAQ" },
   { href: "#contacto", label: "Contacto" },

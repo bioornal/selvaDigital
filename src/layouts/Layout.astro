@@ -7,11 +7,51 @@ import Banner from '../components/Banner';
 import '../styles/global.css';
 
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { 
+  title = "Selva Digital - Desarrollo web freelance para PyMEs en Argentina",
+  description = "Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://www.selvadigital.com');
 const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
+
+const schemaOrgJSON = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.selvadigital.com/#person",
+      "name": "Selva Digital",
+      "description": "Desarrollador web freelance — diseño, desarrollo, e-commerce, sistemas a medida y chatbots con IA para PyMEs en Argentina",
+      "url": "https://www.selvadigital.com",
+      "telephone": "+54-3548-550334",
+      "email": "info.selvadigital@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Córdoba",
+        "addressCountry": "AR"
+      },
+      "priceRange": "$250.000 - $1.000.000 ARS",
+      "areaServed": {
+        "@type": "Place",
+        "name": "Argentina"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.selvadigital.com/#website",
+      "url": "https://www.selvadigital.com",
+      "name": "Selva Digital",
+      "publisher": {
+        "@id": "https://www.selvadigital.com/#business"
+      }
+    }
+  ]
+};
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -21,18 +61,37 @@ const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="canonical" href={canonicalURL} />
     <ViewTransitions />
-    <meta name="description" content="Selva Digital: Expertos en diseño web, desarrollo y mantenimiento. Transformamos ideas en experiencias digitales impactantes.">
-    <meta name="keywords" content="diseño web, desarrollo web, mantenimiento web, SEO, experiencia digital">
     <meta name="author" content="Selva Digital">
-    <meta property="og:title" content="Selva Digital - Desarrollo Web Profesional">
-    <meta property="og:description" content="Expertos en diseño web, desarrollo y mantenimiento. Transformamos ideas en experiencias digitales impactantes.">
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
     <meta property="og:image" content="/images/og-image.jpg">
-    <meta property="og:url" content="https://www.selvadigital.com">
+    <meta property="og:url" content={canonicalURL}>
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100&display=swap" rel="stylesheet">
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    </noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrgJSON)} />
     {googleAnalyticsId && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>

@@ -1,45 +1,45 @@
 ---
+import { CONTACT_PHONE, CONTACT_EMAIL } from '../lib/constants';
+
 const currentYear = new Date().getFullYear();
 
 const menuItems = [
-  { href: "#sobre-nosotros", label: "Sobre Nosotros" },
-  { href: "#servicios-digitales", label: "Servicios" },
+  { href: "#sobre-nosotros", label: "Sobre Mí" },
   { href: "#portfolio", label: "Portfolio" },
+  { href: "#faq", label: "FAQ" },
   { href: "#contacto", label: "Contacto" },
 ];
 ---
 
-<footer class="relative bg-gradient-to-br from-azure-radiance-950 to-black text-white py-8">
+<footer class="relative bg-black text-white py-12 border-t border-white/5">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Logo y descripción */}
       <div class="text-center md:text-left space-y-4">
         <div class="flex flex-col items-center md:items-start">
           <img
-            src="/logo3.png"
+            src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png"
             alt="Selva Digital Logo"
-            class="w-auto h-12 object-contain mb-2 bg-white/90 p-1 rounded"
+            class="w-auto h-12 object-contain mb-2 bg-white/10 p-1"
           />
-          <p class="text-gray-300 text-base font-geist">Transformando ideas en realidad digital</p>
+          <p class="text-gray-400 text-sm">Tecnología que hace crecer tu negocio</p>
         </div>
-        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-sm text-gray-400">
-          <a href="mailto:selvadigitaliguazu@gmail.com" class="hover:text-azure-radiance-400 transition-colors duration-200">
-            selvadigitaliguazu@gmail.com
+        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs font-mono text-gray-500">
+          <a href={`mailto:${CONTACT_EMAIL}`} class="hover:text-violet-400 transition-colors duration-200">
+            {CONTACT_EMAIL}
           </a>
-          <span class="hidden md:inline">|</span>
-          <span>+54 9 3757 210123</span>
+          <span class="hidden md:inline text-white/10">|</span>
+          <span>{CONTACT_PHONE}</span>
         </div>
       </div>
 
-      {/* Enlaces rápidos */}
       <div class="text-center md:text-right">
-        <h4 class="text-lg font-semibold mb-4 text-azure-radiance-300 font-geist">Enlaces rápidos</h4>
+        <h4 class="text-xs font-mono text-violet-400 uppercase tracking-[0.2em] mb-4">Enlaces rápidos</h4>
         <ul class="space-y-2">
           {menuItems.map((item) => (
             <li>
               <a 
                 href={item.href}
-                class="text-gray-300 hover:text-white transition-colors duration-200"
+                class="text-gray-400 hover:text-white text-sm transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -49,10 +49,9 @@ const menuItems = [
       </div>
     </div>
 
-    {/* Footer bottom */}
-    <div class="mt-8 pt-4 border-t border-azure-radiance-700/30 text-center">
-      <p class="text-sm text-gray-400 font-geist">
-        &copy; {currentYear} <span class="text-white">Selva Digital</span>. Todos los derechos reservados.
+    <div class="mt-10 pt-6 border-t border-white/5 text-center">
+      <p class="text-xs text-gray-600 font-mono">
+        &copy; {currentYear} <span class="text-gray-400">Selva Digital</span> — Todos los derechos reservados.
       </p>
     </div>
   </div>

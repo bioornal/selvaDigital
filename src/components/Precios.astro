@@ -1,185 +1,164 @@
 ---
+import PlanCard from './PlanCard.astro';
+
 const plans = [
   {
     name: "Landing Page",
-    price: "400.000",
+    price: "250.000",
     popular: false,
+    desde: false,
     features: [
       "Página única con scroll",
       "Diseño web responsive",
       "Formulario de contacto",
       "Dominio .com gratis por 1 año",
-      "Hosting gratis por 1 año", 
+      "Hosting en la nube incluido",
       "Integración con redes sociales",
-      "Galería de imágenes",
       "Botones de llamada a la acción",
-      "Mapa de ubicación",
       "Optimización para móviles",
       "Animaciones suaves"
     ]
   },
   {
-    name: "Sitio Empresarial",
-    price: "600.000",
-    popular: true,
+    name: "Sitio Web",
+    price: "400.000",
+    popular: false,
+    desde: false,
     features: [
-      "Todo lo incluido en Landing Page +",
-      "4-8 secciones personalizadas",
-      "Diseño web responsive premium", 
-      "Formularios avanzados",
-      "Hosting premium",
-      "Optimización SEO básica",
-      "Integración con Google Analytics",
-      "Galería multimedia avanzada",
+      "3 a 5 secciones personalizadas",
+      "Diseño web responsive premium",
+      "Formulario de contacto avanzado",
+      "Dominio .com gratis por 1 año",
+      "Hosting en la nube incluido",
       "Integración con redes sociales",
+      "Galería de imágenes",
+      "Mapa de ubicación",
+      "Animaciones suaves"
     ]
   },
   {
-    name: "Tienda Online",
-    price: "1.050.000", 
-    popular: false,
+    name: "E-commerce",
+    price: "700.000",
+    popular: true,
+    desde: false,
     features: [
-      "Todo lo incluido en Sitio Empresarial +",
       "Catálogo de productos ilimitado",
-      "Sistema de registro y login",
-      "Perfiles de clientes",
-      "Historial de compras",
+      "Carrito de compras",
       "Integración con MercadoPago",
+      "Sistema de registro y login",
+      "Panel de administración",
       "Gestión de stock automática",
-      "Sistema de descuentos",
-      "Reportes de ventas",
-      "Sistema de reseñas"
+      "Sistema de descuentos y promos",
+      "Dominio .com gratis por 1 año",
+      "Hosting premium incluido",
+      "Optimización SEO",
+      "Google Analytics integrado"
+    ]
+  },
+  {
+    name: "A Medida",
+    price: "550.000",
+    popular: false,
+    desde: false,
+    features: [
+      "Más de 5 secciones personalizadas",
+      "Diseño premium único",
+      "Formularios avanzados",
+      "Dominio .com gratis por 1 año",
+      "Hosting en la nube incluido",
+      "Galería multimedia avanzada",
+      "Integraciones personalizadas",
+      "Optimización SEO completa"
+    ]
+  },
+  {
+    name: "Sistema a Medida",
+    price: "900.000",
+    popular: false,
+    desde: true,
+    features: [
+      "Dashboard de administración",
+      "Login y roles de usuario",
+      "Gestión de datos (CRUD)",
+      "Reportes y métricas",
+      "Base de datos dedicada",
+      "API personalizada",
+      "Deploy en la nube",
+      "Soporte post-lanzamiento"
+    ]
+  },
+  {
+    name: "Chatbot con IA",
+    price: "1.000.000",
+    popular: false,
+    desde: true,
+    features: [
+      "Bot inteligente con IA",
+      "Chats que venden",
+      "Dashboard de mensajes",
+      "Multi-bot y multiusuario",
+      "Respuestas automáticas 24/7",
+      "Base de conocimiento",
+      "Desplegado en VPS propia",
+      "Soporte y entrenamiento"
+    ]
+  },
+  {
+    name: "App a Medida",
+    price: "1.000.000",
+    popular: false,
+    desde: true,
+    features: [
+      "Aplicación web o mobile",
+      "Backend personalizado",
+      "Base de datos dedicada",
+      "Autenticación de usuarios",
+      "Notificaciones push",
+      "Panel de administración",
+      "Deploy en la nube",
+      "Soporte post-lanzamiento"
     ]
   }
 ];
 ---
 
-<section class="py-12 sm:py-20 bg-gradient-to-b from-azure-radiance-950 to-black">
+<section class="py-12 sm:py-20 bg-black">
   <div class="container mx-auto px-3 sm:px-4">
-    <h2 class="text-2xl sm:text-4xl font-bold text-center text-white mb-3 sm:mb-4">Planes de Diseño Web</h2>
-    <p class="text-center text-white/60 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-      Todos nuestros planes incluyen dominio .com y hosting gratis por 1 año. Pago único, sin costos mensuales.
+    <h2 class="text-3xl sm:text-5xl font-heading text-center text-white mb-3 sm:mb-4">Planes y Precios</h2>
+    <p class="text-center text-white/70 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
+      Todos los planes web incluyen dominio .com y hosting gratis por 1 año. Pago único, sin costos mensuales. Después, renovación anual a cargo del cliente.
     </p>
 
-    {/* Vista móvil - Slider horizontal */}
-    <div class="md:hidden overflow-x-auto pb-6 -mx-3">
-      <div class="flex flex-col gap-4 px-3">
-        {plans.map((plan) => (
-          <div class="relative w-full">
-            {plan.popular && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-3 py-0.5 rounded-full text-xs font-medium z-10">
-                Más Elegido
-              </div>
-            )}
-            <div class={`
-              bg-white/5 backdrop-blur-sm p-4 rounded-lg 
-              border border-white/10
-              h-full flex flex-col
-              ${plan.popular ? 'bg-white/10' : ''}
-            `}>
-              <div class="flex-grow">
-                <h3 class="text-xl font-bold text-white mb-2">{plan.name}</h3>
-                <div class="mb-4">
-                  <p class="text-2xl font-bold text-azure-radiance-400">
-                    ${plan.price}
-                  </p>
-                  <p class="text-xs text-white/60">Pago único</p>
-                </div>
-                
-                <ul class="space-y-2 mb-6 text-sm">
-                  {plan.features.map((feature) => (
-                    <li class="flex items-start text-white/80">
-                      <svg class="w-4 h-4 text-emerald-500 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+    <!-- Vista móvil -->
+    <div class="md:hidden space-y-4 max-w-lg mx-auto">
+      {plans.map((plan) => (
+        <PlanCard plan={plan} variant="mobile" />
+      ))}
+    </div>
 
-              <a 
-                href="#contacto"
-                class={`
-                  w-full py-2 px-4 rounded-full font-medium text-sm text-center
-                  transition-all duration-300
-                  ${plan.popular 
-                    ? 'bg-gradient-to-r from-emerald-500 to-azure-radiance-500 text-white' 
-                    : 'bg-white/10 text-white hover:bg-white/20'
-                  }
-                `}
-              >
-                Solicitar presupuesto
-              </a>
-            </div>
-          </div>
+    <!-- Vista desktop -->
+    <div class="hidden md:block">
+      <!-- Primera fila: 4 planes web -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-8">
+        {plans.slice(0, 4).map((plan) => (
+          <PlanCard plan={plan} variant="desktop" />
+        ))}
+      </div>
+
+      <!-- Segunda fila: 3 planes avanzados -->
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {plans.slice(4).map((plan) => (
+          <PlanCard plan={plan} variant="advanced" />
         ))}
       </div>
     </div>
 
-    {/* Vista desktop - Grid */}
-    <div class="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {plans.map((plan) => (
-        <div class="relative group h-full flex">
-          {plan.popular && (
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-sm font-medium z-10">
-              Más Elegido
-            </div>
-          )}
-          <div class={`
-            bg-white/5 backdrop-blur-sm p-8 rounded-xl 
-            border border-white/10 hover:border-azure-radiance-500 
-            transition-all duration-300 flex flex-col w-full
-            ${plan.popular ? 'bg-white/10' : ''}
-          `}>
-            <div class="flex-grow">
-              <h3 class="text-2xl font-bold text-white mb-4">{plan.name}</h3>
-              <div class="mb-6">
-                <p class="text-4xl font-bold text-azure-radiance-400">
-                  ${plan.price}
-                </p>
-                <p class="text-sm text-white/60">Pago único</p>
-              </div>
-              
-              <ul class="space-y-4 mb-8">
-                {plan.features.map((feature) => (
-                  <li class="flex items-start text-white/80">
-                    <svg class="w-5 h-5 text-emerald-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <a 
-              href="#contacto"
-              class={`
-                w-full py-3 px-6 rounded-full font-medium text-center
-                transition-all duration-300 mt-auto
-                ${plan.popular 
-                  ? 'bg-gradient-to-r from-emerald-500 to-azure-radiance-500 text-white hover:shadow-lg hover:scale-105' 
-                  : 'bg-white/10 text-white hover:bg-white/20'
-                }
-              `}
-            >
-              Solicitar presupuesto
-            </a>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <div class="mt-8 sm:mt-12 text-center space-y-3 sm:space-y-4">
-      <p class="text-white/60 text-sm sm:text-base">
-        ¿Necesitás una web construida a medida? 
-        <a href="#contacto" class="text-azure-radiance-400 hover:text-azure-radiance-300">
-          Consultá por nuestro plan de $700.000
-        </a>
+    <div class="mt-8 sm:mt-12 text-center space-y-2">
+      <p class="text-white/80 text-xs sm:text-sm">
+        Todos los precios están expresados en pesos argentinos (ARS). Pago único.
       </p>
-      <p class="text-white/60 text-xs sm:text-sm">
-        Todos los precios están expresados en pesos argentinos (ARS)
+      <p class="text-white/60 text-[10px]">
+        Dominio .com incluido el primer año. Renovación anual a cargo del cliente. Los planes &quot;desde&quot; son precios de referencia según complejidad y alcance, se ajustan tras evaluar el proyecto.
       </p>
     </div>
   </div>
@@ -190,20 +169,5 @@ const plans = [
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
-  }
-
-  .group:hover {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  /* Estilizado del scrollbar horizontal para móvil */
-  .overflow-x-auto {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .overflow-x-auto::-webkit-scrollbar {
-    display: none;
   }
 </style>

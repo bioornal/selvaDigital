@@ -1,25 +1,20 @@
 import React from 'react';
 import { sendAnalyticsEvent } from '../utils/analytics';
+import { WHATSAPP_URL } from '../lib/constants';
 
 const WhatsAppButton: React.FC = () => {
   const handleWhatsAppClick = () => {
-    // Trackear el evento
-    sendAnalyticsEvent(
-      'whatsapp_click',
-      'Contact',
-      'WhatsApp Button Click'
-    );
-
+    sendAnalyticsEvent('whatsapp_click', 'Contact', 'WhatsApp Button Click');
     const mensaje = encodeURIComponent('¡Hola! Me gustaría obtener más información sobre sus servicios.');
-    window.open(`https://wa.me/5493757210123?text=${mensaje}`, '_blank');
+    window.open(`${WHATSAPP_URL}?text=${mensaje}`, '_blank');
   };
 
   return (
     <a
-      href="https://wa.me/543757210123"
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 bg-[#25D366] text-white p-3 rounded-full shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 group"
+      className="fixed bottom-4 right-4 bg-[#25D366] text-white p-3 rounded-none shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 group border border-white/10"
       aria-label="Contactar por WhatsApp"
       onClick={handleWhatsAppClick}
     >

@@ -1,197 +1,171 @@
 ---
-import { Zap, Users, Target, Shield, CheckCircle } from 'lucide-react';
+import { Code2, Globe, Rocket, Wrench, Bot, Cpu, Zap, ShieldCheck } from 'lucide-react';
 
-const features = [
-  {
-    icon: Zap,
-    title: "Más de 5 años de experiencia",
-    description: "Desarrollo web profesional y confiable", 
-    color: "emerald"
+const services = [
+  { icon: Code2, title: "WEB PERSONALIZADA" },
+  { icon: Globe, title: "ECOMMERCE" },
+  { icon: Rocket, title: "PÁGINAS DE VENTA" },
+  { icon: Wrench, title: "SISTEMAS" },
+  { icon: Bot, title: "CHATBOTS QUE VENDEN" },
+];
+
+const steps = [
+  { 
+    id: "01", 
+    title: "HABLÁMOS DE TU IDEA", 
+    desc: "Entiendo tu negocio para darte la mejor solución.",
+    status: "DISPONIBLE"
   },
-  {
-    icon: Users,
-    title: "Equipo profesional",
-    description: "Especialistas altamente calificados",
-    color: "azure-radiance"
+  { 
+    id: "02", 
+    title: "PLAN DE TRABAJO", 
+    desc: "Definimos costos y tiempos claros sin vueltas.",
+    status: "CALIBRANDO"
   },
-  {
-    icon: Target,
-    title: "Enfoque personalizado", 
-    description: "Soluciones adaptadas a tu negocio",
-    color: "purple"
+  { 
+    id: "03", 
+    title: "MANOS A LA OBRA", 
+    desc: "Te muestro avances reales de tu proyecto cada semana.",
+    status: "EN_PROCESO"
   },
-  {
-    icon: Shield,
-    title: "Compromiso total",
-    description: "Satisfacción del cliente garantizada",
-    color: "rose"
+  { 
+    id: "04", 
+    title: "LISTO PARA VENDER", 
+    desc: "Tu web queda volando y lista para recibir clientes.",
+    status: "ESTABLE"
   }
 ];
 ---
 
-<section id="sobre-nosotros" class="py-8 sm:py-24 bg-gradient-to-b from-azure-radiance-800 via-azure-radiance-900 to-azure-radiance-950">
-  <div class="container mx-auto px-3 sm:px-4">
-    <div class="max-w-4xl mx-auto text-center mb-6 sm:mb-16">
-      <h2 class="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-6">
-        Por qué elegir Selva Digital
-      </h2>
-      <p class="text-gray-300 text-sm sm:text-lg">
-        Transformamos tu visión en una presencia digital impactante
-      </p>
-    </div>
+<section id="sobre-nosotros" class="py-24 sm:py-32 bg-black relative overflow-hidden">
+  <!-- Grid Background Overlay -->
+  <div class="absolute inset-0 opacity-10 pointer-events-none" 
+       style="background-image: linear-gradient(#3b82f6 1px, transparent 1px), linear-gradient(90deg, #3b82f6 1px, transparent 1px); background-size: 50px 50px;">
+  </div>
 
-    <div class="sm:hidden mb-8">
-      <ul class="space-y-4">
-        {features.map((feature) => (
-          <li class="flex items-center gap-3 text-white p-3 rounded-lg bg-white/5">
-            <div class={`p-2 rounded-lg bg-${feature.color}-500/10 border border-${feature.color}-500/20`}>
-              <feature.icon className={`w-4 h-4 text-${feature.color}-400`} />
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left Column: Content -->
+        <div class="lg:col-span-7 flex flex-col">
+          <div class="hud-container p-8 sm:p-10 flex-grow scanline-fx">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10">
+              <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-violet-600 to-blue-600 rounded-none blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <img 
+                  src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg"
+                  alt="Perfil"
+                  class="relative w-40 h-40 rounded-none object-cover border-2 border-white/20"
+                />
+                <div class="absolute bottom-0 right-0 w-6 h-6 bg-emerald-500 border-4 border-black rounded-none"></div>
+              </div>
+              <div>
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-2 py-0.5 bg-violet-500/10 border border-violet-500/30 text-[10px] font-mono text-violet-400 tracking-[0.2em] uppercase">Status: Online</span>
+                  <span class="px-2 py-0.5 bg-blue-500/10 border border-blue-500/30 text-[10px] font-mono text-blue-400 tracking-[0.2em] uppercase">ID: 0x7E2A</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-heading glow-text leading-tight text-white uppercase">
+                  Sobre mí
+                </h2>
+              </div>
             </div>
-            <div>
-              <h3 class="text-sm font-bold">{feature.title}</h3>
-              <p class="text-xs text-gray-300">{feature.description}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
 
-    <div class="hidden sm:grid md:grid-cols-2 gap-8 mb-16">
-      {features.map((feature) => (
-        <div class="group relative">
-          <div class="absolute inset-0 bg-white/5 rounded-xl sm:rounded-2xl transition-all duration-300 group-hover:bg-white/10"></div>
-          <div class="relative overflow-hidden backdrop-blur-lg p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-white/10">
-            <div class="flex items-start gap-3 sm:gap-4">
-              <div class={`relative p-2 sm:p-3 rounded-lg sm:rounded-xl bg-${feature.color}-500/10 border border-${feature.color}-500/20`}>
-                <feature.icon className={`w-5 h-5 sm:w-6 sm:h-6 text-${feature.color}-400 relative z-10`} />
-              </div>
-              <div class="flex-1 relative">
-                <h3 class="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 relative">{feature.title}</h3>
-                <p class="text-sm sm:text-base text-gray-300 relative">{feature.description}</p>
-              </div>
+            <div class="space-y-6 text-gray-400 text-sm sm:text-base leading-relaxed mb-12 max-w-2xl">
+              <p>
+                Ayudo a <span class="text-white font-medium">dueños de negocios y PyMEs</span> a vender más y trabajar mejor. Mi misión es que tu empresa tenga <span class="text-violet-400">páginas web personalizadas</span> de alto impacto que atraigan clientes las 24 horas.
+              </p>
+              <p>
+                Como <span class="text-white font-medium">experto en ecommerce</span>, diseño tiendas online que funcionan solas, integrando <span class="text-violet-400">chatbots que venden</span> para que no pierdas ni un solo pedido.
+              </p>
+              <p class="font-mono text-xs border-l-2 border-violet-500 pl-4 py-2 bg-white/5">
+                // RESUMEN DEL SISTEMA: <br/>
+                > TRABAJO CON NEGOCIOS DE TODA ARGENTINA. <br/>
+                > CÓDIGO PURO A MEDIDA Y SIN PLANTILLAS. <br/>
+                > EXPERTO EN ECOMMERCE Y PÁGINAS WEB PERSONALIZADAS.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {services.map((service) => (
+                <div class="flex flex-col items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-none group hover:border-violet-500/50 transition-colors">
+                  <service.icon className="w-5 h-5 text-gray-500 group-hover:text-violet-400 transition-colors" />
+                  <span class="text-[10px] font-mono text-gray-500 group-hover:text-white transition-colors">{service.title}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      ))}
-    </div>
 
-    <div class="relative group rounded-xl sm:rounded-2xl overflow-hidden">
-      <div class="relative bg-white/5 backdrop-blur-lg p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-white/10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12 items-center">
-          <div class="space-y-4 sm:space-y-6 text-white">
-            <h3 class="text-xl sm:text-2xl font-bold">Tecnología de vanguardia</h3>
-            <p class="text-sm sm:text-base text-gray-300">
-              Utilizamos las últimas tecnologías y mejores prácticas para crear sitios web rápidos, seguros y escalables.
-            </p>
-            <ul class="space-y-3 sm:space-y-4">
-              <li class="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span>Desarrollo web moderno</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span>Diseño responsive</span>
-              </li>
-              <li class="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span>Optimización SEO</span>
-              </li>
-            </ul>
-          </div>
-          <div class="relative bg-gradient-to-br from-black/40 to-black/10 rounded-lg sm:rounded-xl p-4 sm:p-6">
-            <div class="grid grid-cols-3 xs:grid-cols-4 md:grid-cols-5 gap-4 sm:gap-6 place-items-center">
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" 
-                alt="React" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" 
-                alt="Next.js" 
-                class="tech-icon invert"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/astro/astro-original.svg" 
-                alt="Astro" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" 
-                alt="Redux" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" 
-                alt="Tailwind" 
-                class="tech-icon"
-              />
-
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" 
-                alt="TypeScript" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" 
-                alt="Node.js" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg" 
-                alt="Express.js" 
-                class="tech-icon invert"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" 
-                alt="PostgreSQL" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" 
-                alt="MongoDB" 
-                class="tech-icon"
-              />
-
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/materialui/materialui-original.svg" 
-                alt="Material UI" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" 
-                alt="Bootstrap" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/www/public/favicon.ico" 
-                alt="Shadcn UI" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg" 
-                alt="Sass" 
-                class="tech-icon"
-              />
-              <img 
-                src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" 
-                alt="Docker" 
-                class="tech-icon"
-              />
+        <!-- Right Column: Visuals & Workflow -->
+        <div class="lg:col-span-5 flex flex-col gap-8">
+          
+          <!-- Tech Visual -->
+          <div class="hud-container h-48 overflow-hidden relative group">
+            <img 
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000" 
+              alt="AI Core"
+              class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4">
+              <span class="text-[10px] font-mono text-emerald-400 animate-pulse">● CORE_ACTIVE</span>
+            </div>
+            <div class="absolute top-4 right-4 flex flex-col gap-1 items-end">
+              <div class="w-12 h-1 bg-white/10"></div>
+              <div class="w-8 h-1 bg-white/10"></div>
+              <div class="w-16 h-1 bg-violet-500/50"></div>
             </div>
           </div>
+
+          <!-- Workflow -->
+          <div class="hud-container p-6 flex-grow">
+            <h3 class="text-sm font-heading mb-6 tracking-widest uppercase flex items-center gap-2">
+              <Zap className="w-4 h-4 text-violet-500" />
+              Flujo de Trabajo
+            </h3>
+            
+            <div class="space-y-6 relative">
+              <div class="absolute left-[13px] top-2 bottom-2 w-px bg-white/10"></div>
+              
+              {steps.map((step) => (
+                <div class="relative pl-10 group">
+                  <div class="absolute left-0 top-1 w-7 h-7 bg-black border border-white/20 rounded-none flex items-center justify-center group-hover:border-violet-500 transition-colors z-10">
+                    <span class="text-[10px] font-mono text-gray-500 group-hover:text-violet-400">{step.id}</span>
+                  </div>
+                  <div>
+                    <div class="flex justify-between items-center mb-1">
+                      <p class="text-xs font-bold text-white uppercase tracking-wider">{step.title}</p>
+                      <span class="text-[10px] font-mono text-gray-500">{step.status}</span>
+                    </div>
+                    <p class="text-xs text-gray-500">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+              <div class="flex gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-500/50" />
+                <span class="text-[10px] font-mono text-gray-500 uppercase">Seguridad Cifrada</span>
+              </div>
+              <div class="flex gap-2">
+                <Cpu className="w-4 h-4 text-blue-500/50" />
+                <span class="text-[10px] font-mono text-gray-500 uppercase">Escalabilidad Cloud</span>
+              </div>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  section {
-    font-family: 'Geist Mono', monospace;
-  }
-  
-  .tech-icon {
-    @apply w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform;
-    filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.1));
+  .font-heading {
+    font-family: 'Nova Square', sans-serif;
   }
 </style>
+

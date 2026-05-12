@@ -65,6 +65,18 @@ module.exports = {
           '900': '#1f4789',
           '950': '#182c53',
         },
+        'ai-violet': {
+          '50': '#f5f3ff',
+          '100': '#ede9fe',
+          '200': '#ddd6fe',
+          '300': '#c4b5fd',
+          '400': '#a78bfa',
+          '500': '#8B5CF6',
+          '600': '#7c3aed',
+          '700': '#6d28d9',
+          '800': '#5b21b6',
+          '900': '#4c1d95',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -86,11 +98,13 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundColor: {
-        'site-background': 'var(--azure-radiance-800)',
+        'site-background': '#000000',
       },
       fontFamily: {
+        'heading': ['"Nova Square"', 'sans-serif'],
+        'body': ['Inter', 'system-ui', 'sans-serif'],
+        'mono': ['"JetBrains Mono"', 'monospace'],
         'montserrat': ['Montserrat', 'sans-serif'],
-        'geist': ['Geist Mono', 'monospace'],
       },
     },
   },
@@ -99,10 +113,10 @@ module.exports = {
     function({ addBase, theme }) {
       addBase({
         ':root': {
-          '--azure-radiance-800': theme('colors.azure-radiance.800'),
+          '--azure-radiance-800': '#000000',
         },
         'body': {
-          backgroundColor: 'var(--azure-radiance-800)',
+          backgroundColor: '#000000',
         },
       });
     },

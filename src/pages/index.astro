@@ -1,21 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero';
+import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
-import About from '../components/About.astro';
 import Portfolio from '../components/Portfolio.astro';
+import AIChatbots from '../components/AIChatbots.astro';
+import Apps from '../components/Apps.astro';
+import Precios from '../components/Precios.astro';
+import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact';
 import WaveSeparator from '../components/WaveSeparator.astro';
 import WaveSeparatorInverted from '../components/WaveSeparatorInverted.astro';
-import Precios from '../components/Precios.astro';
 ---
 
-<Layout title="Selva Digital - Desarrollo Web Profesional">
-  <Hero client:load />
+<Layout 
+  title="Selva Digital - Desarrollo web freelance para PyMEs en Argentina"
+  description="Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
+>
+  <Hero />
   <WaveSeparator />
   <Services />
-  <About />
   <Portfolio />
+  <AIChatbots />
+  <Apps />
   <Precios />
+  <FAQ />
+  <WaveSeparatorInverted />
   <Contact client:load />
 </Layout>

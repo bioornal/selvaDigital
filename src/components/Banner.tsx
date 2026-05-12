@@ -1,102 +1,138 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { WHATSAPP_URL } from '../lib/constants';
 
 const Banner: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 47,
-    minutes: 59,
-    seconds: 59
-  });
-
-  const handleWhatsAppClick = () => {
-    const mensaje = encodeURIComponent('¡Hola! Vi la oferta de lanzamiento del 20% de descuento en su sitio web y me gustaría obtener más información. 😊');
-    window.open(`https://wa.me/5493757210123?text=${mensaje}`, '_blank');
-  };
+  const [hasBeenClaimed, setHasBeenClaimed] = useState(false);
+  const [animateIn, setAnimateIn] = useState(false);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Mostrar banner después de 2 segundos
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 2000);
+    if (typeof window === 'undefined') return;
 
-    // Contador regresivo
-    const interval = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.hours === 0 && prev.minutes === 0 && prev.seconds === 0) {
-          clearInterval(interval);
-          return prev;
+    fetch('/api/banner')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.show) {
+          setHasBeenClaimed(true);
+          return;
         }
-
-        let newHours = prev.hours;
-        let newMinutes = prev.minutes;
-        let newSeconds = prev.seconds - 1;
-
-        if (newSeconds < 0) {
-          newSeconds = 59;
-          newMinutes -= 1;
-        }
-        if (newMinutes < 0) {
-          newMinutes = 59;
-          newHours -= 1;
-        }
-
-        return {
-          hours: newHours,
-          minutes: newMinutes,
-          seconds: newSeconds
-        };
-      });
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
+        const showTimer = setTimeout(() => {
+          setIsVisible(true);
+          requestAnimationFrame(() => setAnimateIn(true));
+        }, 2000);
+        return () => clearTimeout(showTimer);
+      })
+      .catch(() => {
+        const showTimer = setTimeout(() => {
+          setIsVisible(true);
+          requestAnimationFrame(() => setAnimateIn(true));
+        }, 2000);
+        return () => clearTimeout(showTimer);
+      })
+      .finally(() => setChecking(false));
   }, []);
 
-  const handleClose = () => {
-    setIsVisible(false);
-  };
+  const markAsSeen = useCallback(() => {
+    fetch('/api/banner', { method: 'POST' }).catch(() => {});
+  }, []);
 
-  const formatTime = (num: number) => String(num).padStart(2, '0');
+  const handleCTAClick = useCallback(() => {
+    markAsSeen();
+    setHasBeenClaimed(true);
+    setIsVisible(false);
+    const mensaje = encodeURIComponent(
+      '¡Hola! Vi el 20% de descuento en tu primer proyecto y me gustaría obtener más información.'
+    );
+    window.open(`${WHATSAPP_URL}?text=${mensaje}`, '_blank');
+  }, [markAsSeen]);
+
+  const handleClose = useCallback(() => {
+    markAsSeen();
+    setAnimateIn(false);
+    setTimeout(() => setIsVisible(false), 200);
+  }, [markAsSeen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isVisible && animateIn) {
+        handleClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isVisible, animateIn, handleClose]);
+
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) {
+        handleClose();
+      }
+    },
+    [handleClose],
+  );
+
+  if (checking) return null;
+  if (hasBeenClaimed) return null;
+  if (!isVisible) return null;
 
   return (
-    <div className={`fixed bottom-24 right-8 max-w-sm z-50 transition-all duration-500 ease-out ${
-      isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
-    }`}>
-      <div className="relative bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white p-6 rounded-lg shadow-2xl border-2 border-white/20">
-        <button 
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${
+        animateIn ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
+      <div
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onClick={handleOverlayClick}
+      />
+
+      <div
+        className={`relative w-full max-w-md bg-black border border-violet-500/30 p-0 transition-all duration-500 ${
+          animateIn ? 'scale-100 translate-y-0 opacity-100' : 'scale-90 translate-y-8 opacity-0'
+        }`}
+        style={{
+          boxShadow: '0 0 40px rgba(139, 92, 246, 0.15), 0 0 80px rgba(139, 92, 246, 0.05)',
+        }}
+      >
+        <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-violet-400" />
+        <div className="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-violet-400" />
+        <div className="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-violet-400" />
+        <div className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-violet-400" />
+
+        <button
           onClick={handleClose}
-          className="absolute top-2 right-2 text-white/80 hover:text-white transition-colors"
           type="button"
-          aria-label="Cerrar banner"
+          aria-label="Cerrar"
+          className="absolute -top-4 -right-4 w-11 h-11 flex items-center justify-center bg-black border border-violet-500/40 text-violet-400 text-xl leading-none hover:text-white hover:border-violet-400 hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] transition-all duration-200 z-10"
         >
           ×
         </button>
-        
-        <div className="flex flex-col items-center">
-          <span className="text-3xl mb-2">🚀</span>
-          <h3 className="text-xl font-bold mb-2 text-center">¡Oferta de Lanzamiento!</h3>
-          <div className="text-center mb-4">
-            <p className="text-2xl font-bold text-yellow-300">20% OFF</p>
-            <p className="text-sm">en tu primer proyecto web</p>
-          </div>
-          
-          <div className="bg-white/20 px-4 py-2 rounded-full text-sm mb-4">
-            Oferta termina en: <span className="font-bold">
-              {`${formatTime(timeLeft.hours)}:${formatTime(timeLeft.minutes)}:${formatTime(timeLeft.seconds)}`}
-            </span>
-          </div>
-          
-          <button 
-            className="w-full bg-white text-red-600 px-6 py-2 rounded-full 
-                     text-sm font-bold hover:bg-red-100 transition-all duration-300
-                     transform hover:scale-105"
-            onClick={handleWhatsAppClick}
+
+        <div className="p-8 pt-10">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-violet-400 mb-3 text-center">
+            Oferta de lanzamiento
+          </p>
+
+          <h3 className="font-heading text-2xl sm:text-3xl text-white text-center mb-6">
+            20% OFF
+          </h3>
+
+          <p className="text-sm text-gray-400 text-center mb-8 leading-relaxed">
+            en tu <span className="text-white">primer proyecto web</span>
+          </p>
+
+          <button
+            className="w-full bg-violet-600 text-white px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-violet-500 hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all duration-300"
+            onClick={handleCTAClick}
             type="button"
           >
-            ¡Aprovecha ahora!
+            Aprovechar ahora
           </button>
+
+          <p className="text-[9px] text-gray-600 text-center mt-4 tracking-wider">
+            click fuera del panel o presiona ESC para cerrar
+          </p>
         </div>
       </div>
     </div>

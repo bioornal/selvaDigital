@@ -1,5 +1,6 @@
 import React from 'react'
+import { cn } from '../../lib/utils'
 
-export const Textarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement>> = (props) => {
-  return <textarea {...props} className={`px-2 py-1 border rounded ${props.className || ''}`} />
+export const Textarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement>> = ({ className, ...props }) => {
+  return <textarea {...props} className={cn('px-2 py-1 border rounded', className)} />
 }

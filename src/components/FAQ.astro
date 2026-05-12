@@ -1,0 +1,96 @@
+---
+const faqs = [
+  {
+    question: "Cuánto tarda un proyecto web?",
+    answer: "Depende de la complejidad. Una landing page se entrega en 5-7 días hábiles. Un e-commerce completo o sistema a medida puede tardar entre 2 y 4 semanas. Siempre te paso un cronograma antes de arrancar."
+  },
+  {
+    question: "El precio es único o hay mensualidades?",
+    answer: "Todos los precios son pago único. No hay suscripción ni costos mensuales ocultos. Solo renovás el dominio y hosting después del primer año (costo mínimo)."
+  },
+  {
+    question: "Qué pasa si necesito cambios después?",
+    answer: "Las primeras correcciones post-entrega están incluidas. Si después necesitás funcionalidades nuevas o cambios mayores, los cotizo aparte con precio de cliente existente."
+  },
+  {
+    question: "Trabajás con clientes de todo Argentina?",
+    answer: "Sí, trabajo 100% remoto con clientes de todo el país. Las reuniones son por videollamada y la comunicación por nuestro sistema de chat o email, como prefieras."
+  },
+  {
+    question: "Cómo es el proceso de trabajo?",
+    answer: "1) Charla inicial para entender tu negocio. 2) Te paso propuesta y presupuesto. 3) Una vez confirmado, arranco el desarrollo con avances semanales. 4) Revisamos juntos y lanzamos."
+  },
+  {
+    question: "Los chatbots con IA funcionan con cualquier negocio?",
+    answer: "Sí. Funcionan para restaurantes, comercios, servicios profesionales, inmobiliarias, turismo y más. El bot se entrena con la información específica de tu negocio para dar respuestas precisas."
+  },
+  {
+    question: "Incluís dominio y hosting?",
+    answer: "Sí, los planes web incluyen dominio .com y hosting gratis por el primer año. Los planes avanzados (sistemas, chatbots, apps) incluyen deploy en la nube."
+  },
+  {
+    question: "Puedo ver proyectos reales antes de contratar?",
+    answer: "Claro. En el portfolio tenés proyectos funcionando que podés visitar. También puedo mostrarte demos de chatbots con IA en acción."
+  }
+];
+---
+
+<section id="faq" class="py-12 sm:py-24 bg-black relative overflow-hidden">
+  <!-- Grid overlay -->
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" 
+       style="background-image: linear-gradient(rgba(139,92,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,1) 1px, transparent 1px); background-size: 50px 50px;">
+  </div>
+
+  <div class="container mx-auto px-3 sm:px-4 relative z-10">
+    <div class="max-w-4xl mx-auto text-center mb-8 sm:mb-14">
+      <h2 class="text-3xl sm:text-5xl font-heading text-white mb-3 sm:mb-6">
+        Preguntas Frecuentes
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-lg">
+        Lo que más preguntan antes de arrancar
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-3">
+      {faqs.map((faq, index) => (
+        <div class="faq-item hud-container overflow-hidden">
+          <button 
+            class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-white/[0.02] transition-all duration-300"
+            aria-expanded="false"
+          >
+            <span class="text-white font-medium text-sm sm:text-base pr-4 font-mono uppercase tracking-tight">{faq.question}</span>
+            <svg class="faq-icon w-5 h-5 text-violet-400 flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">{faq.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.faq-trigger').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const content = item?.querySelector('.faq-content');
+      const icon = item?.querySelector('.faq-icon');
+      const isOpen = !content?.classList.contains('hidden');
+
+      document.querySelectorAll('.faq-item').forEach((otherItem) => {
+        otherItem.querySelector('.faq-content')?.classList.add('hidden');
+        otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
+        otherItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        content?.classList.remove('hidden');
+        icon?.classList.add('rotate-180');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>

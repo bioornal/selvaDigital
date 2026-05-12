@@ -129,8 +129,8 @@ const plans = [
       Todos los planes web incluyen dominio .com y hosting gratis por 1 año. Pago único, sin costos mensuales. Después, renovación anual a cargo del cliente.
     </p>
 
-    <!-- Vista móvil -->
-    <div class="md:hidden space-y-4 max-w-lg mx-auto">
+    <!-- Vista móvil: acordeón -->
+    <div class="md:hidden space-y-3 max-w-lg mx-auto">
       {plans.map((plan) => (
         <PlanCard plan={plan} variant="mobile" />
       ))}
@@ -164,7 +164,38 @@ const plans = [
   </div>
 </section>
 
+<script>
+  document.querySelectorAll('.plan-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const wrapper = btn.nextElementSibling;
+      if (!wrapper || !wrapper.classList.contains('plan-features-wrapper')) return;
+
+      const isExpanded = wrapper.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', String(isExpanded));
+      
+      const label = btn.querySelector('span');
+      const chevron = btn.querySelector('.plan-chevron');
+      
+      if (label) label.textContent = isExpanded ? 'Ocultar detalles' : 'Ver detalles';
+      if (chevron) chevron.style.transform = isExpanded ? 'rotate(180deg)' : '';
+    });
+  });
+</script>
+
 <style>
+  /* Acordeón mobile */
+  .plan-features-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+  }
+  .plan-features-wrapper.expanded {
+    grid-template-rows: 1fr;
+  }
+  .plan-features-inner {
+    overflow: hidden;
+  }
+
   @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }

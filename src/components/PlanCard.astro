@@ -51,7 +51,7 @@ const isAdvanced = variant === 'advanced';
     </div>
   </div>
 ) : isMobile ? (
-  <div class="relative">
+  <div class="relative plan-card-mobile" data-plan={plan.name}>
     {plan.popular && (
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-3 py-0.5 text-[10px] font-mono uppercase tracking-tight z-10">
         Más Elegido
@@ -64,27 +64,44 @@ const isAdvanced = variant === 'advanced';
     `}>
       <div class="flex-grow">
         <h3 class="text-lg font-bold text-white mb-2 font-heading uppercase">{plan.name}</h3>
-        <div class="mb-4">
+        <div class="mb-3">
           <p class="text-2xl font-bold text-azure-radiance-400 font-mono">
             {plan.desde ? 'Desde ' : ''}${plan.price}
           </p>
           <p class="text-[10px] text-white/60 font-mono uppercase">Pago único</p>
         </div>
         
-        <ul class="space-y-2 mb-6 text-[11px] font-mono uppercase tracking-tighter">
-          {plan.features.map((feature) => (
-            <li class="flex items-start text-white/70">
-              <span class="text-emerald-500/60 mr-2 flex-shrink-0 text-[10px]">—</span>
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
+        <!-- Toggle button mobile -->
+        <button 
+          type="button"
+          class="plan-toggle w-full flex items-center justify-between py-2 text-[11px] font-mono uppercase tracking-wider text-white/50 hover:text-white/80 transition-colors border-t border-white/10 mt-2"
+          aria-expanded="false"
+        >
+          <span>Ver detalles</span>
+          <svg class="plan-chevron w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        <!-- Collapsible features -->
+        <div class="plan-features-wrapper">
+          <div class="plan-features-inner">
+            <ul class="space-y-2 py-4 text-[11px] font-mono uppercase tracking-tighter">
+              {plan.features.map((feature) => (
+                <li class="flex items-start text-white/70">
+                  <span class="text-emerald-500/60 mr-2 flex-shrink-0 text-[10px]">—</span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
 
       <a 
         href="#contacto"
         class={`
-          w-full py-2 px-4 font-mono text-[11px] uppercase tracking-widest text-center block rounded-none
+          w-full py-2.5 px-4 font-mono text-[11px] uppercase tracking-widest text-center block rounded-none
           transition-all duration-300
           ${plan.popular 
             ? 'bg-azure-radiance-600 text-white' 

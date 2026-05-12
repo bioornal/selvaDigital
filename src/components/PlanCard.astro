@@ -160,3 +160,17 @@ const isAdvanced = variant === 'advanced';
     </div>
   </div>
 )}
+
+<style>
+  .plan-features-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+  }
+  .plan-features-wrapper.expanded {
+    grid-template-rows: 1fr;
+  }
+  .plan-features-inner {
+    overflow: hidden;
+  }
+</style>

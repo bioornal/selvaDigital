@@ -3,30 +3,37 @@ import type { Database } from '../types/database';
 
 /**
  * Lee una variable de entorno desde import.meta.env (Astro) o process.env (Node runtime).
- * Tira un error explícito si no existe — mejor fallar al boot que dar respuestas vacías.
+ * Devuelve string vacío si no existe — el cliente Supabase fallará solo cuando se use,
+ * no al cargar el módulo. Esto evita que un build/SSR crashee por env vars faltantes.
  */
-function requireEnvVar(key: string): string {
-  // Astro inyecta vars en import.meta.env durante build/SSR
+function readEnvVar(key: string): string {
   const fromImportMeta = (import.meta.env as Record<string, string | undefined>)[key];
   if (fromImportMeta) return fromImportMeta;
-
-  // Fallback runtime (Vercel functions, scripts Node)
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
     return process.env[key] as string;
   }
+  return '';
+}
 
-  throw new Error(
-    `Missing environment variable: ${key}. ` +
-    `Set it in Vercel → Project → Settings → Environment Variables.`
+const supabaseUrl = readEnvVar('PUBLIC_SUPABASE_URL');
+const supabaseServiceRoleKey = readEnvVar('SUPABASE_SERVICE_ROLE_KEY');
+
+if (!supabaseUrl || !supabaseServiceRoleKey) {
+  console.warn(
+    '[supabase-server] Missing env vars. ' +
+    `PUBLIC_SUPABASE_URL=${supabaseUrl ? 'OK' : 'MISSING'}, ` +
+    `SUPABASE_SERVICE_ROLE_KEY=${supabaseServiceRoleKey ? 'OK' : 'MISSING'}. ` +
+    'API routes that need the service role key will fail with 500.'
   );
 }
 
-const supabaseUrl = requireEnvVar('PUBLIC_SUPABASE_URL');
-const supabaseServiceRoleKey = requireEnvVar('SUPABASE_SERVICE_ROLE_KEY');
-
-export const supabaseAdmin = createClient<Database>(supabaseUrl, supabaseServiceRoleKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+export const supabaseAdmin = createClient<Database>(
+  supabaseUrl || 'https://invalid.supabase.co',
+  supabaseServiceRoleKey || 'invalid-key',
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);

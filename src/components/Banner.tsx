@@ -93,8 +93,9 @@ const Banner: React.FC = () => {
         <button
           onClick={handleClose}
           aria-label="Cerrar"
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-base leading-none transition-colors hover:text-white"
-          style={{ color: textDim, background: 'transparent', borderRadius: '8px' }}
+          type="button"
+          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-lg leading-none transition-colors hover:text-white cursor-pointer"
+          style={{ color: textDim, background: 'transparent', borderRadius: '8px', zIndex: 20 }}
         >
           ×
         </button>

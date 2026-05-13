@@ -84,11 +84,11 @@ const projects = [
 ];
 ---
 
-<section id="portfolio" class="relative" style={`background:${bg}; padding:120px 0;`}>
+<section id="portfolio" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
     {/* Header */}
     <div class="flex flex-wrap items-end justify-between gap-8 mb-12">
-      <div>
+      <div class="text-center md:text-left w-full md:w-auto">
         <div class="inline-flex items-center gap-2.5 mb-[18px]">
           <span class="w-3.5 h-px" style={{ background: accent }}></span>
           <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
@@ -100,16 +100,16 @@ const projects = [
           Proyectos en producción.<br>
           <span style={{ color: accent }}>Sin mockups, sin filtros.</span>
         </h2>
-        <p class="text-[17px] leading-[1.55] max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+        <p class="text-[17px] leading-[1.55] max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
           Cada uno con cliente real, métricas reales y sitio que podés visitar ahora mismo.
         </p>
       </div>
     </div>
 
-    {/* Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    {/* Grid — mobile carousel (10 proyectos, swipe), md+ vuelve a grid */}
+    <div class="portfolio-grid mobile-carousel md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       {projects.map((p) => (
-        <article class="flex flex-col overflow-hidden" style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}>
+        <article class="portfolio-card flex flex-col overflow-hidden w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none" style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}>
           {/* Image */}
           <div class="relative overflow-hidden" style={{ aspectRatio: '16/10', background: '#000' }}>
             <img src={p.img} alt={p.title} class="w-full h-full object-cover" />
@@ -175,3 +175,15 @@ const projects = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Mobile carousel: edge-bleeding para que peek del próximo card sea visible */
+  @media (max-width: 767px) {
+    .portfolio-grid.mobile-carousel {
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+  }
+</style>

@@ -90,7 +90,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contacto" className="relative" style={{ background: '#0A0B0D', padding: '120px 0', borderTop: `1px solid ${line}` }}>
+    <section id="contacto" className="relative" style={{ background: '#0A0B0D', padding: 'clamp(64px, 8vw, 120px) 0', borderTop: `1px solid ${line}` }}>
       {/* Dot grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.08]"
         style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
@@ -197,7 +197,7 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>PRESUPUESTO ESTIMADO (ARS)</label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {presupuestos.map(p => (
                       <button type="button" key={p} className="py-2.5 text-xs font-medium transition-colors hover:text-white"
                         style={{ background: surface2, color: textSoft, border: `1px solid ${line}`, borderRadius: '8px', fontFamily: "'Inter', system-ui, sans-serif" }}>

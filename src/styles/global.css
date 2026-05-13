@@ -9,6 +9,19 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Safety net contra overflow horizontal en mobile. Cualquier sección con
+     elementos absolutos posicionados fuera (glows, etc.) queda contenida. */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Word-break por defecto en headings para evitar palabras largas que rompen layout */
+  h1, h2, h3 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
   /* NORMA TIPOGRÁFICA — títulos siempre tight (line-height <=1.0) */
   h1 {
     font-family: 'Geist', 'Inter', system-ui, sans-serif;
@@ -115,11 +128,58 @@
   text-shadow: 0 0 10px var(--cyber-accent-glow);
 }
 
+/* =========================================================
+   Hero video — efecto de bucle: dim sutil en el loop point
+   para que la transición entre iteraciones sea imperceptible.
+   La opacity de la animación (0.55 → 0.35 → 0.55) sobrescribe
+   el inline `opacity: 0.55` durante el ciclo de 14s.
+   ========================================================= */
 #heroVideo {
-  animation: heroFade 10s linear infinite;
+  animation: heroFade 14s ease-in-out infinite;
 }
 
 @keyframes heroFade {
-  0%, 85% { opacity: 1; }
-  95%, 100% { opacity: 0.7; }
+  0%, 80%   { opacity: 0.55; }
+  92%, 96%  { opacity: 0.32; }
+  100%      { opacity: 0.55; }
+}
+
+/* =========================================================
+   Mobile carousel — utility compartida para Services,
+   Testimonios, Precios y cualquier sección con varios cards.
+   Mobile: scroll-snap horizontal con peek del siguiente card.
+   md+: vuelve a grid (cada componente define su grid-cols).
+
+   IMPORTANTE: el selector :not(.hidden) hace que esta utility NO
+   sobrescriba el `display: none` de Tailwind. Necesario para los
+   tabs de Precios (Web / Sistemas) que togglean `.hidden` por JS.
+   ========================================================= */
+.mobile-carousel:not(.hidden) {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-padding-left: 24px;
+  gap: 16px;
+  padding-bottom: 4px;
+}
+.mobile-carousel::-webkit-scrollbar { display: none; }
+.mobile-carousel > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .mobile-carousel:not(.hidden) {
+    display: grid;
+    overflow: visible;
+    scroll-snap-type: none;
+    gap: revert;
+    padding-bottom: 0;
+  }
+  .mobile-carousel > * {
+    scroll-snap-align: unset;
+    flex-shrink: revert;
+  }
 }

@@ -19,24 +19,39 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
 ---
 
 <section id="hero" class="hero-section relative min-h-screen overflow-hidden flex items-center" style={`background:${bg}; padding-top:74px;`}>
-  {/* Background video */}
+  {/* MOBILE-ONLY: Dot grid pattern — sutil, mismo lenguaje que otras secciones */}
+  <div class="absolute inset-0 pointer-events-none opacity-[0.12] md:hidden"
+    style="background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0); background-size:32px 32px;"
+    aria-hidden="true"></div>
+
+  {/* DESKTOP-ONLY: Background video — solo carga y se reproduce en md+
+       En mobile queda display:none → el navegador no descarga el archivo */}
   <video
     id="heroVideo"
     autoplay
     loop
     muted
     playsinline
-    class="absolute inset-0 w-full h-full object-cover"
+    preload="metadata"
+    class="hidden md:block absolute inset-0 w-full h-full object-cover"
     style="opacity:0.55; filter:saturate(0.85);"
   >
     <source src="https://res.cloudinary.com/djtvjkcu6/video/upload/v1778524166/SelvaDigital/A_seamless_infinite_loop_cinematic_202605111510_zjt26u.mp4" type="video/mp4" />
   </video>
 
-  {/* Overlays */}
-  <div class="absolute inset-0" style={`background: linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.4) 40%, rgba(10,11,13,0.92) 100%), radial-gradient(ellipse at 75% 50%, transparent, rgba(10,11,13,0.5) 70%);`}></div>
+  {/* DESKTOP-ONLY: Dark gradient overlay sobre el video (look original) */}
+  <div class="hidden md:block absolute inset-0" style={`background: linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.4) 40%, rgba(10,11,13,0.92) 100%), radial-gradient(ellipse at 75% 50%, transparent, rgba(10,11,13,0.5) 70%);`} aria-hidden="true"></div>
 
-  {/* Accent glow */}
-  <div class="absolute pointer-events-none" style="top:-200px; right:-400px; width:800px; height:800px; background:radial-gradient(closest-side, rgba(43,182,115,0.18), transparent 70%); filter:blur(10px);"></div>
+  {/* MOBILE-ONLY: Vignette suave (en desktop lo hace el gradient overlay) */}
+  <div class="absolute inset-0 pointer-events-none md:hidden"
+    style="background:radial-gradient(ellipse at 50% 35%, transparent 0%, rgba(10,11,13,0.35) 60%, rgba(10,11,13,0.85) 100%);"
+    aria-hidden="true"></div>
+
+  {/* Accent glow top-right verde (en ambos viewports) */}
+  <div class="absolute pointer-events-none" style="top:-200px; right:-400px; width:800px; height:800px; background:radial-gradient(closest-side, rgba(43,182,115,0.18), transparent 70%); filter:blur(10px);" aria-hidden="true"></div>
+
+  {/* MOBILE-ONLY: glow secundario bottom-left para balance sin video */}
+  <div class="absolute pointer-events-none md:hidden" style="bottom:-300px; left:-300px; width:700px; height:700px; background:radial-gradient(closest-side, rgba(43,182,115,0.08), transparent 70%); filter:blur(20px);" aria-hidden="true"></div>
 
   <div class="hero-inner relative z-10 max-w-[1320px] mx-auto px-6 md:px-10 w-full">
     <div class="max-w-[1180px]">
@@ -87,14 +102,12 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
       {/* Stats */}
       <div class="hero-stats grid grid-cols-2 md:grid-cols-4" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:rgba(18,19,22,0.5); backdrop-filter:blur(12px);`}>
         {stats.map((s, i) => (
-          <div class="flex flex-col gap-1.5 py-4 px-5 md:px-6"
-            style={i < 3 ? { borderRight: `1px solid ${line}` } : {}}
-          >
-            <span class="font-geist text-white leading-none"
-              style="font-size: clamp(26px, 2.8vw, 38px); letter-spacing:-0.02em; font-weight:500;">
+          <div class={`hero-stat-cell hero-stat-cell-${i} flex flex-col gap-1.5 py-3.5 px-4 md:py-4 md:px-6 min-w-0`}>
+            <span class="font-geist text-white leading-none hero-stat-num"
+              style="letter-spacing:-0.02em; font-weight:500;">
               {s.n}
             </span>
-            <span class="text-[13px] leading-tight" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            <span class="text-[12px] md:text-[13px] leading-tight" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
               {s.k}
             </span>
           </div>
@@ -154,23 +167,63 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
       display: none;
     }
   }
+
+  /* Stats: número responsive, evita overflow en mobile */
+  .hero-stat-num {
+    font-size: clamp(22px, 6.5vw, 38px);
+    white-space: nowrap;
+  }
+
+  /* Borders de las celdas: mobile (2 cols) vs desktop (4 cols) */
+  .hero-stat-cell-0, .hero-stat-cell-2 {
+    border-right: 1px solid rgba(250,250,250,0.08);
+  }
+  .hero-stat-cell-0, .hero-stat-cell-1 {
+    border-bottom: 1px solid rgba(250,250,250,0.08);
+  }
+  @media (min-width: 768px) {
+    .hero-stat-cell-0, .hero-stat-cell-1, .hero-stat-cell-2 {
+      border-right: 1px solid rgba(250,250,250,0.08);
+    }
+    .hero-stat-cell-0, .hero-stat-cell-1 {
+      border-bottom: none;
+    }
+  }
 </style>
 
 {/* Clients strip */}
-<section style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`}>
-  <div class="max-w-[1320px] mx-auto px-6 md:px-10 py-5 flex items-center gap-6 md:gap-10 flex-wrap">
+<section class="clients-strip" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`}>
+  <div class="clients-strip-inner max-w-[1320px] mx-auto px-6 md:px-10 py-5 flex items-center gap-6 md:gap-10 md:flex-wrap">
     <span class="text-[11px] tracking-[2.5px] uppercase whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
       CLIENTES //
     </span>
     {clients.map(c => (
-      <span class="text-[15px] font-medium" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif", opacity: 0.85, letterSpacing: '-0.01em' }}>
+      <span class="text-[14px] md:text-[15px] font-medium whitespace-nowrap md:whitespace-normal" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif", opacity: 0.85, letterSpacing: '-0.01em' }}>
         {c}
       </span>
     ))}
   </div>
 </section>
 
+<style>
+  /* Mobile: scroll horizontal suave (los nombres no caben todos juntos
+     en mobile, mejor scroll que cut-off). Desktop: flex-wrap normal. */
+  @media (max-width: 767px) {
+    .clients-strip-inner {
+      overflow-x: auto;
+      flex-wrap: nowrap !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 24px), transparent 100%);
+    }
+    .clients-strip-inner::-webkit-scrollbar { display: none; }
+  }
+</style>
+
 <script>
-  const video = document.getElementById('heroVideo') as HTMLVideoElement;
-  if (video) video.playbackRate = 0.5;
+  // Slow down hero video for cinematic feel. Only runs if video element exists
+  // (which means we're on md+ — el <video> tiene `hidden md:block`).
+  const video = document.getElementById('heroVideo') as HTMLVideoElement | null;
+  if (video) video.playbackRate = 0.35;
 </script>
+

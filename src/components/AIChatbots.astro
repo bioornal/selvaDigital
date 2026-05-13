@@ -17,7 +17,7 @@ const features = [
 ];
 ---
 
-<section id="chatbots" class="relative" style={`background:${bg}; padding:120px 0;`}>
+<section id="chatbots" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
 
     <!-- Top: 2 columns — copy+cards+CTAs | chat -->
@@ -25,22 +25,24 @@ const features = [
 
       <!-- Left: kicker + title + subtitle + 6 cards + CTAs (al bottom) -->
       <div class="flex flex-col">
-        <div class="inline-flex items-center gap-2.5 mb-[18px]">
-          <span class="w-3.5 h-px" style={{ background: accent }}></span>
-          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-            04 ─── Inteligencia artificial
-          </span>
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2.5 mb-[18px]">
+            <span class="w-3.5 h-px" style={{ background: accent }}></span>
+            <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+              04 ─── Inteligencia artificial
+            </span>
+          </div>
+
+          <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[20px]"
+            style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
+            Chatbots con IA que<br><span style={{ color: accent }}>trabajan por vos.</span>
+          </h2>
+
+          <p class="text-[17px] leading-[1.55] mb-8"
+            style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            No son bots de plantilla con respuestas guionadas. Desarrollo asistentes agénticos que entienden tu negocio, cierran ventas y aprenden con el tiempo.
+          </p>
         </div>
-
-        <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[20px]"
-          style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
-          Chatbots con IA que<br><span style={{ color: accent }}>trabajan por vos.</span>
-        </h2>
-
-        <p class="text-[17px] leading-[1.55] mb-8"
-          style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-          No son bots de plantilla con respuestas guionadas. Desarrollo asistentes agénticos que entienden tu negocio, cierran ventas y aprenden con el tiempo.
-        </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {features.map((f) => (

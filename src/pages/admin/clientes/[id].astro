@@ -1,0 +1,32 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ClientDetail from '../../../components/admin/ClientDetail';
+import AdminRouteGuard from '../../../components/admin/AdminRouteGuard';
+
+const { id } = Astro.params;
+---
+
+<AdminLayout title="Cliente | Panel Admin">
+  <AdminRouteGuard client:load>
+    <div class="min-h-screen bg-[#0a0a0f]">
+      <header class="border-b border-gray-800 bg-[#12121a]">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center gap-3">
+              <span class="text-lg font-bold text-white">Selva Digital</span>
+              <span class="text-gray-500">|</span>
+              <span class="text-sm text-gray-400">Detalle</span>
+            </div>
+            <a href="/admin" class="text-sm text-gray-400 hover:text-white transition-colors">
+              Dashboard →
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <ClientDetail client:load clientId={id} />
+      </main>
+    </div>
+  </AdminRouteGuard>
+</AdminLayout>

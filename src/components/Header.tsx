@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CONTACT_PHONE, CONTACT_EMAIL, WHATSAPP_URL } from '../lib/constants';
+import { WHATSAPP_URL } from '../lib/constants';
 
 const menuItems = [
-  { href: "#sobre-nosotros", label: "Sobre Mí" },
-  { href: "#planes", label: "Planes y Precios" },
+  { href: "#sobre", label: "Sobre mí" },
   { href: "#portfolio", label: "Portfolio" },
+  { href: "#planes", label: "Planes" },
   { href: "#faq", label: "FAQ" },
   { href: "#contacto", label: "Contacto" },
 ];
@@ -15,29 +15,24 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prevState => !prevState);
-  };
+  const handleCTAClick = () => window.open(WHATSAPP_URL, '_blank');
 
-  const handleCTAClick = () => {
-    window.open(WHATSAPP_URL, '_blank');
-  };
+  const lineColor = 'rgba(250,250,250,0.08)';
+  const lineStrColor = 'rgba(250,250,250,0.18)';
+  const textSoft = 'rgba(250,250,250,0.72)';
+  const textDim = 'rgba(250,250,250,0.46)';
+  const accent = '#2BB673';
+  const bg = '#0A0B0D';
 
   return (
     <motion.header
@@ -45,24 +40,31 @@ const Header = () => {
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="fixed w-full z-50"
+      style={{
+        background: scrolled ? `rgba(10,11,13,0.85)` : `rgba(10,11,13,0.4)`,
+        backdropFilter: 'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
+        borderBottom: `1px solid ${scrolled ? lineColor : 'transparent'}`,
+        transition: 'all .25s ease',
+      }}
     >
-      <div className={`absolute inset-0 transition-all duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-md shadow-lg' : 'bg-black/70 backdrop-blur-sm'}`}></div>
-      <div className={`max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10`}>
-        <div className="flex justify-between items-center h-20 md:h-24">
-          <div className="flex items-center h-full">
-            <a href="/" className="flex items-center">
-              <img
-                src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png"
-                alt="Selva Digital"
-                className="w-auto h-[48px] md:h-[60px] object-contain"
-                loading="eager"
-              />
-            </a>
-          </div>
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 relative z-10">
+        <div className="flex justify-between items-center h-[74px]">
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-3">
+            <img
+              src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png"
+              alt="Selva Digital"
+              className="w-auto h-[38px] object-contain"
+              loading="eager"
+            />
+          </a>
 
+          {/* Mobile toggle */}
           <button
-            onClick={toggleMobileMenu}
-            className="md:hidden p-2 text-white"
+            onClick={() => setIsMobileMenuOpen(p => !p)}
+            className="md:hidden p-2"
+            style={{ color: textSoft }}
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,38 +76,39 @@ const Header = () => {
             </svg>
           </button>
 
-          <div className="hidden md:flex flex-col justify-between items-end h-full py-2">
-            <div className='flex items-center gap-3'>
-              <span className='text-sm text-white/80 hover:text-azure-radiance-400 transition-colors duration-200 font-medium cursor-default'>{CONTACT_PHONE}</span>
-              <span className='text-white/20'>|</span>
-              <span className='text-sm text-white/80 hover:text-azure-radiance-400 transition-colors duration-200 cursor-default'>{CONTACT_EMAIL}</span>
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <motion.button
-                  onClick={handleCTAClick}
-                  className="px-3 py-1 text-xs bg-azure-radiance-500 hover:bg-azure-radiance-600 text-white font-medium rounded-none transition-colors duration-200"
-                >
-                  PIDA PRESUPUESTO
-                </motion.button>
-              </motion.div>
-            </div>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            {menuItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-normal transition-colors duration-200 hover:text-white"
+                style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-            <nav className="flex items-center gap-5">
-              {menuItems.map((item) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  className="text-white/70 hover:text-azure-radiance-400 transition-colors duration-200 text-sm font-medium"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ y: 0 }}
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-            </nav>
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <span className="text-xs tracking-wide" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+              +54 9 3548 550334
+            </span>
+            <motion.button
+              onClick={handleCTAClick}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="px-4 py-[9px] text-[13px] font-semibold transition-colors duration-200"
+              style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}
+            >
+              Pedir presupuesto →
+            </motion.button>
           </div>
         </div>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -113,42 +116,36 @@ const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden z-40"
+              className="fixed inset-0 md:hidden z-40"
+              style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-gray-900 shadow-lg absolute w-full top-20 z-50 border-t border-white/10"
+              className="md:hidden absolute w-full top-[74px] z-50"
+              style={{ background: bg, borderTop: `1px solid ${lineColor}` }}
             >
-              <div className="px-4 py-4 space-y-4">
-                <motion.button
+              <div className="px-6 py-5 space-y-3">
+                {menuItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="block w-full px-4 py-3 text-center text-sm font-medium transition-colors"
+                    style={{ color: textSoft }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <button
                   onClick={handleCTAClick}
-                  className="w-full px-4 py-3 text-sm bg-azure-radiance-500 text-white rounded-none font-semibold"
-                  whileHover={{ backgroundColor: "#0056b3" }}
+                  className="w-full px-4 py-3 text-sm font-semibold"
+                  style={{ background: accent, color: '#06140C', borderRadius: '10px' }}
                 >
-                  PIDA PRESUPUESTO
-                </motion.button>
-
-                <div className="py-2 text-center space-y-2">
-                  <p className="text-sm text-white font-medium">{CONTACT_PHONE}</p>
-                  <p className="text-sm text-white/70">{CONTACT_EMAIL}</p>
-                </div>
-
-                <div className="space-y-2">
-                  {menuItems.map((item) => (
-                    <motion.a
-                      key={item.href}
-                      href={item.href}
-                      className="block w-full px-4 py-3 text-white/90 hover:bg-white/10 text-center rounded transition-colors duration-200 font-medium"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      whileHover={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-                    >
-                      {item.label}
-                    </motion.a>
-                  ))}
-                </div>
+                  Pedir presupuesto →
+                </button>
               </div>
             </motion.div>
           </>

@@ -1,93 +1,176 @@
 ---
-import HeroDynamic from './HeroDynamic';
-import { Button } from './ui/button';
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
+const lineStr = 'rgba(250,250,250,0.18)';
 
-const techLogos = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", alt: "TypeScript", delay: 0.3 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js", delay: 0.9 },
-  { src: "https://cdn.simpleicons.org/airtable/FFFFFF", alt: "Airtable", delay: 1.2 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg", alt: "Astro", delay: 1.5 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", alt: "CSS3", delay: 1.8 },
-  { src: "https://cdn.simpleicons.org/cursor/FFFFFF", alt: "Cursor", delay: 2.1 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", delay: 2.7 },
-  { src: "https://cdn.simpleicons.org/googledrive/FFFFFF", alt: "Google Drive", delay: 3.0 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB", delay: 3.3 },
-  { src: "https://cdn.simpleicons.org/nextdotjs/FFFFFF", alt: "Next.js", delay: 3.6 },
-  { src: "https://cdn.simpleicons.org/netlify/FFFFFF", alt: "Netlify", delay: 3.9 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python", delay: 4.2 },
-  { src: "https://cdn.simpleicons.org/supabase/3FCF8E", alt: "Supabase", delay: 4.5 },
-  { src: "https://cdn.simpleicons.org/figma/FFFFFF", alt: "Figma", delay: 4.8 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React", delay: 5.1 },
-  { src: "https://cdn.simpleicons.org/mercadopago/00B1EA", alt: "MercadoPago", delay: 5.4 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", alt: "JavaScript", delay: 5.7 },
-  { src: "https://cdn.simpleicons.org/anthropic/FFFFFF", alt: "Claude", delay: 6.0 },
-  { src: "https://cdn.simpleicons.org/notion/FFFFFF", alt: "Notion", delay: 6.3 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", alt: "HTML5", delay: 6.6 },
-  { src: "https://cdn.simpleicons.org/cloudinary/3448C5", alt: "Cloudinary", delay: 6.9 },
-  { src: "https://cdn.simpleicons.org/github/FFFFFF", alt: "GitHub", delay: 7.2 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg", alt: "Firebase", delay: 7.5 },
-  { src: "https://cdn.simpleicons.org/mui/007FFF", alt: "Material UI", delay: 7.8 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", alt: "Express", delay: 8.1 },
-  { src: "https://cdn.simpleicons.org/googlegemini/FFFFFF", alt: "Gemini", delay: 8.4 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", alt: "Tailwind", delay: 8.7 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", alt: "PostgreSQL", delay: 9.0 },
-  { src: "https://cdn.simpleicons.org/git/FFFFFF", alt: "Git", delay: 9.3 },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg", alt: "Vite", delay: 9.6 },
-  { src: "https://cdn.simpleicons.org/n8n/FFFFFF", alt: "n8n", delay: 9.9 },
+const stats = [
+  { n: '15+', k: 'proyectos en producción' },
+  { n: '<24h', k: 'respondo tu pedido inicial' },
+  { n: '$0', k: 'cuotas mensuales' },
+  { n: '100%', k: 'código propio, sin templates' },
 ];
+
+const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip Traslados','Impasto Pizzería','Megabot Admin','Recetario Napolitano'];
 ---
 
-<section class="relative text-white min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-black">
-  <div class="absolute inset-0 bg-black">
-    <video
-      id="heroVideo"
-      autoplay
-      loop
-      muted
-      playsinline
-      poster="/fogon.webp"
-      class="w-full h-full object-cover opacity-60 scale-[1.15]"
-    >
-      <source src="https://res.cloudinary.com/djtvjkcu6/video/upload/v1778524166/SelvaDigital/A_seamless_infinite_loop_cinematic_202605111510_zjt26u.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90"></div>
+<section id="hero" class="hero-section relative min-h-screen overflow-hidden flex items-center" style={`background:${bg}; padding-top:74px;`}>
+  {/* Background video */}
+  <video
+    id="heroVideo"
+    autoplay
+    loop
+    muted
+    playsinline
+    class="absolute inset-0 w-full h-full object-cover"
+    style="opacity:0.55; filter:saturate(0.85);"
+  >
+    <source src="https://res.cloudinary.com/djtvjkcu6/video/upload/v1778524166/SelvaDigital/A_seamless_infinite_loop_cinematic_202605111510_zjt26u.mp4" type="video/mp4" />
+  </video>
 
-  <div class="container mx-auto px-4 relative z-20">
-    <div class="max-w-2xl">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-white mb-4 leading-tight">
-        Tecnología que hace <span class="text-azure-radiance-400">crecer</span> tu negocio
+  {/* Overlays */}
+  <div class="absolute inset-0" style={`background: linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.4) 40%, rgba(10,11,13,0.92) 100%), radial-gradient(ellipse at 75% 50%, transparent, rgba(10,11,13,0.5) 70%);`}></div>
+
+  {/* Accent glow */}
+  <div class="absolute pointer-events-none" style="top:-200px; right:-400px; width:800px; height:800px; background:radial-gradient(closest-side, rgba(43,182,115,0.18), transparent 70%); filter:blur(10px);"></div>
+
+  <div class="hero-inner relative z-10 max-w-[1320px] mx-auto px-6 md:px-10 w-full">
+    <div class="max-w-[1180px]">
+      {/* Eyebrow — Cupos */}
+      <div class="inline-flex items-center gap-3 px-4 py-[7px] hero-eyebrow" style={`border:1px solid ${line}; background:rgba(18,19,22,0.7); backdrop-filter:blur(8px); border-radius:999px;`}>
+        <span class="relative flex h-[8px] w-[8px]">
+          <span class="absolute inline-flex h-full w-full opacity-60 hero-eyebrow-ping" style={`background:${accent}; border-radius:50%;`}></span>
+          <span class="relative inline-flex h-[8px] w-[8px]" style={`background:${accent}; border-radius:50%; box-shadow:0 0 12px ${accent};`}></span>
+        </span>
+        <span class="text-[11px] tracking-[2px] uppercase" style={{ color: textSoft, fontFamily: "'JetBrains Mono', monospace" }}>
+          PRÓXIMA VENTANA: JUNIO 2026
+        </span>
+        <span class="hero-eyebrow-divider" style={`width:1px; height:14px; background:${line};`}></span>
+        <span class="inline-flex items-center gap-1.5 text-[11px] tracking-[2px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>
+          <span>2/3</span>
+          <span style={{ color: textSoft, fontWeight: 400 }}>CUPOS TOMADOS</span>
+        </span>
+      </div>
+
+      {/* Headline */}
+      <h1 class="hero-h1 text-white">
+        Tu web vendiendo 24/7.<br><span style={{ color: accent }}>Sin cuotas, sin agencia.</span>
       </h1>
 
-      <div class="h-16 sm:h-20 mb-6">
-        <HeroDynamic client:load />
+      {/* Subhead */}
+      <p class="hero-subhead max-w-[640px]" style={{ color: textSoft }}>
+        Sitios web, e-commerce y sistemas a medida para PyMEs argentinas.
+        Pago único, el primer año incluye dominio y hosting. Hablás directo
+        conmigo de principio a fin — sin intermediarios, sin sorpresas.
+      </p>
+
+      {/* CTAs */}
+      <div class="hero-ctas flex flex-wrap items-center gap-3">
+        <a href="#contacto" class="inline-flex items-center gap-2 px-7 py-4 text-[15px] font-semibold transition-all duration-200 hover:brightness-110"
+          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+          Pedir presupuesto
+          <span>→</span>
+        </a>
+        <a href="#portfolio" class="inline-flex items-center gap-2 px-6 py-4 text-[15px] font-medium transition-all duration-200"
+          style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+          Ver portfolio →
+        </a>
+        <span class="text-[11px] tracking-[1.5px] ml-2 hidden md:inline" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+          WHATSAPP · +54 9 3548 550334
+        </span>
       </div>
 
-      <div class="hidden md:flex flex-wrap gap-3 mb-8">
-        {techLogos.map((tech) => (
-          <div class="w-9 h-9 p-2 hud-container flex items-center justify-center">
-            <img src={tech.src} alt={tech.alt} class="w-full h-full object-contain opacity-70 hover:opacity-100 transition-opacity" />
+      {/* Stats */}
+      <div class="hero-stats grid grid-cols-2 md:grid-cols-4" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:rgba(18,19,22,0.5); backdrop-filter:blur(12px);`}>
+        {stats.map((s, i) => (
+          <div class="flex flex-col gap-1.5 py-4 px-5 md:px-6"
+            style={i < 3 ? { borderRight: `1px solid ${line}` } : {}}
+          >
+            <span class="font-geist text-white leading-none"
+              style="font-size: clamp(26px, 2.8vw, 38px); letter-spacing:-0.02em; font-weight:500;">
+              {s.n}
+            </span>
+            <span class="text-[13px] leading-tight" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
+              {s.k}
+            </span>
           </div>
         ))}
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-3">
-        <Button size="lg" asChild className="hud-container bg-azure-radiance-600 hover:bg-azure-radiance-700 text-white font-bold px-6 py-5 rounded-none">
-          <a href="#contacto" class="flex items-center gap-2">
-            <span class="relative z-10 uppercase tracking-widest text-xs">Solicitar presupuesto</span>
-          </a>
-        </Button>
-        <Button size="lg" variant="outline" asChild className="hud-container bg-transparent border-white/20 hover:border-azure-radiance-400 text-white px-6 py-5 rounded-none">
-          <a href="#portfolio" class="uppercase tracking-widest text-xs">Ver Proyectos</a>
-        </Button>
       </div>
     </div>
   </div>
 </section>
 
+<style>
+  /* Hero — comprimido con !important para vencer overrides de global.css y otros */
+  .hero-inner {
+    padding-top: clamp(56px, 8vh, 100px) !important;
+    padding-bottom: clamp(56px, 8vh, 100px) !important;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: clamp(24px, 3.5vh, 36px) !important;
+  }
+
+  .hero-h1 {
+    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: clamp(48px, 6vw, 84px) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.035em !important;
+    margin: 0 0 clamp(22px, 3vh, 32px) 0 !important;
+  }
+
+  .hero-subhead {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: clamp(16px, 1.25vw, 19px) !important;
+    line-height: 1.55 !important;
+    margin: 0 0 clamp(28px, 4vh, 44px) 0 !important;
+  }
+
+  .hero-ctas {
+    margin-bottom: clamp(36px, 5vh, 60px) !important;
+  }
+
+  /* Pulse del dot de cupos */
+  .hero-eyebrow-ping {
+    animation: heroEyebrowPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @keyframes heroEyebrowPing {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  /* Responsive del eyebrow: en mobile colapsa el divider */
+  @media (max-width: 520px) {
+    .hero-eyebrow {
+      flex-wrap: wrap;
+      gap: 8px 10px !important;
+    }
+    .hero-eyebrow-divider {
+      display: none;
+    }
+  }
+</style>
+
+{/* Clients strip */}
+<section style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`}>
+  <div class="max-w-[1320px] mx-auto px-6 md:px-10 py-5 flex items-center gap-6 md:gap-10 flex-wrap">
+    <span class="text-[11px] tracking-[2.5px] uppercase whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+      CLIENTES //
+    </span>
+    {clients.map(c => (
+      <span class="text-[15px] font-medium" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif", opacity: 0.85, letterSpacing: '-0.01em' }}>
+        {c}
+      </span>
+    ))}
+  </div>
+</section>
+
 <script>
   const video = document.getElementById('heroVideo') as HTMLVideoElement;
-  if (video) {
-    video.playbackRate = 0.5;
-  }
+  if (video) video.playbackRate = 0.5;
 </script>

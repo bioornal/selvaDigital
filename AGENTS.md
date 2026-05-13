@@ -55,17 +55,42 @@ src/
 │   ├── Footer.astro        — Menu, email, phone, logo
 │   ├── WhatsAppButton.tsx  — Floating WhatsApp button
 │   ├── WaveSeparator.astro — Wave SVG separator
+│   ├── admin/
+│   │   ├── AdminLogin.tsx     — Supabase auth login form
+│   │   ├── AdminDashboard.tsx — Stats + clients table + navigation
+│   │   ├── ClientForm.tsx     — Create/edit client with project details
+│   │   └── ClientDetail.tsx   — Client info, phases, message composer
 │   └── ui/                 — button, card, input, textarea (all use cn())
 ├── lib/
 │   ├── utils.ts            — cn() helper (clsx + tailwind-merge)
-│   └── constants.ts        — WHATSAPP_NUMBER, WHATSAPP_URL, CONTACT_PHONE, CONTACT_EMAIL
+│   ├── constants.ts        — WHATSAPP_NUMBER, WHATSAPP_URL, CONTACT_PHONE, CONTACT_EMAIL
+│   ├── supabase.ts         — Browser Supabase client (anon key)
+│   ├── supabase-server.ts  — Server Supabase client (service role key)
+│   └── templates.ts        — 10 WhatsApp message templates with variable rendering
+├── types/
+│   ├── admin.ts            — Client, ProjectPhase, Message types + status maps
+│   └── database.ts         — Supabase Database TypeScript types
 ├── utils/
 │   └── analytics.ts        — Google Analytics event sender
 ├── layouts/
-│   └── Layout.astro        — Schema.org Person, security headers, font preload, SEO
+│   ├── Layout.astro        — Schema.org Person, security headers, font preload, SEO
+│   └── AdminLayout.astro   — Minimal dark layout for admin panel
 ├── pages/
 │   ├── index.astro         — Hero → Wave → Services → Portfolio → AIChatbots → Apps → Precios → FAQ → Contact
-│   └── api/contact.ts      — POST endpoint: escapeHtml, rate limiting (5/min), env validation, no error leak
+│   ├── admin/
+│   │   ├── login.astro        — Admin login page
+│   │   ├── index.astro        — Admin dashboard
+│   │   └── clientes/
+│   │       ├── nuevo.astro    — New client form
+│   │       └── [id].astro     — Client detail page
+│   └── api/
+│       ├── contact.ts         — POST: escapeHtml, rate limiting, env validation
+│       ├── banner.ts
+│       └── admin/
+│           ├── clients.ts              — GET/POST clients
+│           ├── clients/[id].ts         — GET/PUT/DELETE client
+│           ├── clients/[id]/phases.ts  — GET/POST phases
+│           └── send-message.ts         — POST message from template
 └── styles/
     └── global.css          — Typography rules + heroFade keyframe
 ```
@@ -110,7 +135,19 @@ src/
 - 📈 Dependencies: `astro@4.16.19`, `@astrojs/vercel@7.8.2`
 - 📊 Portfolio order: Impasto → MegaMuebles → Iguazú Falls Lodge → El Fogón Delivery
 
-## Phase 4 (Future)
+## Phase 4 (Admin Panel — May 2026)
+- 🔐 Supabase Auth integration (`@supabase/supabase-js`): login via email/password
+- 🗄 New tables: `clients`, `project_phases`, `messages` with RLS policies
+- 📱 WhatsApp message templates from `docs/templates/whatsapp-cierre-cliente.md` codified in `src/lib/templates.ts`
+- 🎨 Admin routes under `/admin/*`: login, dashboard, new client, client detail
+- 📊 Dashboard with stats (total, active, finished, proposals) and client table
+- 📝 Client form with project details, financials, and payment info
+- 🔄 Phase tracker (0-6) with visual progress and status updates
+- 💬 Message composer: template selection → variable autofill → preview → copy/send via WhatsApp
+- 🛠 API endpoints: `/api/admin/clients`, `/api/admin/clients/[id]`, `/api/admin/send-message`
+- 🔑 New env vars: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+
+## Phase 5 (Future)
 - Blog with Astro content collections
 - Legal pages (términos, privacidad)
 - reCAPTCHA v3 for contact form

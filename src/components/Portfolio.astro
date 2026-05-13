@@ -1,179 +1,177 @@
 ---
-import ProjectCard from './ProjectCard.astro';
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const surface2 = '#1A1C20';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
 
-const featuredProjects = [
-  { 
-    title: 'Impasto Pizzería',
-    description: 'E-commerce de pizzería con carrito funcional, menú interactivo, combos, empanadas por caja y checkout integrado.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Impasto_o46wxm.png',
-    url: 'https://vocal-naiad-861a2c.netlify.app/',
-    tags: ['React', 'Netlify', 'SEO'],
-    resultado: 'En construcción',
-    enConstruccion: true
+const projects = [
+  {
+    title: 'MegaMuebles', tag: 'E-commerce',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
+    desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
+    kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
+    stack: ['React','Cloudinary','GA4'],
+    url: 'https://megamueblessommiers.online'
   },
-  { 
-    title: 'MegaMuebles',
-    description: 'E-commerce de muebles con catálogo de productos, gestión de imágenes y optimización SEO para Córdoba y Punilla.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
-    url: 'https://megamueblessommiers.online',
-    tags: ['React', 'Cloudinary', 'Analytics'],
-    resultado: '20 años de trayectoria digitalizados'
+  {
+    title: 'Iguazú Falls Lodge', tag: 'Turismo',
+    img: '/iguazuFalls.webp',
+    desc: 'Reservas directas, galería premium y formulario optimizado para conversión de huéspedes premium.',
+    kpi: '67% reservas sin OTAs', sub: 'antes era 12%',
+    stack: ['Next.js','Cloudinary','Ads'],
+    url: 'https://www.iguazufallslodge.com/'
   },
-  { 
-    title: 'Iguazú Falls Lodge',
-    description: 'Sitio de alojamientos turísticos con reserva directa, galería premium y optimización para conversión.',
-    image: '/iguazuFalls.webp',
-    url: 'https://www.iguazufallslodge.com/',
-    tags: ['Next.js', 'Cloudinary', 'Google Ads'],
-    resultado: 'Reservas directas sin intermediarios'
+  {
+    title: 'El Fogón Delivery', tag: 'Gastronomía',
+    img: '/fogon.webp',
+    desc: 'E-commerce gastronómico con MercadoPago, opciones sin TACC y carrito persistente entre dispositivos.',
+    kpi: '×2.3 ticket promedio', sub: 'vs. pedidos por WhatsApp',
+    stack: ['Next.js','Tailwind','S3'],
+    url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
   },
-  { 
-    title: 'El Fogón Delivery',
-    description: 'E-commerce gastronómico completo con carrito, menú por categorías, checkout, integración MercadoPago y opciones sin TACC.',
-    image: '/fogon.webp',
-    url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/',
-    tags: ['Next.js', 'Tailwind', 'AWS S3'],
-    resultado: 'Delivery digital completo'
+  {
+    title: 'Vip Translados Iguazú', tag: 'Landing',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
+    desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
+    kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
+    stack: ['React','Vite','Schema'],
+    url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/'
   },
-  { 
-    title: 'Vip Translados Iguazú',
-    description: 'Landing page de traslados turísticos privados con SEO optimizado, Schema.org y Google Ads.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
-    url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/',
-    tags: ['React', 'Vite', 'Schema.org'],
-    resultado: 'SEO y Ads optimizados'
+  {
+    title: 'Megabot Admin', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
+    desc: 'Dashboard multiusuario para gestionar 3 chatbots con IA corriendo en un VPS propio, en tiempo real.',
+    kpi: '3 bots, 1 panel', sub: '+1.200 msgs/día',
+    stack: ['React','IA','VPS'],
+    url: 'https://megabot-admin.cloud/login'
   },
-  { 
-    title: 'Megabot Admin',
-    description: 'Dashboard multiusuario y multi-bot para gestión de mensajes centralizada de 3 bots corriendo en VPS.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
-    url: 'https://megabot-admin.cloud/login',
-    tags: ['React', 'IA', 'VPS'],
-    resultado: 'Multi-bot con IA'
-  }
-];
-
-const moreProjects = [
-  { 
-    title: 'Carro Fogón - Sistema de Pedidos',
-    description: 'Sistema gastronómico de toma de pedidos y gestión de clientes con dashboard en tiempo real.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonPedidos_npzdw3.png',
-    url: 'https://carro-fogon-rcmgt8lva-bioornals-projects.vercel.app/login',
-    tags: ['React', 'Node.js', 'Firebase'],
-    resultado: 'Gestión de pedidos automatizada'
+  {
+    title: 'Impasto Pizzería', tag: 'E-commerce',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Impasto_o46wxm.png',
+    desc: 'Pizzería online con menú interactivo, combos, empanadas por caja y checkout integrado.',
+    kpi: 'En lanzamiento', sub: 'pre-orden activa',
+    stack: ['React','Netlify','SEO'],
+    url: 'https://vocal-naiad-861a2c.netlify.app/'
   },
-  { 
-    title: 'Recetario Napolitano',
-    description: 'Sistema de recetas con calculadora de masa, gestión de costos y precios para pizzería artesanal.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonRecetario_vzfnfn.png',
-    url: 'https://recetarionapolitano.netlify.app/login/',
-    tags: ['React', 'Netlify', 'Node.js'],
-    resultado: 'Control de costos preciso'
+  {
+    title: 'Carro Fogón', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonPedidos_npzdw3.png',
+    desc: 'Sistema gastronómico de toma de pedidos y gestión de clientes con dashboard en tiempo real.',
+    kpi: 'Pedidos automatizados', sub: 'en producción',
+    stack: ['React','Node.js','Firebase'],
+    url: 'https://carro-fogon-rcmgt8lva-bioornals-projects.vercel.app/login'
   },
-  { 
-    title: 'MegaStock',
-    description: 'Sistema de inventario y ventas para empresa de muebles con gestión de stock en tiempo real.',
-    image: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/MegaStock_ovfjhx.png',
-    url: 'https://megastock-app.netlify.app/login',
-    tags: ['React', 'Node.js', 'PostgreSQL'],
-    resultado: 'Stock automatizado'
-  }
+  {
+    title: 'Recetario Napolitano', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonRecetario_vzfnfn.png',
+    desc: 'Sistema de recetas con calculadora de masa, gestión de costos y precios para pizzería artesanal.',
+    kpi: 'Costos optimizados', sub: 'en producción',
+    stack: ['React','Netlify','Node.js'],
+    url: 'https://recetarionapolitano.netlify.app/login/'
+  },
+  {
+    title: 'MegaStock', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/MegaStock_ovfjhx.png',
+    desc: 'Sistema de inventario y ventas para empresa de muebles con gestión de stock en tiempo real.',
+    kpi: 'Stock en tiempo real', sub: 'en producción',
+    stack: ['React','Node.js','PostgreSQL'],
+    url: 'https://megastock-app.netlify.app/login'
+  },
 ];
 ---
 
-<section id="portfolio" class="py-12 sm:py-32 bg-black relative overflow-hidden">
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0 bg-grid-pattern"></div>
-  </div>
-
-  <div class="container mx-auto px-3 sm:px-4 relative z-10">
-    <div class="max-w-4xl mx-auto text-center mb-8 sm:mb-16">
-      <h2 class="text-3xl sm:text-5xl font-heading text-white mb-3 sm:mb-6">
-        Portfolio
-      </h2>
-      <p class="text-gray-300 text-sm sm:text-lg">
-        Proyectos reales con resultados medibles para negocios argentinos
-      </p>
-    </div>
-
-    <!-- Proyectos destacados - mobile -->
-    <div class="md:hidden space-y-4">
-      {featuredProjects.map((project) => (
-        <ProjectCard project={project} variant="mobile" />
-      ))}
-    </div>
-
-    <!-- Proyectos destacados - desktop -->
-    <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-      {featuredProjects.map((project) => (
-        <ProjectCard project={project} variant="desktop" />
-      ))}
-    </div>
-
-    <!-- Más proyectos (expandible) -->
-    <div id="more-projects" class="hidden mt-8">
-      <div class="md:hidden space-y-4">
-        {moreProjects.map((project) => (
-          <ProjectCard project={project} variant="mobile" />
-        ))}
-      </div>
-
-      <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {moreProjects.map((project) => (
-          <ProjectCard project={project} variant="desktop" />
-        ))}
+<section id="portfolio" class="relative" style={`background:${bg}; padding:120px 0;`}>
+  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
+    {/* Header */}
+    <div class="flex flex-wrap items-end justify-between gap-8 mb-12">
+      <div>
+        <div class="inline-flex items-center gap-2.5 mb-[18px]">
+          <span class="w-3.5 h-px" style={{ background: accent }}></span>
+          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+            02 ─── Portfolio
+          </span>
+        </div>
+        <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+          style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
+          Proyectos en producción.<br>
+          <span style={{ color: accent }}>Sin mockups, sin filtros.</span>
+        </h2>
+        <p class="text-[17px] leading-[1.55] max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          Cada uno con cliente real, métricas reales y sitio que podés visitar ahora mismo.
+        </p>
       </div>
     </div>
 
-    <div class="mt-10 sm:mt-14 text-center">
-      <button 
-        id="toggle-projects" 
-        class="px-8 py-3 font-mono text-xs uppercase tracking-widest bg-white/5 text-white hover:bg-white/10 border border-white/10 hover:border-azure-radiance-400/40 transition-all duration-300 rounded-none"
-      >
-        Ver más proyectos
-      </button>
+    {/* Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {projects.map((p) => (
+        <article class="flex flex-col overflow-hidden" style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}>
+          {/* Image */}
+          <div class="relative overflow-hidden" style={{ aspectRatio: '16/10', background: '#000' }}>
+            <img src={p.img} alt={p.title} class="w-full h-full object-cover" />
+            {/* Tag */}
+            <div class="absolute top-3.5 left-3.5 text-[9px] tracking-[2px] uppercase px-2.5 py-1"
+              style={{
+                background: 'rgba(10,11,13,0.8)',
+                backdropFilter: 'blur(8px)',
+                color: white,
+                border: `1px solid ${line}`,
+                fontFamily: "'JetBrains Mono', monospace",
+                borderRadius: '999px'
+              }}>
+              {p.tag}
+            </div>
+            {/* KPI */}
+            <div class="absolute top-3.5 right-3.5 text-[11px] font-semibold px-2.5 py-1"
+              style={{
+                background: 'rgba(43,182,115,0.16)',
+                color: accent,
+                border: `1px solid rgba(43,182,115,0.4)`,
+                fontFamily: "'Inter', system-ui, sans-serif",
+                borderRadius: '999px',
+                backdropFilter: 'blur(8px)'
+              }}>
+              ● {p.kpi}
+            </div>
+          </div>
+
+          {/* Content */}
+          <div class="flex flex-col flex-1 p-5 md:p-6">
+            <div class="flex items-baseline justify-between gap-3 mb-2">
+              <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight" style={{ letterSpacing: '-0.02em' }}>
+                {p.title}
+              </h3>
+              <span class="text-[10px] tracking-wide whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+                {p.sub}
+              </span>
+            </div>
+            <p class="text-[13.5px] leading-relaxed mb-4 flex-1" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+              {p.desc}
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              {p.stack.map(t => (
+                <span class="text-[10px] tracking-[1px] px-2 py-1" style={{
+                  color: textSoft,
+                  background: surface2,
+                  border: `1px solid ${line}`,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '6px'
+                }}>{t}</span>
+              ))}
+            </div>
+            <div class="flex justify-between items-center pt-3.5" style={{ borderTop: `1px solid ${line}` }}>
+              <a href={p.url} target="_blank" class="text-[13px] font-medium inline-flex items-center gap-1.5" style={{ color: white, fontFamily: "'Inter', system-ui, sans-serif", textDecoration: 'none' }}>
+                Ver sitio <span style={{ color: accent }}>→</span>
+              </a>
+              <span class="text-[10px] tracking-[0.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>↗ LIVE</span>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   </div>
 </section>
-
-<script>
-  const toggleBtn = document.getElementById('toggle-projects');
-  const moreProjects = document.getElementById('more-projects');
-  if (toggleBtn && moreProjects) {
-    toggleBtn.addEventListener('click', () => {
-      const isHidden = moreProjects.classList.contains('hidden');
-      if (isHidden) {
-        moreProjects.classList.remove('hidden');
-        toggleBtn.textContent = 'Ver menos proyectos';
-      } else {
-        moreProjects.classList.add('hidden');
-        toggleBtn.textContent = 'Ver más proyectos';
-      }
-    });
-  }
-</script>
-
-<style>
-  .bg-grid-pattern {
-    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
-    background-size: 40px 40px;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .bg-grid-pattern {
-      animation: patternMove 20s linear infinite;
-    }
-  }
-
-  @keyframes patternMove {
-    from { transform: translateY(0); }
-    to { transform: translateY(-40px); }
-  }
-
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-</style>

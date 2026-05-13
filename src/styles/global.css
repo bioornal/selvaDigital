@@ -9,32 +9,41 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* NORMA TIPOGRÁFICA — títulos siempre tight (line-height <=1.0) */
   h1 {
-    font-family: 'Nova Square', sans-serif;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-family: 'Geist', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.94;
   }
 
   h2 {
-    font-family: 'Nova Square', sans-serif;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-family: 'Geist', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
   }
 
   h3, h4, h5, h6 {
-    font-family: 'Nova Square', sans-serif;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+    font-family: 'Geist', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
   }
 
-  p, span, li, a, label, button {
+  /* Body text — NO incluir 'span' aquí: rompe headings (heredan font/weight/lh del h*) */
+  p, li, a, label, button {
     font-family: 'Inter', system-ui, sans-serif;
     font-weight: 400;
     letter-spacing: normal;
     line-height: 1.6;
+  }
+
+  /* Span hereda por defecto. Reset explícito dentro de headings para garantía. */
+  h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
   }
 
   code, pre, .font-mono {

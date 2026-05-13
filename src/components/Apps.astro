@@ -1,67 +1,126 @@
 ---
 import { Smartphone, Server, Bell, Lock } from 'lucide-react';
 
-const appFeatures = [
-  { icon: Server, title: "Backend propio", description: "API y base de datos dedicados" },
-  { icon: Bell, title: "Notificaciones push", description: "Alertas en tiempo real" },
-  { icon: Lock, title: "Autenticación segura", description: "Roles y permisos personalizados" },
-  { icon: Smartphone, title: "Apps web y móviles", description: "Funcionan en cualquier dispositivo" }
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const surface2 = '#1A1C20';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
+const lineMid = 'rgba(250,250,250,0.12)';
+const lineStr = 'rgba(250,250,250,0.18)';
+
+const bullets = [
+  { t: 'Backend propio',          d: 'API y base de datos dedicadas' },
+  { t: 'Autenticación segura',    d: 'Roles y permisos personalizados' },
+  { t: 'Notificaciones push',     d: 'Alertas en tiempo real' },
+  { t: 'Apps web y móviles',      d: 'Funcionan en cualquier dispositivo' },
 ];
 ---
 
-<section id="apps" class="py-10 sm:py-20 bg-black relative overflow-hidden">
-  <!-- Grid overlay -->
-  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" 
-       style="background-image: linear-gradient(rgba(59,130,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,1) 1px, transparent 1px); background-size: 50px 50px;">
-  </div>
+<section id="apps" class="relative" style={`background:${bg}; padding:120px 0;`}>
+  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
+    <div class="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-center p-8 md:p-12 relative overflow-hidden"
+      style={{
+        background: `linear-gradient(180deg, ${surface} 0%, ${bg} 100%)`,
+        border: `1px solid ${line}`,
+        borderRadius: '24px'
+      }}>
+      {/* Accent corner glow */}
+      <div class="absolute pointer-events-none" style={{
+        top: '-150px', left: '-150px', width: '400px', height: '400px',
+        background: `radial-gradient(closest-side, rgba(43,182,115,0.18), transparent 70%)`,
+        filter: 'blur(10px)'
+      }}></div>
 
-  <div class="container mx-auto px-3 sm:px-4 relative z-10">
-    <div class="max-w-5xl mx-auto">
-      <div class="hud-container p-5 sm:p-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-center">
-          <div class="relative">
-            <div class="absolute inset-0 bg-gradient-to-br from-azure-radiance-500/10 via-ai-violet-500/5 to-transparent blur-2xl"></div>
-            <img 
-              src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778524165/SelvaDigital/ChatGPT_Image_11_may_2026_02_54_16_p.m._i6lpzu.png" 
-              alt="Tecnología móvil con IA"
-              class="relative w-full h-auto opacity-90"
-              loading="lazy"
-            />
+      {/* Mock UI */}
+      <div class="relative">
+        <div class="absolute top-4 left-4 w-full h-full" style={{ border: `1px solid ${lineMid}`, borderRadius: '14px' }}></div>
+        <div class="relative p-4 md:p-5 text-[11px]" style={{
+          background: surface2,
+          border: `1px solid ${lineStr}`,
+          borderRadius: '14px',
+          fontFamily: "'JetBrains Mono', monospace",
+          boxShadow: '0 24px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04)'
+        }}>
+          <div class="flex items-center gap-1.5 mb-3.5 pb-3" style={{ borderBottom: `1px solid ${line}` }}>
+            <span class="w-2.5 h-2.5" style={{ background: '#ff5f57', borderRadius: '50%' }}></span>
+            <span class="w-2.5 h-2.5" style={{ background: '#febc2e', borderRadius: '50%' }}></span>
+            <span class="w-2.5 h-2.5" style={{ background: '#28c840', borderRadius: '50%' }}></span>
+            <span class="ml-2.5 text-[11px]" style={{ color: textDim }}>app.elfogondelivery.com</span>
           </div>
-
-          <div>
-            <div class="flex items-center gap-2 mb-4">
-              <Smartphone className="w-4 h-4 text-azure-radiance-400" />
-              <span class="text-azure-radiance-400 text-xs font-mono uppercase tracking-[0.15em]">Apps a medida</span>
-            </div>
-            <h2 class="text-2xl sm:text-4xl font-heading text-white mb-3 sm:mb-4">
-              Necesitás algo más que una web?
-            </h2>
-            <p class="text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
-              Desarrollo aplicaciones completas con backend propio, panel de administración 
-              y base de datos dedicada. Desde un sistema de gestión hasta una app para tus clientes.
-            </p>
-
-            <div class="grid grid-cols-2 gap-3 mb-6">
-              {appFeatures.map((feat) => (
-                <div class="flex items-center gap-2.5">
-                  <feat.icon className="w-4 h-4 text-azure-radiance-400 flex-shrink-0" />
-                  <div>
-                    <p class="text-white text-xs font-medium">{feat.title}</p>
-                    <p class="text-gray-500 text-[10px]">{feat.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <a 
-              href="#contacto" 
-              class="inline-flex items-center gap-2 bg-azure-radiance-500 hover:bg-azure-radiance-600 text-white px-5 py-2.5 rounded-none font-medium text-sm transition-all duration-300 hover:scale-105"
-            >
-              Contame tu idea
-            </a>
+          <div class="grid grid-cols-2 gap-2.5 mb-2.5">
+            {[
+              { l: 'Pedidos hoy',  v: '47',   d: '+12 vs ayer', c: accent },
+              { l: 'Ticket prom.', v: '$12.4k',d: '+18% mes',   c: '#9CA3AF' },
+            ].map((c, i) => (
+              <div class="p-3.5 md:p-4" style={{ background: bg, border: `1px solid ${line}`, borderRadius: '8px' }}>
+                <div class="text-[10px] tracking-[1.5px] mb-1.5" style={{ color: textDim }}>{c.l.toUpperCase()}</div>
+                <div class="font-geist font-semibold text-white text-2xl tracking-tight">{c.v}</div>
+                <div class="text-[10px] mt-1" style={{ color: c.c }}>↑ {c.d}</div>
+              </div>
+            ))}
+          </div>
+          <div class="p-3.5 md:p-4" style={{ background: bg, border: `1px solid ${line}`, borderRadius: '8px' }}>
+            <div class="text-[10px] tracking-[1.5px] mb-2.5" style={{ color: textDim }}>ÚLTIMOS PEDIDOS</div>
+            {[
+              { n: '#1204', c: 'M. Gimenez',  s: '$ 8.450', st: 'pagado' },
+              { n: '#1203', c: 'L. Acosta',   s: '$12.800', st: 'en cocina' },
+              { n: '#1202', c: 'F. Bertola',  s: '$ 5.200', st: 'enviado' },
+            ].map((r, i) => (
+              <div class="flex justify-between text-[11px] py-2" style={{
+                borderBottom: i < 2 ? `1px solid ${line}` : 'none',
+                color: textSoft
+              }}>
+                <span class="text-white">{r.n}</span>
+                <span>{r.c}</span>
+                <span class="text-white">{r.s}</span>
+                <span style={{ color: r.st === 'pagado' ? accent : textDim }}>{r.st}</span>
+              </div>
+            ))}
           </div>
         </div>
+      </div>
+
+      <div>
+        <div class="inline-flex items-center gap-2.5 mb-[18px]">
+          <span class="w-3.5 h-px" style={{ background: accent }}></span>
+          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+            05 ─── Apps a medida
+          </span>
+        </div>
+        <h2 class="font-geist font-semibold text-white leading-[1] tracking-tight mb-[18px]"
+          style="font-size:clamp(36px, 4vw, 64px); letter-spacing:-0.03em;">
+          Necesitás algo más<br><span style={{ color: accent }}>que una web?</span>
+        </h2>
+        <p class="text-[15.5px] leading-relaxed mb-8" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          Aplicaciones completas con backend propio, panel de administración y base de datos dedicada. Desde un sistema interno hasta una app para tus clientes.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-8">
+          {bullets.map((b, i) => (
+            <div class="flex gap-3 items-start">
+              <span class="w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0"
+                style={{
+                  background: 'rgba(43,182,115,0.14)',
+                  border: `1px solid rgba(43,182,115,0.3)`,
+                  color: accent,
+                  borderRadius: '8px'
+                }}>{i+1}</span>
+              <div>
+                <div class="text-sm font-semibold text-white tracking-tight" style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>{b.t}</div>
+                <div class="text-[12.5px] mt-0.5" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>{b.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
+          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+          Contame tu idea →
+        </a>
       </div>
     </div>
   </div>

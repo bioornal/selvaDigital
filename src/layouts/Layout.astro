@@ -82,14 +82,9 @@ const schemaOrgJSON = {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
     />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    </noscript>
 
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrgJSON)} />
     {googleAnalyticsId && (
@@ -106,7 +101,7 @@ const schemaOrgJSON = {
       </>
     )}
   </head>
-  <body class="bg-site-background text-azure-radiance-950">
+  <body class="bg-v2-bg text-white font-body">
     <Header client:load />
     <main>
       <slot />

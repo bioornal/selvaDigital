@@ -1,15 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
+import ServicesV2 from '../components/ServicesV2.astro';
 import Portfolio from '../components/Portfolio.astro';
+import Testimonios from '../components/Testimonios.astro';
 import AIChatbots from '../components/AIChatbots.astro';
 import Apps from '../components/Apps.astro';
 import Precios from '../components/Precios.astro';
 import FAQ from '../components/FAQ.astro';
+import AboutV2 from '../components/AboutV2.astro';
+import Manifiesto from '../components/Manifiesto.astro';
 import Contact from '../components/Contact';
-import WaveSeparator from '../components/WaveSeparator.astro';
-import WaveSeparatorInverted from '../components/WaveSeparatorInverted.astro';
 ---
 
 <Layout 
@@ -17,13 +18,14 @@ import WaveSeparatorInverted from '../components/WaveSeparatorInverted.astro';
   description="Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
 >
   <Hero />
-  <WaveSeparator />
-  <Services />
+  <ServicesV2 />
   <Portfolio />
+  <Testimonios />
   <AIChatbots />
   <Apps />
   <Precios />
   <FAQ />
-  <WaveSeparatorInverted />
+  <AboutV2 />
+  <Manifiesto />
   <Contact client:load />
 </Layout>

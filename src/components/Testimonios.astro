@@ -1,0 +1,116 @@
+---
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
+
+const testimonials = [
+  {
+    quote: "Veníamos vendiendo puerta a puerta hace años. Christian nos armó la web y al tiempo empezaron a entrar consultas por Google, gente que ni nos conocía. Cambió la forma de laburar.",
+    name: 'Hugo Pérez',
+    role: 'Dueño · MegaMuebles',
+    initials: 'HP',
+    avatarBg: 'rgba(43,182,115,0.18)',
+    avatarColor: '#5ee0a0',
+    kpi: '+34% leads orgánicos'
+  },
+  {
+    quote: "Antes todo iba por Booking y nos llevaban la mitad. Ahora la gente reserva directo desde la web. La galería les termina de convencer antes de escribir.",
+    name: 'Ana Molina',
+    role: 'Dueña · Iguazú Falls Lodge',
+    initials: 'AM',
+    avatarBg: 'rgba(192,132,252,0.18)',
+    avatarColor: '#d8b4fe',
+    kpi: '67% reservas directas'
+  },
+  {
+    quote: "Le tiré la idea de los combos un viernes y el sábado ya estaban andando en la web cobrando con MercadoPago. Te responde y resuelve, no te marea.",
+    name: 'Lucas Sosa',
+    role: 'Dueño · El Fogón',
+    initials: 'LS',
+    avatarBg: 'rgba(251,191,36,0.18)',
+    avatarColor: '#fde68a',
+    kpi: '×2.3 ticket promedio'
+  },
+];
+---
+
+<section id="testimonios" class="relative" style={`background:${bg}; padding:110px 0; border-top:1px solid ${line}; border-bottom:1px solid ${line};`}>
+  {/* Faint accent line at top */}
+  <div class="absolute top-0 left-[15%] right-[15%] h-px" style={`background:linear-gradient(90deg, transparent, ${accent}, transparent);`}></div>
+
+  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
+    {/* Heading */}
+    <div class="text-center mb-[60px]">
+      <div class="inline-flex items-center gap-2.5 mb-[18px] justify-center">
+        <span class="w-3.5 h-px" style={{ background: accent }}></span>
+        <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+          03 ─── Lo que dicen
+        </span>
+      </div>
+      <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+        style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
+        No hace falta que vos confíes en mí.<br>
+        <span style={{ color: accent }}>Confiá en ellos.</span>
+      </h2>
+      <p class="text-base md:text-[17px] leading-relaxed max-w-[760px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+        Tres dueños que vivieron el proceso de cerca y vieron el resultado en sus propios números.
+      </p>
+    </div>
+
+    {/* Cards */}
+    <div class="grid md:grid-cols-3 gap-5">
+      {testimonials.map((t, i) => (
+        <figure class="flex flex-col p-7 md:p-8 relative" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '14px' }}>
+          {/* Quote icon */}
+          <svg width="38" height="32" viewBox="0 0 38 32" class="mb-3.5" style={{ opacity: 0.85 }}>
+            <path d="M14 0 L14 16 L8 16 C8 24 12 28 18 30 L18 32 L16 32 C6 32 0 26 0 14 L0 0 Z M34 0 L34 16 L28 16 C28 24 32 28 38 30 L38 32 L36 32 C26 32 20 26 20 14 L20 0 Z" fill={accent}/>
+          </svg>
+
+          <blockquote class="text-[15.5px] leading-relaxed flex-1 mb-6" style={{ color: white, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            {t.quote}
+          </blockquote>
+
+          <figcaption class="flex items-center gap-3.5 pt-5" style={{ borderTop: `1px solid ${line}` }}>
+            <div aria-label={t.name} class="w-11 h-11 flex items-center justify-center flex-shrink-0" style={{
+              background: t.avatarBg,
+              color: t.avatarColor,
+              border: `1px solid ${t.avatarColor}40`,
+              borderRadius: '50%',
+              fontFamily: "'Geist', 'Inter', system-ui, sans-serif",
+              fontSize: '14px',
+              fontWeight: 600,
+              letterSpacing: '0.02em'
+            }}>{t.initials}</div>
+            <div class="flex-1 min-w-0">
+              <div class="font-geist font-semibold text-sm text-white tracking-tight">{t.name}</div>
+              <div class="text-[11.5px] leading-tight mt-0.5" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>{t.role}</div>
+            </div>
+            <span class="text-[10px] tracking-[1px] px-2 py-1 whitespace-nowrap"
+              style={{
+                color: accent,
+                background: 'rgba(43,182,115,0.1)',
+                border: `1px solid rgba(43,182,115,0.3)`,
+                fontFamily: "'JetBrains Mono', monospace",
+                borderRadius: '6px'
+              }}>
+              {t.kpi}
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    {/* Trust strip */}
+    <div class="flex justify-center items-center gap-6 md:gap-8 mt-12 flex-wrap text-[11px] tracking-[1.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+      <span>⟨ 100% PROYECTOS ENTREGADOS ⟩</span>
+      <span style={{ color: line }}>·</span>
+      <span>⟨ CONTRATO Y FACTURA EMITIDA ⟩</span>
+      <span style={{ color: line }}>·</span>
+      <span>⟨ SOPORTE POST-LANZAMIENTO ⟩</span>
+    </div>
+  </div>
+</section>

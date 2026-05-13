@@ -14,7 +14,8 @@ const WhatsAppButton: React.FC = () => {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 bg-[#25D366] text-white p-3 rounded-none shadow-lg hover:bg-[#128C7E] transition-all duration-300 z-50 group border border-white/10"
+      className="fixed bottom-6 right-6 bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:bg-[#128C7E] transition-all duration-300 z-50 group"
+      style={{ boxShadow: '0 12px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06)' }}
       aria-label="Contactar por WhatsApp"
       onClick={handleWhatsAppClick}
     >

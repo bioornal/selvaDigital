@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Selva Digital — Propuestas de rediseño</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #1c1c1f; color: #fafafa; font-family: 'Inter', system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  img { display: block; max-width: 100%; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="direction-a.jsx"></script>
+<script type="text/babel" src="direction-b.jsx"></script>
+<script type="text/babel" data-presets="react">
+  function App() {
+    const DC  = window.DesignCanvas;
+    const Sec = window.DCSection;
+    const Art = window.DCArtboard;
+    const { HeroA, SobreMiA, PortfolioA, HeroB, SobreMiB, PortfolioB } = window;
+    return (
+      <DC
+        title="Selva Digital · Rediseño"
+        subtitle="Dos direcciones, mismas 3 secciones (Hero, Sobre mí, Portfolio). Compará lado a lado, click en un artboard para verlo grande."
+      >
+        <Sec id="a" title="Dirección A — Selva orgánica" subtitle="Honra el logo. Editorial, cálida, sin cyber. Aire de consultora boutique.">
+          <Art id="a-hero"      label="Hero"      width={1440} height={900}><HeroA /></Art>
+          <Art id="a-sobre"     label="Sobre mí"  width={1440} height={900}><SobreMiA /></Art>
+          <Art id="a-portfolio" label="Portfolio" width={1440} height={1180}><PortfolioA /></Art>
+        </Sec>
+
+        <Sec id="b" title="Dirección B — Tech refinada" subtitle="Mantiene el dark mode pero quita el ruido cyber. Sistema de color disciplinado, único acento verde del logo.">
+          <Art id="b-hero"      label="Hero"      width={1440} height={900}><HeroB /></Art>
+          <Art id="b-sobre"     label="Sobre mí"  width={1440} height={900}><SobreMiB /></Art>
+          <Art id="b-portfolio" label="Portfolio" width={1440} height={1180}><PortfolioB /></Art>
+        </Sec>
+      </DC>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

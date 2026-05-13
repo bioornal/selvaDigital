@@ -1,73 +1,87 @@
 ---
-const faqs = [
-  {
-    question: "Cuánto tarda un proyecto web?",
-    answer: "Depende de la complejidad. Una landing page se entrega en 5-7 días hábiles. Un e-commerce completo o sistema a medida puede tardar entre 2 y 4 semanas. Siempre te paso un cronograma antes de arrancar."
-  },
-  {
-    question: "El precio es único o hay mensualidades?",
-    answer: "Todos los precios son pago único. No hay suscripción ni costos mensuales ocultos. Solo renovás el dominio y hosting después del primer año (costo mínimo)."
-  },
-  {
-    question: "Qué pasa si necesito cambios después?",
-    answer: "Las primeras correcciones post-entrega están incluidas. Si después necesitás funcionalidades nuevas o cambios mayores, los cotizo aparte con precio de cliente existente."
-  },
-  {
-    question: "Trabajás con clientes de todo Argentina?",
-    answer: "Sí, trabajo 100% remoto con clientes de todo el país. Las reuniones son por videollamada y la comunicación por nuestro sistema de chat o email, como prefieras."
-  },
-  {
-    question: "Cómo es el proceso de trabajo?",
-    answer: "1) Charla inicial para entender tu negocio. 2) Te paso propuesta y presupuesto. 3) Una vez confirmado, arranco el desarrollo con avances semanales. 4) Revisamos juntos y lanzamos."
-  },
-  {
-    question: "Los chatbots con IA funcionan con cualquier negocio?",
-    answer: "Sí. Funcionan para restaurantes, comercios, servicios profesionales, inmobiliarias, turismo y más. El bot se entrena con la información específica de tu negocio para dar respuestas precisas."
-  },
-  {
-    question: "Incluís dominio y hosting?",
-    answer: "Sí, los planes web incluyen dominio .com y hosting gratis por el primer año. Los planes avanzados (sistemas, chatbots, apps) incluyen deploy en la nube."
-  },
-  {
-    question: "Puedo ver proyectos reales antes de contratar?",
-    answer: "Claro. En el portfolio tenés proyectos funcionando que podés visitar. También puedo mostrarte demos de chatbots con IA en acción."
-  }
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
+
+const qs = [
+  { q: 'Cuánto tarda un proyecto web?',
+    a: 'Una landing page: 5 a 7 días hábiles. Un sitio completo: 2 a 3 semanas. Un e-commerce o sistema a medida: 4 a 8 semanas según alcance. Antes de arrancar te paso un cronograma por escrito con fechas tentativas semana a semana.' },
+  { q: 'El precio es único o hay mensualidades?',
+    a: 'Pago único. El primer año va incluido el dominio .com y el hosting en la nube. Pasado ese año, vos pagás directamente al proveedor de hosting (~USD 10–15 al mes según el plan). No hay tarifas mensuales mías escondidas.' },
+  { q: 'El código queda mío?',
+    a: 'Sí. Cuando se entrega el proyecto, te paso el repositorio, las claves de los servicios contratados (dominio, hosting, MercadoPago) y la documentación. Si mañana quisieras que otra persona lo mantenga, puede.' },
+  { q: 'Hago el diseño yo o lo hacés vos?',
+    a: 'Lo hago yo. Diseño y programo cada proyecto desde cero — no son plantillas. Antes de programar te muestro una propuesta visual; sobre eso iteramos hasta que esté.' },
+  { q: 'Trabajás solo o tenés equipo?',
+    a: 'Trabajo solo. Vos hablás directo conmigo de principio a fin: presupuesto, diseño, programación, deploy, soporte. Eso es más rápido y más barato que una agencia — pero significa que no tomo más de 3 proyectos en simultáneo.' },
+  { q: 'Trabajás solo en Argentina?',
+    a: 'Sí, trabajo exclusivamente con clientes en Argentina. El foco está en PyMEs argentinas que quieren digitalizar su negocio sin tarifas mensuales escondidas.' },
 ];
 ---
 
-<section id="faq" class="py-12 sm:py-24 bg-black relative overflow-hidden">
-  <!-- Grid overlay -->
-  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" 
-       style="background-image: linear-gradient(rgba(139,92,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,1) 1px, transparent 1px); background-size: 50px 50px;">
-  </div>
-
-  <div class="container mx-auto px-3 sm:px-4 relative z-10">
-    <div class="max-w-4xl mx-auto text-center mb-8 sm:mb-14">
-      <h2 class="text-3xl sm:text-5xl font-heading text-white mb-3 sm:mb-6">
-        Preguntas Frecuentes
-      </h2>
-      <p class="text-gray-400 text-sm sm:text-lg">
-        Lo que más preguntan antes de arrancar
-      </p>
-    </div>
-
-    <div class="max-w-3xl mx-auto space-y-3">
-      {faqs.map((faq, index) => (
-        <div class="faq-item hud-container overflow-hidden">
-          <button 
-            class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-white/[0.02] transition-all duration-300"
-            aria-expanded="false"
-          >
-            <span class="text-white font-medium text-sm sm:text-base pr-4 font-mono uppercase tracking-tight">{faq.question}</span>
-            <svg class="faq-icon w-5 h-5 text-violet-400 flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5">
-            <p class="text-gray-400 text-sm leading-relaxed">{faq.answer}</p>
-          </div>
+<section id="faq" class="relative" style={`background:${bg}; padding:120px 0;`}>
+  <div class="max-w-[1080px] mx-auto px-6 md:px-10">
+    <div class="grid md:grid-cols-[1fr_1.4fr] gap-16 md:gap-20 items-start">
+      {/* Left sticky heading */}
+      <div class="md:sticky md:top-[120px]">
+        <div class="inline-flex items-center gap-2.5 mb-[18px]">
+          <span class="w-3.5 h-px" style={{ background: accent }}></span>
+          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+            07 ─── FAQ
+          </span>
         </div>
-      ))}
+        <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+          style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
+          Preguntas<br><span style={{ color: accent }}>frecuentes.</span>
+        </h2>
+        <p class="text-base md:text-[17px] leading-relaxed mb-8" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          Lo que más me preguntan antes de arrancar un proyecto. Si tu duda no está, escribime y la respondo el mismo día.
+        </p>
+        <a href="#contacto" class="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-all hover:brightness-110"
+          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+          Hacer una consulta →
+        </a>
+      </div>
+
+      {/* Accordion */}
+      <div class="flex flex-col gap-2">
+        {qs.map((item, i) => (
+          <div class="faq-item overflow-hidden transition-all" style={{
+            background: i === 0 ? surface : bg,
+            border: `1px solid ${i === 0 ? 'rgba(43,182,115,0.35)' : line}`,
+            borderRadius: '12px'
+          }}>
+            <button class="faq-trigger w-full flex items-center justify-between px-5 md:px-6 py-5 text-left bg-transparent border-none gap-3"
+              style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: '15.5px', fontWeight: 500, color: white, letterSpacing: '-0.01em' }}
+              aria-expanded={i === 0 ? 'true' : 'false'}>
+              <span class="flex items-center gap-3.5">
+                <span class="text-[11px] tracking-[1px]" style={{ color: i === 0 ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+                  0{i+1}
+                </span>
+                {item.q}
+              </span>
+              <span class="faq-icon text-[22px] font-light transition-transform duration-200 flex-shrink-0"
+                style={{ color: i === 0 ? accent : textDim, transform: i === 0 ? 'rotate(45deg)' : 'rotate(0)' }}>
+                +
+              </span>
+            </button>
+            <div class="faq-content px-5 md:px-6 pb-5" style={{
+              display: i === 0 ? 'block' : 'none',
+              paddingLeft: '56px',
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontSize: '14px',
+              lineHeight: '1.65',
+              color: textSoft
+            }}>
+              {item.a}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -78,18 +92,30 @@ const faqs = [
       const item = btn.closest('.faq-item');
       const content = item?.querySelector('.faq-content');
       const icon = item?.querySelector('.faq-icon');
-      const isOpen = !content?.classList.contains('hidden');
+      const num = item?.querySelector('.faq-trigger span span');
+      const isOpen = content?.style.display === 'block';
+      const accent = '#2BB673';
+      const line = 'rgba(250,250,250,0.08)';
+      const textDim = 'rgba(250,250,250,0.46)';
 
-      document.querySelectorAll('.faq-item').forEach((otherItem) => {
-        otherItem.querySelector('.faq-content')?.classList.add('hidden');
-        otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
-        otherItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach((other) => {
+        const oc = other.querySelector('.faq-content');
+        const oi = other.querySelector('.faq-icon');
+        const on = other.querySelector('.faq-trigger span span');
+        if (oc) oc.style.display = 'none';
+        if (oi) { oi.style.transform = 'rotate(0)'; oi.style.color = textDim; }
+        if (on) on.style.color = textDim;
+        other.style.background = '#0A0B0D';
+        other.style.borderColor = line;
       });
 
       if (!isOpen) {
-        content?.classList.remove('hidden');
-        icon?.classList.add('rotate-180');
-        btn.setAttribute('aria-expanded', 'true');
+        if (content) content.style.display = 'block';
+        if (icon) { icon.style.transform = 'rotate(45deg)'; icon.style.color = accent; }
+        if (num) num.style.color = accent;
+        item.style.background = '#121316';
+        item.style.borderColor = 'rgba(43,182,115,0.35)';
       }
     });
   });

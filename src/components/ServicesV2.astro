@@ -1,0 +1,181 @@
+---
+const accent = '#2BB673';
+const bg = '#0A0B0D';
+const surface = '#121316';
+const white = '#FAFAFA';
+const textSoft = 'rgba(250,250,250,0.72)';
+const textDim = 'rgba(250,250,250,0.46)';
+const line = 'rgba(250,250,250,0.08)';
+const lineStr = 'rgba(250,250,250,0.18)';
+
+const services = [
+  {
+    n: '01', t: 'Sitios web',
+    d: 'Landing pages y sitios institucionales que convierten visitantes en consultas. Diseño propio, sin templates.',
+    bullets: ['Diseño 100% personalizado', 'Carga rápida + Core Web Vitals', 'SEO técnico de base'],
+    cta: 'Desde $250.000',
+    featured: true
+  },
+  {
+    n: '02', t: 'E-commerce',
+    d: 'Tiendas online con MercadoPago, gestión de stock, cupones y catálogo ilimitado. Pago único.',
+    bullets: ['Carrito + checkout integrado', 'Panel de productos', 'Dominio + hosting 1er año'],
+    cta: 'Desde $700.000'
+  },
+  {
+    n: '03', t: 'Sistemas a medida',
+    d: 'Dashboards, CRMs y herramientas internas pensadas para tu operativa. Backend propio.',
+    bullets: ['Login + roles de usuario', 'API + base de datos dedicada', 'Reportes y métricas'],
+    cta: 'Desde $900.000'
+  },
+  {
+    n: '04', t: 'Chatbots con IA',
+    d: 'Asistentes que entienden tu negocio, cierran ventas y atienden 24/7 — no son bots de plantilla.',
+    bullets: ['Base de conocimiento propia', 'Dashboard de conversaciones', 'Multi-bot multiusuario'],
+    cta: 'Desde $1.000.000'
+  },
+  {
+    n: '05', t: 'SEO local',
+    d: 'Para que te encuentren en Córdoba y en toda Argentina. Schema.org, Google Business y contenido optimizado para tu zona.',
+    bullets: ['Auditoría técnica', 'Schema + datos estructurados', 'Estrategia de keywords'],
+    cta: 'Incluido en planes'
+  },
+];
+---
+
+<section id="servicios" class="services-section relative" style={`background:${bg};`}>
+  {/* Dot grid */}
+  <div class="absolute inset-0 pointer-events-none opacity-[0.15]"
+    style="background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0); background-size:28px 28px;">
+  </div>
+
+  <div class="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
+    {/* Header */}
+    <div class="services-header grid md:grid-cols-2 items-end">
+      <div>
+        <div class="inline-flex items-center gap-2.5 services-kicker">
+          <span class="w-3.5 h-px" style={{ background: accent }}></span>
+          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
+            01 ─── Servicios
+          </span>
+        </div>
+        <h2 class="services-h2 text-white">
+          Todo lo que necesita <span style={{ color: accent }}>tu negocio digital.</span>
+        </h2>
+        <p class="services-sub max-w-[620px]" style={{ color: textSoft }}>
+          Desde una landing simple hasta sistemas a medida con backend propio. Cinco verticales, una misma persona detrás.
+        </p>
+      </div>
+      <div class="text-left md:text-right">
+        <span class="text-[11px] tracking-[2px] leading-relaxed" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+          ┌── ALCANCE ──────┐<br/>
+          │ Argentina       │<br/>
+          └─────────────────┘
+        </span>
+      </div>
+    </div>
+
+    {/* Cards grid */}
+    <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5" style={`border:1px solid ${line}; border-radius:14px; overflow:hidden;`}>
+      {services.map((s, i) => (
+        <div class="flex flex-col p-7 md:p-8 relative" style={{
+          background: s.featured ? 'rgba(43,182,115,0.06)' : surface,
+          borderRight: i < 4 ? `1px solid ${line}` : 'none',
+          minHeight: '380px'
+        }}>
+          {s.featured && (
+            <span class="absolute top-3.5 right-3.5 text-[9px] tracking-[1.5px] uppercase px-2 py-1"
+              style={{
+                color: accent,
+                background: 'rgba(43,182,115,0.14)',
+                border: `1px solid rgba(43,182,115,0.5)`,
+                fontFamily: "'JetBrains Mono', monospace",
+                borderRadius: '999px'
+              }}>
+              ★ POPULAR
+            </span>
+          )}
+
+          <div class="text-[11px] tracking-[2px] mb-4" style={{
+            color: s.featured ? accent : textDim,
+            fontFamily: "'JetBrains Mono', monospace"
+          }}>
+            {s.n}
+          </div>
+
+          <h3 class="services-card-h3 text-white">
+            {s.t}
+          </h3>
+
+          <p class="text-[13.5px] leading-relaxed mb-5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            {s.d}
+          </p>
+
+          <ul class="flex flex-col gap-2 mb-7 list-none p-0">
+            {s.bullets.map(b => (
+              <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+                <span style={{ color: accent, marginTop: '2px' }}>▸</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-auto pt-4 flex justify-between items-center" style={{ borderTop: `1px solid ${line}` }}>
+            <span class="text-xs font-semibold text-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+              {s.cta}
+            </span>
+            <span class="text-[10px]" style={{ color: s.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+              →
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Servicios — scoped overrides con !important para vencer global.css y Tailwind base */
+  .services-section {
+    padding: clamp(80px, 10vh, 120px) 0 clamp(70px, 9vh, 100px) 0 !important;
+  }
+
+  .services-header {
+    gap: 60px !important;
+    margin-bottom: 64px !important;
+  }
+
+  .services-kicker {
+    margin-bottom: 18px !important;
+  }
+
+  .services-h2 {
+    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: clamp(44px, 4.5vw, 60px) !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.03em !important;
+    margin: 0 0 18px 0 !important;
+    max-width: 14ch !important;
+  }
+
+  .services-sub {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: 17px !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  .services-grid {
+    gap: 0 !important;
+  }
+
+  .services-card-h3 {
+    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 12px 0 !important;
+  }
+</style>

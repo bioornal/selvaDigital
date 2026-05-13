@@ -52,6 +52,12 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        'v2': {
+          bg: '#0A0B0D',
+          surface: '#121316',
+          surface2: '#1A1C20',
+          surface3: '#22262C',
+        },
         'azure-radiance': {
           '50': '#eff8ff',
           '100': '#dbeefe',
@@ -105,6 +111,7 @@ module.exports = {
         'body': ['Inter', 'system-ui', 'sans-serif'],
         'mono': ['"JetBrains Mono"', 'monospace'],
         'montserrat': ['Montserrat', 'sans-serif'],
+        'geist': ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
     },
   },
@@ -114,9 +121,22 @@ module.exports = {
       addBase({
         ':root': {
           '--azure-radiance-800': '#000000',
+          '--v2-bg': '#0A0B0D',
+          '--v2-surface': '#121316',
+          '--v2-surface2': '#1A1C20',
+          '--v2-surface3': '#22262C',
+          '--v2-white': '#FAFAFA',
+          '--v2-text-soft': 'rgba(250,250,250,0.72)',
+          '--v2-text-dim': 'rgba(250,250,250,0.46)',
+          '--v2-text-faint': 'rgba(250,250,250,0.28)',
+          '--v2-line': 'rgba(250,250,250,0.08)',
+          '--v2-line-mid': 'rgba(250,250,250,0.12)',
+          '--v2-line-str': 'rgba(250,250,250,0.18)',
+          '--v2-accent': '#2BB673',
         },
         'body': {
-          backgroundColor: '#000000',
+          backgroundColor: '#0A0B0D',
+          color: '#FAFAFA',
         },
       });
     },

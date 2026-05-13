@@ -1,11 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '../types/database';
+import { WebSocket as WSWebSocket } from 'ws';
 
-/**
- * Lee una variable de entorno desde import.meta.env (Astro) o process.env (Node runtime).
- * Devuelve string vacío si no existe — el cliente Supabase fallará solo cuando se use,
- * no al cargar el módulo. Esto evita que un build/SSR crashee por env vars faltantes.
- */
 function readEnvVar(key: string): string {
   const fromImportMeta = (import.meta.env as Record<string, string | undefined>)[key];
   if (fromImportMeta) return fromImportMeta;
@@ -35,5 +31,9 @@ export const supabaseAdmin = createClient<Database>(
       autoRefreshToken: false,
       persistSession: false,
     },
+    // Node 20 no tiene WebSocket nativo; supabase-js exige uno para inicializar
+    // el cliente realtime aunque nunca lo usemos.
+    // @ts-expect-error - transport está permitido en runtime
+    realtime: { transport: WSWebSocket },
   }
 );

@@ -11,6 +11,7 @@ import FAQ from '../components/FAQ.astro';
 import AboutV2 from '../components/AboutV2.astro';
 import Manifiesto from '../components/Manifiesto.astro';
 import Contact from '../components/Contact';
+import SectionDivider from '../components/SectionDivider.astro';
 ---
 
 <Layout 
@@ -19,13 +20,20 @@ import Contact from '../components/Contact';
 >
   <Hero />
   <ServicesV2 />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <Portfolio />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <Testimonios />
   <AIChatbots />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <Apps />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <Precios />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <FAQ />
+  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
   <AboutV2 />
   <Manifiesto />
+  <SectionDivider />
   <Contact client:load />
 </Layout>

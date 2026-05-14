@@ -17,8 +17,33 @@ const cols = [
 
 <footer style={{ background: surface, borderTop: `1px solid ${line}`, paddingTop: '60px' }}>
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 md:gap-12 pb-12" style={{ borderBottom: `1px solid ${line}` }}>
-      {/* Brand */}
+
+    {/* Mobile: logo + redes en una fila, luego copyright */}
+    <div class="md:hidden pb-8" style={{ borderBottom: `1px solid ${line}` }}>
+      <div class="flex items-center justify-between mb-6">
+        <img src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png" alt="Selva Digital" class="h-[34px] w-auto" />
+        <div class="flex gap-2">
+          {['WA','IG','Gh','In'].map(s => (
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-[10px] font-semibold"
+              style={{
+                background: '#1A1C20',
+                border: `1px solid ${line}`,
+                color: textSoft,
+                fontFamily: "'JetBrains Mono', monospace",
+                borderRadius: '8px'
+              }}>
+              {s}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="text-[11px] tracking-[1px] text-center" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+        © 2026 SELVA DIGITAL · CÓRDOBA, ARGENTINA
+      </div>
+    </div>
+
+    {/* Desktop: layout completo */}
+    <div class="hidden md:grid md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 pb-12" style={{ borderBottom: `1px solid ${line}` }}>
       <div>
         <img src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png" alt="Selva Digital" class="h-[38px] w-auto mb-5" />
         <p class="text-[13.5px] leading-relaxed mb-5 max-w-[340px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -39,8 +64,6 @@ const cols = [
           ))}
         </div>
       </div>
-
-      {/* Columns */}
       {cols.map(c => (
         <div>
           <div class="text-[10.5px] tracking-[2px] mb-4" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
@@ -55,8 +78,8 @@ const cols = [
       ))}
     </div>
 
-    {/* Bottom bar */}
-    <div class="flex flex-wrap justify-between items-center py-7 gap-3.5">
+    {/* Bottom bar — desktop only */}
+    <div class="hidden md:flex flex-wrap justify-between items-center py-7 gap-3.5">
       <div class="text-[11px] tracking-[1px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
         © 2026 SELVA DIGITAL · CHRISTIAN A. SPEZIALI · CÓRDOBA, ARGENTINA
       </div>
@@ -67,6 +90,7 @@ const cols = [
         <a href="/admin" class="hover:text-white transition-colors opacity-40 hover:opacity-100">Panel</a>
       </div>
     </div>
+
   </div>
 
   {/* Tape strip */}

@@ -66,7 +66,7 @@ const services = [
           Desde una landing simple hasta sistemas a medida con backend propio. Cinco verticales, una misma persona detrás.
         </p>
       </div>
-      <div class="text-center md:text-right">
+      <div class="hidden md:flex justify-end items-start">
         <span class="text-[11px] tracking-[2px] leading-relaxed" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
           ┌── ALCANCE ──────┐<br/>
           │ Argentina       │<br/>
@@ -142,12 +142,14 @@ const services = [
   .services-header {
     gap: 32px !important;
     margin-bottom: 40px !important;
+    grid-template-columns: 1fr !important;
   }
 
   @media (min-width: 768px) {
     .services-header {
       gap: 60px !important;
       margin-bottom: 64px !important;
+      grid-template-columns: 1fr 1fr !important;
     }
   }
 

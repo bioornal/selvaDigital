@@ -29,7 +29,7 @@ const steps = [
     <div class="grid md:grid-cols-[1.2fr_0.85fr] gap-8 md:gap-16 items-start">
       {/* Left content */}
       <div>
-        <div class="text-center md:text-left">
+        <div class="text-left">
           <div class="inline-flex items-center gap-2.5 mb-[18px]">
             <span class="w-3.5 h-px" style={{ background: accent }}></span>
             <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
@@ -43,7 +43,7 @@ const steps = [
             <span style={{ color: accent }}>Developer que no terceriza.</span>
           </h2>
 
-          <p class="text-[17px] leading-[1.55] mb-8 max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          <p class="text-[17px] leading-[1.55] mb-8 max-w-[620px] md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Desarrollador web freelance basado en Córdoba, Argentina. Hace 6 años que ayudo a dueños de negocios y PyMEs a tener su web vendiendo 24/7, sin tarifas mensuales escondidas.
           </p>
         </div>
@@ -101,7 +101,7 @@ const steps = [
           </div>
         </div>
 
-        <div class="flex gap-3 mt-8">
+        <div class="flex gap-3 mt-8 justify-center md:justify-start">
           <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
             style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
             Conversemos →
@@ -165,8 +165,8 @@ const steps = [
           </div>
         </div>
 
-        {/* KPIs en columna derecha */}
-        <div class="relative grid grid-cols-3 gap-2 md:gap-2.5">
+        {/* KPIs en columna derecha — desktop only */}
+        <div class="hidden md:grid grid-cols-3 gap-2 md:gap-2.5">
           {kpi.map(s => (
             <div class="kpi-card" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '10px' }}>
               <div class="font-geist font-semibold text-white leading-none kpi-num" style={{ letterSpacing: '-0.025em' }}>
@@ -178,8 +178,8 @@ const steps = [
           ))}
         </div>
 
-        {/* Stack en columna derecha */}
-        <div class="relative">
+        {/* Stack en columna derecha — desktop only */}
+        <div class="hidden md:block relative">
           <div class="text-[10.5px] tracking-[2px] mb-3" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>STACK PRINCIPAL // 2026</div>
           <div class="flex flex-wrap gap-1.5" data-stack-wrap>
             {stack.map((t, i) => (

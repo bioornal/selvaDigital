@@ -153,13 +153,13 @@ const Banner: React.FC = () => {
               style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${line}`, borderRadius: '10px' }}
             >
               <div className="text-[10px] tracking-[1.5px] mb-1" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-                INCLUYE
+                MODALIDAD
               </div>
               <div
                 className="text-white"
                 style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em' }}
               >
-                Dominio + Host
+                Pago 50 / 50
               </div>
             </div>
           </div>

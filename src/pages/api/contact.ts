@@ -6,6 +6,7 @@ interface ContactForm {
   email: string;
   mensaje: string;
   tipoProyecto: string;
+  presupuesto?: string;
 }
 
 function escapeHtml(text: string): string {
@@ -70,7 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const data = await request.json() as ContactForm;
-    const { nombre, email, mensaje, tipoProyecto } = data;
+    const { nombre, email, mensaje, tipoProyecto, presupuesto } = data;
 
     if (!nombre || !email || !mensaje || !tipoProyecto) {
       return new Response(JSON.stringify({
@@ -95,7 +96,8 @@ export const POST: APIRoute = async ({ request }) => {
         <h2>Nuevo mensaje de contacto</h2>
         <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || escapeHtml(tipoProyecto))}</p>
+        <p><strong>Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || tipoProyecto)}</p>
+        <p><strong>Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' ARS' : 'No especificado'}</p>
         <p><strong>Mensaje:</strong></p>
         <p>${escapeHtml(mensaje)}</p>
       `

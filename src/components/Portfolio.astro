@@ -107,7 +107,7 @@ const projects = [
     </div>
 
     {/* Grid — mobile carousel (10 proyectos, swipe), md+ vuelve a grid */}
-    <div class="portfolio-grid mobile-carousel md:grid-cols-2 lg:grid-cols-3 md:gap-5">
+    <div class="portfolio-grid mobile-carousel md:grid-cols-2 lg:grid-cols-3">
       {projects.map((p) => (
         <article class="portfolio-card flex flex-col overflow-hidden w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none" style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}>
           {/* Image */}
@@ -184,6 +184,17 @@ const projects = [
       padding-right: 24px;
       margin-left: -24px;
       margin-right: -24px;
+    }
+  }
+  /* Desktop: gap explícito (override del gap: revert global) */
+  @media (min-width: 768px) {
+    .portfolio-grid.mobile-carousel {
+      gap: 28px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .portfolio-grid.mobile-carousel {
+      gap: 32px;
     }
   }
 </style>

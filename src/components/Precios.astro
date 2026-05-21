@@ -10,21 +10,21 @@ const lineStr = 'rgba(250,250,250,0.18)';
 
 const planesWeb = [
   { t: 'Landing Page', price: '$250.000', sub: 'PAGO ÚNICO',
-    features: ['Página única con scroll','Diseño web responsive','Formulario de contacto','Dominio .com gratis 1 año','Hosting en la nube incluido','Integración con redes','Optimización para móviles'] },
-  { t: 'Sitio Web', price: '$400.000', sub: 'PAGO ÚNICO', featured: true,
-    features: ['3 a 5 secciones personalizadas','Diseño responsive premium','Formulario avanzado','Dominio + Hosting incluido','Galería de imágenes','Mapa de ubicación','Animaciones suaves'] },
-  { t: 'E-commerce', price: '$700.000', sub: 'PAGO ÚNICO',
+    features: ['Página única con scroll','Diseño web responsive','Formulario de contacto','Integración con redes sociales','Optimización para móviles','SEO básico on-page','Entrega lista para hostear'] },
+  { t: 'Sitio Web Corporativo', price: '$350.000', sub: 'PAGO ÚNICO · 3 a 5 PÁGINAS', featured: true,
+    features: ['3 a 5 secciones personalizadas','Diseño responsive premium','Formulario avanzado','Galería de imágenes','Mapa de ubicación','Animaciones suaves','Entrega lista para hostear'] },
+  { t: 'Sitio Web Extendido', price: '$450.000', sub: 'PAGO ÚNICO · +5 PÁGINAS',
+    features: ['+5 secciones personalizadas','Diseño premium único','Formularios avanzados','Galería multimedia','Optimización SEO completa','Animaciones suaves','Soporte post-lanzamiento'] },
+  { t: 'Tienda E-commerce', price: '$1.300.000', sub: 'PAGO ÚNICO',
     features: ['Catálogo de productos ilimitado','Carrito + MercadoPago','Sistema de login','Panel de administración','Gestión de stock automática','Descuentos y promos','SEO + GA4 integrados'] },
-  { t: 'A Medida', price: '$550.000', sub: 'PAGO ÚNICO',
-    features: ['+5 secciones personalizadas','Diseño premium único','Formularios avanzados','Galería multimedia','Integraciones a medida','Optimización SEO completa','Soporte post-lanzamiento'] },
 ];
 
 const planesSistemas = [
-  { t: 'Sistema a medida', price: '$900.000+', sub: 'SEGÚN ALCANCE', code: 'SYSTEM: CUSTOM',
+  { t: 'Sistema a medida', price: '$1.200.000', sub: 'DESDE · SEGÚN ALCANCE', code: 'SYSTEM: CUSTOM',
     features: ['Dashboard de administración','Login y roles de usuario','Gestión de datos (CRUD)','Reportes y métricas','Base de datos dedicada','API personalizada','Deploy en la nube'] },
-  { t: 'Chatbot con IA', price: '$1.000.000+', sub: 'SEGÚN ALCANCE', code: 'BOT: AGENTIC', featured: true,
-    features: ['Bot inteligente con IA','Chats que venden','Dashboard de mensajes','Multi-bot multiusuario','Respuestas 24/7','Base de conocimiento','Desplegado en VPS propio'] },
-  { t: 'App a medida', price: '$1.000.000+', sub: 'SEGÚN ALCANCE', code: 'APP: NATIVE',
+  { t: 'Chatbot con IA', price: '$1.500.000', sub: 'PAGO ÚNICO', code: 'BOT: AGENTIC', featured: true,
+    features: ['Bot inteligente con IA','Chats que venden 24/7','Dashboard de mensajes','Multi-bot multiusuario','Base de conocimiento','Integración con WhatsApp / Web','Desplegado en VPS propio'] },
+  { t: 'App a medida', price: 'Consultar', sub: 'SEGÚN ALCANCE', code: 'APP: NATIVE',
     features: ['App web o mobile','Backend personalizado','Base de datos dedicada','Autenticación de usuarios','Notificaciones push','Panel de administración','Soporte post-lanzamiento'] },
 ];
 ---
@@ -39,13 +39,13 @@ const planesSistemas = [
           06 ─── Planes y precios
         </span>
       </div>
-      <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
-        style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
-        Pago único, sin sorpresas.<br>
-        <span style={{ color: accent }}>El primer año va incluido.</span>
+      <h2 class="font-geist font-semibold text-white leading-[1.05] md:leading-[1.02] tracking-tight mb-[18px] px-2 md:px-0"
+        style="font-size:clamp(26px, 5vw, 56px); letter-spacing:-0.025em;">
+        Pago único, sin ataduras.<br>
+        <span style={{ color: accent }}>50% inicio · 50% entrega.</span>
       </h2>
       <p class="text-base md:text-[17px] leading-relaxed" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-        Dominio .com y hosting en la nube cubiertos por 12 meses. Después, sólo se renueva el hosting — vos pagás directamente al proveedor.
+        Hosting y dominio se contratan aparte (alrededor de <strong style={{ color: white }}>AR$ 9.300/mes en Hostinger</strong>) y quedan a tu nombre. Sin contratos mensuales ni dependencia con nosotros: el sitio es 100% tuyo desde el día uno.
       </p>
     </div>
 
@@ -151,8 +151,9 @@ const planesSistemas = [
     </div>
 
     <p class="text-center mt-9 text-[13px] max-w-[760px] mx-auto" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
-      Todos los precios en pesos argentinos (ARS). Dominio incluido el primer año, después se renueva con el proveedor.
-      Los planes "desde" se ajustan al alcance final del proyecto, evaluado en una llamada gratuita.
+      Todos los precios en pesos argentinos (ARS). Modalidad de pago 50% al inicio y 50% contra entrega.
+      Hosting y dominio no incluidos — te asesoramos para que los contrates a tu nombre (aprox. AR$ 9.300/mes en Hostinger).
+      Los planes "consultar" se ajustan al alcance final del proyecto, evaluado en una llamada gratuita.
     </p>
   </div>
 </section>

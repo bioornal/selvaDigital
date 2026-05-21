@@ -52,6 +52,7 @@ interface FormValues {
   nombre: string;
   email: string;
   tipoProyecto: string;
+  presupuesto: string;
   mensaje: string;
 }
 
@@ -60,7 +61,7 @@ const Contact = () => {
   const [formMessage, setFormMessage] = useState('');
   const [tipo, setTipo] = useState('');
 
-  const initialValues: FormValues = { nombre: '', email: '', tipoProyecto: '', mensaje: '' };
+  const initialValues: FormValues = { nombre: '', email: '', tipoProyecto: '', presupuesto: '', mensaje: '' };
 
   const handleSubmit = async (values: FormValues, { resetForm, setSubmitting }: any) => {
     setFormStatus('idle');
@@ -150,7 +151,7 @@ const Contact = () => {
 
           {/* Right: form */}
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ errors, touched, isSubmitting, isValid, dirty, setFieldValue }) => (
+            {({ errors, touched, isSubmitting, isValid, dirty, setFieldValue, values }) => (
               <Form className="flex flex-col gap-4 p-6 md:p-7" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '12px' }}>
                 <div className="text-[10.5px] tracking-[2px] mb-0" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>// SUBMIT_REQUEST</div>
 
@@ -198,12 +199,28 @@ const Contact = () => {
                 <div>
                   <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>PRESUPUESTO ESTIMADO (ARS)</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {presupuestos.map(p => (
-                      <button type="button" key={p} className="py-2.5 text-xs font-medium transition-colors hover:text-white"
-                        style={{ background: surface2, color: textSoft, border: `1px solid ${line}`, borderRadius: '8px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-                        {p}
-                      </button>
-                    ))}
+                    {presupuestos.map(p => {
+                      const selected = values.presupuesto === p;
+                      return (
+                        <button
+                          type="button"
+                          key={p}
+                          onClick={() => setFieldValue('presupuesto', selected ? '' : p)}
+                          aria-pressed={selected}
+                          className="py-2.5 text-xs font-medium transition-all"
+                          style={{
+                            background: selected ? 'rgba(43,182,115,0.15)' : surface2,
+                            color: selected ? accent : textSoft,
+                            border: `1px solid ${selected ? 'rgba(43,182,115,0.55)' : line}`,
+                            borderRadius: '8px',
+                            fontFamily: "'Inter', system-ui, sans-serif",
+                            fontWeight: selected ? 600 : 500,
+                            boxShadow: selected ? '0 0 12px -2px rgba(43,182,115,0.25)' : 'none'
+                          }}>
+                          {p}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 

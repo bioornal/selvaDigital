@@ -17,10 +17,10 @@ const kpi = [
 const stack = ['React','Next.js','Astro','TypeScript','Node.js','PostgreSQL','MongoDB','Firebase','Tailwind','Vercel','VPS','MercadoPago','OpenAI','Anthropic'];
 
 const steps = [
-  { n: '01', t: 'Hablamos de tu idea', d: 'Me contás qué necesitás, qué vendés y a quién le querés llegar.' },
-  { n: '02', t: 'Te paso un plan claro', d: 'Presupuesto, tiempos y alcance por escrito. Sin sorpresas.' },
-  { n: '03', t: 'Construyo con avances semanales', d: 'Ves la web crecer en tiempo real y ajustamos sobre la marcha.' },
-  { n: '04', t: 'Lanzamos y capacito', d: 'Te entrego las claves, te explico cómo funciona y quedás operativo.' },
+  { n: '01', t: 'Hablamos de tu idea',            d: 'Me contás qué vendés y a quién. Salís de la llamada sabiendo si esto te sirve, sin compromiso ni "te confirmo después".' },
+  { n: '02', t: 'Te paso un plan claro',          d: 'Recibís precio cerrado, alcance y fecha de entrega por escrito. Sabés exactamente cuánto pagás y qué obtenés antes de decir que sí.' },
+  { n: '03', t: 'Construyo con avances semanales', d: 'Ves el sitio crecer cada semana y pedís cambios cuando los necesitás. No esperás 6 semanas para descubrir que algo no era lo que pensabas.' },
+  { n: '04', t: 'Lanzamos y quedás operando',     d: 'Tu negocio queda online y vendiendo. Te muestro cómo recibir las consultas y a quién contactar si algo necesita atención.' },
 ];
 ---
 
@@ -39,16 +39,23 @@ const steps = [
 
           <h2 class="font-geist font-semibold text-white leading-[1] tracking-tight mb-4"
             style="font-size:clamp(36px, 4vw, 64px); letter-spacing:-0.03em;">
-            Christian A. Speziali.<br>
-            <span style={{ color: accent }}>Developer que no terceriza.</span>
+            Un solo interlocutor.<br>
+            <span style={{ color: accent }}>De la idea al deploy.</span>
           </h2>
 
-          <p class="text-[17px] leading-[1.55] mb-8 max-w-[620px] md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Desarrollador web freelance basado en Córdoba, Argentina. Hace 6 años que ayudo a dueños de negocios y PyMEs a tener su web vendiendo 24/7, sin tarifas mensuales escondidas.
+          {/* Desktop: bajada extendida */}
+          <p class="hidden md:block text-[17px] leading-[1.55] mb-8 max-w-[620px] md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            Soy Christian Speziali, desarrollador web freelance desde Córdoba. Hace 6 años que ayudo a dueños de PyMEs argentinas a dejar de perder ventas online, recuperar horas de su semana y aparecer primeros en Google — sin tarifas mensuales escondidas.
+          </p>
+
+          {/* Mobile: bajada compacta */}
+          <p class="md:hidden text-[15px] leading-[1.55] mb-6" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            Desarrollador freelance desde Córdoba. Hablás directo conmigo de principio a fin — sin agencias ni intermediarios. <strong class="text-white font-semibold">Tomo máximo 3 proyectos a la vez.</strong>
           </p>
         </div>
 
-        <div class="flex flex-col gap-3.5 mb-10">
+        {/* Desktop only: párrafos secundarios */}
+        <div class="hidden md:flex flex-col gap-3.5 mb-10">
           <p class="text-[15.5px] leading-relaxed max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Trabajo solo. Eso significa que vos hablás conmigo de principio a fin —
             presupuesto, diseño, programación, deploy y soporte. Sin agencia
@@ -101,7 +108,7 @@ const steps = [
           </div>
         </div>
 
-        <div class="flex gap-3 mt-8 justify-center md:justify-start">
+        <div class="hidden md:flex gap-3 mt-8 justify-center md:justify-start">
           <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
             style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
             Conversemos →
@@ -113,8 +120,8 @@ const steps = [
         </div>
       </div>
 
-      {/* Right: Photo + KPIs + Stack */}
-      <div class="relative flex flex-col gap-7">
+      {/* Right: Photo + KPIs + Stack — desktop only */}
+      <div class="hidden md:flex relative flex-col gap-7">
         {/* Green halo */}
         <div class="absolute pointer-events-none" style="inset:-30px; background:radial-gradient(circle at 30% 40%, rgba(43,182,115,0.12), transparent 65%); filter:blur(8px); z-index:0;"></div>
 

@@ -1,5 +1,5 @@
 ---
-import { CONTACT_PHONE, CONTACT_EMAIL } from '../lib/constants';
+import { CONTACT_PHONE, CONTACT_EMAIL, WHATSAPP_URL } from '../lib/constants';
 
 const accent = '#2BB673';
 const surface = '#121316';
@@ -13,6 +13,13 @@ const cols = [
   { title: 'Empresa',   items: ['Sobre mí','Portfolio','Testimonios','Planes y precios','Preguntas frecuentes'] },
   { title: 'Contacto',  items: [CONTACT_PHONE, CONTACT_EMAIL, 'Córdoba, Argentina', 'Lun–Vie · 9–19', 'WhatsApp directo'] },
 ];
+
+const socials = [
+  { label: 'WA', href: WHATSAPP_URL, title: 'WhatsApp' },
+  { label: 'IG', href: 'https://www.instagram.com/selvadigital_creaciones/', title: 'Instagram' },
+  { label: 'Gh', href: null, title: null },
+  { label: 'In', href: null, title: null },
+];
 ---
 
 <footer style={{ background: surface, borderTop: `1px solid ${line}`, paddingTop: '60px' }}>
@@ -23,17 +30,33 @@ const cols = [
       <div class="flex items-center justify-between mb-6">
         <img src="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png" alt="Selva Digital" class="h-[34px] w-auto" />
         <div class="flex gap-2">
-          {['WA','IG','Gh','In'].map(s => (
-            <a href="#" class="w-8 h-8 flex items-center justify-center text-[10px] font-semibold"
-              style={{
-                background: '#1A1C20',
-                border: `1px solid ${line}`,
-                color: textSoft,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '8px'
-              }}>
-              {s}
-            </a>
+          {socials.map(s => (
+            s.href ? (
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.title}
+                class="w-8 h-8 flex items-center justify-center text-[10px] font-semibold transition-colors hover:text-white"
+                style={{
+                  background: '#1A1C20',
+                  border: `1px solid ${line}`,
+                  color: textSoft,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '8px'
+                }}>
+                {s.label}
+              </a>
+            ) : (
+              <span aria-hidden="true"
+                class="w-8 h-8 flex items-center justify-center text-[10px] font-semibold cursor-default"
+                style={{
+                  background: '#1A1C20',
+                  border: `1px solid ${line}`,
+                  color: 'rgba(250,250,250,0.28)',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '8px',
+                  opacity: 0.55
+                }}>
+                {s.label}
+              </span>
+            )
           ))}
         </div>
       </div>
@@ -50,17 +73,33 @@ const cols = [
           Desarrollo web freelance para PyMEs argentinas. Sitios, e-commerce, sistemas a medida y chatbots con IA. Pago único, sin sorpresas.
         </p>
         <div class="flex gap-2.5">
-          {['WA','IG','Gh','In'].map(s => (
-            <a href="#" class="w-9 h-9 flex items-center justify-center text-[11px] font-semibold transition-colors hover:text-white"
-              style={{
-                background: '#1A1C20',
-                border: `1px solid ${line}`,
-                color: textSoft,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '9px'
-              }}>
-              {s}
-            </a>
+          {socials.map(s => (
+            s.href ? (
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.title}
+                class="w-9 h-9 flex items-center justify-center text-[11px] font-semibold transition-colors hover:text-white"
+                style={{
+                  background: '#1A1C20',
+                  border: `1px solid ${line}`,
+                  color: textSoft,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '9px'
+                }}>
+                {s.label}
+              </a>
+            ) : (
+              <span aria-hidden="true"
+                class="w-9 h-9 flex items-center justify-center text-[11px] font-semibold cursor-default"
+                style={{
+                  background: '#1A1C20',
+                  border: `1px solid ${line}`,
+                  color: 'rgba(250,250,250,0.28)',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '9px',
+                  opacity: 0.55
+                }}>
+                {s.label}
+              </span>
+            )
           ))}
         </div>
       </div>

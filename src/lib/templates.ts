@@ -32,16 +32,16 @@ Con eso te paso una propuesta clara en menos de 24hs.`,
     name: 'Confirmación de proyecto y seña',
     phase: 1,
     description: 'Después del primer call, cuando el cliente está de acuerdo en avanzar.',
-    variables: ['NOMBRE', 'TIPO_PROYECTO', 'MONTO_TOTAL', 'MONTO_SEÑA', 'MONTO_DISENO', 'MONTO_FINAL', 'SEMANAS'],
+    variables: ['NOMBRE', 'TIPO_PROYECTO', 'MONTO_TOTAL', 'MONTO_SEÑA', 'MONTO_FINAL', 'SEMANAS'],
     content: `Buenísimo {NOMBRE}, te confirmo lo que hablamos:
 
 ✓ {TIPO_PROYECTO}
 ✓ Total: ARS {MONTO_TOTAL}
-✓ 40% para arrancar (seña): ${'{MONTO_SEÑA}'}
-✓ 30% al aprobar el diseño: ${'{MONTO_DISENO}'}
-✓ 30% al ver el sitio listo: ${'{MONTO_FINAL}'}
+✓ 50% para arrancar (seña): ${'{MONTO_SEÑA}'}
+✓ 50% al ver el sitio listo (contra entrega): ${'{MONTO_FINAL}'}
 ✓ Plazo: {SEMANAS} semanas desde que arrancamos
-✓ Incluye dominio + hosting 1er año + capacitación
+✓ Incluye diseño, programación y deploy
+✓ Hosting + dominio se contratan a tu nombre (aprox. AR$ 9.300/mes en Hostinger, te asesoro en la elección)
 
 La seña no se devuelve — eso me asegura que arrancamos en serio y vos te asegurás mi tiempo dedicado.
 
@@ -61,7 +61,7 @@ Titular: Christian A. Speziali
 CBU: {CBU}
 Alias: {ALIAS}
 
-Monto seña (40%): ${'{MONTO_SEÑA}'}
+Monto seña (50%): ${'{MONTO_SEÑA}'}
 
 Cuando me mandés el comprobante arrancamos esa misma semana.
 Si preferís MercadoPago, decime y te mando link 👌`,
@@ -102,16 +102,11 @@ Esperamos 1-2 días para tu feedback y arranco la programación.`,
     name: 'Aprobación de diseño + segundo pago',
     phase: 4,
     description: 'Cuando el cliente aprueba el diseño.',
-    variables: ['NOMBRE', 'MONTO_DISENO', 'ALIAS', 'DIAS'],
+    variables: ['NOMBRE', 'DIAS'],
     content: `Genial {NOMBRE}, queda confirmado el diseño ✅
 
-Para arrancar la programación, te toca el segundo pago:
+Con esto arranco a programar — no hay pago intermedio, el segundo y último pago va contra entrega del sitio terminado.
 
-🏦 Monto (30%): ${'{MONTO_DISENO}'}
-Mismos datos de antes:
-Alias: {ALIAS}
-
-Cuando me mandés el comprobante arranco a programar.
 En {DIAS} días tenés el demo navegable listo 💪`,
   },
   {
@@ -128,9 +123,9 @@ Te paso el link al demo (anda solo desde este link, no te preocupes si no se ve 
 
 Revisalo con calma, probá los formularios, navegá desde celular y desktop. Cualquier ajuste menor lo hacemos sin problema.
 
-Para publicarlo en tu dominio final ({DOMINIO}), te toca el último 30%:
+Para publicarlo en tu dominio final ({DOMINIO}), te toca el último 50%:
 
-🏦 Monto final (30%): ${'{MONTO_FINAL}'}
+🏦 Monto final (50%): ${'{MONTO_FINAL}'}
 Alias: {ALIAS}
 
 Cuando me llegue, lo deployo y te paso las llaves del panel para que edites lo que necesites 🔑`,

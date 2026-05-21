@@ -25,9 +25,9 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
   const calculated = useMemo(() => {
     const total = parseFloat(form.total_amount) || 0;
     return {
-      deposit: Math.round(total * 0.4),
-      design: Math.round(total * 0.3),
-      final: Math.round(total * 0.3),
+      deposit: Math.round(total * 0.5),
+      design: 0,
+      final: Math.round(total * 0.5),
     };
   }, [form.total_amount]);
 
@@ -50,9 +50,9 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
       project_type: form.project_type,
       status: form.status,
       total_amount: total || null,
-      deposit_amount: total ? Math.round(total * 0.4) : null,
-      design_amount: total ? Math.round(total * 0.3) : null,
-      final_amount: total ? Math.round(total * 0.3) : null,
+      deposit_amount: total ? Math.round(total * 0.5) : null,
+      design_amount: null,
+      final_amount: total ? Math.round(total * 0.5) : null,
       weeks: form.weeks ? parseInt(form.weeks) : null,
     };
 
@@ -165,17 +165,13 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Seña (40%)</label>
+            <label className={labelClass}>Seña (50%)</label>
             <input value={calculated.deposit ? `$${calculated.deposit.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
           <div>
-            <label className={labelClass}>Diseño (30%)</label>
-            <input value={calculated.design ? `$${calculated.design.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
-          </div>
-          <div>
-            <label className={labelClass}>Final (30%)</label>
+            <label className={labelClass}>Final (50%)</label>
             <input value={calculated.final ? `$${calculated.final.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
         </div>

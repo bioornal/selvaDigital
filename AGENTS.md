@@ -30,8 +30,13 @@
 - `npm run preview` — preview build
 
 ## Design System
-- Typography: Nova Square (headings) + Inter (body) + JetBrains Mono (code)
-- Colors: `azure-radiance` (primary blue) + `ai-violet` (AI section accent)
+- Typography: Geist (headings) + Inter (body) + JetBrains Mono (code/kickers)
+- Colors:
+  - Accent principal: **Emerald `#2BB673`** (CTAs, kickers, highlights de texto y "featured")
+  - Acento secundario: **Electric Cyan `#00E5FF` / `rgba(0, 229, 255, 0.45)`** — separadores globales entre secciones, barra de progreso de scroll, líneas sutiles
+  - Background: `#0A0B0D` (body) / `#121316` (surface)
+  - Text: `white #FAFAFA` / `textSoft rgba(250,250,250,0.72)` / `textDim rgba(250,250,250,0.58)` (boosted vía global.css para cumplir WCAG AA)
+  - NOTA: las clases Tailwind legacy `azure-radiance` y `ai-violet` quedaron del design system anterior y NO se usan en componentes activos (sólo en el config de Tailwind por compatibilidad).
 - Buttons: ALL CTA/action buttons use `rounded-none` (90° rectangular corners)
 - Decorative elements (badges, tags, orbs, profile photo, WhatsApp float) retain `rounded-full`
 - All prices in ARS, one-time payment (50/50 inicio/entrega)
@@ -42,21 +47,23 @@
 ```
 src/
 ├── components/
-│   ├── Header.tsx          — max-w-[1400px], 4 menu items, compact "PIDA PRESUPUESTO" button
-│   ├── Hero.tsx            — Video bg (Cloudinary), AnimatedOrbs, 34 tech logos, typewriter, 2 CTA buttons
-│   ├── Services.astro      — Merged About+Services: profile photo, bio, services, process steps
-│   ├── Portfolio.astro     — 9 projects, uses ProjectCard.astro (no inline duplication)
-│   ├── ProjectCard.astro   — Reusable project card (mobile + desktop variants)
-│   ├── AIChatbots.astro    — Neural Interface design: centered header, 2-col stretch layout, video left, 6 cards + CTA right
-│   ├── Apps.astro          — Static AI image with gradient glow, feature list, CTA
-│   ├── Precios.astro       — 7 plans, uses PlanCard.astro (no inline duplication)
-│   ├── PlanCard.astro      — Reusable pricing card (mobile + desktop + advanced variants)
-│   ├── FAQ.astro           — 8 questions, vanilla JS accordion
-│   ├── Contact.tsx         — Form (Formik+Yup), Resend email, phone, email, location
-│   ├── Banner.tsx          — 20% OFF discount banner (honest, no fake countdown)
-│   ├── Footer.astro        — Menu, email, phone, logo
+│   ├── Header.tsx          — max-w-[1320px], 5 menu items, "Pedir presupuesto →" CTA emerald
+│   ├── Hero.astro          — Video bg desktop / dot grid mobile, eyebrow cupos, stats grid, microcopy
+│   ├── ServicesV2.astro    — 5 service cards (sitios, e-commerce, sistemas, chatbots, SEO)
+│   ├── Portfolio.astro     — 9 proyectos con KPI y stack visible (inline, sin sub-component)
+│   ├── AboutV2.astro       — Foto perfil + bio + KPIs + stack + tabla "cómo trabajo" (mobile accordion)
+│   ├── Manifiesto.astro    — 3 pilares con íconos (precio fijo / respuesta directa / pago único)
+│   ├── Testimonios.astro   — 6 testimonios reales con avatares iniciales + KPI badge
+│   ├── AIChatbots.astro    — 2-col: kicker+title+6 cards+CTAs (izq) + ChatPreview React (der, md+)
+│   ├── ChatPreview.tsx     — Animated chat demo (client:visible)
+│   ├── Apps.astro          — Static AI image con gradient glow, feature list, CTA
+│   ├── Precios.astro       — 7 planes con tabs (Webs / Sistemas), pricing inline (sin PlanCard)
+│   ├── FAQ.astro           — 9 preguntas, vanilla JS accordion, aria-controls + focus visible
+│   ├── Contact.tsx         — Form (Formik+Yup) + presupuesto toggle, Resend email
+│   ├── Banner.tsx          — 20% OFF discount banner (localStorage, sin fake countdown)
+│   ├── Footer.astro        — Menu, email, phone, logo, socials
 │   ├── WhatsAppButton.tsx  — Floating WhatsApp button
-│   ├── WaveSeparator.astro — Wave SVG separator
+│   ├── SectionDivider.astro — Divisor cian sutil entre secciones
 │   ├── admin/
 │   │   ├── AdminLogin.tsx     — Supabase auth login form
 │   │   ├── AdminDashboard.tsx — Stats + clients table + navigation
@@ -78,7 +85,7 @@ src/
 │   ├── Layout.astro        — Schema.org Person, security headers, font preload, SEO
 │   └── AdminLayout.astro   — Minimal dark layout for admin panel
 ├── pages/
-│   ├── index.astro         — Hero → Wave → Services → Portfolio → AIChatbots → Apps → Precios → FAQ → Contact
+│   ├── index.astro         — Hero → Services(01) → Portfolio(02) → AboutV2(03) → Manifiesto(04) → Testimonios(05) → AIChatbots(06) → Apps(07) → Precios(08) → FAQ(09) → Contact(10). Prerender estático.
 │   ├── admin/
 │   │   ├── login.astro        — Admin login page
 │   │   ├── index.astro        — Admin dashboard
@@ -97,15 +104,11 @@ src/
     └── global.css          — Typography rules + heroFade keyframe
 ```
 
-## AIChatbots Section (latest redesign)
-- Esthetic: "Neural Interface" — dark, cinematic, neon violet accents
-- Layout: centered header (badge + title + subtitle), then flex 2-col with `align-items: stretch`
-- Left col: vertical video (220px, `height: 100%`, scanline overlay, neon border with box-shadow, `playbackRate: 0.5`)
-- Right col: flex column with `flex: 1` cards grid + `flex: 1` CTA box — both stretch to match video height
-- Cards: border-left violet accent, hover glow, staggered fadeIn entrance
-- CTA: `rounded-none` button with sweep glow hover effect
-- Custom CSS (scoped `<style>`), no Tailwind utility classes in this component
-- Video playbackRate set via `<script>` tag
+## AIChatbots Section (estado actual)
+- Layout 2-col en desktop: kicker + título + 6 feature cards + 2 CTAs (izq) / `ChatPreview` React animado (der, md+)
+- En mobile: sólo la columna izquierda (sin chat preview), y se reemplazan los 2 CTAs por uno único "Ver Chatbot en vivo →" (emerald)
+- Feature cards con dot violet (`#8B5CF6`) y spotlight glow al pasar el mouse
+- Desktop conserva los 2 CTAs originales: "Pedir demo gratis" (emerald) + "Ver Megabot en vivo →" (outline)
 
 ## Key Decisions
 - Freelancer over agency — all text first-person singular
@@ -159,11 +162,66 @@ src/
 - 📱 Mobile UX: AboutV2 compactado (1 párrafo en lugar de 3, foto + KPIs + stack + botones ocultos en mobile). Portfolio cards con gap explícito (28-32px md/lg) para evitar override del `gap: revert` global.
 - 🗑 FAQ: eliminada pregunta "El código queda mío" (el código queda con el dev). Reemplazada por "Cambios post-entrega" y "¿Y si no me gusta el diseño?".
 
-## Phase 6 (Future)
+## Phase 6 (Audit & Optimization — May 2026)
+- ⚡ **Rendimiento e Integridad Técnica**: Forzado de pre-renderizado estático (`prerender = true`) en `src/pages/index.astro` para servir la landing page directamente desde la CDN Edge de Vercel en milisegundos.
+- ⚡ **Interactividad de Alta Gama**: Implementación de animaciones de scroll con `IntersectionObserver` y delays en cascada (stagger), y efecto de halo interactivo que sigue al mouse (*Spotlight Glow*) en las tarjetas de precios/servicios.
+- ⚡ **Integridad del Design System**: Conversión de todos los botones de acción principales y CTAs a esquinas de 90° (`rounded-none`). Barra superior indicadora de progreso de scroll en color Electric Cyan.
+- ⚡ **Optimización de Conversión (CRO)**: Incorporación de 6 testimonios auténticos de clientes locales vinculados al portfolio con métricas reales, y adición de microcopy de confianza bajo los CTAs principales del Hero para incentivar la acción y reserva inmediata de cupos.
+- ⚡ **Accesibilidad y Contraste WCAG AA**: Modificación responsiva en `global.css` para elevar automáticamente la opacidad de los textos secundarios grises (`rgba(250,250,250,0.46)`) en pantallas móviles (menores a 768px) para asegurar legibilidad perfecta de 4.5:1 bajo luz de día directa.
+
+## Phase 7 (Pre-launch Polish — May 2026)
+- 🧹 Código muerto eliminado: `PlanCard.astro`, `ProjectCard.astro`, `HeroDynamic.tsx`, `Services.astro`, `WaveSeparator.astro`, `WaveSeparatorInverted.astro` (resuelve drift de paleta — el sitio activo es 100% emerald + cian).
+- 🔢 Reordenamiento: AboutV2 + Manifiesto subidos de la posición 8-9 a 3-4, antes de Testimonios. Numeración de kickers re-secuenciada 01-10 (Contact pasó de 09 duplicado a 10).
+- 🔍 SEO: og:image apunta al logo Cloudinary, Schema.org enriquecido con `ProfessionalService` + `OfferCatalog` (6 ofertas con precios ARS), sitemap.xml actualizado, robots.txt bloquea `/admin` y `/api/`, AdminLayout con `meta robots noindex`.
+- ♿ Accesibilidad: `textDim` global subido de 0.46 → 0.58 para pasar WCAG AA en desktop (mobile boost a 0.66). `aria-controls` + `aria-labelledby` en FAQ. `aria-hidden` en SVGs decorativos (Testimonios quote, Manifiesto icons, FAQ chevron). Focus visible global con outline emerald.
+
+## Phase 8 (Mobile UX Reduction — May 2026)
+Premisa de la fase: **mobile escanea, no lee**. Cada elemento que no convierte = ruido. Cortar, no agregar. Desktop intocado en toda la fase.
+
+- 📐 **Hero mobile compactado**: stats grid de 4 → 2 ($0 cuotas y 100% código quedan sólo desktop con clase `.hide-on-mobile`). H1 baja `font-size` mínimo de 48px → 38px con line-height 0.98 para no romper en 320px. Segundo CTA "Ver portfolio →" pasa de botón a link discreto subrayado en mobile (el primario gana foco).
+- ✂️ **Carousels recortados en mobile**:
+  - Portfolio 9 → 4 destacados + link "Ver los 5 restantes →" expandible (revela el resto sin cargar otra página).
+  - Testimonios 6 → 3 cards.
+  - AIChatbots 6 features → 4 clave.
+  Las cards extras se ocultan con `.hide-on-mobile` (display: none < 768px), sin afectar el grid desktop.
+- 🟢 **Carousel dots minimal**: indicador de posición (5px, emerald activo se estira a 18×5px tipo "pill") en Portfolio, Testimonios, Services, Precios (web + sistemas). Inicialización JS centralizada en `Layout.astro` — busca `.mobile-carousel[data-dots]` y crea dots en su contenedor `[data-dots-for="..."]`.
+- 📝 **Manifiesto compactado mobile**: cada pilar tiene `descShort` (≤12 palabras) que se muestra `md:hidden`, y `desc` original `hidden md:block`. -60% texto leído en mobile.
+- 📄 **FAQ compactación mobile**: padding del trigger `py-5 px-5` → `13px × 16px`, font-size `15.5 → 14.5`, gap entre items `8 → 6px`, content padding `pb-5 + 56px` → `14px + 42px`, font respuesta `14 → 13px`, gap heading↔accordion `64 → 32px`. Cada caja ~35% más baja.
+- 🦶 **Footer tape strip** (largo, no entra en una línea < 480px): oculto en mobile con `hidden md:block`.
+- ⏱ **Reveal delays cap mobile**: `delay-200/250/300/400` se capean a 120-180ms en `<768px` para que cards no aparezcan tarde al scrollear rápido.
+- 🧰 **Utilidades globales nuevas** en `global.css`:
+  - `.hide-on-mobile` — `display: none !important` < 768px
+  - `.carousel-dots` + `.carousel-dot` / `.carousel-dot.active`
+  - Cap de delays en cascada para mobile
+
+Resultado neto: ~30% menos scroll vertical en la mitad-arriba de la home mobile. No se agregaron CTAs nuevos — el WhatsApp flotante ya cumple ese rol y duplicarlo en el Header habría generado ruido sin ganancia.
+
+## Phase 9 (Mobile Typography Consistency + FAQ Image — May 2026)
+Premisa: en mobile cada sección tenía su propio tamaño de H2 (26–36px), su propia alineación (AboutV2 era el único `text-left`), y sus subtítulos variaban entre 14.5 y 17px. Ruido visual sin razón funcional. Desktop intocado en toda la fase.
+
+- 🧰 **Utilidades globales nuevas** en `global.css` dentro de `@media (max-width: 767px)` con `!important` (para vencer los `style="font-size:clamp(...)"` inline):
+  - `.section-h2` → 30px / line-height 1.05 / letter-spacing -0.025em / text-align center
+  - `.section-sub` → 15.5px / line-height 1.55 / text-align center
+  - `.card-body` → 13.5px / line-height 1.55
+  - `.section-heading` → fuerza centro al wrapper del bloque heading (cubre AboutV2 que era `text-left`)
+- 📐 **10 secciones unificadas** con las clases anteriores: AboutV2, Apps, AIChatbots, Manifiesto, Testimonios, Precios, FAQ, Portfolio, ServicesV2, Contact. Antes los H2 oscilaban entre 26px (Precios) y 36px (resto) y los subs entre 14.5px y 17px.
+- ✍️ **Testimonios H2 mobile reescrito**: "No hace falta que vos confíes en mí." → "No me creas a mí." (en mobile vía `md:hidden`/`hidden md:inline`). El original wrappeaba a 3+ líneas con el nuevo tamaño 30px centrado. Desktop conserva el copy original.
+- 🎯 **CTAs alineados al heading en mobile**:
+  - Apps: `<div class="text-center md:text-left">` envolviendo el CTA "Contame tu idea →"
+  - AIChatbots: `justify-center lg:justify-start` en el flex wrapper de CTAs
+- 🤖 **AIChatbots CTA único en mobile**: en `<768px` los 2 botones desktop se ocultan y aparece uno solo "Ver Chatbot en vivo →" (emerald). Reduce ruido en mobile sin tocar desktop. Implementación: 3 `<a>` con `hidden md:inline-flex` / `md:hidden inline-flex`.
+- 🖼 **FAQ desktop — imagen decorativa en columna izquierda**: nueva imagen de selva tropical con luz emerald (`Cloudinary: ChatGPT_Image_22_may_2026_11_48_27_a.m._jpiiau.png`) bajo el CTA "Hacer una consulta →". Transforms: `c_fill,g_auto,w_900,h_1200,q_auto,f_auto`. Halo emerald sutil detrás (mismo recurso que AboutV2). `loading="lazy"` + `decoding="async"`. Mobile: oculta con `hidden md:flex`.
+- 📏 **FAQ grid restructurado para que las columnas tengan el mismo alto**: pasó de `items-start` → `items-stretch`. La columna izquierda dejó de ser `md:sticky` y ahora es `flex flex-col` — heading/sub/CTA apilados arriba y la imagen toma `flex-1 min-h-[420px]` para rellenar exactamente el alto de la lista de FAQs de la derecha.
+
+Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre en 1 línea (los `<br>` lo garantizan), subtítulos uniformes. En desktop el FAQ ya no tiene hueco vertical en la columna izquierda.
+
+## Phase 10 (Future)
 - Blog with Astro content collections
 - Legal pages (términos, privacidad)
 - reCAPTCHA v3 for contact form
-- Client testimonials con datos reales (desbloquea stats outcome del Hero)
+- Reemplazar Framer Motion en Header por CSS transitions (-80kB del bundle del index)
+- CSP header en `vercel.json`
+- A/B test del Banner modal 20% OFF (¿realmente convierte o sólo interrumpe?)
 
 ## Rules
 - NO push to GitHub unless explicitly requested

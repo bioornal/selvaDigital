@@ -25,20 +25,48 @@ const schemaOrgJSON = {
     {
       "@type": "Person",
       "@id": "https://www.selvadigital.com/#person",
-      "name": "Selva Digital",
+      "name": "Christian Speziali",
+      "alternateName": "Selva Digital",
       "description": "Desarrollador web freelance — diseño, desarrollo, e-commerce, sistemas a medida y chatbots con IA para PyMEs en Argentina",
       "url": "https://www.selvadigital.com",
-      "telephone": "+54-3548-550334",
+      "telephone": "+54-9-3548-550334",
       "email": "info.selvadigital@gmail.com",
+      "image": "https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg",
+      "jobTitle": "Desarrollador web freelance",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Córdoba",
         "addressCountry": "AR"
       },
+      "areaServed": { "@type": "Country", "name": "Argentina" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.selvadigital.com/#service",
+      "name": "Selva Digital",
+      "url": "https://www.selvadigital.com",
+      "image": "https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png",
+      "telephone": "+54-9-3548-550334",
+      "email": "info.selvadigital@gmail.com",
       "priceRange": "$250.000 - $1.500.000 ARS",
-      "areaServed": {
-        "@type": "Place",
-        "name": "Argentina"
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Córdoba",
+        "addressCountry": "AR"
+      },
+      "areaServed": { "@type": "Country", "name": "Argentina" },
+      "provider": { "@id": "https://www.selvadigital.com/#person" },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Planes y servicios",
+        "itemListElement": [
+          { "@type": "Offer", "name": "Landing Page",           "price": "250000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sitio Web Corporativo",  "price": "350000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sitio Web Extendido",    "price": "450000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Tienda E-commerce",      "price": "1300000", "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sistema a medida",       "price": "1200000", "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Chatbot con IA",         "price": "1500000", "priceCurrency": "ARS" }
+        ]
       }
     },
     {
@@ -46,9 +74,8 @@ const schemaOrgJSON = {
       "@id": "https://www.selvadigital.com/#website",
       "url": "https://www.selvadigital.com",
       "name": "Selva Digital",
-      "publisher": {
-        "@id": "https://www.selvadigital.com/#business"
-      }
+      "inLanguage": "es-AR",
+      "publisher": { "@id": "https://www.selvadigital.com/#service" }
     }
   ]
 };
@@ -67,7 +94,8 @@ const schemaOrgJSON = {
     <meta name="author" content="Selva Digital">
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="/images/og-image.jpg">
+    <meta property="og:image" content="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png">
+    <meta property="og:image:alt" content="Selva Digital — desarrollo web freelance para PyMEs">
     <meta property="og:url" content={canonicalURL}>
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_AR">
@@ -102,6 +130,7 @@ const schemaOrgJSON = {
     )}
   </head>
   <body class="bg-v2-bg text-white font-body">
+    <div id="scroll-progress" aria-hidden="true"></div>
     <Header client:load />
     <main>
       <slot />
@@ -109,5 +138,106 @@ const schemaOrgJSON = {
     <Footer />
     <WhatsAppButton client:load />
     <Banner client:load />
+
+    <script>
+      function initAnimations() {
+        // 1. Reading Progress Bar
+        const progressBar = document.getElementById('scroll-progress');
+        const handleScroll = () => {
+          if (!progressBar) return;
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalHeight <= 0) {
+            progressBar.style.width = '0%';
+            return;
+          }
+          const progress = (window.scrollY / totalHeight) * 100;
+          progressBar.style.width = `${progress}%`;
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Run once initially
+
+        // 2. ScrollReveal (IntersectionObserver)
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+          root: null,
+          rootMargin: '-30px 0px',
+          threshold: 0.05
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // 2.5. Carousel dots — mobile only. Cada .mobile-carousel con
+        //      `data-dots` busca su contenedor `.carousel-dots` sibling y
+        //      crea un dot por cada hijo visible (no hidden, no .hide-on-mobile).
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          const carousels = document.querySelectorAll<HTMLElement>('.mobile-carousel[data-dots]');
+          carousels.forEach((carousel) => {
+            const dotsContainer = document.querySelector<HTMLElement>(
+              `[data-dots-for="${carousel.dataset.dots}"]`
+            );
+            if (!dotsContainer) return;
+
+            const items = Array.from(carousel.children).filter(
+              (el) => !(el as HTMLElement).classList.contains('hide-on-mobile')
+            ) as HTMLElement[];
+            if (items.length < 2) return;
+
+            dotsContainer.innerHTML = '';
+            items.forEach((_, i) => {
+              const dot = document.createElement('span');
+              dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+              dotsContainer.appendChild(dot);
+            });
+
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+            const updateActive = () => {
+              const scrollLeft = carousel.scrollLeft;
+              const cardWidth = items[0].getBoundingClientRect().width;
+              const gap = parseFloat(getComputedStyle(carousel).gap || '16');
+              const idx = Math.round(scrollLeft / (cardWidth + gap));
+              const clamped = Math.max(0, Math.min(items.length - 1, idx));
+              dots.forEach((d, i) => d.classList.toggle('active', i === clamped));
+            };
+
+            carousel.addEventListener('scroll', updateActive, { passive: true });
+            updateActive();
+          });
+        }
+
+        // 3. Spotlight Cards Glow Effect (Mouse Move listener)
+        if (window.matchMedia('(hover: hover)').matches) {
+          const spotlightCards = document.querySelectorAll('.spotlight-card');
+          spotlightCards.forEach(card => {
+            const htmlCard = card as HTMLElement;
+            htmlCard.addEventListener('mousemove', (e: MouseEvent) => {
+              const rect = htmlCard.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              htmlCard.style.setProperty('--mouse-x', `${x}px`);
+              htmlCard.style.setProperty('--mouse-y', `${y}px`);
+            });
+          });
+        }
+      }
+
+      // Bind to Astro view transition page load
+      document.addEventListener('astro:page-load', initAnimations);
+      // Fallback in case DOM is already loaded
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initAnimations();
+      } else {
+        document.addEventListener('DOMContentLoaded', initAnimations);
+      }
+    </script>
   </body>
 </html>

@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import ServicesV2 from '../components/ServicesV2.astro';
@@ -19,21 +21,22 @@ import SectionDivider from '../components/SectionDivider.astro';
   description="Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
 >
   <Hero />
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
   <ServicesV2 />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
   <Portfolio />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
-  <Testimonios />
-  <AIChatbots />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
-  <Apps />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
-  <Precios />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
-  <FAQ />
-  <div class="md:hidden" style="height:1px; background:rgba(250,250,250,0.08);"></div>
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
   <AboutV2 />
   <Manifiesto />
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <Testimonios />
+  <AIChatbots />
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <Apps />
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <Precios />
+  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <FAQ />
   <SectionDivider />
   <Contact client:load />
 </Layout>

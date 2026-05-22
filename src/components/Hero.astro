@@ -11,8 +11,8 @@ const lineStr = 'rgba(250,250,250,0.18)';
 const stats = [
   { n: '15+', k: 'proyectos en producción' },
   { n: '<24h', k: 'respondo tu pedido inicial' },
-  { n: '$0', k: 'cuotas mensuales' },
-  { n: '100%', k: 'código propio, sin templates' },
+  { n: '$0', k: 'cuotas mensuales', desktopOnly: true },
+  { n: '100%', k: 'código propio, sin templates', desktopOnly: true },
 ];
 
 const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip Traslados','Impasto Pizzería','Megabot Admin','Recetario Napolitano'];
@@ -56,7 +56,7 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
   <div class="hero-inner relative z-10 max-w-[1320px] mx-auto px-6 md:px-10 w-full">
     <div class="max-w-[1180px]">
       {/* Eyebrow — Cupos */}
-      <div class="inline-flex items-center gap-3 px-4 py-[7px] hero-eyebrow" style={`border:1px solid ${line}; background:rgba(18,19,22,0.7); backdrop-filter:blur(8px); border-radius:999px;`}>
+      <div class="inline-flex items-center gap-3 px-4 py-[7px] hero-eyebrow reveal reveal-slide-up delay-75" style={`border:1px solid ${line}; background:rgba(18,19,22,0.7); backdrop-filter:blur(8px); border-radius:999px;`}>
         <span class="relative flex h-[8px] w-[8px]">
           <span class="absolute inline-flex h-full w-full opacity-60 hero-eyebrow-ping" style={`background:${accent}; border-radius:50%;`}></span>
           <span class="relative inline-flex h-[8px] w-[8px]" style={`background:${accent}; border-radius:50%; box-shadow:0 0 12px ${accent};`}></span>
@@ -72,37 +72,49 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
       </div>
 
       {/* Headline */}
-      <h1 class="hero-h1 text-white">
+      <h1 class="hero-h1 text-white reveal reveal-slide-up delay-100">
         Tu web vendiendo 24/7.<br><span style={{ color: accent }}>Sin cuotas, sin agencia.</span>
       </h1>
 
       {/* Subhead */}
-      <p class="hero-subhead max-w-[640px]" style={{ color: textSoft }}>
+      <p class="hero-subhead max-w-[640px] reveal reveal-slide-up delay-150" style={{ color: textSoft }}>
         Convertí tu WhatsApp saturado en un negocio que atiende, vende
         y cobra solo. Para PyMEs argentinas cansadas de pagar agencias
         sin ver resultados.
       </p>
 
       {/* CTAs */}
-      <div class="hero-ctas flex flex-wrap items-center gap-3">
-        <a href="#contacto" class="inline-flex items-center gap-2 px-7 py-4 text-[15px] font-semibold transition-all duration-200 hover:brightness-110"
-          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
-          Pedir presupuesto
-          <span>→</span>
-        </a>
-        <a href="#portfolio" class="inline-flex items-center gap-2 px-6 py-4 text-[15px] font-medium transition-all duration-200"
-          style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
-          Ver portfolio →
-        </a>
-        <span class="text-[11px] tracking-[1.5px] ml-2 hidden md:inline" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-          WHATSAPP · +54 9 3548 550334
-        </span>
+      <div class="hero-ctas flex flex-col gap-3.5 reveal reveal-slide-up delay-200">
+        <div class="flex flex-wrap items-center gap-3 w-full">
+          <a href="#contacto" class="inline-flex items-center gap-2 px-7 py-4 text-[15px] font-semibold rounded-none transition-all duration-200 hover:brightness-110"
+            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
+            Pedir presupuesto
+            <span>→</span>
+          </a>
+          {/* Desktop: botón secundario | Mobile: link discreto */}
+          <a href="#portfolio" class="hidden md:inline-flex items-center gap-2 px-6 py-4 text-[15px] font-medium rounded-none transition-all duration-200"
+            style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
+            Ver portfolio →
+          </a>
+          <a href="#portfolio" class="md:hidden text-[14px] font-medium underline underline-offset-4 decoration-1"
+            style={{ color: textSoft, textDecorationColor: 'rgba(250,250,250,0.25)', fontFamily: "'Inter', system-ui, sans-serif" }}>
+            Ver portfolio →
+          </a>
+          <span class="text-[11px] tracking-[1.5px] ml-2 hidden md:inline" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+            WHATSAPP · +54 9 3548 550334
+          </span>
+        </div>
+
+        {/* Microcopy de Confianza */}
+        <p class="text-[12px] max-w-[620px] leading-relaxed mt-0.5" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          ✨ <strong style={{ color: textSoft }}>Reservá tu diagnóstico sin cargo hoy</strong> y congelá la tarifa. Seña del 50% al iniciar para guardar tu lugar y asegurar tu fecha de entrega en junio.
+        </p>
       </div>
 
       {/* Stats */}
-      <div class="hero-stats grid grid-cols-2 md:grid-cols-4" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:rgba(18,19,22,0.5); backdrop-filter:blur(12px);`}>
+      <div class="hero-stats grid grid-cols-2 md:grid-cols-4 reveal reveal-slide-up delay-250" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:rgba(18,19,22,0.5); backdrop-filter:blur(12px);`}>
         {stats.map((s, i) => (
-          <div class={`hero-stat-cell hero-stat-cell-${i} flex flex-col gap-1.5 py-3.5 px-4 md:py-4 md:px-6 min-w-0`}>
+          <div class={`hero-stat-cell hero-stat-cell-${i} flex flex-col gap-1.5 py-3.5 px-4 md:py-4 md:px-6 min-w-0 ${s.desktopOnly ? 'hide-on-mobile' : ''}`}>
             <span class="font-geist text-white leading-none hero-stat-num"
               style="letter-spacing:-0.02em; font-weight:500;">
               {s.n}
@@ -138,10 +150,16 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
   .hero-h1 {
     font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
     font-weight: 700 !important;
-    font-size: clamp(48px, 6vw, 84px) !important;
-    line-height: 0.96 !important;
+    font-size: clamp(38px, 9vw, 84px) !important;
+    line-height: 0.98 !important;
     letter-spacing: -0.035em !important;
     margin: 0 0 clamp(22px, 3vh, 32px) 0 !important;
+  }
+  @media (min-width: 768px) {
+    .hero-h1 {
+      font-size: clamp(48px, 6vw, 84px) !important;
+      line-height: 0.96 !important;
+    }
   }
 
   .hero-subhead {
@@ -181,27 +199,23 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
     white-space: nowrap;
   }
 
-  /* Borders de las celdas: mobile (2 cols) vs desktop (4 cols) */
-  .hero-stat-cell-0, .hero-stat-cell-2 {
+  /* Mobile: sólo 2 stats visibles (cells 0 y 1), borde divisorio vertical entre ellas */
+  .hero-stat-cell-0 {
     border-right: 1px solid rgba(250,250,250,0.08);
   }
-  .hero-stat-cell-0, .hero-stat-cell-1 {
-    border-bottom: 1px solid rgba(250,250,250,0.08);
-  }
+  /* Desktop: 4 stats, separadores verticales entre todas excepto la última */
   @media (min-width: 768px) {
     .hero-stat-cell-0, .hero-stat-cell-1, .hero-stat-cell-2 {
       border-right: 1px solid rgba(250,250,250,0.08);
-    }
-    .hero-stat-cell-0, .hero-stat-cell-1 {
-      border-bottom: none;
     }
   }
 </style>
 
 
-{/* Clients strip — desktop only */}
-<section class="clients-strip hidden md:block" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`}>
-  <div class="clients-strip-inner max-w-[1320px] mx-auto px-6 md:px-10 py-5 flex items-center gap-6 md:gap-10 md:flex-wrap">
+{/* Clients strip — desktop: estático con wrap | mobile: marquee infinito */}
+<section class="clients-strip" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`} aria-label="Clientes">
+  {/* Desktop */}
+  <div class="hidden md:flex clients-strip-inner max-w-[1320px] mx-auto px-6 md:px-10 py-5 items-center gap-6 md:gap-10 md:flex-wrap">
     <span class="text-[11px] tracking-[2.5px] uppercase whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
       CLIENTES //
     </span>
@@ -211,7 +225,62 @@ const clients = ['MegaMuebles','El Fogón Delivery','Iguazú Falls Lodge','Vip T
       </span>
     ))}
   </div>
+
+  {/* Mobile: marquee infinito */}
+  <div class="md:hidden clients-marquee py-3.5" aria-hidden="true">
+    <div class="clients-marquee-track">
+      {[...clients, ...clients].map(c => (
+        <span class="clients-marquee-item" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>
+          <span class="clients-marquee-dot" style={{ background: accent }}></span>
+          {c}
+        </span>
+      ))}
+    </div>
+  </div>
 </section>
+
+<style>
+  /* Marquee mobile — scroll horizontal infinito */
+  .clients-marquee {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  }
+  .clients-marquee-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding-left: 28px;
+    white-space: nowrap;
+    animation: clientsMarquee 28s linear infinite;
+    width: max-content;
+  }
+  .clients-marquee-item {
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    opacity: 0.82;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .clients-marquee-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 6px currentColor;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  @keyframes clientsMarquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .clients-marquee-track { animation: none; }
+  }
+</style>
 
 <script>
   // Slow down hero video for cinematic feel. Only runs if video element exists

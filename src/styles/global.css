@@ -183,3 +183,234 @@
     flex-shrink: revert;
   }
 }
+
+/* =========================================================
+   SISTEMA DE REVELADO POR SCROLL (SCROLL REVEAL)
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-slide-up {
+  transform: translateY(30px);
+}
+
+.reveal-slide-left {
+  transform: translateX(-30px);
+}
+
+.reveal-slide-right {
+  transform: translateX(30px);
+}
+
+.reveal-fade {
+  transform: none;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Delays para Stagger */
+.delay-75 { transition-delay: 75ms; }
+.delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* =========================================================
+   EFECTO INTERACTIVO SPOTLIGHT GLOW (CURSOR MOVE OVERLAY)
+   ========================================================= */
+.spotlight-card {
+  position: relative;
+  --spotlight-color: 43, 182, 115; /* Verde por defecto */
+}
+
+/* Borde spotlight */
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* grosor del borde */
+  background: radial-gradient(
+    300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(var(--spotlight-color), 0.38),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+/* Fondo spotlight */
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(var(--spotlight-color), 0.04),
+    transparent 50%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before,
+.spotlight-card:hover::after {
+  opacity: 1;
+}
+
+/* Accesibilidad: focus visible global para navegación con teclado */
+:focus-visible {
+  outline: 2px solid #2BB673;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =========================================================
+   MOBILE REDUCTION UTILITIES — solo afectan <768px
+   ========================================================= */
+@media (max-width: 767px) {
+  /* Oculta el elemento sólo en mobile (desktop intacto) */
+  .hide-on-mobile { display: none !important; }
+
+  /* Cap de delays en cascada — reveal se siente fluido sin esperas */
+  .reveal.delay-200 { transition-delay: 120ms !important; }
+  .reveal.delay-250 { transition-delay: 140ms !important; }
+  .reveal.delay-300 { transition-delay: 160ms !important; }
+  .reveal.delay-400 { transition-delay: 180ms !important; }
+
+  /* =========================================================
+     TIPOGRAFÍA UNIFICADA DE SECCIÓN (mobile-only)
+     Aplican !important para vencer inline `style="font-size:..."`.
+     Desktop intacto: estas reglas viven dentro del media query.
+     ========================================================= */
+  .section-h2 {
+    font-size: 30px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.025em !important;
+    text-align: center !important;
+  }
+  .section-sub {
+    font-size: 15.5px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+  .card-body {
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+  }
+  /* Contenedor de heading: fuerza centro en mobile (cubre el caso AboutV2). */
+  .section-heading {
+    text-align: center !important;
+  }
+  .section-heading > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Carousel dots minimal — sólo mobile */
+.carousel-dots {
+  display: none;
+}
+@media (max-width: 767px) {
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 18px;
+    padding: 0 24px;
+  }
+  .carousel-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(250, 250, 250, 0.18);
+    transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease;
+    flex-shrink: 0;
+  }
+  .carousel-dot.active {
+    background: #2BB673;
+    width: 18px;
+    border-radius: 3px;
+  }
+}
+
+/* Barra de progreso de lectura */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #00E5FF;
+  width: 0%;
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+}
+
+/* Efecto de Zoom Out Progresivo para Imágenes */
+.reveal-zoom-out {
+  overflow: hidden;
+}
+.reveal-zoom-out img {
+  transform: scale(1.12);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-zoom-out.in-view img {
+  transform: scale(1);
+}
+
+/* =========================================================
+   WCAG AA CONTRAST OPTIMIZATION
+   Boost grey text contrast — passes 4.5:1 against #0A0B0D
+   ========================================================= */
+/* Desktop: textDim 0.46 → 0.58 (sube de ~4.0:1 a ~4.7:1) */
+[style*="color: rgba(250, 250, 250, 0.46)"],
+[style*="color:rgba(250,250,250,0.46)"],
+[style*="color: rgba(250,250,250,0.46)"],
+[style*="color:rgba(250, 250, 250, 0.46)"],
+.text-dim {
+  color: rgba(250, 250, 250, 0.58) !important;
+}
+
+/* Mobile: boost adicional bajo luz directa */
+@media (max-width: 767px) {
+  [style*="color: rgba(250, 250, 250, 0.46)"],
+  [style*="color:rgba(250,250,250,0.46)"],
+  [style*="color: rgba(250,250,250,0.46)"],
+  [style*="color:rgba(250, 250, 250, 0.46)"],
+  .text-dim {
+    color: rgba(250, 250, 250, 0.66) !important;
+  }
+
+  [style*="color: rgba(250, 250, 250, 0.72)"],
+  [style*="color:rgba(250,250,250,0.72)"],
+  [style*="color: rgba(250,250,250,0.72)"],
+  [style*="color:rgba(250, 250, 250, 0.72)"],
+  .text-soft {
+    color: rgba(250, 250, 250, 0.88) !important;
+  }
+}
+
+

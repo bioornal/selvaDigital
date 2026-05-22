@@ -51,7 +51,7 @@ const services = [
 
   <div class="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
     {/* Header */}
-    <div class="services-header grid md:grid-cols-2 items-end">
+    <div class="services-header grid md:grid-cols-2 items-end reveal reveal-slide-up">
       <div class="text-center md:text-left">
         <div class="inline-flex items-center gap-2.5 services-kicker">
           <span class="w-3.5 h-px" style={{ background: accent }}></span>
@@ -59,10 +59,10 @@ const services = [
             01 ─── Servicios
           </span>
         </div>
-        <h2 class="services-h2 text-white mx-auto md:mx-0">
+        <h2 class="section-h2 services-h2 text-white mx-auto md:mx-0">
           Tu competencia ya está online.<br><span style={{ color: accent }}>Vos todavía no.</span>
         </h2>
-        <p class="services-sub max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft }}>
+        <p class="section-sub services-sub max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft }}>
           Cinco formas concretas de dejar de perder ventas, recuperar horas de tu semana y poner tu negocio adelante en Google.
         </p>
       </div>
@@ -76,60 +76,66 @@ const services = [
     </div>
 
     {/* Cards grid — mobile-carousel utility hace swipe horizontal; en md+ vuelve a grid */}
-    <div class="services-grid mobile-carousel md:grid-cols-2 lg:grid-cols-5">
-      {services.map((s, i) => (
-        <div class="service-card flex flex-col p-6 md:p-8 relative" style={{
-          background: s.featured ? 'rgba(43,182,115,0.06)' : surface,
-          minHeight: '360px'
-        }}>
-          {s.featured && (
-            <span class="absolute top-3.5 right-3.5 text-[9px] tracking-[1.5px] uppercase px-2 py-1"
-              style={{
-                color: accent,
-                background: 'rgba(43,182,115,0.14)',
-                border: `1px solid rgba(43,182,115,0.5)`,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '999px'
-              }}>
-              ★ POPULAR
-            </span>
-          )}
-
-          <div class="text-[11px] tracking-[2px] mb-4" style={{
-            color: s.featured ? accent : textDim,
-            fontFamily: "'JetBrains Mono', monospace"
+    <div class="services-grid mobile-carousel md:grid-cols-2 lg:grid-cols-5" data-dots="services">
+      {services.map((s, i) => {
+        const delays = ['delay-75', 'delay-150', 'delay-200', 'delay-250', 'delay-300'];
+        return (
+          <div class={`service-card flex flex-col p-6 md:p-8 relative spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
+            background: s.featured ? 'rgba(43,182,115,0.06)' : surface,
+            minHeight: '360px'
           }}>
-            {s.n}
+            {s.featured && (
+              <span class="absolute top-3.5 right-3.5 text-[9px] tracking-[1.5px] uppercase px-2 py-1"
+                style={{
+                  color: accent,
+                  background: 'rgba(43,182,115,0.14)',
+                  border: `1px solid rgba(43,182,115,0.5)`,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  borderRadius: '999px'
+                }}>
+                ★ POPULAR
+              </span>
+            )}
+
+            <div class="text-[11px] tracking-[2px] mb-4" style={{
+              color: s.featured ? accent : textDim,
+              fontFamily: "'JetBrains Mono', monospace"
+            }}>
+              {s.n}
+            </div>
+
+            <h3 class="services-card-h3 text-white">
+              {s.t}
+            </h3>
+
+            <p class="text-[13.5px] leading-relaxed mb-5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+              {s.d}
+            </p>
+
+            <ul class="flex flex-col gap-2 mb-7 list-none p-0">
+              {s.bullets.map(b => (
+                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+                  <span style={{ color: accent, marginTop: '2px' }}>▸</span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-auto pt-4 flex justify-between items-center" style={{ borderTop: `1px solid ${line}` }}>
+              <span class="text-xs font-semibold text-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+                {s.cta}
+              </span>
+              <span class="text-[10px]" style={{ color: s.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+                →
+              </span>
+            </div>
           </div>
-
-          <h3 class="services-card-h3 text-white">
-            {s.t}
-          </h3>
-
-          <p class="text-[13.5px] leading-relaxed mb-5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            {s.d}
-          </p>
-
-          <ul class="flex flex-col gap-2 mb-7 list-none p-0">
-            {s.bullets.map(b => (
-              <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                <span style={{ color: accent, marginTop: '2px' }}>▸</span>
-                {b}
-              </li>
-            ))}
-          </ul>
-
-          <div class="mt-auto pt-4 flex justify-between items-center" style={{ borderTop: `1px solid ${line}` }}>
-            <span class="text-xs font-semibold text-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-              {s.cta}
-            </span>
-            <span class="text-[10px]" style={{ color: s.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-              →
-            </span>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
+
+    {/* Dots — mobile only */}
+    <div class="md:hidden carousel-dots" data-dots-for="services"></div>
   </div>
 </section>
 

@@ -102,14 +102,14 @@ const Contact = () => {
           <div className="inline-flex items-center gap-2.5 mb-[18px] justify-center">
             <span className="w-3.5 h-px" style={{ background: accent }} />
             <span className="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-              09 ─── Contacto
+              10 ─── Contacto
             </span>
           </div>
-          <h2 className="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+          <h2 className="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
             style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', letterSpacing: '-0.025em' }}>
             Hablemos del próximo<br /><span style={{ color: accent }}>proyecto.</span>
           </h2>
-          <p className="text-base md:text-[17px] leading-relaxed max-w-[640px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          <p className="section-sub text-base md:text-[17px] leading-relaxed max-w-[640px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Respondo presupuestos en menos de 24 horas. Si tu proyecto entra en la próxima ventana, arrancamos en menos de 2 semanas.
           </p>
         </div>

@@ -25,32 +25,32 @@ const features = [
 
       <!-- Left: kicker + title + subtitle + 6 cards + CTAs (al bottom) -->
       <div class="flex flex-col">
-        <div class="text-center lg:text-left">
+        <div class="text-center lg:text-left reveal reveal-slide-up">
           <div class="inline-flex items-center gap-2.5 mb-[18px]">
             <span class="w-3.5 h-px" style={{ background: accent }}></span>
             <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-              04 ─── Inteligencia artificial
+              06 ─── Inteligencia artificial
             </span>
           </div>
 
-          <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[20px]"
+          <h2 class="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[20px]"
             style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
             Chatbots con IA que<br><span style={{ color: accent }}>trabajan por vos.</span>
           </h2>
 
-          <p class="text-[17px] leading-[1.55] mb-8"
+          <p class="section-sub text-[17px] leading-[1.55] mb-8"
             style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Dejá de perder ventas cuando cerrás. Desarrollo asistentes que entienden tu negocio, atienden a tus clientes y cierran pedidos por vos — 24/7, sin descanso ni quejas.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {features.map((f) => (
-            <div class="flex flex-col gap-2 p-3.5 transition-colors hover:border-[rgba(43,182,115,0.3)]"
-              style={{ background: surface, border: `1px solid ${line}`, borderRadius: '10px' }}>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 reveal reveal-slide-up delay-150">
+          {features.map((f, i) => (
+            <div class={`flex flex-col gap-2 p-3.5 transition-colors spotlight-card ${i >= 4 ? 'hide-on-mobile' : ''}`}
+              style={{ background: surface, border: `1px solid ${line}`, borderRadius: '10px', '--spotlight-color': '139, 92, 246' } as any}>
               <div class="flex items-center gap-2">
                 <span class="w-1.5 h-1.5 flex-shrink-0"
-                  style={{ background: accent, borderRadius: '50%', boxShadow: `0 0 8px ${accent}` }}></span>
+                  style={{ background: '#8B5CF6', borderRadius: '50%', boxShadow: `0 0 8px #8B5CF6` }}></span>
                 <h3 class="text-[13px] font-semibold text-white tracking-tight"
                   style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>{f.title}</h3>
               </div>
@@ -61,22 +61,27 @@ const features = [
         </div>
 
         <!-- CTAs empujados al bottom de la columna -->
-        <div class="flex flex-wrap gap-3 mt-auto pt-8">
+        <div class="flex flex-wrap gap-3 mt-auto pt-8 justify-center lg:justify-start reveal reveal-slide-up delay-200">
           <a href="#contacto"
-            class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
-            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+            class="hidden md:inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-none transition-all hover:brightness-110"
+            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
             Pedir demo gratis
           </a>
           <a href="#contacto"
-            class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-105"
-            style={{ background: surface, color: '#FAFAFA', border: `1px solid rgba(250,250,250,0.18)`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+            class="hidden md:inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-none transition-all hover:brightness-105"
+            style={{ background: surface, color: '#FAFAFA', border: `1px solid rgba(250,250,250,0.18)`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
             Ver Megabot en vivo →
+          </a>
+          <a href="#contacto"
+            class="md:hidden inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-none transition-all hover:brightness-110"
+            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
+            Ver Chatbot en vivo →
           </a>
         </div>
       </div>
 
       <!-- Right: animated chat preview — desktop only -->
-      <div class="hidden md:block w-full">
+      <div class="hidden md:block w-full reveal reveal-slide-right delay-250">
         <ChatPreview client:visible />
       </div>
     </div>

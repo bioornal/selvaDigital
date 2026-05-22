@@ -99,8 +99,8 @@ const Header = () => {
               onClick={handleCTAClick}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="px-4 py-[9px] text-[13px] font-semibold transition-colors duration-200"
-              style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}
+              className="px-4 py-[9px] text-[13px] font-semibold transition-colors duration-200 rounded-none"
+              style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}
             >
               Pedir presupuesto →
             </motion.button>
@@ -141,8 +141,8 @@ const Header = () => {
                 ))}
                 <button
                   onClick={handleCTAClick}
-                  className="w-full px-4 py-3 text-sm font-semibold"
-                  style={{ background: accent, color: '#06140C', borderRadius: '10px' }}
+                  className="w-full px-4 py-3 text-sm font-semibold rounded-none"
+                  style={{ background: accent, color: '#06140C', borderRadius: '0px' }}
                 >
                   Pedir presupuesto →
                 </button>

@@ -32,25 +32,25 @@ const planesSistemas = [
 <section id="planes" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
     {/* Heading */}
-    <div class="text-center mb-12 max-w-[760px] mx-auto">
+    <div class="text-center mb-12 max-w-[760px] mx-auto reveal reveal-slide-up">
       <div class="inline-flex items-center gap-2.5 mb-[18px] justify-center">
         <span class="w-3.5 h-px" style={{ background: accent }}></span>
         <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-          06 ─── Planes y precios
+          08 ─── Planes y precios
         </span>
       </div>
-      <h2 class="font-geist font-semibold text-white leading-[1.05] md:leading-[1.02] tracking-tight mb-[18px] px-2 md:px-0"
+      <h2 class="section-h2 font-geist font-semibold text-white leading-[1.05] md:leading-[1.02] tracking-tight mb-[18px] px-2 md:px-0"
         style="font-size:clamp(26px, 5vw, 56px); letter-spacing:-0.025em;">
         Pago único, sin ataduras.<br>
         <span style={{ color: accent }}>50% inicio · 50% entrega.</span>
       </h2>
-      <p class="text-base md:text-[17px] leading-relaxed" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+      <p class="section-sub text-base md:text-[17px] leading-relaxed" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
         Hosting y dominio se contratan aparte (alrededor de <strong style={{ color: white }}>AR$ 9.300/mes en Hostinger</strong>) y quedan a tu nombre. Sin contratos mensuales ni dependencia con nosotros: el sitio es 100% tuyo desde el día uno.
       </p>
     </div>
 
     {/* Tabs */}
-    <div class="flex justify-center mb-10">
+    <div class="flex justify-center mb-10 reveal reveal-slide-up delay-75">
       <div class="inline-flex p-1 gap-0.5" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '12px' }}>
         <button id="tab-web" class="tab-btn px-5 py-2.5 text-[13.5px] font-semibold transition-all"
           style={{ background: accent, color: '#06140C', borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -64,91 +64,104 @@ const planesSistemas = [
     </div>
 
     {/* Web plans — carousel en mobile, grid en sm+ */}
-    <div id="plans-web" class="plans-grid mobile-carousel sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
-      {planesWeb.map(p => (
-        <div class="plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none" style={{
-          background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
-          border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
-          borderRadius: '14px',
-          boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none'
-        }}>
-          {p.featured && (
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
-              style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
-              ★ MÁS ELEGIDO
+    <div id="plans-web" class="plans-grid mobile-carousel sm:grid-cols-2 lg:grid-cols-4 sm:gap-4" data-dots="planes-web">
+      {planesWeb.map((p, i) => {
+        const delays = ['delay-75', 'delay-150', 'delay-200', 'delay-250'];
+        return (
+          <div class={`plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
+            background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
+            border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
+            borderRadius: '14px',
+            boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none'
+          }}>
+            {p.featured && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
+                style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
+                ★ MÁS ELEGIDO
+              </div>
+            )}
+            <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
+            <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
+              <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
+              <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
             </div>
-          )}
-          <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
-          <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
-            <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
-            <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
+            <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
+              {p.features.map(f => (
+                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+                  <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block rounded-none transition-all hover:brightness-110"
+              style={{
+                background: p.featured ? accent : 'transparent',
+                color: p.featured ? '#06140C' : white,
+                border: p.featured ? 'none' : `1px solid ${lineStr}`,
+                fontFamily: "'Inter', system-ui, sans-serif",
+                borderRadius: '0px'
+              }}>
+              {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
+            </a>
           </div>
-          <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
-            {p.features.map(f => (
-              <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-          <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block transition-all hover:brightness-110"
-            style={{
-              background: p.featured ? accent : 'transparent',
-              color: p.featured ? '#06140C' : white,
-              border: p.featured ? 'none' : `1px solid ${lineStr}`,
-              fontFamily: "'Inter', system-ui, sans-serif",
-              borderRadius: '10px'
-            }}>
-            {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
-          </a>
-        </div>
-      ))}
+        );
+      })}
     </div>
 
+    {/* Dots para web plans — mobile only */}
+    <div class="sm:hidden carousel-dots" data-dots-for="planes-web"></div>
+
     {/* Sistemas plans — carousel en mobile, grid en sm+ */}
-    <div id="plans-sistemas" class="plans-grid mobile-carousel hidden sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
-      {planesSistemas.map(p => (
-        <div class="plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none" style={{
-          background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
-          border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
-          borderRadius: '14px',
-          boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none'
-        }}>
-          {p.featured && (
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
-              style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
-              ★ MÁS ELEGIDO
+    <div id="plans-sistemas" class="plans-grid mobile-carousel hidden sm:grid-cols-2 lg:grid-cols-3 sm:gap-4" data-dots="planes-sistemas">
+      {planesSistemas.map((p, i) => {
+        const delays = ['delay-75', 'delay-150', 'delay-200'];
+        return (
+          <div class={`plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
+            background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
+            border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
+            borderRadius: '14px',
+            boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none',
+            '--spotlight-color': '139, 92, 246'
+          } as any}>
+            {p.featured && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
+                style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
+                ★ MÁS ELEGIDO
+              </div>
+            )}
+            {p.code && (
+              <div class="text-[9.5px] tracking-[2px] mb-3" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.code}</div>
+            )}
+            <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
+            <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
+              <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
+              <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
             </div>
-          )}
-          {p.code && (
-            <div class="text-[9.5px] tracking-[2px] mb-3" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.code}</div>
-          )}
-          <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
-          <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
-            <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
-            <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
+            <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
+              {p.features.map(f => (
+                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+                  <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block rounded-none transition-all hover:brightness-110"
+              style={{
+                background: p.featured ? accent : 'transparent',
+                color: p.featured ? '#06140C' : white,
+                border: p.featured ? 'none' : `1px solid ${lineStr}`,
+                fontFamily: "'Inter', system-ui, sans-serif",
+                borderRadius: '0px'
+              }}>
+              {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
+            </a>
           </div>
-          <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
-            {p.features.map(f => (
-              <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-          <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block transition-all hover:brightness-110"
-            style={{
-              background: p.featured ? accent : 'transparent',
-              color: p.featured ? '#06140C' : white,
-              border: p.featured ? 'none' : `1px solid ${lineStr}`,
-              fontFamily: "'Inter', system-ui, sans-serif",
-              borderRadius: '10px'
-            }}>
-            {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
-          </a>
-        </div>
-      ))}
+        );
+      })}
     </div>
+
+    {/* Dots para sistemas — mobile only */}
+    <div class="sm:hidden carousel-dots" data-dots-for="planes-sistemas"></div>
 
     <p class="text-center mt-9 text-[13px] max-w-[760px] mx-auto" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
       Todos los precios en pesos argentinos (ARS). Modalidad de pago 50% al inicio y 50% contra entrega.
@@ -166,18 +179,29 @@ const planesSistemas = [
   const accent = '#2BB673';
   const textSoft = 'rgba(250,250,250,0.72)';
 
+  // Visibilidad de dots según tab activo (mobile)
+  const dotsWeb = document.querySelector<HTMLElement>('[data-dots-for="planes-web"]');
+  const dotsSist = document.querySelector<HTMLElement>('[data-dots-for="planes-sistemas"]');
+
   if (tabWeb && tabSist && plansWeb && plansSist) {
     tabWeb.addEventListener('click', () => {
       tabWeb.style.background = accent; tabWeb.style.color = '#06140C';
       tabSist.style.background = 'transparent'; tabSist.style.color = textSoft;
       plansWeb.classList.remove('hidden'); plansSist.classList.add('hidden');
+      if (dotsWeb) dotsWeb.style.display = '';
+      if (dotsSist) dotsSist.style.display = 'none';
     });
     tabSist.addEventListener('click', () => {
       tabSist.style.background = accent; tabSist.style.color = '#06140C';
       tabWeb.style.background = 'transparent'; tabWeb.style.color = textSoft;
       plansSist.classList.remove('hidden'); plansWeb.classList.add('hidden');
+      if (dotsSist) dotsSist.style.display = '';
+      if (dotsWeb) dotsWeb.style.display = 'none';
     });
   }
+
+  // Inicial: ocultar dots de sistemas (su carousel arranca .hidden)
+  if (dotsSist) dotsSist.style.display = 'none';
 </script>
 
 <style>

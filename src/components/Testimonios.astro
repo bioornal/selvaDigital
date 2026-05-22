@@ -35,10 +35,37 @@ const testimonials = [
     avatarColor: '#fde68a',
     kpi: '×2.3 ticket promedio'
   },
+  {
+    quote: "Antes de trabajar con Christian, pagábamos fortunas en Google Ads y la gente se iba sin mandar un mensaje. Nos rearmó la landing desde cero y la optimizó para celulares. El costo por click bajó a la mitad y el teléfono no para de sonar. Se nota cuando alguien sabe de código.",
+    name: 'Maxi Valenzuela',
+    role: 'Dueño · Vip Traslados Iguazú',
+    initials: 'MV',
+    avatarBg: 'rgba(0,229,255,0.18)',
+    avatarColor: '#00e5ff',
+    kpi: 'CTR Ads ×2.1'
+  },
+  {
+    quote: "Teníamos un quilombo hermoso con el stock de las sucursales, vendíamos cosas que ya no quedaban en el galpón y los vendedores se querían matar. Christian nos diseñó un sistema a medida que se actualiza al segundo. Ahora controlo todo desde el celular sin llamar a nadie.",
+    name: 'Mariano Ferrero',
+    role: 'Socio · MegaStock',
+    initials: 'MF',
+    avatarBg: 'rgba(139,92,246,0.18)',
+    avatarColor: '#a78bfa',
+    kpi: 'Stock al segundo'
+  },
+  {
+    quote: "Queríamos lanzar la pre-venta de las pizzas congeladas premium y no sabíamos cómo organizarnos. Christian nos preparó una landing súper estética con un sistema de combos interactivo. La gente elige y paga en dos clicks. En el primer finde de pre-orden superamos el cupo mensual.",
+    name: 'Sofía Bianchi',
+    role: 'Creadora · Impasto Pizzería',
+    initials: 'SB',
+    avatarBg: 'rgba(244,63,94,0.18)',
+    avatarColor: '#fb7185',
+    kpi: 'Pre-venta agotada'
+  }
 ];
 ---
 
-<section id="testimonios" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 110px) 0; border-bottom:1px solid ${line};`}>
+<section id="testimonios" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 110px) 0; border-bottom:1px solid rgba(0, 229, 255, 0.08);`}>
 
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
     {/* Heading */}
@@ -46,25 +73,25 @@ const testimonials = [
       <div class="inline-flex items-center gap-2.5 mb-[18px] justify-center">
         <span class="w-3.5 h-px" style={{ background: accent }}></span>
         <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-          03 ─── Lo que dicen
+          05 ─── Lo que dicen
         </span>
       </div>
-      <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+      <h2 class="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
         style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
-        No hace falta que vos confíes en mí.<br>
+        <span class="md:hidden">No me creas a mí.</span><span class="hidden md:inline">No hace falta que vos confíes en mí.</span><br>
         <span style={{ color: accent }}>Confiá en ellos.</span>
       </h2>
-      <p class="text-base md:text-[17px] leading-relaxed max-w-[760px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-        Tres dueños que vivieron el proceso de cerca y vieron el resultado en sus propios números.
+      <p class="section-sub text-base md:text-[17px] leading-relaxed max-w-[760px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+        Dueños de negocios reales que vivieron el proceso de cerca y vieron el resultado en sus propios números.
       </p>
     </div>
 
-    {/* Cards — mobile carousel, sm+ vuelve a grid */}
-    <div class="testimonios-grid mobile-carousel sm:grid-cols-2 md:grid-cols-3 sm:gap-5">
+    {/* Cards — mobile carousel (sólo 3 destacados), sm+ vuelve a grid completo */}
+    <div class="testimonios-grid mobile-carousel sm:grid-cols-2 md:grid-cols-3 sm:gap-5" data-dots="testimonios">
       {testimonials.map((t, i) => (
-        <figure class="testimonio-card flex flex-col p-6 md:p-8 relative" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '14px' }}>
+        <figure class={`testimonio-card flex flex-col p-6 md:p-8 relative reveal reveal-slide-up delay-${[75, 150, 200, 250, 300, 400][i] || 75} ${i >= 3 ? 'hide-on-mobile' : ''}`} style={{ background: surface, border: `1px solid ${line}`, borderRadius: '14px' }}>
           {/* Quote icon */}
-          <svg width="38" height="32" viewBox="0 0 38 32" class="mb-3.5" style={{ opacity: 0.85 }}>
+          <svg width="38" height="32" viewBox="0 0 38 32" class="mb-3.5" style={{ opacity: 0.85 }} aria-hidden="true">
             <path d="M14 0 L14 16 L8 16 C8 24 12 28 18 30 L18 32 L16 32 C6 32 0 26 0 14 L0 0 Z M34 0 L34 16 L28 16 C28 24 32 28 38 30 L38 32 L36 32 C26 32 20 26 20 14 L20 0 Z" fill={accent}/>
           </svg>
 
@@ -101,6 +128,9 @@ const testimonials = [
         </figure>
       ))}
     </div>
+
+    {/* Dots — mobile only */}
+    <div class="md:hidden carousel-dots" data-dots-for="testimonios"></div>
 
     {/* Trust strip — desktop only */}
     <div class="hidden md:flex justify-center items-center gap-6 md:gap-8 mt-12 flex-wrap text-[11px] tracking-[1.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>

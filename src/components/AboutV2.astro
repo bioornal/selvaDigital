@@ -29,15 +29,15 @@ const steps = [
     <div class="grid md:grid-cols-[1.2fr_0.85fr] gap-8 md:gap-16 items-start">
       {/* Left content */}
       <div>
-        <div class="text-left">
+        <div class="text-left section-heading reveal reveal-slide-up">
           <div class="inline-flex items-center gap-2.5 mb-[18px]">
             <span class="w-3.5 h-px" style={{ background: accent }}></span>
             <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-              08 ─── Sobre mí
+              03 ─── Sobre mí
             </span>
           </div>
 
-          <h2 class="font-geist font-semibold text-white leading-[1] tracking-tight mb-4"
+          <h2 class="section-h2 font-geist font-semibold text-white leading-[1] tracking-tight mb-4"
             style="font-size:clamp(36px, 4vw, 64px); letter-spacing:-0.03em;">
             Un solo interlocutor.<br>
             <span style={{ color: accent }}>De la idea al deploy.</span>
@@ -49,13 +49,13 @@ const steps = [
           </p>
 
           {/* Mobile: bajada compacta */}
-          <p class="md:hidden text-[15px] leading-[1.55] mb-6" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          <p class="section-sub md:hidden text-[15px] leading-[1.55] mb-6" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Desarrollador freelance desde Córdoba. Hablás directo conmigo de principio a fin — sin agencias ni intermediarios. <strong class="text-white font-semibold">Tomo máximo 3 proyectos a la vez.</strong>
           </p>
         </div>
 
         {/* Desktop only: párrafos secundarios */}
-        <div class="hidden md:flex flex-col gap-3.5 mb-10">
+        <div class="hidden md:flex flex-col gap-3.5 mb-10 reveal reveal-slide-up delay-75">
           <p class="text-[15.5px] leading-relaxed max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             Trabajo solo. Eso significa que vos hablás conmigo de principio a fin —
             presupuesto, diseño, programación, deploy y soporte. Sin agencia
@@ -70,7 +70,7 @@ const steps = [
         </div>
 
         {/* Process */}
-        <div>
+        <div class="reveal reveal-slide-up delay-150">
           <div class="text-[11px] tracking-[2px] mb-4" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>CÓMO TRABAJO</div>
           <div class="flex flex-col process-steps" style={{ border: `1px solid ${line}`, borderRadius: '10px', overflow: 'hidden' }}>
             {steps.map((s, i) => (
@@ -89,7 +89,7 @@ const steps = [
                     <span class="font-geist font-semibold text-white text-sm">{s.t}</span>
                     <span class="process-step-chevron text-xs transition-transform" style={{ color: textDim }}>▾</span>
                   </summary>
-                  <div class="px-5 pb-3.5 pl-[68px] text-[13px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+                  <div class="card-body px-5 pb-3.5 pl-[68px] text-[13px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
                     {s.d}
                   </div>
                 </details>
@@ -108,13 +108,13 @@ const steps = [
           </div>
         </div>
 
-        <div class="hidden md:flex gap-3 mt-8 justify-center md:justify-start">
-          <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
-            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+        <div class="hidden md:flex gap-3 mt-8 justify-center md:justify-start reveal reveal-slide-up delay-200">
+          <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-none transition-all hover:brightness-110"
+            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
             Conversemos →
           </a>
-          <a href="#portfolio" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-medium transition-all"
-            style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+          <a href="#portfolio" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-medium rounded-none transition-all"
+            style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
             Ver portfolio →
           </a>
         </div>
@@ -125,7 +125,7 @@ const steps = [
         {/* Green halo */}
         <div class="absolute pointer-events-none" style="inset:-30px; background:radial-gradient(circle at 30% 40%, rgba(43,182,115,0.12), transparent 65%); filter:blur(8px); z-index:0;"></div>
 
-        <div class="relative w-full overflow-hidden" style={{ aspectRatio: '4/5', background: surface, border: `1px solid ${lineStr}`, borderRadius: '18px' }}>
+        <div class="relative w-full overflow-hidden reveal reveal-slide-up reveal-zoom-out delay-75" style={{ aspectRatio: '4/5', background: surface, border: `1px solid ${lineStr}`, borderRadius: '18px' }}>
           <img
             src="https://res.cloudinary.com/djtvjkcu6/image/upload/c_fill,w_900,h_1100,g_face,q_auto,f_auto/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg"
             alt="Christian A. Speziali"
@@ -173,7 +173,7 @@ const steps = [
         </div>
 
         {/* KPIs en columna derecha — desktop only */}
-        <div class="hidden md:grid grid-cols-3 gap-2 md:gap-2.5">
+        <div class="hidden md:grid grid-cols-3 gap-2 md:gap-2.5 reveal reveal-slide-up delay-150">
           {kpi.map(s => (
             <div class="kpi-card" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '10px' }}>
               <div class="font-geist font-semibold text-white leading-none kpi-num" style={{ letterSpacing: '-0.025em' }}>
@@ -186,7 +186,7 @@ const steps = [
         </div>
 
         {/* Stack en columna derecha — desktop only */}
-        <div class="hidden md:block relative">
+        <div class="hidden md:block relative reveal reveal-slide-up delay-200">
           <div class="text-[10.5px] tracking-[2px] mb-3" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>STACK PRINCIPAL // 2026</div>
           <div class="flex flex-wrap gap-1.5" data-stack-wrap>
             {stack.map((t, i) => (

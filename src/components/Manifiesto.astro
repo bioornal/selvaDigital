@@ -11,18 +11,21 @@ const pillars = [
   {
     n: '01',
     title: 'Precio fijo, sin sorpresas',
+    descShort: 'Presupuesto cerrado por escrito. 50% al inicio, 50% contra entrega.',
     desc: 'Presupuesto cerrado por escrito antes de arrancar: 50% para reservar tu cupo y empezar el diseño, 50% contra entrega del sitio terminado. Aprobás la propuesta visual antes de que escriba una sola línea de código — así sabés exactamente qué vas a recibir desde el primer día.',
     icon: 'lock'
   },
   {
     n: '02',
     title: 'No esperás 3 días una respuesta',
+    descShort: 'Me escribís y te contesto yo. Sin tickets, sin equipos rotando.',
     desc: 'Me escribís directo y te contesto yo. Si tenés una idea a las 11 de la noche o un cambio urgente un sábado, no pasa por un equipo de soporte ni queda atrapado en una cola de tickets. Ahorrás los días que se pierden en idas y vueltas con agencias.',
     icon: 'chat'
   },
   {
     n: '03',
-    title: 'Tu negocio online, sin atarte a una cuota de por vida',
+    title: 'Sin cuota mensual de por vida',
+    descShort: 'Pago único. Hosting y dominio a tu nombre — el sitio es 100% tuyo.',
     desc: 'Pago único: el sitio queda funcionando y listo desde el día uno. El hosting y el dominio quedan a tu nombre (alrededor de AR$ 9.300/mes en Hostinger) — pagás directo al proveedor, no a mí. Si mañana querés mover el sitio o no trabajar más conmigo, podés.',
     icon: 'key'
   },
@@ -31,7 +34,7 @@ const pillars = [
 
 <section id="manifiesto" class="relative manifiesto-section" style={`background:${bg}; padding:clamp(64px, 8vw, 110px) 0;`}>
   {/* Faint accent line at top — desktop only */}
-  <div class="hidden md:block absolute top-0 left-[15%] right-[15%] h-px" style={`background:linear-gradient(90deg, transparent, ${accent}, transparent);`}></div>
+  <div class="hidden md:block absolute top-0 left-[15%] right-[15%] h-px" style="background:linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.45), transparent);"></div>
 
   <div class="max-w-[1320px] mx-auto px-6 md:px-10">
     {/* Heading */}
@@ -39,15 +42,15 @@ const pillars = [
       <div class="inline-flex items-center gap-2.5 mb-[18px] justify-center">
         <span class="w-3.5 h-px" style={{ background: accent }}></span>
         <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-          09 ─── Cómo trabajo con vos
+          04 ─── Cómo trabajo con vos
         </span>
       </div>
-      <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
+      <h2 class="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
         style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
         Sin letra chica.<br>
         <span style={{ color: accent }}>Así de simple.</span>
       </h2>
-      <p class="text-base md:text-[17px] leading-relaxed max-w-[640px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+      <p class="section-sub text-base md:text-[17px] leading-relaxed max-w-[640px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
         Tres reglas claras que respetamos los dos. Sin contratos pesados, sin sorpresas en la factura.
       </p>
     </div>
@@ -71,18 +74,18 @@ const pillars = [
                 color: accent
               }}>
               {p.icon === 'lock' && (
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
               )}
               {p.icon === 'chat' && (
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
               )}
               {p.icon === 'key' && (
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
                 </svg>
               )}
@@ -99,18 +102,18 @@ const pillars = [
               color: accent
             }}>
             {p.icon === 'lock' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             )}
             {p.icon === 'chat' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             )}
             {p.icon === 'key' && (
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
               </svg>
             )}
@@ -125,8 +128,11 @@ const pillars = [
             {p.title}
           </h3>
 
-          {/* Description */}
-          <p class="text-[14px] leading-[1.6]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+          {/* Description — mobile compacta / desktop completa */}
+          <p class="md:hidden text-[13.5px] leading-[1.55]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+            {p.descShort}
+          </p>
+          <p class="hidden md:block text-[14px] leading-[1.6]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
             {p.desc}
           </p>
         </div>
@@ -147,7 +153,7 @@ const pillars = [
 
 <style>
   @media (min-width: 768px) {
-    .manifiesto-section { border-top: 1px solid rgba(250,250,250,0.08); }
+    .manifiesto-section { border-top: 1px solid rgba(0, 229, 255, 0.08); }
   }
 
   .manifiesto-card {

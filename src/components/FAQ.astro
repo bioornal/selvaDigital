@@ -29,61 +29,81 @@ const qs = [
 ];
 ---
 
-<section id="faq" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
+<section id="faq" class="faq-section relative" style={`background:${bg};`}>
   <div class="max-w-[1080px] mx-auto px-6 md:px-10">
-    <div class="grid md:grid-cols-[1fr_1.4fr] gap-16 md:gap-20 items-start">
-      {/* Left sticky heading */}
-      <div class="md:sticky md:top-[120px] text-center md:text-left">
-        <div class="inline-flex items-center gap-2.5 mb-[18px]">
+    <div class="grid md:grid-cols-[1fr_1.4fr] gap-8 md:gap-20 items-stretch">
+      {/* Left column — heading + decorative image que rellena el alto del FAQ */}
+      <div class="faq-heading flex flex-col text-center md:text-left reveal reveal-slide-up">
+        <div class="inline-flex items-center gap-2.5 mb-[14px] md:mb-[18px]">
           <span class="w-3.5 h-px" style={{ background: accent }}></span>
           <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
             07 ─── FAQ
           </span>
         </div>
-        <h2 class="font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
-          style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
+        <h2 class="section-h2 faq-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight"
+          style="letter-spacing:-0.025em;">
           Preguntas<br><span style={{ color: accent }}>frecuentes.</span>
         </h2>
-        <p class="text-base md:text-[17px] leading-relaxed mb-8" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
+        <p class="section-sub faq-sub leading-relaxed" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
           Lo que más me preguntan antes de arrancar un proyecto. Si tu duda no está, escribime y la respondo el mismo día.
         </p>
-        <a href="#contacto" class="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-all hover:brightness-110"
-          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '10px' }}>
+        <a href="#contacto" class="faq-cta inline-flex items-center gap-2 text-sm font-semibold rounded-none transition-all hover:brightness-110"
+          style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
           Hacer una consulta →
         </a>
+
+        {/* Decorative image — desktop only, stretches to match FAQ list height */}
+        <div class="hidden md:flex relative mt-10 flex-1 min-h-[420px]">
+          <div class="absolute pointer-events-none" style="inset:-24px; background:radial-gradient(circle at 30% 40%, rgba(43,182,115,0.14), transparent 65%); filter:blur(12px); z-index:0;"></div>
+          <div class="relative w-full overflow-hidden" style={{ border: `1px solid ${line}`, borderRadius: '12px' }}>
+            <img
+              src="https://res.cloudinary.com/djtvjkcu6/image/upload/c_fill,g_auto,w_900,h_1200,q_auto,f_auto/v1779461418/SelvaDigital/ChatGPT_Image_22_may_2026_11_48_27_a.m._jpiiau.png"
+              alt="Hojas de selva tropical iluminadas por luz verde — decorativo"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Accordion */}
-      <div class="flex flex-col gap-2">
+      <div class="faq-list flex flex-col reveal reveal-slide-up delay-150">
         {qs.map((item, i) => (
           <div class="faq-item overflow-hidden transition-all" style={{
             background: i === 0 ? surface : bg,
-            border: `1px solid ${i === 0 ? 'rgba(43,182,115,0.35)' : line}`,
-            borderRadius: '12px'
+            border: `1px solid ${i === 0 ? 'rgba(43,182,115,0.35)' : line}`
           }}>
-            <button class="faq-trigger w-full flex items-center justify-between px-5 md:px-6 py-5 text-left bg-transparent border-none gap-3"
-              style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: '15.5px', fontWeight: 500, color: white, letterSpacing: '-0.01em' }}
-              aria-expanded={i === 0 ? 'true' : 'false'}>
-              <span class="flex items-center gap-3.5">
-                <span class="text-[11px] tracking-[1px]" style={{ color: i === 0 ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+            <button class="faq-trigger w-full flex items-center justify-between text-left bg-transparent border-none gap-3"
+              style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontWeight: 500, color: white, letterSpacing: '-0.01em' }}
+              aria-expanded={i === 0 ? 'true' : 'false'}
+              aria-controls={`faq-panel-${i}`}
+              id={`faq-trigger-${i}`}>
+              <span class="flex items-center gap-3 md:gap-3.5">
+                <span class="faq-num text-[10.5px] md:text-[11px] tracking-[1px]" style={{ color: i === 0 ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
                   0{i+1}
                 </span>
                 {item.q}
               </span>
-              <span class="faq-icon text-[22px] font-light transition-transform duration-200 flex-shrink-0"
+              <span class="faq-icon text-[20px] md:text-[22px] font-light transition-transform duration-200 flex-shrink-0" aria-hidden="true"
                 style={{ color: i === 0 ? accent : textDim, transform: i === 0 ? 'rotate(45deg)' : 'rotate(0)' }}>
                 +
               </span>
             </button>
-            <div class="faq-content px-5 md:px-6 pb-5" style={{
-              display: i === 0 ? 'block' : 'none',
-              paddingLeft: '56px',
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontSize: '14px',
-              lineHeight: '1.65',
-              color: textSoft
+            <div class="faq-content-wrapper grid transition-all duration-300 ease-in-out"
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              style={{
+              gridTemplateRows: i === 0 ? '1fr' : '0fr',
+              opacity: i === 0 ? 1 : 0
             }}>
-              {item.a}
+              <div class="faq-content overflow-hidden" style={{
+                fontFamily: "'Inter', system-ui, sans-serif",
+                color: textSoft
+              }}>
+                {item.a}
+              </div>
             </div>
           </div>
         ))}
@@ -92,36 +112,116 @@ const qs = [
   </div>
 </section>
 
+<style>
+  /* === FAQ: compactación mobile sin tocar desktop === */
+
+  /* Section padding */
+  .faq-section { padding: 56px 0 64px 0; }
+  @media (min-width: 768px) {
+    .faq-section { padding: clamp(64px, 8vw, 120px) 0; }
+  }
+
+  /* Heading area mobile: bajar margen del título y subhead */
+  .faq-h2 {
+    font-size: 32px;
+    margin: 0 0 12px 0;
+  }
+  .faq-sub {
+    font-size: 14.5px;
+    margin: 0 0 18px 0;
+  }
+  .faq-cta {
+    padding: 10px 18px;
+  }
+  @media (min-width: 768px) {
+    .faq-h2 {
+      font-size: clamp(36px, 4.5vw, 56px);
+      margin: 0 0 18px 0;
+    }
+    .faq-sub {
+      font-size: 17px;
+      margin: 0 0 32px 0;
+    }
+    .faq-cta {
+      padding: 12px 20px;
+    }
+  }
+
+  /* Lista: gap menor + radius por item (mobile) */
+  .faq-list { gap: 6px; }
+  .faq-item { border-radius: 10px; }
+  @media (min-width: 768px) {
+    .faq-list { gap: 8px; }
+    .faq-item { border-radius: 12px; }
+  }
+
+  /* Trigger: padding mucho más chico en mobile */
+  .faq-trigger {
+    padding: 13px 16px;
+    font-size: 14.5px;
+    line-height: 1.3;
+  }
+  @media (min-width: 768px) {
+    .faq-trigger {
+      padding: 20px 24px;
+      font-size: 15.5px;
+      line-height: normal;
+    }
+  }
+
+  /* Content: padding más compacto */
+  .faq-content {
+    padding: 0 16px 14px 42px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  @media (min-width: 768px) {
+    .faq-content {
+      padding: 0 24px 20px 56px;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+  }
+</style>
+
 <script>
   document.querySelectorAll('.faq-trigger').forEach((btn) => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
-      const content = item?.querySelector('.faq-content');
-      const icon = item?.querySelector('.faq-icon');
-      const num = item?.querySelector('.faq-trigger span span');
-      const isOpen = content?.style.display === 'block';
+      const wrapper = item?.querySelector('.faq-content-wrapper') as HTMLElement;
+      const icon = item?.querySelector('.faq-icon') as HTMLElement;
+      const num = item?.querySelector('.faq-trigger span span') as HTMLElement;
+      const isOpen = wrapper && wrapper.style.gridTemplateRows === '1fr';
       const accent = '#2BB673';
       const line = 'rgba(250,250,250,0.08)';
       const textDim = 'rgba(250,250,250,0.46)';
 
       // Close all
       document.querySelectorAll('.faq-item').forEach((other) => {
-        const oc = other.querySelector('.faq-content');
-        const oi = other.querySelector('.faq-icon');
-        const on = other.querySelector('.faq-trigger span span');
-        if (oc) oc.style.display = 'none';
+        const otherHtml = other as HTMLElement;
+        const ow = other.querySelector('.faq-content-wrapper') as HTMLElement;
+        const oi = other.querySelector('.faq-icon') as HTMLElement;
+        const on = other.querySelector('.faq-trigger span span') as HTMLElement;
+        if (ow) {
+          ow.style.gridTemplateRows = '0fr';
+          ow.style.opacity = '0';
+        }
         if (oi) { oi.style.transform = 'rotate(0)'; oi.style.color = textDim; }
         if (on) on.style.color = textDim;
-        other.style.background = '#0A0B0D';
-        other.style.borderColor = line;
+        otherHtml.style.background = '#0A0B0D';
+        otherHtml.style.borderColor = line;
       });
 
-      if (!isOpen) {
-        if (content) content.style.display = 'block';
+      if (!isOpen && item) {
+        const itemHtml = item as HTMLElement;
+        if (wrapper) {
+          wrapper.style.gridTemplateRows = '1fr';
+          wrapper.style.opacity = '1';
+        }
         if (icon) { icon.style.transform = 'rotate(45deg)'; icon.style.color = accent; }
         if (num) num.style.color = accent;
-        item.style.background = '#121316';
-        item.style.borderColor = 'rgba(43,182,115,0.35)';
+        itemHtml.style.background = '#121316';
+        itemHtml.style.borderColor = 'rgba(43,182,115,0.35)';
       }
     });
   });

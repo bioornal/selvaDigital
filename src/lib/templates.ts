@@ -183,6 +183,22 @@ Te recuerdo el acuerdo: si el proyecto se pausa más de 30 días sin avance de t
 
 No quiero que llegue a eso. Avisame cómo estás y retomamos cuando puedas 👌`,
   },
+  {
+    id: 'explicacion-eslogan',
+    name: 'Explicación del eslogan (Vende 24/7)',
+    phase: 0,
+    description: 'Explicar por qué una web vende 24/7 y responde (ideal prospectos con dudas).',
+    variables: ['NOMBRE', 'TIPO_PROYECTO'],
+    content: `¡Hola {NOMBRE}! Qué buena pregunta me hacés. A primera vista suena a frase de marketing, pero te lo explico sin vueltas porque es clave para tu {TIPO_PROYECTO}:
+
+1. "Vende 24/7": No significa que vas a estar cobrando de noche (a menos que hagamos tienda online). Significa captar clientes mientras dormís: la web recibe al prospecto, saca sus dudas y te deja el contacto listo en WhatsApp. Vos cerrás de día, pero la web hizo el laburo de no perder la consulta a las 2 AM.
+
+2. "Te responde": Según lo que necesite tu negocio, sumamos un Chatbot con IA que atiende al instante, respuestas automáticas en WhatsApp o agenda de turnos online.
+
+El beneficio: El cliente de hoy quiere respuesta ya. Si te escriben tarde y no contestás hasta el otro día, se van con la competencia. Con esto, reciben respuesta al toque y quedan fidelizados.
+
+¿Cómo lo ves? ¿Tenés muchas consultas que te entran fuera de horario? 🙌`,
+  },
 ];
 
 export function getTemplateById(id: string): MessageTemplate | undefined {

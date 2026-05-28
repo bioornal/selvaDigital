@@ -204,7 +204,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
             {client.total_amount && (
               <div>
                 <span className="text-gray-500 block text-xs">Monto total</span>
-                <span className="text-white">${client.total_amount.toLocaleString('es-AR')} ARS</span>
+                <span className="text-white">${client.total_amount.toLocaleString('es-AR')} USD</span>
               </div>
             )}
             {client.weeks && (

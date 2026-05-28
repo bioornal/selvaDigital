@@ -145,7 +145,7 @@ const Banner: React.FC = () => {
                 className="text-white"
                 style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em' }}
               >
-                Hasta $140k
+                Hasta $240 USD
               </div>
             </div>
             <div

@@ -97,7 +97,7 @@ export const POST: APIRoute = async ({ request }) => {
         <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || tipoProyecto)}</p>
-        <p><strong>Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' ARS' : 'No especificado'}</p>
+        <p><strong>Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' USD' : 'No especificado'}</p>
         <p><strong>Mensaje:</strong></p>
         <p>${escapeHtml(mensaje)}</p>
       `

@@ -156,7 +156,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Monto total del proyecto (ARS) *</label>
+            <label className={labelClass}>Monto total del proyecto (USD) *</label>
             <input name="total_amount" type="number" required min="0" value={form.total_amount} onChange={handleChange} className={inputClass} placeholder="250000" />
           </div>
           <div>
@@ -167,11 +167,11 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Seña (50%)</label>
+            <label className={labelClass}>Seña (50% USD)</label>
             <input value={calculated.deposit ? `$${calculated.deposit.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
           <div>
-            <label className={labelClass}>Final (50%)</label>
+            <label className={labelClass}>Final (50% USD)</label>
             <input value={calculated.final ? `$${calculated.final.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
         </div>

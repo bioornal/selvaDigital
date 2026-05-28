@@ -36,9 +36,9 @@ Con eso te paso una propuesta clara en menos de 24hs.`,
     content: `Buenísimo {NOMBRE}, te confirmo lo que hablamos:
 
 ✓ {TIPO_PROYECTO}
-✓ Total: ARS {MONTO_TOTAL}
-✓ 50% para arrancar (seña): ${'{MONTO_SEÑA}'}
-✓ 50% al ver el sitio listo (contra entrega): ${'{MONTO_FINAL}'}
+✓ Total: USD {MONTO_TOTAL}
+✓ 50% para arrancar (seña): USD ${'{MONTO_SEÑA}'}
+✓ 50% al ver el sitio listo (contra entrega): USD ${'{MONTO_FINAL}'}
 ✓ Plazo: {SEMANAS} semanas desde que arrancamos
 ✓ Incluye diseño, programación y deploy
 ✓ Hosting + dominio se contratan a tu nombre (aprox. AR$ 9.300/mes en Hostinger, te asesoro en la elección)
@@ -61,7 +61,7 @@ Titular: Christian A. Speziali
 CBU: {CBU}
 Alias: {ALIAS}
 
-Monto seña (50%): ${'{MONTO_SEÑA}'}
+Monto seña (50%): USD ${'{MONTO_SEÑA}'}
 
 Cuando me mandés el comprobante arrancamos esa misma semana.
 Si preferís MercadoPago, decime y te mando link 👌`,
@@ -125,7 +125,7 @@ Revisalo con calma, probá los formularios, navegá desde celular y desktop. Cua
 
 Para publicarlo en tu dominio final ({DOMINIO}), te toca el último 50%:
 
-🏦 Monto final (50%): ${'{MONTO_FINAL}'}
+🏦 Monto final (50%): USD ${'{MONTO_FINAL}'}
 Alias: {ALIAS}
 
 Cuando me llegue, lo deployo y te paso las llaves del panel para que edites lo que necesites 🔑`,

@@ -35,7 +35,7 @@ const projectTypes = [
   { value: 'otro', label: 'Otro / No estoy seguro' }
 ];
 
-const presupuestos = ['< 400k', '400k–800k', '800k–1.5M', '+1.5M'];
+const presupuestos = ['< $350', '$350–$700', '$700–$1.200', '+$1.200'];
 
 const validationSchema = Yup.object({
   nombre: Yup.string()
@@ -197,7 +197,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>PRESUPUESTO ESTIMADO (ARS)</label>
+                  <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>PRESUPUESTO ESTIMADO (USD)</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {presupuestos.map(p => {
                       const selected = values.presupuesto === p;

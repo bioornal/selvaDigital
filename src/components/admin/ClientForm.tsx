@@ -15,6 +15,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
     project_name: client?.project_name || '',
     project_type: client?.project_type || 'web',
     status: client?.status || 'lead',
+    currency: client?.currency || 'USD',
     total_amount: client?.total_amount?.toString() || '',
     weeks: client?.weeks?.toString() || '',
     access_code: client?.access_code || '',
@@ -50,6 +51,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
       project_name: form.project_name || null,
       project_type: form.project_type,
       status: form.status,
+      currency: form.currency,
       total_amount: total || null,
       deposit_amount: total ? Math.round(total * 0.5) : null,
       design_amount: null,
@@ -161,9 +163,16 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
           Financiero
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className={labelClass}>Monto total del proyecto (USD) *</label>
+            <label className={labelClass}>Moneda *</label>
+            <select name="currency" value={form.currency} onChange={handleChange} className={inputClass}>
+              <option value="USD">USD (Dólares)</option>
+              <option value="ARS">ARS (Pesos)</option>
+            </select>
+          </div>
+          <div>
+            <label className={labelClass}>Monto total ({form.currency}) *</label>
             <input name="total_amount" type="number" required min="0" value={form.total_amount} onChange={handleChange} className={inputClass} placeholder="250000" />
           </div>
           <div>
@@ -174,11 +183,11 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Seña (50% USD)</label>
+            <label className={labelClass}>Seña (50% {form.currency})</label>
             <input value={calculated.deposit ? `$${calculated.deposit.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
           <div>
-            <label className={labelClass}>Final (50% USD)</label>
+            <label className={labelClass}>Final (50% {form.currency})</label>
             <input value={calculated.final ? `$${calculated.final.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
           </div>
         </div>

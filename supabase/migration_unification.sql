@@ -7,6 +7,9 @@
 ALTER TABLE public.clients 
 ADD COLUMN IF NOT EXISTS access_code TEXT UNIQUE;
 
+ALTER TABLE public.clients 
+ADD COLUMN IF NOT EXISTS currency TEXT NOT NULL DEFAULT 'USD' CHECK (currency IN ('USD', 'ARS'));
+
 -- Create index for faster lookups by access_code
 CREATE INDEX IF NOT EXISTS idx_clients_access_code ON public.clients(access_code);
 

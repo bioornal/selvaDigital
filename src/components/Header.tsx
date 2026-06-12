@@ -151,8 +151,16 @@ const Header = () => {
                     {item.label}
                   </a>
                 ))}
-                
-                <div className="flex justify-center gap-6 py-2 border-t border-[rgba(250,250,250,0.06)]">
+                                <div className="flex justify-center gap-6 py-2 border-t border-[rgba(250,250,250,0.06)]">
+                  <a 
+                    href="/portal" 
+                    className="flex items-center gap-2 text-xs opacity-75 hover:opacity-100 transition-opacity py-1"
+                    style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Portal Clientes
+                  </a>
+                  <span className="text-white opacity-20 py-1">|</span>
                   <a 
                     href="https://www.instagram.com/selvadigital_creaciones/" 
                     target="_blank" 

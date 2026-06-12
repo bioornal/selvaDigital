@@ -19,7 +19,17 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const content = renderTemplate(template, variables || {});
+    // Fetch client to check currency
+    const { data: clientData } = await supabaseAdmin
+      .from('clients')
+      .select('currency')
+      .eq('id', client_id)
+      .single();
+
+    let content = renderTemplate(template, variables || {});
+    if (clientData?.currency === 'ARS') {
+      content = content.replace(/USD/g, 'ARS');
+    }
 
     const { data, error } = await supabaseAdmin
       .from('messages')

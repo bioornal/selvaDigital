@@ -110,7 +110,11 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
           else vars[v] = '';
         });
         setVariables(vars);
-        setPreview(renderTemplate(template, vars));
+        let content = renderTemplate(template, vars);
+        if (client.currency === 'ARS') {
+          content = content.replace(/USD/g, 'ARS');
+        }
+        setPreview(content);
       }
     }
   }, [selectedTemplate, client]);
@@ -120,7 +124,11 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     setVariables(newVars);
     const template = messageTemplates.find((t) => t.id === selectedTemplate);
     if (template) {
-      setPreview(renderTemplate(template, newVars));
+      let content = renderTemplate(template, newVars);
+      if (client?.currency === 'ARS') {
+        content = content.replace(/USD/g, 'ARS');
+      }
+      setPreview(content);
     }
   }
 
@@ -394,7 +402,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
             {client.total_amount && (
               <div>
                 <span className="text-gray-500 block text-xs">Monto total</span>
-                <span className="text-white">${client.total_amount.toLocaleString('es-AR')} USD</span>
+                <span className="text-white">${client.total_amount.toLocaleString('es-AR')} {client.currency || 'USD'}</span>
               </div>
             )}
             {client.weeks && (

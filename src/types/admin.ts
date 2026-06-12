@@ -6,6 +6,7 @@ export interface Client {
   project_name?: string | null;
   project_type: string;
   status: 'lead' | 'propuesta' | 'seña' | 'diseño' | 'desarrollo' | 'demo' | 'deploy' | 'finalizado' | 'pausado';
+  currency?: 'USD' | 'ARS' | null;
   total_amount?: number | null;
   deposit_amount?: number | null;
   design_amount?: number | null;

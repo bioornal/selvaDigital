@@ -10,6 +10,7 @@ export interface Database {
           project_name: string | null;
           project_type: string;
           status: string;
+          currency: string | null;
           total_amount: number | null;
           deposit_amount: number | null;
           design_amount: number | null;

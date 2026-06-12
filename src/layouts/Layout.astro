@@ -131,13 +131,13 @@ const schemaOrgJSON = {
   </head>
   <body class="bg-v2-bg text-white font-body">
     <div id="scroll-progress" aria-hidden="true"></div>
-    <Header client:load />
+    <Header client:load transition:persist />
     <main>
       <slot />
     </main>
     <Footer />
-    <WhatsAppButton client:load />
-    <Banner client:load />
+    <WhatsAppButton client:load transition:persist />
+    <Banner client:load transition:persist />
 
     <script>
       function initAnimations() {

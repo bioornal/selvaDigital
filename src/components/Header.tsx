@@ -105,7 +105,7 @@ const Header = () => {
             </a>
             <span className="w-px h-3.5 bg-[rgba(250,250,250,0.18)]" />
             <span className="text-xs tracking-wide" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-              +54 9 3548 550334
+              +54 9 3757 652007
             </span>
             <motion.button
               onClick={handleCTAClick}

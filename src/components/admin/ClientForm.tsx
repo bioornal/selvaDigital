@@ -112,7 +112,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
           <div>
             <label className={labelClass}>Teléfono (WhatsApp) *</label>
-            <input name="phone" required value={form.phone} onChange={handleChange} className={inputClass} placeholder="3548550334" />
+            <input name="phone" required value={form.phone} onChange={handleChange} className={inputClass} placeholder="3757652007" />
           </div>
 
           <div>

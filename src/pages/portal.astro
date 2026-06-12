@@ -1,0 +1,22 @@
+---
+import PortalFlow from '../components/client-portal/PortalFlow';
+import '../styles/portal.css';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Portal de Clientes | Selva Digital</title>
+    <meta name="description" content="Sube la información y archivos requeridos para tu proyecto digital con Selva Digital de forma simple y segura." />
+    <link rel="icon" type="image/webp" href="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778600745/SelvaDigital/favicon_mamfqa.webp" />
+  </head>
+  <body class="selva-portal-body min-h-screen">
+    <div class="selva-bg"></div>
+    <div class="selva-dots"></div>
+    
+    <PortalFlow client:load />
+  </body>
+</html>

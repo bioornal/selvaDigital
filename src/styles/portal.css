@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.selva-portal-body {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+  /* ============================================================
+     NEW PALETTE — Light Mode · Indigo · Violet · Cyan
+     ============================================================ */
+
+  /* Surfaces (light) */
+  --background: #FAFBFF;
+  --foreground: #0B1020;
+  --muted: #6B7390;
+  --muted-foreground: #8A92AB;
+
+  /* Brand: Indigo → Violet → Cyan spectrum */
+  --selva-deep: #1E1B4B;     /* deep indigo (titles on light) */
+  --selva-mid: #4338CA;      /* mid indigo */
+  --selva-emerald: #4F46E5;  /* primary indigo */
+  --selva-mint: #7C3AED;     /* violet */
+  --selva-neon: #06B6D4;     /* cyan accent */
+  --selva-glow: #A78BFA;     /* soft violet glow */
+
+  /* Surfaces hierarchy */
+  --surface-1: rgba(255, 255, 255, 0.7);
+  --surface-2: rgba(255, 255, 255, 0.9);
+  --surface-3: #FFFFFF;
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --border-default: rgba(15, 23, 42, 0.10);
+  --border-strong: rgba(15, 23, 42, 0.16);
+
+  /* Status */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #0EA5E9;
+
+  /* Refined radii */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  /* Base Body Styles Scoped */
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  font-family: var(--font-sans) !important;
+  min-height: 100vh;
+  overflow-x: hidden;
+  letter-spacing: -0.011em;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+}
+
+/* Font Family Overrides for Tailwind Utilities inside the Portal */
+.selva-portal-body .font-heading {
+  font-family: var(--font-heading) !important;
+}
+
+.selva-portal-body .font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+/* Scoped Render smoothing */
+.selva-portal-body * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ========================================================================
+   ANIMATED BACKGROUND — subtle aurora orbs in indigo/violet/cyan
+   ======================================================================== */
+.selva-portal-body .selva-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(99, 102, 241, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 60%),
+    #FAFBFF;
+}
+
+.selva-portal-body .selva-bg::before {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 12%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float-orb-a 28s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.selva-portal-body .selva-bg::after {
+  content: "";
+  position: absolute;
+  bottom: 8%;
+  right: 12%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+  animation: float-orb-b 32s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.selva-portal-body .selva-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(99, 102, 241, 0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes float-orb-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -70px) scale(1.1); }
+  66% { transform: translate(-40px, 40px) scale(0.9); }
+}
+
+@keyframes float-orb-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, 60px) scale(0.95); }
+}
+
+/* ========================================================================
+   SURFACES — light clean cards (no glassmorphism, more like Linear/Vercel)
+   ======================================================================== */
+.selva-portal-body .glass-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 4px 16px -2px rgba(15, 23, 42, 0.04);
+}
+
+.selva-portal-body .glass-panel-strong {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 32px -4px rgba(15, 23, 42, 0.08);
+}
+
+.selva-portal-body .glass-panel-elevated {
+  background: #FFFFFF;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 16px 48px -8px rgba(67, 56, 202, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+}
+
+.selva-portal-body .glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.selva-portal-body .glass-panel-hover:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 32px -4px rgba(67, 56, 202, 0.10);
+  transform: translateY(-2px);
+}
+
+/* ========================================================================
+   INPUTS — clean light inputs
+   ======================================================================== */
+.selva-portal-body .glass-input {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.selva-portal-body .glass-input::placeholder {
+  color: #94A3B8;
+}
+
+.selva-portal-body .glass-input:hover {
+  border-color: var(--border-strong);
+}
+
+.selva-portal-body .glass-input:focus {
+  outline: none;
+  border-color: var(--selva-emerald);
+  box-shadow:
+    0 0 0 4px rgba(79, 70, 229, 0.12),
+    0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+/* ========================================================================
+   TEXT EFFECTS
+   ======================================================================== */
+.selva-portal-body .text-glow {
+  text-shadow: 0 0 20px rgba(79, 70, 229, 0.20);
+}
+
+.selva-portal-body .text-glow-neon {
+  text-shadow:
+    0 0 20px rgba(124, 58, 237, 0.30),
+    0 0 40px rgba(124, 58, 237, 0.10);
+}
+
+.selva-portal-body .text-gradient {
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ========================================================================
+   ANIMATIONS
+   ======================================================================== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.selva-portal-body .animate-fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.selva-portal-body .animate-fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.selva-portal-body .animate-scale-in { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.selva-portal-body .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+
+.selva-portal-body .stagger-children > * { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.selva-portal-body .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.selva-portal-body .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.selva-portal-body .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.selva-portal-body .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.selva-portal-body .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.selva-portal-body .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* ========================================================================
+   SKELETON
+   ======================================================================== */
+.selva-portal-body .skeleton {
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.06) 25%, rgba(99, 102, 241, 0.12) 50%, rgba(99, 102, 241, 0.06) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================================================
+   SCROLLBAR — light theme scoped
+   ======================================================================== */
+.selva-portal-body::-webkit-scrollbar,
+.selva-portal-body *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.selva-portal-body::-webkit-scrollbar-track,
+.selva-portal-body *::-webkit-scrollbar-track {
+  background: transparent;
+}
+.selva-portal-body::-webkit-scrollbar-thumb,
+.selva-portal-body *::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.2s;
+}
+.selva-portal-body::-webkit-scrollbar-thumb:hover,
+.selva-portal-body *::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.24);
+  background-clip: padding-box;
+}
+.selva-portal-body::-webkit-scrollbar-corner,
+.selva-portal-body *::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.selva-portal-body,
+.selva-portal-body * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.16) transparent;
+}
+
+.selva-portal-body ::selection,
+.selva-portal-body::selection {
+  background: rgba(79, 70, 229, 0.18);
+  color: var(--selva-deep);
+}
+
+.selva-portal-body .gradient-border {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 48px -8px rgba(67, 56, 202, 0.18);
+}
+
+.selva-portal-body .gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #4F46E5, #7C3AED 50%, #06B6D4);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

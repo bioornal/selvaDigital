@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { Client, ProjectPhase } from '../../types/admin';
+import type { Client, ProjectPhase, ClientBrandInfo, UploadedFile } from '../../types/admin';
 import { statusLabels, statusColors } from '../../types/admin';
 import { messageTemplates, renderTemplate } from '../../lib/templates';
 import { adminFetch } from '../../lib/admin-fetch';
-import { ArrowLeft, Send, MessageSquare, CheckCircle, Clock, AlertCircle, Copy, Pencil } from 'lucide-react';
+import { 
+  ArrowLeft, Send, MessageSquare, CheckCircle, Clock, AlertCircle, 
+  Copy, Pencil, Download, ExternalLink, FileArchive, Globe, Trash2 
+} from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+import JSZip from 'jszip';
 
 interface ClientDetailProps {
   clientId: string;
@@ -19,9 +24,17 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
   const [sending, setSending] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // New states for client portal materials
+  const [brandInfo, setBrandInfo] = useState<ClientBrandInfo | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const [downloadingZip, setDownloadingZip] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+
   useEffect(() => {
     loadClient();
     loadPhases();
+    loadBrandInfo();
+    loadUploadedFiles();
   }, [clientId]);
 
   async function loadClient() {
@@ -47,6 +60,38 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       // silent
     }
     setLoading(false);
+  }
+
+  async function loadBrandInfo() {
+    try {
+      const { data, error } = await supabase
+        .from('client_brand_info')
+        .select('*')
+        .eq('client_id', clientId)
+        .maybeSingle();
+
+      if (!error && data) {
+        setBrandInfo(data as unknown as ClientBrandInfo);
+      }
+    } catch (e) {
+      // silent
+    }
+  }
+
+  async function loadUploadedFiles() {
+    try {
+      const { data, error } = await supabase
+        .from('uploaded_files')
+        .select('*')
+        .eq('client_id', clientId)
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setUploadedFiles(data as unknown as UploadedFile[]);
+      }
+    } catch (e) {
+      // silent
+    }
   }
 
   useEffect(() => {
@@ -117,6 +162,151 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     const text = encodeURIComponent(preview);
     window.open(`https://wa.me/${client.phone.replace(/\D/g, '')}?text=${text}`, '_blank');
   }
+
+  // Helper functions for client portal materials
+  async function handleGenerateAccessCode() {
+    if (!client) return;
+    const generated = 'SELVA-' + Math.floor(1000 + Math.random() * 9000).toString();
+    try {
+      const { data, error } = await supabase
+        .from('clients')
+        .update({ access_code: generated })
+        .eq('id', client.id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      setClient(data as unknown as Client);
+    } catch (e) {
+      console.error(e);
+      alert('Error al generar código de acceso.');
+    }
+  }
+
+  function copyPortalLink() {
+    if (!client?.access_code) return;
+    const link = `${window.location.origin}/portal?code=${client.access_code}`;
+    navigator.clipboard.writeText(link);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  }
+
+  async function handleDownloadSingle(file: UploadedFile) {
+    try {
+      const response = await fetch(file.file_url, { mode: 'cors' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = file.file_name;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+    } catch (err) {
+      window.open(file.file_url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  async function handleDownloadZip() {
+    if (uploadedFiles.length === 0 || !client) return;
+    setDownloadingZip(true);
+    try {
+      const zip = new JSZip();
+      
+      const manifest = {
+        project: client.name,
+        exportedAt: new Date().toISOString(),
+        totalFiles: uploadedFiles.length,
+        files: uploadedFiles.map((f) => ({
+          name: f.file_name,
+          category: f.category,
+          size: f.file_size,
+          type: f.file_type,
+          uploadedAt: f.created_at,
+          path: `${categoryFolder(f.category)}/${f.file_name}`
+        }))
+      };
+      zip.file('manifest.json', JSON.stringify(manifest, null, 2));
+
+      const folders: Record<string, any> = {
+        logo: zip.folder('logos')!,
+        hero_banner: zip.folder('hero-banners')!,
+        product_gallery: zip.folder('galeria-productos')!,
+        general_asset: zip.folder('otros-archivos')!
+      };
+
+      for (const file of uploadedFiles) {
+        try {
+          const res = await fetch(file.file_url, { mode: 'cors' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const blob = await res.blob();
+          const folder = folders[file.category] || folders.general_asset;
+          folder.file(file.file_name, blob);
+        } catch (e) {
+          console.error(`Failed to add ${file.file_name}:`, e);
+        }
+      }
+
+      const zipBlob = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 }
+      });
+      const blobUrl = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      const safeProjectName = client.name.toLowerCase().replace(/\s+/g, '-');
+      a.download = `${safeProjectName}-materiales-${new Date().toISOString().split('T')[0]}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error('Error generating ZIP:', err);
+      alert('Error al generar el ZIP de descargas.');
+    } finally {
+      setDownloadingZip(false);
+    }
+  }
+
+  function categoryFolder(cat: UploadedFile['category']): string {
+    const map = {
+      logo: 'logos',
+      hero_banner: 'hero-banners',
+      product_gallery: 'galeria-productos',
+      general_asset: 'otros-archivos'
+    };
+    return map[cat] || 'otros';
+  }
+
+  function categoryLabel(cat: UploadedFile['category']): string {
+    const map = {
+      logo: 'Logotipos',
+      hero_banner: 'Imagen Portada / Hero',
+      product_gallery: 'Galería de Productos',
+      general_asset: 'Otros Recursos / Documentos'
+    };
+    return map[cat] || 'Otros';
+  }
+
+  const parseColors = (inputString: string) => {
+    if (!inputString) return [];
+    const hexRegex = /#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/g
+    const matches = inputString.match(hexRegex);
+    return matches || [];
+  };
+
+  const formatBytes = (bytes: number, decimals = 2) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  };
 
   if (loading) {
     return (
@@ -213,6 +403,30 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 <span className="text-white">{client.weeks} semanas</span>
               </div>
             )}
+            <div>
+              <span className="text-gray-500 block text-xs">Código de Acceso Portal</span>
+              <div className="flex items-center gap-2 mt-1">
+                {client.access_code ? (
+                  <>
+                    <span className="text-green-400 font-mono font-bold bg-green-950/20 border border-green-800/30 px-2 py-0.5 text-xs">{client.access_code}</span>
+                    <button
+                      onClick={copyPortalLink}
+                      className="text-xs text-gray-400 hover:text-white transition-colors flex items-center gap-1.5 bg-gray-800 hover:bg-gray-750 px-2 py-0.5"
+                    >
+                      <Copy className="w-3 h-3" />
+                      {copiedLink ? 'Copiado' : 'Link'}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={handleGenerateAccessCode}
+                    className="text-xs bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:bg-blue-600/20 transition-colors px-2 py-1 uppercase tracking-wider font-semibold font-mono"
+                  >
+                    Generar Código
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -269,6 +483,212 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* NEW: CLIENT PORTAL MATERIALS SECTION */}
+      <div className="bg-[#12121a] border border-gray-800 p-5 space-y-6">
+        <div className="flex items-center justify-between border-b border-gray-800 pb-3">
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Materiales del Cliente (Portal de Carga)
+          </h3>
+          {uploadedFiles.length > 0 && (
+            <button
+              onClick={handleDownloadZip}
+              disabled={downloadingZip}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold py-1.5 px-3 uppercase tracking-wider transition-all cursor-pointer"
+            >
+              <FileArchive className="w-3.5 h-3.5" />
+              {downloadingZip ? 'Comprimiendo...' : 'Descargar Todo (.ZIP)'}
+            </button>
+          )}
+        </div>
+
+        {/* Brand Profile Information */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Perfil de Marca
+            </h4>
+            {brandInfo ? (
+              <div className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-3.5 text-sm">
+                <div>
+                  <span className="text-gray-500 block text-xs">Nombre de Marca</span>
+                  <span className="text-white font-semibold">{brandInfo.brand_name}</span>
+                </div>
+                {brandInfo.tagline && (
+                  <div>
+                    <span className="text-gray-500 block text-xs">Slogan / Frase</span>
+                    <span className="text-gray-300 italic">"{brandInfo.tagline}"</span>
+                  </div>
+                )}
+                {brandInfo.description && (
+                  <div>
+                    <span className="text-gray-500 block text-xs">Descripción Comercial</span>
+                    <p className="text-gray-300 leading-relaxed mt-1 text-xs">{brandInfo.description}</p>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-4">
+                  {brandInfo.contact_email && (
+                    <div>
+                      <span className="text-gray-500 block text-xs">Email Comercial</span>
+                      <span className="text-gray-300 font-mono text-xs">{brandInfo.contact_email}</span>
+                    </div>
+                  )}
+                  {brandInfo.contact_phone && (
+                    <div>
+                      <span className="text-gray-500 block text-xs">Teléfono Comercial</span>
+                      <span className="text-gray-300 font-mono text-xs">{brandInfo.contact_phone}</span>
+                    </div>
+                  )}
+                </div>
+                {brandInfo.brand_colors && (
+                  <div>
+                    <span className="text-gray-500 block text-xs mb-1.5">Colores Especificados</span>
+                    <p className="text-gray-300 text-xs mb-2">{brandInfo.brand_colors}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {parseColors(brandInfo.brand_colors).map((color, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 px-2 py-0.5 bg-[#12121a] border border-gray-800 rounded-full text-[10px]">
+                          <div
+                            className="w-3 h-3 rounded-full border border-gray-700"
+                            style={{ backgroundColor: color }}
+                          />
+                          <span className="font-mono text-gray-300">{color.toUpperCase()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="bg-[#0a0a0f] border border-gray-800 p-6 text-center text-xs text-gray-500">
+                El cliente aún no ha completado sus datos comerciales en el portal.
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Sitios de Referencia y Redes
+            </h4>
+            <div className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-4 text-sm min-h-[150px]">
+              {brandInfo ? (
+                <>
+                  <div>
+                    <span className="text-gray-500 block text-xs mb-1.5">Redes Sociales</span>
+                    {Object.values(brandInfo.social_links).some(link => link) ? (
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        {Object.entries(brandInfo.social_links).map(([platform, link]) => link ? (
+                          <a
+                            key={platform}
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 hover:underline flex items-center gap-1 capitalize"
+                          >
+                            <Globe className="w-3 h-3 shrink-0" />
+                            {platform}
+                          </a>
+                        ) : null)}
+                      </div>
+                    ) : (
+                      <span className="text-gray-600 italic text-xs">Sin enlaces cargados</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className="text-gray-500 block text-xs mb-1.5">Sitios Web de Referencia</span>
+                    {brandInfo.reference_sites.length > 0 ? (
+                      <div className="space-y-1.5">
+                        {brandInfo.reference_sites.map((site, idx) => (
+                          <a
+                            key={idx}
+                            href={site}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 hover:underline flex items-center gap-1.5 text-xs truncate"
+                          >
+                            <ExternalLink className="w-3 h-3 shrink-0 text-gray-500" />
+                            {site}
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-gray-600 italic text-xs">Sin referencias de sitios</span>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-6 text-xs text-gray-500">
+                  Sin redes ni referencias.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Uploaded Files Section */}
+        <div className="space-y-4 pt-4 border-t border-gray-800">
+          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Archivos Subidos por el Cliente
+          </h4>
+          {uploadedFiles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {['logo', 'hero_banner', 'product_gallery', 'general_asset'].map((cat) => {
+                const catFiles = uploadedFiles.filter(f => f.category === cat);
+                if (catFiles.length === 0) return null;
+                return (
+                  <div key={cat} className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-3">
+                    <h5 className="text-xs font-semibold text-blue-400 uppercase tracking-wider border-b border-gray-900 pb-1.5">
+                      {categoryLabel(cat as UploadedFile['category'])} ({catFiles.length})
+                    </h5>
+                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                      {catFiles.map(file => (
+                        <div key={file.id} className="flex items-center justify-between gap-3 p-2 bg-[#12121a] border border-gray-800/80 text-xs">
+                          {file.file_type.startsWith('image/') ? (
+                            <div className="w-8 h-8 bg-slate-900 border border-gray-800 overflow-hidden shrink-0">
+                              <img src={file.file_url} alt={file.file_name} className="w-full h-full object-cover" />
+                            </div>
+                          ) : (
+                            <div className="w-8 h-8 bg-[#0a0a0f] border border-gray-800 flex items-center justify-center shrink-0">
+                              <FileText className="w-4 h-4 text-blue-500" />
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-gray-300 font-semibold truncate leading-tight" title={file.file_name}>
+                              {file.file_name}
+                            </p>
+                            <p className="text-[10px] text-gray-500 mt-0.5 font-mono">{formatBytes(file.file_size)}</p>
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <a
+                              href={file.file_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1 text-gray-400 hover:text-white hover:bg-gray-800"
+                              title="Ver en pestaña nueva"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                            <button
+                              onClick={() => handleDownloadSingle(file)}
+                              className="p-1 text-gray-400 hover:text-white hover:bg-gray-800 cursor-pointer"
+                              title="Descargar archivo"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="bg-[#0a0a0f] border border-gray-800 p-6 text-center text-xs text-gray-500">
+              El cliente aún no ha subido archivos.
+            </div>
+          )}
         </div>
       </div>
 
@@ -348,7 +768,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
               <button
                 onClick={handleSend}
                 disabled={!preview || sending}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 {sending ? 'Guardando...' : 'Guardar mensaje'}
@@ -356,7 +776,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
               <button
                 onClick={openWhatsApp}
                 disabled={!preview}
-                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 Abrir WhatsApp

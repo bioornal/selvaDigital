@@ -32,6 +32,11 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     console.log('POST BODY:', body);
+    
+    if (!body.access_code) {
+      body.access_code = 'SELVA-' + Math.floor(1000 + Math.random() * 9000).toString();
+    }
+
     const { data, error } = await supabaseAdmin.from('clients').insert(body).select().single();
 
     if (error) {

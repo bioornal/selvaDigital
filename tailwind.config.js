@@ -83,6 +83,12 @@ module.exports = {
           '800': '#5b21b6',
           '900': '#4c1d95',
         },
+        'selva-deep': '#1E1B4B',
+        'selva-mid': '#4338CA',
+        'selva-emerald': '#4F46E5',
+        'selva-mint': '#7C3AED',
+        'selva-neon': '#06B6D4',
+        'selva-glow': '#A78BFA',
       },
       borderRadius: {
         lg: "var(--radius)",

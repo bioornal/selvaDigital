@@ -17,6 +17,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
     status: client?.status || 'lead',
     total_amount: client?.total_amount?.toString() || '',
     weeks: client?.weeks?.toString() || '',
+    access_code: client?.access_code || '',
   });
 
   const [saving, setSaving] = useState(false);
@@ -54,6 +55,7 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
       design_amount: null,
       final_amount: total ? Math.round(total * 0.5) : null,
       weeks: form.weeks ? parseInt(form.weeks) : null,
+      access_code: form.access_code || null,
     };
 
     try {
@@ -114,6 +116,11 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
           <div>
             <label className={labelClass}>Email</label>
             <input name="email" type="email" value={form.email} onChange={handleChange} className={inputClass} placeholder="cliente@email.com" />
+          </div>
+
+          <div>
+            <label className={labelClass}>Código de Acceso (Portal)</label>
+            <input name="access_code" value={form.access_code} onChange={handleChange} className={inputClass} placeholder="Autogenerado si se deja vacío" />
           </div>
         </div>
 

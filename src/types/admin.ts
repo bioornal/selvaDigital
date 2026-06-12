@@ -15,6 +15,7 @@ export interface Client {
   alias?: string | null;
   bank?: string | null;
   cbu?: string | null;
+  access_code?: string | null;
   created_at: string;
   updated_at: string;
   current_phase: number;
@@ -40,6 +41,37 @@ export interface Message {
   variables: Record<string, string>;
   sent_at?: string | null;
   status: 'borrador' | 'enviado';
+  created_at: string;
+}
+
+export interface ClientBrandInfo {
+  id: string;
+  client_id: string;
+  brand_name: string;
+  tagline?: string | null;
+  brand_colors?: string | null;
+  description?: string | null;
+  contact_email?: string | null;
+  contact_phone?: string | null;
+  social_links: {
+    instagram?: string;
+    facebook?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  reference_sites: string[];
+  updated_at: string;
+}
+
+export interface UploadedFile {
+  id: string;
+  client_id: string;
+  file_name: string;
+  file_path: string;
+  file_url: string;
+  file_size: number;
+  file_type: string;
+  category: 'logo' | 'hero_banner' | 'product_gallery' | 'general_asset';
   created_at: string;
 }
 

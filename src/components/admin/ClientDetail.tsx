@@ -3,9 +3,9 @@ import type { Client, ProjectPhase, ClientBrandInfo, UploadedFile } from '../../
 import { statusLabels, statusColors } from '../../types/admin';
 import { messageTemplates, renderTemplate } from '../../lib/templates';
 import { adminFetch } from '../../lib/admin-fetch';
-import { 
-  ArrowLeft, Send, MessageSquare, CheckCircle, Clock, AlertCircle, 
-  Copy, Pencil, Download, ExternalLink, FileArchive, Globe, Trash2 
+import {
+  ArrowLeft, Send, MessageSquare, CheckCircle, Clock, AlertCircle,
+  Copy, Pencil, Download, ExternalLink, FileArchive, Globe, Trash2, FileText
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import JSZip from 'jszip';
@@ -18,6 +18,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
   const [client, setClient] = useState<Client | null>(null);
   const [phases, setPhases] = useState<ProjectPhase[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [preview, setPreview] = useState('');
@@ -31,10 +32,29 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
   const [copiedLink, setCopiedLink] = useState(false);
 
   useEffect(() => {
-    loadClient();
-    loadPhases();
-    loadBrandInfo();
-    loadUploadedFiles();
+    let cancelled = false;
+    const timeout = setTimeout(() => {
+      if (!cancelled) {
+        setLoading(false);
+        setLoadError('Tiempo de espera agotado. Verificá la conexión con Supabase.');
+      }
+    }, 15000);
+
+    Promise.all([
+      loadClient(),
+      loadPhases(),
+      loadBrandInfo(),
+      loadUploadedFiles(),
+    ]).finally(() => {
+      cancelled = true;
+      clearTimeout(timeout);
+      setLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, [clientId]);
 
   async function loadClient() {
@@ -43,9 +63,12 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       if (res.ok) {
         const data = await res.json();
         setClient(data as Client);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        setLoadError(err.error || `Error ${res.status} al cargar cliente`);
       }
-    } catch (e) {
-      // silent
+    } catch (e: any) {
+      setLoadError(e.message || 'No se pudo cargar el cliente');
     }
   }
 
@@ -54,12 +77,11 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       const res = await adminFetch(`/api/admin/clients/${clientId}/phases`);
       if (res.ok) {
         const data = await res.json();
-        setPhases(data as ProjectPhase[]);
+        setPhases(Array.isArray(data) ? (data as ProjectPhase[]) : []);
       }
     } catch (e) {
-      // silent
+      // non-critical: phases are optional
     }
-    setLoading(false);
   }
 
   async function loadBrandInfo() {
@@ -74,7 +96,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
         setBrandInfo(data as unknown as ClientBrandInfo);
       }
     } catch (e) {
-      // silent
+      // non-critical: brand info is optional
     }
   }
 
@@ -90,7 +112,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
         setUploadedFiles(data as unknown as UploadedFile[]);
       }
     } catch (e) {
-      // silent
+      // non-critical: files are optional
     }
   }
 
@@ -327,7 +349,13 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
   if (!client) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">Cliente no encontrado</p>
+        {loadError ? (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-sm max-w-md mx-auto">
+            {loadError}
+          </div>
+        ) : (
+          <p className="text-gray-500">Cliente no encontrado</p>
+        )}
         <a href="/admin" className="text-sm text-blue-400 hover:text-blue-300 mt-2 inline-block">
           ← Volver al dashboard
         </a>

@@ -35,7 +35,7 @@ const projectTypes = [
   { value: 'otro', label: 'Otro / No estoy seguro' }
 ];
 
-const presupuestos = ['< $350', '$350–$700', '$700–$1.200', '+$1.200'];
+const presupuestos = ['< $500', '$500–$1.200', '$1.200–$1.500', '+$1.500'];
 
 const validationSchema = Yup.object({
   nombre: Yup.string()

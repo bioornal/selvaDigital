@@ -154,7 +154,7 @@ src/
 
 ## Phase 5 (Copy Refactor + Comm Model — May 2026)
 - ✍️ Outcome-led copy refactor across Hero subhead, ServicesV2 (5 cards + H2), Manifiesto (3 cards), AIChatbots (6 features + subhead), AboutV2 (H2 + 4-step process), FAQ. Formula: dolor concreto → cómo lo resolvés → resultado → precio.
-- 💸 Pricing simplificado: Landing $250k, Sitio Corp 3-5pg $350k, Sitio Extendido +5pg $450k, E-commerce $1.3M, Sistema a medida $1.2M, Chatbot IA $1.5M, App a medida (consultar).
+- 💸 Pricing simplificado: Landing $350, Sitio Corp 3-5pg $450, Sitio Extendido +5pg $550, E-commerce $1.200, Sistema a medida $1.500, Chatbot IA $1.500, App a medida $1.500.
 - 🏦 Modelo de pago: pasó de 40/30/30 (seña/diseño/final) → 50/50 (inicio/contra entrega). Refleja en `templates.ts` (WhatsApp) y `admin/ClientForm.tsx` (autocálculo).
 - 🌐 Hosting/dominio NO incluidos — se contrata aparte a nombre del cliente (~AR$ 9.300/mes Hostinger). Argumento de venta: "no quedás atado, el sitio es 100% tuyo desde el día uno".
 - 📩 Contact form: nuevo campo `presupuesto` con botones toggle (ARS rangos: <400k, 400k-800k, 800k-1.5M, +1.5M). Llega al email vía Resend.

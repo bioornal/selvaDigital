@@ -1,0 +1,26 @@
+name: Supabase Keep-Alive Ping
+
+on:
+  schedule:
+    # Se ejecuta 2 veces al día (06:00 UTC y 18:00 UTC)
+    - cron: '0 6,18 * * *'
+  workflow_dispatch: # Permite ejecución manual desde GitHub Actions UI
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Selva Digital keep-alive API
+        run: |
+          echo "Realizando ping al endpoint /api/keep-alive..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://selvadigital.com.ar/api/keep-alive")
+          echo "Respuesta: $RESPONSE"
+
+      - name: Ping Supabase REST API directa (Fallback)
+        if: ${{ secrets.PUBLIC_SUPABASE_URL != '' && secrets.PUBLIC_SUPABASE_ANON_KEY != '' }}
+        run: |
+          echo "Realizando ping directo a la REST API de Supabase..."
+          curl -s -X GET "${{ secrets.PUBLIC_SUPABASE_URL }}/rest/v1/clients?select=id&limit=1" \
+            -H "apikey: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}"
+          echo "Ping directo completado."

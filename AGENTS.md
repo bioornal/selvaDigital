@@ -9,8 +9,8 @@
 - Commercial model: pago único, 50% inicio + 50% contra entrega. NO hosting/dominio incluido — el cliente lo contrata a su nombre (recomendamos Hostinger, ~AR$ 9.300/mes). Esto evita atar al cliente al freelancer y baja la fricción de venta.
 
 ## Contact Info
-- Phone: `+54 9 3548 550334`
-- WhatsApp: `5493548550334`
+- Phone: `+54 9 3548 403786`
+- WhatsApp: `5493548403786`
 - Email: `info.selvadigital@gmail.com`
 - Logo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png`
 - Profile photo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg`
@@ -95,6 +95,7 @@ src/
 │   └── api/
 │       ├── contact.ts         — POST: escapeHtml, rate limiting, env validation
 │       ├── banner.ts
+│       ├── keep-alive.ts      — GET: ping diario a Supabase vía Vercel Cron (evita pausa free tier; proteger con CRON_SECRET)
 │       └── admin/
 │           ├── clients.ts              — GET/POST clients
 │           ├── clients/[id].ts         — GET/PUT/DELETE client
@@ -136,7 +137,7 @@ src/
 - ⚡ Google Fonts: non-blocking load via `rel="preload"` + `onload` trick + `<noscript>` fallback
 - 🖼 Images: `fogon.png` (932KB→168KB WebP), `iguazuFalls.png` (1.1MB→338KB WebP). Originals removed from `public/`
 - 🎯 Banner: fake countdown timer removed — replaced with honest "20% OFF" offer (localStorage for claimed state, no reset)
-- 📋 `.env.example` created (RESEND_API_KEY, CONTACT_EMAIL, PUBLIC_GA_ID)
+- 📋 `.env.example` created (RESEND_API_KEY, CONTACT_EMAIL, PUBLIC_GA_ID) — luego se agregaron keys de Supabase y CRON_SECRET
 - 📈 Dependencies: `astro@4.16.19`, `@astrojs/vercel@7.8.2`
 - 📊 Portfolio order: Impasto → MegaMuebles → Iguazú Falls Lodge → El Fogón Delivery
 

@@ -10,12 +10,12 @@ const line = 'rgba(250,250,250,0.08)';
 
 const projects = [
   {
-    title: 'MegaMuebles', tag: 'E-commerce',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
-    desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
-    kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
-    stack: ['React','Cloudinary','GA4'],
-    url: 'https://megamueblessommiers.online'
+    title: 'Aruma Lodge', tag: 'Turismo',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/f_auto,q_auto,w_1200,h_630/v1781879164/ArumaLodge/Hero_bgsjtf.jpg',
+    desc: 'Departamentos de autor en el centro de Puerto Iguazú con piscina, jacuzzi y motor de reservas directas.',
+    kpi: 'Reserva directa 100%', sub: 'Puerto Iguazú',
+    stack: ['Next.js','Cloudinary','Supabase'],
+    url: 'https://arumalodgeiguazu.com/'
   },
   {
     title: 'Iguazú Falls Lodge', tag: 'Turismo',
@@ -26,12 +26,28 @@ const projects = [
     url: 'https://www.iguazufallslodge.com/'
   },
   {
-    title: 'Social Core', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1779842341/SelvaDigital/4ee423a3-f907-4d6e-9800-1ef9b4a7330e.png',
-    desc: 'Dashboard multi-marca y planificador editorial con IA integrado para automatizar y diseñar la grilla de Instagram en segundos.',
-    kpi: 'Grilla en minutos', sub: '100% automatizado',
-    stack: ['React','Vite','Fal.ai','Tailwind'],
-    url: 'https://mk-panel.netlify.app/'
+    title: 'MegaMuebles', tag: 'E-commerce',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
+    desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
+    kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
+    stack: ['React','Cloudinary','GA4'],
+    url: 'https://megamueblessommiers.online'
+  },
+  {
+    title: 'La Casa del Lago', tag: 'Turismo',
+    img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    desc: 'Cabañas a orillas del lago Urugua-í con muelle propio, kayaks, parrilla y motor de reservas sin comisiones.',
+    kpi: 'Reservas 24/7', sub: 'Lago Urugua-í',
+    stack: ['Next.js','React','Tailwind'],
+    url: 'https://melodious-palmier-d4426c.netlify.app/'
+  },
+  {
+    title: 'Impasto Pizzería', tag: 'E-commerce',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Impasto_o46wxm.png',
+    desc: 'Pizzería online con menú interactivo, combos, empanadas por caja y checkout integrado.',
+    kpi: 'En lanzamiento', sub: 'pre-orden activa',
+    stack: ['React','Netlify','SEO'],
+    url: 'https://vocal-naiad-861a2c.netlify.app/'
   },
   {
     title: 'El Fogón Delivery', tag: 'Gastronomía',
@@ -42,7 +58,7 @@ const projects = [
     url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
   },
   {
-    title: 'Vip Translados Iguazú', tag: 'Landing',
+    title: 'Vip Traslados Iguazú', tag: 'Landing',
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
     desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
     kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
@@ -58,12 +74,12 @@ const projects = [
     url: 'https://megabot-admin.cloud/login'
   },
   {
-    title: 'Impasto Pizzería', tag: 'E-commerce',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Impasto_o46wxm.png',
-    desc: 'Pizzería online con menú interactivo, combos, empanadas por caja y checkout integrado.',
-    kpi: 'En lanzamiento', sub: 'pre-orden activa',
-    stack: ['React','Netlify','SEO'],
-    url: 'https://vocal-naiad-861a2c.netlify.app/'
+    title: 'Social Core', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1779842341/SelvaDigital/4ee423a3-f907-4d6e-9800-1ef9b4a7330e.png',
+    desc: 'Dashboard multi-marca y planificador editorial con IA integrado para automatizar y diseñar la grilla de Instagram en segundos.',
+    kpi: 'Grilla en minutos', sub: '100% automatizado',
+    stack: ['React','Vite','Fal.ai','Tailwind'],
+    url: 'https://mk-panel.netlify.app/'
   },
   {
     title: 'Carro Fogón', tag: 'Sistema',
@@ -82,6 +98,9 @@ const projects = [
     url: 'https://recetarionapolitano.netlify.app/login/'
   },
 ];
+
+const INITIAL_VISIBLE = 3;
+const extraCount = projects.length - INITIAL_VISIBLE;
 ---
 
 <section id="portfolio" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
@@ -106,13 +125,17 @@ const projects = [
       </div>
     </div>
 
-    {/* Grid — mobile carousel (en mobile mostramos sólo 4 destacados; los 5 restantes se muestran al hacer click), md+ vuelve a grid completo */}
-    <div class="portfolio-grid mobile-carousel md:grid-cols-2 lg:grid-cols-3" data-dots="portfolio">
+    {/* Grid principal */}
+    <div id="portfolio-grid-container" class="portfolio-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8">
       {projects.map((p, i) => (
-        <article class={`portfolio-card flex flex-col overflow-hidden w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none ${i >= 4 ? 'portfolio-extra hide-on-mobile' : ''}`} style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}>
+        <article
+          class={`portfolio-card flex flex-col overflow-hidden w-full min-w-0 transition-all duration-500 ease-in-out ${i >= INITIAL_VISIBLE ? 'portfolio-extra-card hidden' : ''}`}
+          style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}
+          data-index={i}
+        >
           {/* Image */}
           <div class="relative overflow-hidden" style={{ aspectRatio: '16/10', background: '#000' }}>
-            <img src={p.img} alt={p.title} class="w-full h-full object-cover" />
+            <img src={p.img} alt={p.title} class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
             {/* Tag */}
             <div class="absolute top-3.5 left-3.5 text-[9px] tracking-[2px] uppercase px-2.5 py-1"
               style={{
@@ -164,8 +187,8 @@ const projects = [
               ))}
             </div>
             <div class="flex justify-between items-center pt-3.5" style={{ borderTop: `1px solid ${line}` }}>
-              <a href={p.url} target="_blank" class="text-[13px] font-medium inline-flex items-center gap-1.5" style={{ color: white, fontFamily: "'Inter', system-ui, sans-serif", textDecoration: 'none' }}>
-                Ver sitio <span style={{ color: accent }}>→</span>
+              <a href={p.url} target="_blank" rel="noopener noreferrer" class="text-[13px] font-medium inline-flex items-center gap-1.5 group" style={{ color: white, fontFamily: "'Inter', system-ui, sans-serif", textDecoration: 'none' }}>
+                Ver sitio <span style={{ color: accent }} class="transition-transform group-hover:translate-x-1">→</span>
               </a>
               <span class="text-[10px] tracking-[0.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>↗ LIVE</span>
             </div>
@@ -174,53 +197,74 @@ const projects = [
       ))}
     </div>
 
-    {/* Dots + link "ver más" — mobile only */}
-    <div class="md:hidden carousel-dots" data-dots-for="portfolio"></div>
-    <div class="md:hidden flex justify-center mt-4">
-      <button type="button" id="portfolio-show-all"
-        class="text-[13px] font-medium underline underline-offset-4 decoration-1 transition-colors"
-        style={`color:${textSoft}; text-decoration-color:rgba(43,182,115,0.5); font-family:'Inter', system-ui, sans-serif;`}>
-        Ver los 5 proyectos restantes →
+    {/* Botón desplegable moderno */}
+    <div class="flex justify-center mt-12">
+      <button
+        type="button"
+        id="portfolio-toggle-btn"
+        class="group relative inline-flex items-center gap-3 px-8 py-4 text-[13px] font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer"
+        style={{
+          background: surface,
+          color: white,
+          border: `1px solid ${line}`,
+          fontFamily: "'JetBrains Mono', monospace"
+        }}
+        data-expanded="false"
+        data-extra-count={extraCount}
+      >
+        <span id="portfolio-btn-text" class="transition-colors group-hover:text-[#2BB673]">
+          Ver todos los proyectos ({projects.length}) ↓
+        </span>
+        <span
+          id="portfolio-btn-icon"
+          class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-transform duration-300"
+          style={{ background: 'rgba(43,182,115,0.15)', color: accent }}
+        >
+          ↓
+        </span>
       </button>
     </div>
   </div>
 </section>
 
 <script>
-  // Mobile: revelar el resto de proyectos al tocar "Ver más"
-  const showBtn = document.getElementById('portfolio-show-all');
-  if (showBtn) {
-    showBtn.addEventListener('click', () => {
-      document.querySelectorAll('.portfolio-extra').forEach(el => {
-        el.classList.remove('hide-on-mobile');
-      });
-      showBtn.style.display = 'none';
-      // Refrescar dots si existen
-      const carousel = document.querySelector('.portfolio-grid') as HTMLElement;
-      if (carousel) carousel.dispatchEvent(new Event('scroll'));
+  const toggleBtn = document.getElementById('portfolio-toggle-btn');
+  const btnText = document.getElementById('portfolio-btn-text');
+  const btnIcon = document.getElementById('portfolio-btn-icon');
+  const extraCards = document.querySelectorAll('.portfolio-extra-card');
+
+  if (toggleBtn && btnText && btnIcon) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('data-expanded') === 'true';
+
+      if (isExpanded) {
+        // Colapsar
+        extraCards.forEach(card => card.classList.add('hidden'));
+        toggleBtn.setAttribute('data-expanded', 'false');
+        btnText.textContent = `Ver todos los proyectos (${extraCards.length + 3}) ↓`;
+        btnIcon.textContent = '↓';
+        btnIcon.style.transform = 'rotate(0deg)';
+        
+        // Scroll suave de regreso al portfolio header
+        const portfolioSection = document.getElementById('portfolio');
+        if (portfolioSection) {
+          portfolioSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Desplegar
+        extraCards.forEach(card => card.classList.remove('hidden'));
+        toggleBtn.setAttribute('data-expanded', 'true');
+        btnText.textContent = 'Mostrar menos ↑';
+        btnIcon.textContent = '↑';
+        btnIcon.style.transform = 'rotate(180deg)';
+      }
     });
   }
 </script>
 
 <style>
-  /* Mobile carousel: edge-bleeding para que peek del próximo card sea visible */
-  @media (max-width: 767px) {
-    .portfolio-grid.mobile-carousel {
-      padding-left: 24px;
-      padding-right: 24px;
-      margin-left: -24px;
-      margin-right: -24px;
-    }
-  }
-  /* Desktop: gap explícito (override del gap: revert global) */
-  @media (min-width: 768px) {
-    .portfolio-grid.mobile-carousel {
-      gap: 28px;
-    }
-  }
-  @media (min-width: 1024px) {
-    .portfolio-grid.mobile-carousel {
-      gap: 32px;
-    }
+  #portfolio-toggle-btn:hover {
+    border-color: rgba(43,182,115,0.4);
+    box-shadow: 0 0 20px rgba(43,182,115,0.15);
   }
 </style>

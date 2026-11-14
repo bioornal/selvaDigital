@@ -5,6 +5,16 @@ export type { Client, ClientBrandInfo, UploadedFile } from '../types/admin';
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
+/** false cuando faltan las variables (p. ej. en local sin .env): la app carga igual y las consultas fallan con su mensaje de error. */
+export const supabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+
+if (!supabaseConfigured) {
+  console.warn(
+    '[supabase] Faltan PUBLIC_SUPABASE_URL y/o PUBLIC_SUPABASE_ANON_KEY. ' +
+    'Copiá .env.example como .env y completá las claves para usar el portal y el admin en local.'
+  );
+}
+
 // Node 20 (Vercel) no tiene WebSocket nativo y supabase-js inicializa
 // el cliente realtime al crear el client. Polyfill solo en SSR para
 // evitar crashes; en browser ya existe globalThis.WebSocket.
@@ -15,7 +25,7 @@ if (import.meta.env.SSR) {
   wsTransport = ws.WebSocket || ws.default;
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+export const supabase = createClient<Database>(supabaseUrl || 'https://invalid.supabase.co', supabaseAnonKey || 'invalid-key', {
   // @ts-expect-error - transport está permitido en runtime aunque tipos sean estrictos
   realtime: wsTransport ? { transport: wsTransport } : undefined,
 });

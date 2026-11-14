@@ -1,0 +1,70 @@
+---
+/**
+ * Separador visual de ancho completo: imagen de producto + frase y botón
+ * que presenta los trabajos en vivo.
+ */
+interface Props {
+  image: string;        // nombre base en /public/visuals, sin extensión
+  title: string;        // frase grande
+  href: string;
+  cta: string;
+  external?: boolean;
+  align?: 'left' | 'right'; // lado del texto: el opuesto a donde está el objeto de la imagen
+}
+
+const { image, title, href, cta, external = false, align = 'left' } = Astro.props;
+const linkAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<aside class:list={['vbreak on-deep', { 'is-right': align === 'right' }]} aria-label={title}>
+  <picture class="vbreak-media" aria-hidden="true">
+    <source media="(max-width: 767px)" srcset={`/visuals/${image}-1200.webp`} type="image/webp" />
+    <source srcset={`/visuals/${image}.webp`} type="image/webp" />
+    <img src={`/visuals/${image}.png`} alt="" width="2400" height="900" loading="lazy" decoding="async" />
+  </picture>
+  <div class="wrap vbreak-copy">
+    <p class="vbreak-title">{title}</p>
+    <a class="btn btn-primary" href={href} {...linkAttrs}>{cta}</a>
+  </div>
+</aside>
+
+<style>
+  .vbreak {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: clamp(360px, 42vw, 600px);
+    display: flex;
+    align-items: flex-end;
+    padding-block: clamp(40px, 6vw, 72px);
+  }
+  .vbreak-media { position: absolute; inset: 0; z-index: -1; display: block; }
+  .vbreak-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vbreak-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(11, 33, 40, .94) 0%, rgba(11, 33, 40, .7) 50%, rgba(11, 33, 40, .1) 85%);
+  }
+  .vbreak-copy { position: relative; }
+  .vbreak-title {
+    margin: 0 0 28px;
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 116;
+    font-size: var(--fs-display-compact);
+    line-height: .95;
+    letter-spacing: -0.03em;
+    color: var(--ice);
+  }
+  @media (min-width: 768px) {
+    .vbreak.is-right .vbreak-copy { display: flex; flex-direction: column; align-items: flex-end; text-align: right; padding-left: 52%; }
+    .vbreak.is-right .vbreak-title { max-width: 12ch; }
+    .vbreak.is-right .vbreak-media::after { background: linear-gradient(270deg, rgba(11, 33, 40, .88) 0%, rgba(11, 33, 40, .35) 55%, rgba(11, 33, 40, 0) 100%); }
+  }
+  @media (max-width: 767px) {
+    .vbreak-media::after { background: linear-gradient(180deg, rgba(11, 33, 40, .2) 0%, rgba(11, 33, 40, .9) 70%); }
+    .vbreak .btn { width: 100%; }
+  }
+</style>

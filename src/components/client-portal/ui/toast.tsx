@@ -35,10 +35,10 @@ const icons: Record<ToastType, React.ReactNode> = {
 }
 
 const styles: Record<ToastType, { border: string; icon: string; bg: string }> = {
-  success: { border: 'border-l-emerald-500', icon: 'text-emerald-600', bg: 'bg-emerald-50' },
-  error: { border: 'border-l-red-500', icon: 'text-red-600', bg: 'bg-red-50' },
-  warning: { border: 'border-l-amber-500', icon: 'text-amber-600', bg: 'bg-amber-50' },
-  info: { border: 'border-l-sky-500', icon: 'text-sky-600', bg: 'bg-sky-50' }
+  success: { border: 'border-l-[var(--lime)]', icon: 'text-[var(--lime)]', bg: 'bg-[var(--petrol-deep)]' },
+  error: { border: 'border-l-[#FFB4A8]', icon: 'text-[#FFB4A8]', bg: 'bg-[var(--petrol-deep)]' },
+  warning: { border: 'border-l-[#F5C76B]', icon: 'text-[#F5C76B]', bg: 'bg-[var(--petrol-deep)]' },
+  info: { border: 'border-l-[var(--line-petrol-strong)]', icon: 'text-[var(--on-petrol-soft)]', bg: 'bg-[var(--petrol-raised)]' }
 }
 
 const ToastItem: React.FC<{ toast: Toast; onClose: (id: string) => void }> = ({ toast, onClose }) => {
@@ -51,19 +51,19 @@ const ToastItem: React.FC<{ toast: Toast; onClose: (id: string) => void }> = ({ 
 
   return (
     <div
-      className={`pointer-events-auto bg-white rounded-xl border border-slate-200 border-l-2 ${s.border} px-4 py-3.5 min-w-[300px] max-w-[420px] flex items-start gap-3 animate-fade-in-up shadow-lg shadow-slate-200/60`}
+      className={`pointer-events-auto bg-[var(--petrol-deep)] rounded-none border border-[var(--line-petrol)] ${s.border} px-4 py-3.5 min-w-0 w-full max-w-[420px] flex items-start gap-3`}
       role="status"
     >
       <div className={`shrink-0 mt-0.5 ${s.icon}`}>{icons[toast.type]}</div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-slate-900 leading-tight">{toast.title}</p>
+        <p className="text-sm font-semibold text-[var(--ice)] leading-tight">{toast.title}</p>
         {toast.description && (
-          <p className="text-xs text-slate-500 mt-1 leading-relaxed">{toast.description}</p>
+          <p className="text-xs text-[var(--on-petrol-soft)] mt-1 leading-relaxed">{toast.description}</p>
         )}
       </div>
       <button
         onClick={() => onClose(toast.id)}
-        className="shrink-0 text-slate-400 hover:text-slate-700 transition-colors p-0.5 -m-0.5 rounded"
+        className="shrink-0 text-[var(--on-petrol-dim)] hover:text-[var(--ice)] transition-colors p-0.5 -m-0.5 rounded"
         aria-label="Cerrar notificación"
       >
         <X className="w-3.5 h-3.5" />
@@ -97,7 +97,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
+      <div className="toast-stack fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
         {toasts.map((t) => (
           <ToastItem key={t.id} toast={t} onClose={remove} />
         ))}

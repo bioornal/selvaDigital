@@ -78,32 +78,45 @@ export const POST: APIRoute = async ({ request }) => {
           to: EMAIL_TO,
           subject: `🔔 ¡Carga Finalizada! Cliente: ${projectName}`,
           html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #f8fafc;">
-              <h2 style="color: #4f46e5; margin-top: 0;">¡Nueva carga completada!</h2>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#E8F7F5" style="width: 100%; background-color: #E8F7F5; border-collapse: collapse; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35;">
+          <tr>
+            <td align="center" style="padding: 20px; border-radius: 0;">
+              <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width: 100%; max-width: 600px; background-color: #ffffff; border: 1px solid #C8D6D6; border-collapse: collapse; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35;">
+                <tr>
+                  <td bgcolor="#102D35" style="background-color: #102D35; padding: 24px; border-radius: 0; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; color: #E8F7F5;">selva digital<span style="color: #D9FA57;">.</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 24px; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35; line-height: 1.6;">
+<h2 style="color: #102D35; margin-top: 0;">¡Nueva carga completada!</h2>
               <p>El cliente <strong>${projectName}</strong> ha finalizado el proceso de carga de activos e información en su portal.</p>
-              <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;" />
-              <table style="width: 100%; border-collapse: collapse;">
+              <hr style="border: 0; border-top: 1px solid #C8D6D6; margin: 20px 0;" />
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; border-radius: 0;">
                 <tr>
-                  <td style="padding: 6px 0; color: #64748b; font-weight: bold; width: 150px;">Cliente:</td>
-                  <td style="padding: 6px 0; color: #1e293b;">${projectName}</td>
+                  <td style="padding: 6px 0; color: #4D6369; font-weight: bold; width: 150px;">Cliente:</td>
+                  <td style="padding: 6px 0; color: #102D35;">${projectName}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #64748b; font-weight: bold;">Código de Acceso:</td>
-                  <td style="padding: 6px 0; color: #1e293b; font-family: monospace;">${accessCode}</td>
+                  <td style="padding: 6px 0; color: #4D6369; font-weight: bold;">Código de Acceso:</td>
+                  <td style="padding: 6px 0; color: #102D35; font-family: Arial, Helvetica, sans-serif;">${accessCode}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #64748b; font-weight: bold;">Servicio:</td>
-                  <td style="padding: 6px 0; color: #1e293b; text-transform: capitalize;">${serviceType}</td>
+                  <td style="padding: 6px 0; color: #4D6369; font-weight: bold;">Servicio:</td>
+                  <td style="padding: 6px 0; color: #102D35; text-transform: capitalize;">${serviceType}</td>
                 </tr>
               </table>
-              <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;" />
+              <hr style="border: 0; border-top: 1px solid #C8D6D6; margin: 20px 0;" />
               <p style="margin-bottom: 0; text-align: center;">
-                <a href="${origin}/admin" style="display: inline-block; background-color: #4f46e5; color: #ffffff; font-weight: bold; padding: 10px 20px; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.15);">
+                <a href="${origin}/admin" style="display: inline-block; background-color: #D9FA57; color: #102D35; font-weight: bold; padding: 10px 20px; border-radius: 0; text-decoration: none;">
                   Ir al Panel de Administración
                 </a>
               </p>
-            </div>
-          `
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      `
         });
         results.email = !sendError;
       } catch (err) {

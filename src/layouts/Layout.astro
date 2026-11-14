@@ -3,7 +3,6 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton';
-import Banner from '../components/Banner';
 import '../styles/global.css';
 
 interface Props {
@@ -29,7 +28,7 @@ const schemaOrgJSON = {
       "alternateName": "Selva Digital",
       "description": "Desarrollador web freelance — diseño, desarrollo, e-commerce, sistemas a medida y chatbots con IA para PyMEs en Argentina",
       "url": "https://www.selvadigital.com",
-      "telephone": "+54-9-3548-403786",
+      "telephone": "+54-9-3757-652003",
       "email": "info.selvadigital@gmail.com",
       "image": "https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg",
       "jobTitle": "Desarrollador web freelance",
@@ -46,9 +45,9 @@ const schemaOrgJSON = {
       "name": "Selva Digital",
       "url": "https://www.selvadigital.com",
       "image": "https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png",
-      "telephone": "+54-9-3548-403786",
+      "telephone": "+54-9-3757-652003",
       "email": "info.selvadigital@gmail.com",
-      "priceRange": "$350 - $1500 USD",
+      "priceRange": "$250.000 - $1.500.000 ARS",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Córdoba",
@@ -60,13 +59,13 @@ const schemaOrgJSON = {
         "@type": "OfferCatalog",
         "name": "Planes y servicios",
         "itemListElement": [
-          { "@type": "Offer", "name": "Landing Page",           "price": "350",  "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Sitio Web Corporativo",  "price": "450",  "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Sitio Web Extendido",    "price": "550",  "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Tienda E-commerce",      "price": "1200", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Sistema a medida",       "price": "1500", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Chatbot con IA",         "price": "1500", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "App a medida",           "price": "1500", "priceCurrency": "USD" }
+          { "@type": "Offer", "name": "Landing Page",           "price": "250000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sitio Web Corporativo",  "price": "350000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sitio Web Extendido",    "price": "450000",  "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Tienda E-commerce",      "price": "1300000", "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Sistema a medida",       "price": "1200000", "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "Chatbot con IA",         "price": "1500000", "priceCurrency": "ARS" },
+          { "@type": "Offer", "name": "App a medida" }
         ]
       }
     },
@@ -111,9 +110,11 @@ const schemaOrgJSON = {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@87.5..112.5,400..500&family=Doto:wght@600..900&display=swap"
       rel="stylesheet"
     />
+    <meta name="theme-color" content="#102D35" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
 
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrgJSON)} />
     {googleAnalyticsId && (
@@ -130,115 +131,13 @@ const schemaOrgJSON = {
       </>
     )}
   </head>
-  <body class="bg-v2-bg text-white font-body">
-    <div id="scroll-progress" aria-hidden="true"></div>
+  <body>
     <Header client:load transition:persist />
     <main>
       <slot />
     </main>
     <Footer />
     <WhatsAppButton client:load transition:persist />
-    <Banner client:load transition:persist />
 
-    <script>
-      function initAnimations() {
-        // 1. Reading Progress Bar
-        const progressBar = document.getElementById('scroll-progress');
-        const handleScroll = () => {
-          if (!progressBar) return;
-          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          if (totalHeight <= 0) {
-            progressBar.style.width = '0%';
-            return;
-          }
-          const progress = (window.scrollY / totalHeight) * 100;
-          progressBar.style.width = `${progress}%`;
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Run once initially
-
-        // 2. ScrollReveal (IntersectionObserver)
-        const revealElements = document.querySelectorAll('.reveal');
-        const observerOptions = {
-          root: null,
-          rootMargin: '-30px 0px',
-          threshold: 0.05
-        };
-
-        const observer = new IntersectionObserver((entries, obs) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-              obs.unobserve(entry.target);
-            }
-          });
-        }, observerOptions);
-
-        revealElements.forEach(el => observer.observe(el));
-
-        // 2.5. Carousel dots — mobile only. Cada .mobile-carousel con
-        //      `data-dots` busca su contenedor `.carousel-dots` sibling y
-        //      crea un dot por cada hijo visible (no hidden, no .hide-on-mobile).
-        if (window.matchMedia('(max-width: 767px)').matches) {
-          const carousels = document.querySelectorAll<HTMLElement>('.mobile-carousel[data-dots]');
-          carousels.forEach((carousel) => {
-            const dotsContainer = document.querySelector<HTMLElement>(
-              `[data-dots-for="${carousel.dataset.dots}"]`
-            );
-            if (!dotsContainer) return;
-
-            const items = Array.from(carousel.children).filter(
-              (el) => !(el as HTMLElement).classList.contains('hide-on-mobile')
-            ) as HTMLElement[];
-            if (items.length < 2) return;
-
-            dotsContainer.innerHTML = '';
-            items.forEach((_, i) => {
-              const dot = document.createElement('span');
-              dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-              dotsContainer.appendChild(dot);
-            });
-
-            const dots = dotsContainer.querySelectorAll('.carousel-dot');
-
-            const updateActive = () => {
-              const scrollLeft = carousel.scrollLeft;
-              const cardWidth = items[0].getBoundingClientRect().width;
-              const gap = parseFloat(getComputedStyle(carousel).gap || '16');
-              const idx = Math.round(scrollLeft / (cardWidth + gap));
-              const clamped = Math.max(0, Math.min(items.length - 1, idx));
-              dots.forEach((d, i) => d.classList.toggle('active', i === clamped));
-            };
-
-            carousel.addEventListener('scroll', updateActive, { passive: true });
-            updateActive();
-          });
-        }
-
-        // 3. Spotlight Cards Glow Effect (Mouse Move listener)
-        if (window.matchMedia('(hover: hover)').matches) {
-          const spotlightCards = document.querySelectorAll('.spotlight-card');
-          spotlightCards.forEach(card => {
-            const htmlCard = card as HTMLElement;
-            htmlCard.addEventListener('mousemove', (e: MouseEvent) => {
-              const rect = htmlCard.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              htmlCard.style.setProperty('--mouse-x', `${x}px`);
-              htmlCard.style.setProperty('--mouse-y', `${y}px`);
-            });
-          });
-        }
-      }
-
-      // Bind to Astro view transition page load
-      document.addEventListener('astro:page-load', initAnimations);
-      // Fallback in case DOM is already loaded
-      if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        initAnimations();
-      } else {
-        document.addEventListener('DOMContentLoaded', initAnimations);
-      }
-    </script>
   </body>
 </html>

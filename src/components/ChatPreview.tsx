@@ -1,154 +1,71 @@
 import { useState, useEffect } from 'react';
 
-const accent = '#2BB673';
-const surface = '#121316';
-const surface2 = '#1A1C20';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
-const shadow = '0 24px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04)';
-
-function withAlpha(hex: string, a: number) {
-  const h = hex.replace('#', '');
-  const r = parseInt(h.substring(0, 2), 16);
-  const g = parseInt(h.substring(2, 4), 16);
-  const b = parseInt(h.substring(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-
+// Conversación armada con la carta real publicada en impastopizzas.com (precios, envío y pagos tal como figuran).
 const messages = [
-  { from: 'user', text: 'Hola, ¿tienen sommiers de 2 plazas en stock?' },
-  { from: 'bot',  text: '¡Hola! Sí, tenemos 3 modelos disponibles. ¿En qué ciudad estás para confirmarte el envío?' },
-  { from: 'user', text: 'Capital. Querría el más económico.' },
-  { from: 'bot',  text: 'El Queen 140×190 sale $189.900 con envío incluido. ¿Te lo aseguro?' },
+  { from: 'user', text: '¡Hola! Somos 3, ¿qué me recomendás?' },
+  { from: 'bot',  text: '¡Hola! Para 3 va justo una pizza de 8 porciones. Las más pedidas son la Napoletana all\x27Aglio ($20.000) y la Muzzarella y Jamón ($18.500). Y si no se ponen de acuerdo, mitad y mitad es sin costo.' },
+  { from: 'user', text: 'Dale, una Napoletana. ¿Llegan a mi casa?' },
+  { from: 'bot',  text: 'Tenemos delivery propio en Puerto Iguazú. ¿En qué zona estás y cuál es la dirección de entrega?' },
+  { from: 'user', text: 'En el centro de Puerto Iguazú, Av. Córdoba 150.' },
+  { from: 'bot',  text: 'Para esa dirección: Napoletana all\x27Aglio $20.000 + envío $3.000, total $23.000. La entrega estimada es de 30 a 50 min. ¿Confirmás el pedido para pagar con Mercado Pago?' },
 ];
 
 export default function ChatPreview() {
-  const [step, setStep] = useState(0);
-
+  const [step, setStep] = useState(messages.length);
+  const [reducedMotion, setReducedMotion] = useState(true);
   useEffect(() => {
-    const id = setInterval(() => setStep(s => (s + 1) % (messages.length + 1)), 2400);
-    return () => clearInterval(id);
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const syncMotion = () => {
+      if (interval !== undefined) clearInterval(interval);
+      setReducedMotion(preference.matches);
+      setStep(preference.matches ? messages.length : 0);
+      if (!preference.matches) interval = setInterval(() => setStep(s => (s + 1) % (messages.length + 1)), 2400);
+    };
+    syncMotion();
+    preference.addEventListener('change', syncMotion);
+    return () => {
+      if (interval !== undefined) clearInterval(interval);
+      preference.removeEventListener('change', syncMotion);
+    };
   }, []);
-
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
-      <div style={{
-        position: 'absolute', inset: -40,
-        background: `radial-gradient(circle at 60% 50%, ${withAlpha(accent, 0.18)}, transparent 65%)`,
-        filter: 'blur(20px)', pointerEvents: 'none'
-      }} />
-
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        boxSizing: 'border-box',
-        background: surface,
-        border: `1px solid ${lineStr}`,
-        borderRadius: 20,
-        padding: 30,
-        boxShadow: shadow,
-        fontFamily: "'Inter', system-ui, sans-serif"
-      }}>
-        {/* Header */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          paddingBottom: 16, borderBottom: `1px solid ${line}`
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{
-              width: 40, height: 40, borderRadius: 10,
-              background: withAlpha(accent, 0.15),
-              border: `1px solid ${withAlpha(accent, 0.4)}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: accent, fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 14, fontWeight: 600
-            }}>AI</div>
-            <div>
-              <div style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: 14, fontWeight: 600, color: '#FAFAFA' }}>
-                Megabot · MegaMuebles
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: 1, color: accent }}>
-                <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: accent, boxShadow: `0 0 6px ${accent}` }} />
-                EN LÍNEA · 24/7
-              </div>
-            </div>
+    <figure className="chat-demo" aria-label="Conversación de ejemplo con el asistente de la web de Impasto Pizzería">
+      <header className="chat-demo-header">
+        <p className="chat-demo-name">Asistente de Impasto</p>
+      </header>
+      <div className="chat-demo-messages">
+        {messages.slice(0, step).map((message, index) => (
+          <p key={index} className={'chat-demo-bubble chat-demo-' + message.from}>
+            <span className="sr-only">{message.from === 'user' ? 'Cliente: ' : 'Asistente: '}</span>
+            {message.text}
+          </p>
+        ))}
+        {!reducedMotion && step < messages.length && messages[step].from === 'bot' && (
+          <div className="chat-demo-typing" role="status" aria-label="El asistente está escribiendo">
+            <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
           </div>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: textDim }}>
-            {messages.length} msgs
-          </span>
-        </div>
-
-        {/* Messages */}
-        <div style={{ padding: '24px 0', display: 'flex', flexDirection: 'column', gap: 14, minHeight: 380 }}>
-          {messages.slice(0, step).map((m, i) => (
-            <div key={i} style={{
-              alignSelf: m.from === 'user' ? 'flex-end' : 'flex-start',
-              maxWidth: '82%',
-              background: m.from === 'user' ? surface2 : withAlpha(accent, 0.14),
-              border: `1px solid ${m.from === 'user' ? line : withAlpha(accent, 0.3)}`,
-              color: m.from === 'user' ? textSoft : '#FAFAFA',
-              padding: '12px 16px',
-              borderRadius: m.from === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
-              fontSize: 14.5, lineHeight: 1.5
-            }}>
-              {m.text}
-            </div>
-          ))}
-          {step < messages.length && messages[step].from === 'bot' && (
-            <div style={{
-              alignSelf: 'flex-start', color: textDim,
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11, letterSpacing: 1, padding: '4px 14px'
-            }}>
-              megabot está escribiendo…
-            </div>
-          )}
-        </div>
-
-        {/* Input mock */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 10,
-          padding: '14px 16px', background: surface2,
-          border: `1px solid ${line}`, borderRadius: 10
-        }}>
-          <span style={{ fontSize: 13, color: textDim, flex: 1 }}>
-            Escribí un mensaje…
-          </span>
-          <span style={{
-            background: accent, color: '#06140C',
-            width: 32, height: 32, borderRadius: 8,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 700, fontSize: 16
-          }}>↑</span>
-        </div>
-
-        {/* Stats */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(3,1fr)',
-          marginTop: 18, paddingTop: 18, borderTop: `1px solid ${line}`
-        }}>
-          {[
-            { n: '1.2k', k: 'msgs/día' },
-            { n: '89%',  k: 'auto-resueltas' },
-            { n: '3 s',  k: 'tiempo medio' },
-          ].map((s, i) => (
-            <div key={i} style={{
-              textAlign: 'center',
-              borderRight: i < 2 ? `1px solid ${line}` : 'none',
-              padding: '4px 8px'
-            }}>
-              <div style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif", fontSize: 20, fontWeight: 600, color: '#FAFAFA', letterSpacing: -0.01 }}>
-                {s.n}
-              </div>
-              <div style={{ fontSize: 11, color: textDim, marginTop: 2 }}>
-                {s.k}
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
-    </div>
+      <style dangerouslySetInnerHTML={{ __html: chatStyles }} />
+    </figure>
   );
 }
+
+const chatStyles = `
+.chat-demo { width: 100%; margin: 0; padding: clamp(20px, 2.5vw, 32px); box-sizing: border-box; background: var(--petrol-deep); color: var(--ice); border: 1px solid var(--line-petrol-strong); border-radius: 0; font-family: var(--font-body); }
+.chat-demo-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--line-petrol-strong); }
+.chat-demo-name { margin: 0; font-size: var(--fs-body); font-weight: 700; line-height: 1.25; }
+.chat-demo-messages { display: flex; flex-direction: column; gap: 14px; min-height: 400px; padding: 28px 0; }
+.chat-demo-bubble { max-width: 86%; margin: 0; padding: 12px 16px; border-radius: 0; font-size: var(--fs-small); line-height: 1.5; overflow-wrap: anywhere; }
+.chat-demo-user { align-self: flex-end; background: var(--ice); color: var(--petrol); }
+.chat-demo-bot { align-self: flex-start; background: var(--petrol-raised); color: var(--ice); }
+.chat-demo-typing { display: flex; gap: 6px; align-self: flex-start; padding: 16px; background: var(--petrol-raised); }
+.chat-demo-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--ice); }
+@media (prefers-reduced-motion: no-preference) {
+  .chat-demo-typing span { animation: chat-demo-breathe 1.2s ease-in-out infinite; }
+  .chat-demo-typing span:nth-child(2) { animation-delay: .15s; }
+  .chat-demo-typing span:nth-child(3) { animation-delay: .3s; }
+}
+@keyframes chat-demo-breathe { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+`;

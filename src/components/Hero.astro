@@ -1,291 +1,167 @@
 ---
-const accent = '#2BB673';
-const bg = '#0A0B0D';
-const surface = '#121316';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
+import WaIcon from './ui/WaIcon';
+import { whatsappLink } from '../lib/constants';
 
-const stats = [
-  { n: '15+', k: 'proyectos en producción' },
-  { n: '<24h', k: 'respondo tu pedido inicial' },
-  { n: '$0', k: 'cuotas mensuales', desktopOnly: true },
-  { n: '100%', k: 'código propio, sin templates', desktopOnly: true },
-];
+const WA_HERO = whatsappLink('¡Hola Christian! Quiero que mi negocio venda online. ¿Me pasás un presupuesto?');
 
-const clients = ['MegaMuebles','Social Core','El Fogón Delivery','Iguazú Falls Lodge','Impasto Pizzería','Megabot Admin','Recetario Napolitano'];
+// Verbos que rotan en el titular: lo que la web hace sola.
+const verbs = ['vende', 'atiende', 'responde', 'cobra'];
 ---
 
-<section id="hero" class="hero-section relative min-h-screen overflow-hidden flex items-center" style={`background:${bg}; padding-top:74px;`}>
-  {/* MOBILE-ONLY: Dot grid pattern — sutil, mismo lenguaje que otras secciones */}
-  <div class="absolute inset-0 pointer-events-none opacity-[0.12] md:hidden"
-    style="background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0); background-size:32px 32px;"
-    aria-hidden="true"></div>
+<section id="hero" class="hero on-petrol" aria-labelledby="hero-title">
+  <picture class="hero-visual" aria-hidden="true">
+    <source media="(max-width: 767px)" srcset="/visuals/hero-device-1200.webp" type="image/webp" />
+    <source srcset="/visuals/hero-device.webp" type="image/webp" />
+    <img src="/visuals/hero-device.png" alt="" width="2400" height="1350" fetchpriority="high" decoding="async" />
+  </picture>
 
-  {/* DESKTOP-ONLY: Background video — solo carga y se reproduce en md+
-       En mobile queda display:none → el navegador no descarga el archivo */}
-  <video
-    id="heroVideo"
-    autoplay
-    loop
-    muted
-    playsinline
-    preload="metadata"
-    class="hidden md:block absolute inset-0 w-full h-full object-cover"
-    style="opacity:0.55; filter:saturate(0.85);"
-  >
-    <source src="https://res.cloudinary.com/djtvjkcu6/video/upload/v1778524166/SelvaDigital/A_seamless_infinite_loop_cinematic_202605111510_zjt26u.mp4" type="video/mp4" />
-  </video>
-
-  {/* DESKTOP-ONLY: Dark gradient overlay sobre el video (look original) */}
-  <div class="hidden md:block absolute inset-0" style={`background: linear-gradient(180deg, rgba(10,11,13,0.6) 0%, rgba(10,11,13,0.4) 40%, rgba(10,11,13,0.92) 100%), radial-gradient(ellipse at 75% 50%, transparent, rgba(10,11,13,0.5) 70%);`} aria-hidden="true"></div>
-
-  {/* MOBILE-ONLY: Vignette suave (en desktop lo hace el gradient overlay) */}
-  <div class="absolute inset-0 pointer-events-none md:hidden"
-    style="background:radial-gradient(ellipse at 50% 35%, transparent 0%, rgba(10,11,13,0.35) 60%, rgba(10,11,13,0.85) 100%);"
-    aria-hidden="true"></div>
-
-  {/* Accent glow top-right verde (en ambos viewports) */}
-  <div class="absolute pointer-events-none" style="top:-200px; right:-400px; width:800px; height:800px; background:radial-gradient(closest-side, rgba(43,182,115,0.18), transparent 70%); filter:blur(10px);" aria-hidden="true"></div>
-
-  {/* MOBILE-ONLY: glow secundario bottom-left para balance sin video */}
-  <div class="absolute pointer-events-none md:hidden" style="bottom:-300px; left:-300px; width:700px; height:700px; background:radial-gradient(closest-side, rgba(43,182,115,0.08), transparent 70%); filter:blur(20px);" aria-hidden="true"></div>
-
-  <div class="hero-inner relative z-10 max-w-[1320px] mx-auto px-6 md:px-10 w-full">
-    <div class="max-w-[1180px]">
-      {/* Eyebrow — Cupos */}
-      <div class="inline-flex items-center gap-3 px-4 py-[7px] hero-eyebrow reveal reveal-slide-up delay-75" style={`border:1px solid ${line}; background:rgba(18,19,22,0.7); backdrop-filter:blur(8px); border-radius:999px;`}>
-        <span class="relative flex h-[8px] w-[8px]">
-          <span class="absolute inline-flex h-full w-full opacity-60 hero-eyebrow-ping" style={`background:${accent}; border-radius:50%;`}></span>
-          <span class="relative inline-flex h-[8px] w-[8px]" style={`background:${accent}; border-radius:50%; box-shadow:0 0 12px ${accent};`}></span>
-        </span>
-        <span class="text-[11px] tracking-[2px] uppercase" style={{ color: textSoft, fontFamily: "'JetBrains Mono', monospace" }}>
-          PRÓXIMA VENTANA: JUNIO 2026
-        </span>
-        <span class="hero-eyebrow-divider" style={`width:1px; height:14px; background:${line};`}></span>
-        <span class="inline-flex items-center gap-1.5 text-[11px] tracking-[2px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>
-          <span>2/3</span>
-          <span style={{ color: textSoft, fontWeight: 400 }}>CUPOS TOMADOS</span>
-        </span>
-      </div>
-
-      {/* Headline */}
-      <h1 class="hero-h1 text-white reveal reveal-slide-up delay-100">
-        Tu web vendiendo 24/7.<br><span style={{ color: accent }}>Sin cuotas, sin agencia.</span>
-      </h1>
-
-      {/* Subhead */}
-      <p class="hero-subhead max-w-[640px] reveal reveal-slide-up delay-150" style={{ color: textSoft }}>
-        Convertí tu WhatsApp saturado en un negocio que atiende, vende
-        y cobra solo. Para PyMEs argentinas cansadas de pagar agencias
-        sin ver resultados.
-      </p>
-
-      {/* CTAs */}
-      <div class="hero-ctas flex flex-col gap-3.5 reveal reveal-slide-up delay-200">
-        <div class="flex flex-wrap items-center gap-3 w-full">
-          <a href="#contacto" class="inline-flex items-center gap-2 px-7 py-4 text-[15px] font-semibold rounded-none transition-all duration-200 hover:brightness-110"
-            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
-            Pedir presupuesto
-            <span>→</span>
-          </a>
-          {/* Desktop: botón secundario | Mobile: link discreto */}
-          <a href="#portfolio" class="hidden md:inline-flex items-center gap-2 px-6 py-4 text-[15px] font-medium rounded-none transition-all duration-200"
-            style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
-            Ver portfolio →
-          </a>
-          <a href="#portfolio" class="md:hidden text-[14px] font-medium underline underline-offset-4 decoration-1"
-            style={{ color: textSoft, textDecorationColor: 'rgba(250,250,250,0.25)', fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Ver portfolio →
-          </a>
-          <span class="text-[11px] tracking-[1.5px] ml-2 hidden md:inline" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-            WHATSAPP · +54 9 3548 403786
-          </span>
-        </div>
-
-        {/* Microcopy de Confianza */}
-        <p class="text-[12px] max-w-[620px] leading-relaxed mt-0.5" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
-          ✨ <strong style={{ color: textSoft }}>Reservá tu diagnóstico sin cargo hoy</strong> y congelá la tarifa. Seña del 50% al iniciar para guardar tu lugar y asegurar tu fecha de entrega en junio.
-        </p>
-      </div>
-
-      {/* Stats */}
-      <div class="hero-stats grid grid-cols-2 md:grid-cols-4 reveal reveal-slide-up delay-250" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:rgba(18,19,22,0.5); backdrop-filter:blur(12px);`}>
-        {stats.map((s, i) => (
-          <div class={`hero-stat-cell hero-stat-cell-${i} flex flex-col gap-1.5 py-3.5 px-4 md:py-4 md:px-6 min-w-0 ${s.desktopOnly ? 'hide-on-mobile' : ''}`}>
-            <span class="font-geist text-white leading-none hero-stat-num"
-              style="letter-spacing:-0.02em; font-weight:500;">
-              {s.n}
-            </span>
-            <span class="text-[12px] md:text-[13px] leading-tight" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
-              {s.k}
-            </span>
-          </div>
+  <div class="wrap hero-inner">
+    <h1 id="hero-title" class="hero-h1">
+      <span class="sr-only">Tu negocio vende, atiende, responde y cobra solo.</span>
+      <span class="hero-line mask-line" aria-hidden="true">Tu negocio</span>
+      <span class="hero-line mask-line hero-rotor" aria-hidden="true" data-rotor>
+        {verbs.map((v, i) => (
+          <span class:list={['hero-verb', { 'is-on': i === 0 }]}>{v}</span>
         ))}
+      </span>
+      <span class="hero-line mask-line" aria-hidden="true">solo<span class="hero-stop">.</span></span>
+    </h1>
+
+    <div class="hero-foot fade-late">
+      <p class="hero-sub">
+        <strong>Dejá de perder ventas por no contestar a tiempo.</strong>
+        Tu web responde, toma pedidos y cobra mientras vos trabajás.
+      </p>
+      <div class="hero-cta">
+        <a href={WA_HERO} target="_blank" rel="noopener noreferrer" class="btn btn-primary hero-btn">
+          <WaIcon size={20} />
+          Escribime por WhatsApp
+        </a>
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  /* Hero — comprimido con !important para vencer overrides de global.css y otros */
-  .hero-inner {
-    padding-top: clamp(32px, 4vh, 56px) !important;
-    padding-bottom: clamp(48px, 6vh, 72px) !important;
-  }
-
-  @media (min-width: 768px) {
-    .hero-inner {
-      padding-top: clamp(56px, 8vh, 100px) !important;
-      padding-bottom: clamp(56px, 8vh, 100px) !important;
-    }
-  }
-
-  .hero-eyebrow {
-    margin-bottom: clamp(24px, 3.5vh, 36px) !important;
-  }
-
-  .hero-h1 {
-    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
-    font-weight: 700 !important;
-    font-size: clamp(38px, 9vw, 84px) !important;
-    line-height: 0.98 !important;
-    letter-spacing: -0.035em !important;
-    margin: 0 0 clamp(22px, 3vh, 32px) 0 !important;
-  }
-  @media (min-width: 768px) {
-    .hero-h1 {
-      font-size: clamp(48px, 6vw, 84px) !important;
-      line-height: 0.96 !important;
-    }
-  }
-
-  .hero-subhead {
-    font-family: 'Inter', system-ui, sans-serif !important;
-    font-size: clamp(16px, 1.25vw, 19px) !important;
-    line-height: 1.55 !important;
-    margin: 0 0 clamp(28px, 4vh, 44px) 0 !important;
-  }
-
-  .hero-ctas {
-    margin-bottom: clamp(36px, 5vh, 60px) !important;
-  }
-
-  /* Pulse del dot de cupos */
-  .hero-eyebrow-ping {
-    animation: heroEyebrowPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  @keyframes heroEyebrowPing {
-    0%   { transform: scale(1);   opacity: 0.6; }
-    75%, 100% { transform: scale(2.2); opacity: 0; }
-  }
-
-  /* Responsive del eyebrow: en mobile colapsa el divider */
-  @media (max-width: 520px) {
-    .hero-eyebrow {
-      flex-wrap: wrap;
-      gap: 8px 10px !important;
-    }
-    .hero-eyebrow-divider {
-      display: none;
-    }
-  }
-
-  /* Stats: número responsive, evita overflow en mobile */
-  .hero-stat-num {
-    font-size: clamp(22px, 6.5vw, 38px);
-    white-space: nowrap;
-  }
-
-  /* Mobile: sólo 2 stats visibles (cells 0 y 1), borde divisorio vertical entre ellas */
-  .hero-stat-cell-0 {
-    border-right: 1px solid rgba(250,250,250,0.08);
-  }
-  /* Desktop: 4 stats, separadores verticales entre todas excepto la última */
-  @media (min-width: 768px) {
-    .hero-stat-cell-0, .hero-stat-cell-1, .hero-stat-cell-2 {
-      border-right: 1px solid rgba(250,250,250,0.08);
-    }
-  }
-</style>
-
-
-{/* Clients strip — desktop: estático con wrap | mobile: marquee infinito */}
-<section class="clients-strip" style={`border-top:1px solid ${line}; border-bottom:1px solid ${line}; background:${surface};`} aria-label="Clientes">
-  {/* Desktop */}
-  <div class="hidden md:flex clients-strip-inner max-w-[1320px] mx-auto px-6 md:px-10 py-5 items-center gap-6 md:gap-10 md:flex-wrap">
-    <span class="text-[11px] tracking-[2.5px] uppercase whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-      CLIENTES //
-    </span>
-    {clients.map(c => (
-      <span class="text-[14px] md:text-[15px] font-medium whitespace-nowrap md:whitespace-normal" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif", opacity: 0.85, letterSpacing: '-0.01em' }}>
-        {c}
-      </span>
-    ))}
-  </div>
-
-  {/* Mobile: marquee infinito */}
-  <div class="md:hidden clients-marquee py-3.5" aria-hidden="true">
-    <div class="clients-marquee-track">
-      {[...clients, ...clients].map(c => (
-        <span class="clients-marquee-item" style={{ color: textSoft, fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>
-          <span class="clients-marquee-dot" style={{ background: accent }}></span>
-          {c}
-        </span>
-      ))}
-    </div>
-  </div>
-</section>
-
-<style>
-  /* Marquee mobile — scroll horizontal infinito */
-  .clients-marquee {
-    overflow: hidden;
-    position: relative;
-    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-  }
-  .clients-marquee-track {
-    display: inline-flex;
-    align-items: center;
-    gap: 28px;
-    padding-left: 28px;
-    white-space: nowrap;
-    animation: clientsMarquee 28s linear infinite;
-    width: max-content;
-  }
-  .clients-marquee-item {
-    font-size: 13.5px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    opacity: 0.82;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .clients-marquee-dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    box-shadow: 0 0 6px currentColor;
-    opacity: 0.7;
-    flex-shrink: 0;
-  }
-  @keyframes clientsMarquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .clients-marquee-track { animation: none; }
-  }
-</style>
 
 <script>
-  // Slow down hero video for cinematic feel. Only runs if video element exists
-  // (which means we're on md+ — el <video> tiene `hidden md:block`).
-  const video = document.getElementById('heroVideo') as HTMLVideoElement | null;
-  if (video) video.playbackRate = 0.35;
+  // Rota el verbo del titular. Con prefers-reduced-motion queda fijo en el primero.
+  const rotor = document.querySelector<HTMLElement>('[data-rotor]');
+  if (rotor && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const verbs = Array.from(rotor.querySelectorAll<HTMLElement>('.hero-verb'));
+    let i = 0;
+    window.setInterval(() => {
+      const prev = verbs[i];
+      i = (i + 1) % verbs.length;
+      prev.classList.remove('is-on');
+      prev.classList.add('is-off');
+      verbs[i].classList.remove('is-off');
+      verbs[i].classList.add('is-on');
+      window.setTimeout(() => prev.classList.remove('is-off'), 700);
+    }, 2400);
+  }
 </script>
 
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: calc(68px + clamp(32px, 6vh, 80px)) 0 clamp(40px, 7vh, 80px);
+  }
+
+  .hero-stop { color: var(--lime); }
+
+  /* Imagen de producto: tercio derecho, el titular vive sobre el vacío izquierdo */
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+  }
+  .hero-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 72% 50%;
+    display: block;
+  }
+  /* Velo inferior para que la bajada y el CTA lean sobre cualquier zona de la imagen */
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(16, 45, 53, 0) 45%, rgba(16, 45, 53, 0.85) 100%);
+  }
+
+  .hero-inner { position: relative; width: 100%; }
+
+  .hero-h1 {
+    margin: 0 0 clamp(32px, 5vh, 56px);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 125;
+    font-size: var(--fs-hero);
+    line-height: 0.86;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: var(--ice);
+  }
+  .hero-line { display: block; }
+
+  /* Rotor: todas las palabras apiladas en la misma celda; el ancho lo fija la más larga */
+  .hero-rotor {
+    display: grid;
+    width: max-content;
+    overflow: hidden;
+    color: var(--lime);
+  }
+  .hero-verb {
+    grid-area: 1 / 1;
+    transform: translateY(105%);
+    opacity: 0;
+    transition: transform .7s var(--ease-out), opacity .7s var(--ease-out);
+  }
+  .hero-verb.is-on { transform: translateY(0); opacity: 1; }
+  .hero-verb.is-off { transform: translateY(-105%); opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-verb { transition: none; }
+  }
+
+  .hero-foot {
+    display: grid;
+    gap: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-petrol-strong);
+  }
+  .hero-sub {
+    margin: 0;
+    max-width: 46ch;
+    font-size: var(--fs-lede);
+    line-height: 1.5;
+    color: var(--on-petrol-soft);
+  }
+  .hero-sub strong { display: block; color: var(--ice); font-weight: 700; }
+  .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .hero-btn { min-height: 60px; padding-inline: 30px; font-size: var(--fs-body); }
+
+  @media (min-width: 1024px) {
+    .hero-foot { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+    .hero-cta { align-items: flex-end; }
+  }
+
+  /* Mobile: la imagen pasa a ser un fondo tenue para que el titular gane todo el peso */
+  @media (max-width: 767px) {
+    .hero-visual { right: 3vw; }
+    .hero-visual img { object-position: 80% 50%; opacity: .55; }
+    .hero-visual::after { background: linear-gradient(180deg, rgba(16, 45, 53, .35) 0%, rgba(16, 45, 53, .9) 70%); }
+    .hero-btn { width: 100%; }
+    .hero-cta { width: 100%; }
+  }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+</style>

@@ -93,13 +93,28 @@ export const POST: APIRoute = async ({ request }) => {
       replyTo: email,
       subject: `Nuevo mensaje de contacto de ${escapeHtml(nombre)}`,
       html: `
-        <h2>Nuevo mensaje de contacto</h2>
-        <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || tipoProyecto)}</p>
-        <p><strong>Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' USD' : 'No especificado'}</p>
-        <p><strong>Mensaje:</strong></p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#E8F7F5" style="width: 100%; background-color: #E8F7F5; border-collapse: collapse; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35;">
+          <tr>
+            <td align="center" style="padding: 20px; border-radius: 0;">
+              <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width: 100%; max-width: 600px; background-color: #ffffff; border: 1px solid #C8D6D6; border-collapse: collapse; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35;">
+                <tr>
+                  <td bgcolor="#102D35" style="background-color: #102D35; padding: 24px; border-radius: 0; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; color: #E8F7F5;">selva digital<span style="color: #D9FA57;">.</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 24px; border-radius: 0; font-family: Arial, Helvetica, sans-serif; color: #102D35; line-height: 1.6;">
+<h2 style="color: #102D35; margin-top: 0;">Nuevo mensaje de contacto</h2>
+        <p><strong style="color: #4D6369;">Nombre:</strong> ${escapeHtml(nombre)}</p>
+        <p><strong style="color: #4D6369;">Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong style="color: #4D6369;">Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || tipoProyecto)}</p>
+        <p><strong style="color: #4D6369;">Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' USD' : 'No especificado'}</p>
+        <p><strong style="color: #4D6369;">Mensaje:</strong></p>
         <p>${escapeHtml(mensaje)}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       `
     });
 

@@ -12,23 +12,19 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: 'bg-slate-100 text-slate-700 border-slate-200',
-  success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  warning: 'bg-amber-50 text-amber-700 border-amber-200',
-  error: 'bg-red-50 text-red-700 border-red-200',
-  info: 'bg-sky-50 text-sky-700 border-sky-200',
-  brand: 'bg-indigo-50 text-selva-emerald border-indigo-200',
-  outline: 'bg-transparent text-slate-600 border-slate-200'
+  default: 'bg-[var(--petrol-raised)] text-[var(--ice)] border-[rgba(232,247,245,.32)]',
+  success: 'bg-[var(--petrol-deep)] text-[var(--lime)] border-[var(--lime)]',
+  warning: 'bg-[var(--petrol-deep)] text-[#F5C76B] border-[#F5C76B]',
+  error: 'bg-[var(--petrol-deep)] text-[#FFB4A8] border-[#FFB4A8]',
+  info: 'bg-[var(--petrol-deep)] text-[var(--ice)] border-[rgba(232,247,245,.32)]',
+  brand: 'bg-[var(--petrol-raised)] text-[var(--ice)] border-[rgba(232,247,245,.32)]',
+  outline: 'bg-transparent text-[var(--ice)] border-[rgba(232,247,245,.32)]'
 }
 
 const dotColors: Record<BadgeVariant, string> = {
-  default: 'bg-slate-400',
-  success: 'bg-emerald-500',
-  warning: 'bg-amber-500',
-  error: 'bg-red-500',
-  info: 'bg-sky-500',
-  brand: 'bg-selva-emerald',
-  outline: 'bg-slate-400'
+ default: 'bg-[var(--on-petrol-dim)]', success: 'bg-[var(--lime)]',
+ warning: 'bg-[#F5C76B]', error: 'bg-[#FFB4A8]', info: 'bg-[var(--ice)]',
+ brand: 'bg-[var(--on-petrol-soft)]', outline: 'bg-[var(--on-petrol-dim)]'
 }
 
 const sizeClasses: Record<BadgeSize, string> = {
@@ -48,14 +44,14 @@ export const Badge: React.FC<BadgeProps> = ({
 }) => {
   return (
     <span
-      className={`inline-flex items-center font-semibold uppercase tracking-[0.08em] rounded-full border ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center font-mono font-medium uppercase tracking-[0.08em] rounded-full border ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
       {...props}
     >
       {iconLeft && <span className="shrink-0">{iconLeft}</span>}
       {dot && (
         <span className="relative flex h-1.5 w-1.5">
           {pulse && (
-            <span className={`absolute inline-flex h-full w-full rounded-full ${dotColors[variant]} opacity-75 animate-ping`} />
+            <span className={`absolute inline-flex h-full w-full rounded-full ${dotColors[variant]} opacity-75 `} />
           )}
           <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${dotColors[variant]}`} />
         </span>

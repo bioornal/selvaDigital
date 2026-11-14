@@ -52,6 +52,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        petrol: { DEFAULT: "#102D35", deep: "#0B2128", raised: "#163B45" },
+        ice: "#E8F7F5",
+        lime: { DEFAULT: "#D9FA57", press: "#C6EA3C" },
         'v2': {
           bg: '#0A0B0D',
           surface: '#121316',
@@ -113,9 +116,11 @@ module.exports = {
         'site-background': '#000000',
       },
       fontFamily: {
+        'display': ['Archivo', 'system-ui', 'sans-serif'],
+        'dot': ['Doto', '"Martian Mono"', 'monospace'],
         'heading': ['"Nova Square"', 'sans-serif'],
         'body': ['Inter', 'system-ui', 'sans-serif'],
-        'mono': ['"JetBrains Mono"', 'monospace'],
+        'mono': ['"Martian Mono"', '"JetBrains Mono"', 'monospace'],
         'montserrat': ['Montserrat', 'sans-serif'],
         'geist': ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
@@ -139,10 +144,6 @@ module.exports = {
           '--v2-line-mid': 'rgba(250,250,250,0.12)',
           '--v2-line-str': 'rgba(250,250,250,0.18)',
           '--v2-accent': '#2BB673',
-        },
-        'body': {
-          backgroundColor: '#0A0B0D',
-          color: '#FAFAFA',
         },
       });
     },

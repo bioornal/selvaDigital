@@ -3,40 +3,43 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import ServicesV2 from '../components/ServicesV2.astro';
 import Portfolio from '../components/Portfolio.astro';
+import ServicesV2 from '../components/ServicesV2.astro';
+import AboutV2 from '../components/AboutV2.astro';
 import Testimonios from '../components/Testimonios.astro';
-import AIChatbots from '../components/AIChatbots.astro';
-import Apps from '../components/Apps.astro';
 import Precios from '../components/Precios.astro';
 import FAQ from '../components/FAQ.astro';
-import AboutV2 from '../components/AboutV2.astro';
-import Manifiesto from '../components/Manifiesto.astro';
 import Contact from '../components/Contact';
-import SectionDivider from '../components/SectionDivider.astro';
+import VisualBreak from '../components/VisualBreak.astro';
+import WhyWeb from '../components/WhyWeb.astro';
 ---
 
-<Layout 
+<Layout
   title="Selva Digital - Desarrollo web freelance para PyMEs en Argentina"
-  description="Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
+  description="Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA para tu web que convierten visitantes en clientes. Precio fijo, pago único. Córdoba, Argentina."
 >
+  <!-- 1. La promesa -->
   <Hero />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
-  <ServicesV2 />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <!-- 1b. El argumento principal: por qué tu negocio necesita una web -->
+  <WhyWeb />
+  <!-- 2. La prueba: único lugar con proyectos y métricas -->
   <Portfolio />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <!-- 3. Qué resuelvo (sin precios; chatbot web destacado) -->
+  <ServicesV2 />
+  <!-- 4. Cómo trabajo: persona + trato directo + proceso -->
   <AboutV2 />
-  <Manifiesto />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <!-- 5. Lo que dicen los clientes -->
   <Testimonios />
-  <AIChatbots />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
-  <Apps />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <VisualBreak
+    image="sep-live"
+    title="Todo lo que ves acá está funcionando."
+    href="#portfolio"
+    cta="Abrir los trabajos"
+  />
+  <!-- 6. Precios: único lugar con cifras, 50/50 y hosting -->
   <Precios />
-  <div style="height:1px; background:rgba(0, 229, 255, 0.08);"></div>
+  <!-- 7. Preguntas que no se respondieron antes -->
   <FAQ />
-  <SectionDivider />
-  <Contact client:load />
+  <!-- 8. Contacto -->
+  <Contact client:visible />
 </Layout>

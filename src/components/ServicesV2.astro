@@ -1,253 +1,170 @@
 ---
-const accent = '#2BB673';
-const bg = '#0A0B0D';
-const surface = '#121316';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
+import { ArrowUpRight, Check, ChevronDown } from 'lucide-react';
+import ChatPreview from './ChatPreview';
 
 const services = [
   {
-    n: '01', t: 'Sitios web',
-    d: 'Si tu negocio no aparece en Google, no existe. Te dejo arriba de la competencia local con un sitio que carga rápido y convierte al visitante en una consulta directa por WhatsApp.',
-    bullets: ['Primera consulta orgánica en 30-60 días', 'Diseñado para que te llamen, no para verse lindo', 'Tu marca arriba de la competencia local'],
-    cta: 'Desde $350 USD',
-    featured: true
+    t: 'Sitios web',
+    d: 'Si tu negocio no aparece en Google, no existe. Te armo un sitio rápido, pensado para que te encuentren en tu zona y te escriban por WhatsApp.',
+    bullets: ['SEO local configurado desde el lanzamiento', 'Diseñado para que te llamen, no para verse lindo', 'Ficha y contenido pensados para tu zona'],
   },
   {
-    n: '02', t: 'E-commerce',
+    t: 'Tienda online',
     d: '¿Cuántas ventas perdés porque tus clientes te tienen que escribir, esperar respuesta y coordinar pago? Tu tienda online les cobra sola, 24/7, mientras vos te dedicás a producir.',
     bullets: ['Cobrás aunque estés cerrado', 'Stock y pedidos en un solo panel', 'Cada cliente paga directo, sin idas y vueltas'],
-    cta: 'Desde $1.200 USD'
   },
   {
-    n: '03', t: 'Sistemas a medida',
+    t: 'Sistemas a medida',
     d: '¿Cuántas horas perdés por semana copiando datos entre Excels, WhatsApp y libretas? Un sistema a medida ordena tu operativa en un solo lugar — y deja de depender de tu memoria.',
     bullets: ['Dejá de buscar info por 5 lugares distintos', 'Sabés en tiempo real cómo va el negocio', 'Tu equipo trabaja con la misma información'],
-    cta: 'Desde $1.500 USD'
   },
   {
-    n: '04', t: 'Chatbots con IA',
-    d: '¿Cuántas consultas perdés a la noche, los domingos o cuando estás atendiendo? El bot responde por vos, toma el pedido y te lo deja listo para confirmar. Cada conversación que no se cae es plata que no se va.',
-    bullets: ['Atiende mientras dormís', 'No deja una consulta sin respuesta', 'Manejá varios negocios desde un solo panel'],
-    cta: 'Desde $1.500 USD'
-  },
-  {
-    n: '05', t: 'SEO local',
-    d: 'Para que cuando alguien busque tu rubro en tu zona, aparezcas vos primero — no tu competencia. Más visitas sin pagar publicidad, mes a mes.',
+    t: 'SEO local',
+    d: 'Para que cuando alguien busque tu rubro en tu zona, te encuentren a vos. Más visitas sin pagar publicidad, mes a mes.',
     bullets: ['Te encuentran cuando te buscan', 'Visitas gratis que no dependen de Ads', 'Resultados que crecen con el tiempo'],
-    cta: 'Incluido en planes'
+  },
+  {
+    t: 'Apps a medida',
+    d: 'Aplicaciones completas hechas a tu medida, con panel de administración y tus datos guardados y respaldados. Desde un sistema interno hasta una app para tus clientes.',
+    bullets: ['Hecha a la medida de cómo trabajás', 'Acceso seguro con permisos por usuario', 'Notificaciones push en tiempo real', 'Apps web y móviles'],
   },
 ];
+const features = [
+  { title: 'Vende mientras dormís', desc: 'El chat de tu web toma pedidos y confirma datos. Cuando volvés, tenés las consultas listas para cerrar.' },
+  { title: 'Conoce tu negocio', desc: 'Cargás tu catálogo, precios y políticas para que el asistente de tu web responda con la información de tu negocio.' },
+  { title: 'Atiende a toda hora', desc: 'Quien entra a tu web puede consultar de noche, los domingos o feriados. El chat responde aunque vos estés descansando.' },
+  { title: 'Sabés cuánto vendiste', desc: 'Desde un solo panel ves qué consultas del chat de tu web se convirtieron en ventas y dónde se quedaron en el camino.' },
+];
+const LIVE_BOT_URL = 'https://www.impastopizzas.com/';
 ---
 
-<section id="servicios" class="services-section relative" style={`background:${bg};`}>
-  {/* Dot grid */}
-  <div class="absolute inset-0 pointer-events-none opacity-[0.15]"
-    style="background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0); background-size:28px 28px;">
-  </div>
+<section id="servicios" class="section on-ice" aria-labelledby="services-title">
+  <div class="wrap">
+    <header class="services-heading">
+      <h2 id="services-title" class="h2">Lo que hago por tu negocio.</h2>
+      <p class="lede">Desarrollo tu web y ordeno las herramientas de tu negocio para que vendas y trabajes mejor.</p>
+    </header>
 
-  <div class="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
-    {/* Header */}
-    <div class="services-header grid md:grid-cols-2 items-end reveal reveal-slide-up">
-      <div class="text-center md:text-left">
-        <div class="inline-flex items-center gap-2.5 services-kicker">
-          <span class="w-3.5 h-px" style={{ background: accent }}></span>
-          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-            01 ─── Servicios
-          </span>
-        </div>
-        <h2 class="section-h2 services-h2 text-white mx-auto md:mx-0">
-          Tu competencia ya está online.<br><span style={{ color: accent }}>Vos todavía no.</span>
-        </h2>
-        <p class="section-sub services-sub max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft }}>
-          Cinco formas concretas de dejar de perder ventas, recuperar horas de tu semana y poner tu negocio adelante en Google.
-        </p>
-      </div>
-      <div class="hidden md:flex justify-end items-start">
-        <span class="text-[11px] tracking-[2px] leading-relaxed" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-          ┌── ALCANCE ──────┐<br/>
-          │ Argentina       │<br/>
-          └─────────────────┘
-        </span>
-      </div>
-    </div>
-
-    {/* Cards grid — mobile-carousel utility hace swipe horizontal; en md+ vuelve a grid */}
-    <div class="services-grid mobile-carousel md:grid-cols-2 lg:grid-cols-5" data-dots="services">
-      {services.map((s, i) => {
-        const delays = ['delay-75', 'delay-150', 'delay-200', 'delay-250', 'delay-300'];
-        return (
-          <div class={`service-card flex flex-col p-6 md:p-8 relative spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
-            background: s.featured ? 'rgba(43,182,115,0.06)' : surface,
-            minHeight: '360px'
-          }}>
-            {s.featured && (
-              <span class="absolute top-3.5 right-3.5 text-[9px] tracking-[1.5px] uppercase px-2 py-1"
-                style={{
-                  color: accent,
-                  background: 'rgba(43,182,115,0.14)',
-                  border: `1px solid rgba(43,182,115,0.5)`,
-                  fontFamily: "'JetBrains Mono', monospace",
-                  borderRadius: '999px'
-                }}>
-                ★ POPULAR
-              </span>
-            )}
-
-            <div class="text-[11px] tracking-[2px] mb-4" style={{
-              color: s.featured ? accent : textDim,
-              fontFamily: "'JetBrains Mono', monospace"
-            }}>
-              {s.n}
-            </div>
-
-            <h3 class="services-card-h3 text-white">
-              {s.t}
-            </h3>
-
-            <p class="text-[13.5px] leading-relaxed mb-5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-              {s.d}
-            </p>
-
-            <ul class="flex flex-col gap-2 mb-7 list-none p-0">
-              {s.bullets.map(b => (
-                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                  <span style={{ color: accent, marginTop: '2px' }}>▸</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-
-            <div class="mt-auto pt-4 flex justify-between items-center" style={{ borderTop: `1px solid ${line}` }}>
-              <span class="text-xs font-semibold text-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-                {s.cta}
-              </span>
-              <span class="text-[10px]" style={{ color: s.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-                →
-              </span>
-            </div>
+    <div class="services-list">
+    <div class="services-desktop">
+      {services.map(s => (
+        <article class="service-row">
+          <div class="service-label">
+            <h3 class="service-name">{s.t}</h3>
           </div>
-        );
-      })}
+          <p class="service-desc">{s.d}</p>
+          <div class="service-spec">
+            <ul class="service-bullets">
+              {s.bullets.map(b => <li><Check size={14} strokeWidth={1.5} aria-hidden="true" /><span>{b}</span></li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
     </div>
 
-    {/* Dots — mobile only */}
-    <div class="md:hidden carousel-dots" data-dots-for="services"></div>
+    <div class="services-mobile">
+      {services.map((s, i) => (
+        <details class="service-disclosure" open={i === 0}>
+          <summary>
+            <span class="service-label">
+              <span class="service-name">{s.t}</span>
+            </span>
+            <ChevronDown className="service-chevron" size={20} strokeWidth={1.5} aria-hidden="true" />
+          </summary>
+          <div class="service-content">
+            <p class="service-desc">{s.d}</p>
+            <ul class="service-bullets">
+              {s.bullets.map(b => <li><Check size={14} strokeWidth={1.5} aria-hidden="true" /><span>{b}</span></li>)}
+            </ul>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="services-closing">
+      <a class="btn btn-petrol rounded-none" href="#planes">Ver precios</a>
+    </div>
+    </div>
+
+    <article class="chatbot-panel on-petrol" aria-labelledby="service-chatbot-title">
+      <div class="chatbot-copy">
+        <h3 id="service-chatbot-title" class="h3">Chatbot con IA para tu web</h3>
+        <p class="lede">Sumá un asistente a tu web que responde consultas, toma pedidos y los deja listos para confirmar.</p>
+        <details class="chatbot-details">
+          <summary>Qué hace el asistente</summary>
+          <dl class="chatbot-features">
+            {features.map(f => (
+              <div class="chatbot-feature">
+                <dt>{f.title}</dt>
+                <dd>{f.desc}</dd>
+              </div>
+            ))}
+          </dl>
+        </details>
+        <div class="chatbot-actions">
+          <a class="btn btn-primary rounded-none" href={LIVE_BOT_URL} target="_blank" rel="noopener noreferrer">Probalo en Impasto <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" /></a>
+        </div>
+      </div>
+      <div class="chatbot-preview"><ChatPreview client:visible /></div>
+    </article>
+
   </div>
 </section>
 
 <style>
-  /* Servicios — scoped overrides con !important para vencer global.css y Tailwind base */
-  .services-section {
-    padding: clamp(80px, 10vh, 120px) 0 clamp(70px, 9vh, 100px) 0 !important;
-  }
-
-  .services-header {
-    gap: 32px !important;
-    margin-bottom: 40px !important;
-    grid-template-columns: 1fr !important;
-  }
-
+  .services-heading { margin-bottom: clamp(40px, 6vw, 80px); }
+  .services-heading .h2 { margin: 0 0 24px; }
+  .services-heading .lede { color: var(--on-ice-soft); }
+  .services-heading .lede { margin: 0; }
+  .chatbot-panel { display: grid; gap: 32px; padding: clamp(24px, 3vw, 40px); margin-top: clamp(48px, 6vw, 80px); border-radius: 0; }
+  .chatbot-copy { min-width: 0; }
+  .chatbot-copy .h3 { margin: 0 0 16px; font-size: var(--fs-quote); }
+  .chatbot-details summary { cursor: pointer; padding-block: 16px; font-size: var(--fs-control); }
+  .chatbot-details summary:focus-visible { outline-color: var(--lime); }
+  .chatbot-copy .lede { margin: 0 0 24px; font-size: var(--fs-control); color: var(--on-petrol-soft); }
+  .chatbot-features { display: grid; margin: 0; gap: 0 24px; }
+  .chatbot-feature { border-top: 1px solid var(--line-petrol-strong); padding: 18px 0; }
+  .chatbot-feature dt { margin-bottom: 8px; font-size: var(--fs-body); font-weight: 700; line-height: 1.25; }
+  .chatbot-feature dd { margin: 0; font-size: var(--fs-small); line-height: 1.55; color: var(--on-petrol-soft); }
+  .chatbot-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .chatbot-actions .btn { max-width: 100%; padding: 14px 18px; }
+  .chatbot-panel .btn-ghost { color: var(--on-petrol); box-shadow: inset 0 0 0 1px var(--line-petrol-strong); }
+  .chatbot-panel .btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--on-petrol); }
+  .chatbot-panel a:focus-visible { outline-color: var(--lime); }
+  .chatbot-preview { display: none; min-width: 0; }
+  .services-desktop { display: none; }
   @media (min-width: 768px) {
-    .services-header {
-      gap: 60px !important;
-      margin-bottom: 64px !important;
-      grid-template-columns: 1fr 1fr !important;
-    }
+    .chatbot-features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-
-  .services-kicker {
-    margin-bottom: 18px !important;
-  }
-
-  .services-h2 {
-    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
-    font-weight: 600 !important;
-    font-size: clamp(34px, 7vw, 60px) !important;
-    line-height: 0.98 !important;
-    letter-spacing: -0.03em !important;
-    margin: 0 0 18px 0 !important;
-    max-width: 100%;
-    overflow-wrap: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .services-h2 {
-      font-size: clamp(44px, 4.5vw, 60px) !important;
-      line-height: 0.95 !important;
-      max-width: 14ch !important;
-    }
-  }
-
-  .services-sub {
-    font-family: 'Inter', system-ui, sans-serif !important;
-    font-size: 15px !important;
-    line-height: 1.55 !important;
-    margin: 0 !important;
-  }
-
-  @media (min-width: 768px) {
-    .services-sub {
-      font-size: 17px !important;
-    }
-  }
-
-  .services-grid {
-    gap: 0 !important;
-  }
-
-  .services-card-h3 {
-    font-family: 'Geist', 'Inter', system-ui, sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 22px !important;
-    line-height: 1.15 !important;
-    letter-spacing: -0.01em !important;
-    margin: 0 0 12px 0 !important;
-  }
-
-  /* === Mobile: services-grid usa .mobile-carousel ===
-     Cada card ocupa 85% del viewport (peek del siguiente).
-     Borde + radius individual ya que el grid container no clipea. */
-  @media (max-width: 767px) {
-    .services-grid.mobile-carousel {
-      padding-left: 24px;
-      padding-right: 24px;
-      margin-left: -24px;
-      margin-right: -24px;
-    }
-    .service-card {
-      width: 85%;
-      flex-basis: 85%;
-      min-width: 0;
-      max-width: 85%;
-      border: 1px solid rgba(250,250,250,0.08);
-      border-radius: 14px;
-    }
-  }
-
-  /* === md+: vuelve a grid con borders compartidos como el original === */
-  @media (min-width: 768px) {
-    .services-grid {
-      gap: 0 !important;
-      border: 1px solid rgba(250,250,250,0.08);
-      border-radius: 14px;
-      overflow: hidden;
-    }
-    /* Borders entre cards en grid de 2 cols (md) y 5 cols (lg) */
-    .service-card:not(:last-child) {
-      border-right: 1px solid rgba(250,250,250,0.08);
-    }
-  }
-  /* En md (2 cols), el último de cada fila no debe tener border-right */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .service-card:nth-child(2n) {
-      border-right: none;
-    }
-    .service-card:not(:nth-last-child(-n+2)) {
-      border-bottom: 1px solid rgba(250,250,250,0.08);
-    }
+  .service-disclosure, .service-row { border-top: 1px solid var(--line-ice-strong); }
+  .service-disclosure summary { display: grid; grid-template-columns: minmax(0, 1fr) 20px; align-items: center; gap: 12px; padding: 20px 0; cursor: pointer; list-style: none; }
+  .service-disclosure summary::-webkit-details-marker { display: none; }
+  .service-label { display: grid; gap: 12px; min-width: 0; }
+  .service-name { margin: 0; font-family: var(--font-display); font-size: var(--fs-service); font-weight: 800; font-variation-settings: 'wdth' 110; line-height: 1.05; letter-spacing: -0.025em; overflow-wrap: break-word; }
+  .service-disclosure[open] :global(.service-chevron) { transform: rotate(180deg); }
+  .service-desc { margin: 0; font-size: var(--fs-control); line-height: 1.55; color: var(--on-ice-soft); }
+  .service-content { display: grid; gap: 18px; padding-bottom: 24px; }
+  .service-bullets { display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; list-style: none; font-size: var(--fs-small); line-height: 1.45; }
+  .service-bullets li { display: flex; align-items: flex-start; gap: 10px; }
+  .service-bullets :global(svg) { flex-shrink: 0; margin-top: 4px; }
+  .services-closing { border-top: 1px solid var(--line-ice-strong); padding-top: 36px; }
+  @media (min-width: 1024px) {
+    .chatbot-panel { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: clamp(24px, 3vw, 48px); }
+    .chatbot-preview { display: block; }
+    .services-mobile { display: none; }
+    .services-desktop { display: block; }
+    .service-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 28px; padding-block: 28px 32px; align-items: start; }
+    .service-label { grid-column: span 4; }
+    .service-name { font-size: var(--fs-feature); }
+    .service-desc { grid-column: span 4; }
+    .service-spec { grid-column: span 4; min-width: 0; }
   }
 </style>
+
+<script>
+  const chatbotDetails = document.querySelector<HTMLDetailsElement>('.chatbot-details');
+  const desktopChatbot = window.matchMedia('(min-width: 1024px)');
+  const syncChatbotDetails = () => { if (chatbotDetails) chatbotDetails.open = desktopChatbot.matches; };
+  syncChatbotDetails();
+  desktopChatbot.addEventListener('change', syncChatbotDetails);
+</script>

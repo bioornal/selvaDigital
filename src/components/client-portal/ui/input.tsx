@@ -19,16 +19,16 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.08em] font-heading flex items-center gap-1.5 ml-0.5"
+            className="text-[11px] font-semibold text-[var(--on-petrol-soft)] uppercase tracking-[0.08em] font-heading flex items-center gap-1.5 ml-0.5"
           >
             {label}
-            {required && <span className="text-selva-mint text-[10px]">*</span>}
+            {required && <span className="text-[var(--on-petrol-soft)] text-[10px]">*</span>}
           </label>
         )}
 
         <div className="relative group">
           {iconLeft && (
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-selva-emerald transition-colors duration-200">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--on-petrol-dim)] group-focus-within:text-[var(--on-petrol-soft)] transition-colors duration-200">
               <span className="w-4 h-4">{iconLeft}</span>
             </div>
           )}
@@ -36,31 +36,33 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             id={inputId}
-            className={`glass-input w-full px-4 py-3 text-sm focus:outline-none placeholder:text-slate-400 text-slate-900 ${
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error || hint ? inputId + '-feedback' : undefined}
+            className={`field w-full px-4 py-3 text-sm  placeholder:text-[var(--on-petrol-dim)] text-[var(--ice)] ${
               iconLeft ? 'pl-11' : ''
             } ${iconRight ? 'pr-11' : ''} ${
               error
-                ? 'border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
+                ? 'border-[#FFB4A8] focus:border-[var(--ice)]  '
                 : ''
             } ${className}`}
             {...props}
           />
 
           {iconRight && (
-            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[var(--on-petrol-dim)]">
               <span className="w-4 h-4">{iconRight}</span>
             </div>
           )}
         </div>
 
         {error && (
-          <p className="text-xs text-red-500 font-medium mt-0.5 ml-0.5 flex items-center gap-1.5 animate-fade-in">
-            <span className="inline-block w-1 h-1 rounded-full bg-red-500" />
+          <p id={inputId + '-feedback'} className="text-xs text-[#FFB4A8] font-medium mt-0.5 ml-0.5 flex items-center gap-1.5 ">
+            <span className="inline-block w-1 h-1 rounded-full bg-[var(--petrol-deep)]" />
             {error}
           </p>
         )}
         {hint && !error && (
-          <p className="text-xs text-slate-500 mt-0.5 ml-0.5 leading-relaxed">{hint}</p>
+          <p id={inputId + '-feedback'} className="text-xs text-[var(--on-petrol-soft)] mt-0.5 ml-0.5 leading-relaxed">{hint}</p>
         )}
       </div>
     )

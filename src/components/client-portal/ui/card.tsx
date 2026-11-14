@@ -8,9 +8,9 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClasses = {
-  default: 'glass-panel',
-  strong: 'glass-panel-strong',
-  elevated: 'glass-panel-elevated'
+  default: 'panel-deep',
+  strong: 'panel-deep',
+  elevated: 'panel-raised'
 }
 
 const paddingClasses = {
@@ -31,10 +31,10 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`${variantClasses[variant]} rounded-[20px] ${
+      className={`${variantClasses[variant]} rounded-none ${
         padding !== 'none' ? paddingClasses[padding] : ''
-      } ${hoverEffect ? 'glass-panel-hover' : ''} ${
-        gradientBorder ? 'gradient-border' : ''
+      } ${hoverEffect ? 'panel-hover' : ''} ${
+        gradientBorder ? 'panel-rule' : ''
       } ${className}`}
       {...props}
     >

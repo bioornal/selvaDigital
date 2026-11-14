@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { supabase } from '../../lib/supabase';
 
 export default function AdminLogin() {
+  const formId = useId();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,53 +42,59 @@ export default function AdminLogin() {
 
   if (checkingSession) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f]">
-        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[var(--petrol)]">
+        <div className="w-8 h-8 border-2 border-[var(--line-petrol-strong)] border-t-transparent rounded-full animate-spin" role="status" aria-label="Cargando" />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-[#12121a] border border-gray-800 p-8">
+      <div className="w-full max-w-md bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Nova Square, Inter, sans-serif' }}>
+          <h1 className="text-2xl font-bold text-[var(--ice)] mb-2" style={{ fontFamily: 'Archivo, sans-serif' }}>
             Selva Digital
           </h1>
-          <p className="text-gray-400 text-sm">Panel de administración</p>
+          <p className="text-[var(--on-petrol-dim)] text-sm">Panel de administración</p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+          <div id={`${formId}-error`} role="alert" className="mb-4 p-3 bg-[var(--petrol-deep)] border border-[#FFB4A8] text-[#FFB4A8] text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">
+            <label htmlFor={`${formId}-email`} className="block text-xs font-medium text-[var(--on-petrol-dim)] mb-1 uppercase tracking-wider">
               Email
             </label>
             <input
+              id={`${formId}-email`}
+              aria-invalid={error ? true : undefined}
+              aria-describedby={error ? `${formId}-error` : undefined}
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#0a0a0f] border border-gray-700 rounded-none px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[var(--petrol)] border border-[var(--line-petrol)] rounded-none px-4 py-3 text-sm text-[var(--ice)] placeholder-[var(--on-petrol-soft)]  focus:border-[var(--ice)] transition-colors"
               placeholder="tu@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">
+            <label htmlFor={`${formId}-password`} className="block text-xs font-medium text-[var(--on-petrol-dim)] mb-1 uppercase tracking-wider">
               Contraseña
             </label>
             <input
+              id={`${formId}-password`}
+              aria-invalid={error ? true : undefined}
+              aria-describedby={error ? `${formId}-error` : undefined}
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#0a0a0f] border border-gray-700 rounded-none px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[var(--petrol)] border border-[var(--line-petrol)] rounded-none px-4 py-3 text-sm text-[var(--ice)] placeholder-[var(--on-petrol-soft)]  focus:border-[var(--ice)] transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -95,14 +102,14 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wider"
+            className="btn btn-lime w-full    font-medium py-3 px-4 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wider"
           >
             {loading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+          <a href="/" className="btn btn-ghost text-xs text-[var(--on-petrol-soft)] hover:text-[var(--on-petrol-dim)] transition-colors">
             ← Volver al sitio
           </a>
         </div>

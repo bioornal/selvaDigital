@@ -1,217 +1,104 @@
 ---
-const accent = '#2BB673';
-const bg = '#0A0B0D';
-const surface = '#121316';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
-
+import { whatsappLink } from '../lib/constants';
 const planesWeb = [
-  { t: 'Landing Page', price: '$350', sub: 'PAGO ÚNICO',
+  { t: 'Landing Page', price: '$250.000',
     features: ['Página única con scroll','Diseño web responsive','Formulario de contacto','Integración con redes sociales','Optimización para móviles','SEO básico on-page','Entrega lista para hostear'] },
-  { t: 'Sitio Web Corporativo', price: '$450', sub: 'PAGO ÚNICO · 3 a 5 PÁGINAS', featured: true,
-    features: ['3 a 5 secciones personalizadas','Diseño responsive premium','Formulario avanzado','Galería de imágenes','Mapa de ubicación','Animaciones suaves','Entrega lista para hostear'] },
-  { t: 'Sitio Web Extendido', price: '$550', sub: 'PAGO ÚNICO · +5 PÁGINAS',
-    features: ['+5 secciones personalizadas','Diseño premium único','Formularios avanzados','Galería multimedia','Optimización SEO completa','Animaciones suaves','Soporte post-lanzamiento'] },
-  { t: 'Tienda E-commerce', price: '$1.200', sub: 'PAGO ÚNICO',
-    features: ['Catálogo de productos ilimitado','Carrito + MercadoPago','Sistema de login','Panel de administración','Gestión de stock automática','Descuentos y promos','SEO + GA4 integrados'] },
+  { t: 'Sitio Web Corporativo', price: '$350.000', sub: '3 a 5 páginas', featured: true,
+    features: ['3 a 5 páginas personalizadas','Diseño responsive premium','Formulario avanzado','Galería de imágenes','Mapa de ubicación','Animaciones suaves','Entrega lista para hostear'] },
+  { t: 'Sitio Web Extendido', price: '$450.000', sub: 'Más de 5 páginas',
+    features: ['Más de 5 páginas personalizadas','Diseño premium único','Formularios avanzados','Galería multimedia','Optimización SEO completa','Animaciones suaves','Soporte post-lanzamiento'] },
+  { t: 'Tienda E-commerce', price: '$1.300.000',
+    features: ['Catálogo de productos ilimitado','Carrito + MercadoPago','Sistema de login','Panel de administración','Gestión de stock automática','Descuentos y promos','SEO y estadísticas de visitas'] },
 ];
 
 const planesSistemas = [
-  { t: 'Sistema a medida', price: '$1.500', sub: 'PAGO ÚNICO', code: 'SYSTEM: CUSTOM',
-    features: ['Dashboard de administración','Login y roles de usuario','Gestión de datos (CRUD)','Reportes y métricas','Base de datos dedicada','API personalizada','Deploy en la nube'] },
-  { t: 'Chatbot con IA', price: '$1.500', sub: 'PAGO ÚNICO', code: 'BOT: AGENTIC', featured: true,
-    features: ['Bot inteligente con IA','Chats que venden 24/7','Dashboard de mensajes','Multi-bot multiusuario','Base de conocimiento','Integración con WhatsApp / Web','Desplegado en VPS propio'] },
-  { t: 'App a medida', price: '$1.500', sub: 'PAGO ÚNICO', code: 'APP: NATIVE',
-    features: ['App web o mobile','Backend personalizado','Base de datos dedicada','Autenticación de usuarios','Notificaciones push','Panel de administración','Soporte post-lanzamiento'] },
+  { t: 'Sistema a medida', price: '$1.200.000',
+    features: ['Panel de administración','Usuarios con distintos permisos','Cargá, editá y buscá tus datos','Reportes y métricas','Tus datos guardados y respaldados','Se conecta con tus otras herramientas','Online y accesible desde cualquier lugar'] },
+  { t: 'Chatbot con IA', price: '$1.500.000', featured: true,
+    features: ['Bot inteligente con IA','Chats que venden 24/7','Panel con todas las conversaciones','Varios bots en un solo panel','Base de conocimiento','Integrado en tu web','Funcionando en un servidor dedicado'] },
+  { t: 'App a medida', price: 'Consultar',
+    features: ['App web o mobile','Hecha a la medida de tu operación','Tus datos guardados y respaldados','Autenticación de usuarios','Notificaciones push','Panel de administración','Soporte post-lanzamiento'] },
+];
+const groups = [
+  { id: 'web', label: 'Webs', plans: planesWeb },
+  { id: 'sistemas', label: 'Sistemas', plans: planesSistemas },
 ];
 ---
-
-<section id="planes" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
-  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
-    {/* Heading */}
-    <div class="text-center mb-12 max-w-[760px] mx-auto reveal reveal-slide-up">
-      <div class="inline-flex items-center gap-2.5 mb-[18px] justify-center">
-        <span class="w-3.5 h-px" style={{ background: accent }}></span>
-        <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-          08 ─── Planes y precios
-        </span>
-      </div>
-      <h2 class="section-h2 font-geist font-semibold text-white leading-[1.05] md:leading-[1.02] tracking-tight mb-[18px] px-2 md:px-0"
-        style="font-size:clamp(26px, 5vw, 56px); letter-spacing:-0.025em;">
-        Pago único, sin ataduras.<br>
-        <span style={{ color: accent }}>50% inicio · 50% entrega.</span>
-      </h2>
-      <p class="section-sub text-base md:text-[17px] leading-relaxed" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-        Hosting y dominio se contratan aparte (alrededor de <strong style={{ color: white }}>AR$ 9.300/mes en Hostinger</strong>) y quedan a tu nombre. Sin contratos mensuales ni dependencia con nosotros: el sitio es 100% tuyo desde el día uno.
-      </p>
+<section id="planes" class="section on-ice" aria-labelledby="planes-title">
+  <div class="wrap">
+    <header class="pricing-heading">
+      <h2 id="planes-title" class="h2">Un precio. Una vez.</h2>
+      <p class="lede">Pagás el desarrollo una sola vez: <strong>50% al inicio y 50% contra entrega</strong>. Hosting y dominio no están incluidos: los contratás aparte, a tu nombre. Te recomiendo Hostinger, con hosting de alrededor de <strong>AR$ 9.300/mes</strong>; el dominio se paga por separado. No me pagás una cuota mensual por el desarrollo y podés elegir tu proveedor: el sitio es tuyo desde el día uno.</p>
+    </header>
+    <div class="plan-tabs" role="tablist" aria-label="Tipo de proyecto">
+      {groups.map((group, i) => <button type="button" id={`tab-${group.id}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`plans-${group.id}`} tabindex={i === 0 ? 0 : -1}>{group.label}</button>)}
     </div>
-
-    {/* Tabs */}
-    <div class="flex justify-center mb-10 reveal reveal-slide-up delay-75">
-      <div class="inline-flex p-1 gap-0.5" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '12px' }}>
-        <button id="tab-web" class="tab-btn px-5 py-2.5 text-[13.5px] font-semibold transition-all"
-          style={{ background: accent, color: '#06140C', borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-          Webs y tiendas
-        </button>
-        <button id="tab-sistemas" class="tab-btn px-5 py-2.5 text-[13.5px] font-semibold transition-all"
-          style={{ background: 'transparent', color: textSoft, borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-          Sistemas a medida
-        </button>
-      </div>
-    </div>
-
-    {/* Web plans — carousel en mobile, grid en sm+ */}
-    <div id="plans-web" class="plans-grid mobile-carousel sm:grid-cols-2 lg:grid-cols-4 sm:gap-4" data-dots="planes-web">
-      {planesWeb.map((p, i) => {
-        const delays = ['delay-75', 'delay-150', 'delay-200', 'delay-250'];
-        return (
-          <div class={`plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
-            background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
-            border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
-            borderRadius: '14px',
-            boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none'
-          }}>
-            {p.featured && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
-                style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
-                ★ MÁS ELEGIDO
-              </div>
-            )}
-            <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
-            <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
-              <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
-              <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
-            </div>
-            <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
-              {p.features.map(f => (
-                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                  <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block rounded-none transition-all hover:brightness-110"
-              style={{
-                background: p.featured ? accent : 'transparent',
-                color: p.featured ? '#06140C' : white,
-                border: p.featured ? 'none' : `1px solid ${lineStr}`,
-                fontFamily: "'Inter', system-ui, sans-serif",
-                borderRadius: '0px'
-              }}>
-              {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
-            </a>
-          </div>
-        );
-      })}
-    </div>
-
-    {/* Dots para web plans — mobile only */}
-    <div class="sm:hidden carousel-dots" data-dots-for="planes-web"></div>
-
-    {/* Sistemas plans — carousel en mobile, grid en sm+ */}
-    <div id="plans-sistemas" class="plans-grid mobile-carousel hidden sm:grid-cols-2 lg:grid-cols-3 sm:gap-4" data-dots="planes-sistemas">
-      {planesSistemas.map((p, i) => {
-        const delays = ['delay-75', 'delay-150', 'delay-200'];
-        return (
-          <div class={`plan-card relative flex flex-col p-6 md:p-7 w-[85%] max-w-[85%] min-w-0 md:w-auto md:max-w-none spotlight-card reveal reveal-slide-up ${delays[i]}`} style={{
-            background: p.featured ? `linear-gradient(180deg, rgba(43,182,115,0.08), ${surface})` : surface,
-            border: `1px solid ${p.featured ? 'rgba(43,182,115,0.55)' : line}`,
-            borderRadius: '14px',
-            boxShadow: p.featured ? '0 0 60px -10px rgba(43,182,115,0.18)' : 'none',
-            '--spotlight-color': '139, 92, 246'
-          } as any}>
-            {p.featured && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10.5px] font-bold tracking-[1.5px] px-3 py-1"
-                style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '999px' }}>
-                ★ MÁS ELEGIDO
-              </div>
-            )}
-            {p.code && (
-              <div class="text-[9.5px] tracking-[2px] mb-3" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.code}</div>
-            )}
-            <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight mb-4" style={{ letterSpacing: '-0.01em' }}>{p.t}</h3>
-            <div class="mb-5 pb-4" style={{ borderBottom: `1px solid ${line}` }}>
-              <div class="font-geist font-semibold text-white leading-none" style={{ fontSize: '36px', letterSpacing: '-0.025em' }}>{p.price}</div>
-              <div class="text-[10px] tracking-[2px] mt-2" style={{ color: p.featured ? accent : textDim, fontFamily: "'JetBrains Mono', monospace" }}>{p.sub}</div>
-            </div>
-            <ul class="flex flex-col gap-2.5 flex-1 mb-7 list-none p-0">
-              {p.features.map(f => (
-                <li class="flex items-start gap-2 text-[12.5px] leading-snug" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                  <span style={{ color: accent, marginTop: '1px', flexShrink: 0 }}>✓</span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href="#contacto" class="w-full text-center py-3 text-[13px] font-semibold tracking-wide inline-block rounded-none transition-all hover:brightness-110"
-              style={{
-                background: p.featured ? accent : 'transparent',
-                color: p.featured ? '#06140C' : white,
-                border: p.featured ? 'none' : `1px solid ${lineStr}`,
-                fontFamily: "'Inter', system-ui, sans-serif",
-                borderRadius: '0px'
-              }}>
-              {p.featured ? 'Iniciar pedido →' : 'Solicitar presupuesto'}
-            </a>
-          </div>
-        );
-      })}
-    </div>
-
-    {/* Dots para sistemas — mobile only */}
-    <div class="sm:hidden carousel-dots" data-dots-for="planes-sistemas"></div>
-
-    <p class="text-center mt-9 text-[13px] max-w-[760px] mx-auto" style={{ color: textDim, fontFamily: "'Inter', system-ui, sans-serif" }}>
-      Todos los precios en dólares estadounidenses (USD). Modalidad de pago 50% al inicio y 50% contra entrega.
-      Hosting y dominio no incluidos — te asesoramos para que los contrates a tu nombre (aprox. AR$ 9.300/mes en Hostinger).
-    </p>
   </div>
+  {groups.map((group, i) => (
+    <div id={`plans-${group.id}`} role="tabpanel" aria-labelledby={`tab-${group.id}`} hidden={i !== 0} tabindex="0" class="plan-panel">
+      <div class="specs snap-row" style={`--plan-count:${group.plans.length}`}>
+        {group.plans.map(p => (
+          <article class:list={['spec-column', { 'is-featured': p.featured }]}>
+            <h3>{p.t}</h3>
+            <p class="plan-price"><span class="dot-num">{p.price}</span>{p.price !== 'Consultar' && <span class="mono">ARS</span>}</p>
+            <p class="mono plan-sub">{p.sub ?? ""}</p>
+            <ul>{p.features.map(feature => <li>{feature}</li>)}</ul>
+            <a class={`btn ${p.featured ? 'btn-primary' : 'btn-ghost'}`} href={whatsappLink(`¡Hola Christian! Me interesa el plan ${p.t}. ¿Me pasás más info?`)} target="_blank" rel="noopener noreferrer">{p.featured ? 'Iniciar pedido' : 'Solicitar presupuesto'}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  ))}
 </section>
-
 <script>
-  const tabWeb = document.getElementById('tab-web');
-  const tabSist = document.getElementById('tab-sistemas');
-  const plansWeb = document.getElementById('plans-web');
-  const plansSist = document.getElementById('plans-sistemas');
-  const accent = '#2BB673';
-  const textSoft = 'rgba(250,250,250,0.72)';
-
-  // Visibilidad de dots según tab activo (mobile)
-  const dotsWeb = document.querySelector<HTMLElement>('[data-dots-for="planes-web"]');
-  const dotsSist = document.querySelector<HTMLElement>('[data-dots-for="planes-sistemas"]');
-
-  if (tabWeb && tabSist && plansWeb && plansSist) {
-    tabWeb.addEventListener('click', () => {
-      tabWeb.style.background = accent; tabWeb.style.color = '#06140C';
-      tabSist.style.background = 'transparent'; tabSist.style.color = textSoft;
-      plansWeb.classList.remove('hidden'); plansSist.classList.add('hidden');
-      if (dotsWeb) dotsWeb.style.display = '';
-      if (dotsSist) dotsSist.style.display = 'none';
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('#planes [role="tab"]'));
+  function activateTab(index: number, focus = false) {
+    tabs.forEach((tab, i) => {
+      tab.setAttribute('aria-selected', String(i === index));
+      tab.tabIndex = i === index ? 0 : -1;
+      const panel = document.getElementById(tab.getAttribute('aria-controls')!);
+      if (panel) panel.hidden = i !== index;
     });
-    tabSist.addEventListener('click', () => {
-      tabSist.style.background = accent; tabSist.style.color = '#06140C';
-      tabWeb.style.background = 'transparent'; tabWeb.style.color = textSoft;
-      plansSist.classList.remove('hidden'); plansWeb.classList.add('hidden');
-      if (dotsSist) dotsSist.style.display = '';
-      if (dotsWeb) dotsWeb.style.display = 'none';
-    });
+    if (focus) tabs[index].focus();
+    window.dispatchEvent(new Event('resize'));
   }
-
-  // Inicial: ocultar dots de sistemas (su carousel arranca .hidden)
-  if (dotsSist) dotsSist.style.display = 'none';
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activateTab(i));
+    tab.addEventListener('keydown', event => {
+      let next = i;
+      if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault(); activateTab(next, true);
+    });
+  });
 </script>
-
 <style>
-  /* Mobile carousel para planes: extiende el scroll hasta los bordes
-     de la pantalla para que el peek del próximo card sea visible. */
-  @media (max-width: 767px) {
-    .plans-grid.mobile-carousel {
-      padding-left: 24px;
-      padding-right: 24px;
-      margin-left: -24px;
-      margin-right: -24px;
-    }
+  #planes { position: relative; isolation: isolate; }
+  @media (min-width: 1024px) { .pricing-heading { padding-right: 200px; min-height: 400px; } }
+  .pricing-heading { max-width: 1050px; margin-bottom: 36px; }
+  .pricing-heading h2 { margin: 0 0 24px; }
+  .pricing-heading p { color: var(--on-ice-soft); }
+  .plan-tabs { display: inline-flex; border: 1px solid var(--line-ice-strong); margin-bottom: 40px; }
+  .plan-tabs button { border-radius: 0; padding: 14px 28px; font-weight: 700; color: var(--on-ice); }
+  .plan-tabs button[aria-selected="true"] { background: var(--petrol); color: var(--ice); }
+  .plan-tabs button:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .plan-panel[hidden] { display: none; }
+  .specs { gap: 0; }
+  .spec-column { position: relative; width: 84vw; display: flex; flex-direction: column; padding: 88px 24px 12px; border-left: 1px solid var(--line-ice-strong); min-width: 0; }
+  .spec-column:last-child { border-right: 1px solid var(--line-ice-strong); }
+  .spec-column h3 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 700; line-height: 1.15; min-height: 51px; margin: 0 0 24px; }
+  .plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 0 0 12px; }
+  .plan-price .dot-num { font-size: var(--fs-price-mobile); letter-spacing: -.02em; white-space: nowrap; }
+  .plan-sub { color: var(--on-ice-soft); min-height: 34px; margin-bottom: 20px; }
+  .spec-column ul { list-style: none; padding: 0; margin: 0 0 28px; flex: 1; }
+  .spec-column li { font-size: var(--fs-small); line-height: 1.45; padding: 12px 0; border-top: 1px solid var(--line-ice); }
+  .spec-column .btn { padding-inline: 12px; width: 100%; }
+  @media (min-width: 768px) {
+    .specs { display: grid; grid-template-columns: repeat(var(--plan-count), minmax(0, 1fr)); max-width: var(--maxw); margin-inline: auto; overflow: visible; }
+    .spec-column { width: auto; padding-inline: clamp(12px, 1.8vw, 24px); }
+    .plan-price .dot-num { font-size: var(--fs-price); }
   }
 </style>

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import type { Client, ProjectPhase, ClientBrandInfo, UploadedFile } from '../../types/admin';
-import { statusLabels, statusColors } from '../../types/admin';
+import { statusLabels } from '../../types/admin';
 import { messageTemplates, renderTemplate } from '../../lib/templates';
 import { adminFetch } from '../../lib/admin-fetch';
 import {
@@ -15,6 +15,7 @@ interface ClientDetailProps {
 }
 
 export default function ClientDetail({ clientId }: ClientDetailProps) {
+  const formId = useId();
   const [client, setClient] = useState<Client | null>(null);
   const [phases, setPhases] = useState<ProjectPhase[]>([]);
   const [loading, setLoading] = useState(true);
@@ -341,7 +342,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[var(--line-petrol-strong)] border-t-transparent rounded-full animate-spin" role="status" aria-label="Cargando" />
       </div>
     );
   }
@@ -350,13 +351,13 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     return (
       <div className="text-center py-12">
         {loadError ? (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-sm max-w-md mx-auto">
+          <div role="alert" className="mb-4 p-3 bg-[var(--petrol-deep)] border border-[#FFB4A8] text-[#FFB4A8] text-sm max-w-md mx-auto">
             {loadError}
           </div>
         ) : (
-          <p className="text-gray-500">Cliente no encontrado</p>
+          <p className="text-[var(--on-petrol-soft)]">Cliente no encontrado</p>
         )}
-        <a href="/admin" className="text-sm text-blue-400 hover:text-blue-300 mt-2 inline-block">
+        <a href="/admin" className="btn btn-ghost text-sm text-[var(--on-petrol-soft)] hover:text-[var(--on-petrol-soft)] mt-2 inline-block">
           ← Volver al dashboard
         </a>
       </div>
@@ -368,21 +369,21 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <a href="/admin" className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 mb-2 transition-colors">
+          <a href="/admin" className="btn btn-ghost inline-flex items-center gap-1 text-xs text-[var(--on-petrol-soft)] hover:text-[var(--on-petrol-dim)] mb-2 transition-colors">
             <ArrowLeft className="w-3 h-3" /> Volver
           </a>
-          <h1 className="text-2xl font-bold text-white">{client.name}</h1>
+          <h1 className="text-2xl font-bold text-[var(--ice)]">{client.name}</h1>
           <div className="flex items-center gap-3 mt-1">
-            <span className={`inline-flex items-center px-2 py-0.5 text-xs font-medium text-white ${statusColors[client.status]}`}>
+            <span className={`inline-flex items-center px-2 py-0.5 text-xs font-medium text-[var(--ice)] project-status project-status-${client.status}`}>
               {statusLabels[client.status]}
             </span>
-            <span className="text-xs text-gray-500">Fase actual: {client.current_phase}</span>
+            <span className="text-xs text-[var(--on-petrol-soft)]">Fase actual: {client.current_phase}</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <a
             href={`/admin/clientes/${client.id}/editar`}
-            className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-2 px-4 rounded-none transition-colors"
+            className="btn btn-ghost inline-flex items-center gap-2    text-sm font-medium py-2 px-4 rounded-none transition-colors"
           >
             <Pencil className="w-4 h-4" />
             Editar
@@ -391,7 +392,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
             href={`https://wa.me/${client.phone.replace(/\D/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-none transition-colors"
+            className="btn btn-ghost inline-flex items-center gap-2    text-sm font-medium py-2 px-4 rounded-none transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
             WhatsApp
@@ -402,52 +403,52 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       {/* Info Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Info Card */}
-        <div className="bg-[#12121a] border border-gray-800 p-5 space-y-4">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-800 pb-2">
+        <div className="bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-5 space-y-4">
+          <h3 className="text-xs font-semibold text-[var(--on-petrol-dim)] uppercase tracking-wider border-b border-[var(--line-petrol)] pb-2">
             Información
           </h3>
           <div className="space-y-3 text-sm">
             <div>
-              <span className="text-gray-500 block text-xs">Teléfono</span>
-              <span className="text-white font-mono">{client.phone}</span>
+              <span className="text-[var(--on-petrol-soft)] block text-xs">Teléfono</span>
+              <span className="text-[var(--ice)] font-mono">{client.phone}</span>
             </div>
             {client.email && (
               <div>
-                <span className="text-gray-500 block text-xs">Email</span>
-                <span className="text-white">{client.email}</span>
+                <span className="text-[var(--on-petrol-soft)] block text-xs">Email</span>
+                <span className="text-[var(--ice)]">{client.email}</span>
               </div>
             )}
             {client.project_name && (
               <div>
-                <span className="text-gray-500 block text-xs">Proyecto</span>
-                <span className="text-white">{client.project_name}</span>
+                <span className="text-[var(--on-petrol-soft)] block text-xs">Proyecto</span>
+                <span className="text-[var(--ice)]">{client.project_name}</span>
               </div>
             )}
             <div>
-              <span className="text-gray-500 block text-xs">Tipo</span>
-              <span className="text-white">{client.project_type}</span>
+              <span className="text-[var(--on-petrol-soft)] block text-xs">Tipo</span>
+              <span className="text-[var(--ice)]">{client.project_type}</span>
             </div>
             {client.total_amount && (
               <div>
-                <span className="text-gray-500 block text-xs">Monto total</span>
-                <span className="text-white">${client.total_amount.toLocaleString('es-AR')} {client.currency || 'USD'}</span>
+                <span className="text-[var(--on-petrol-soft)] block text-xs">Monto total</span>
+                <span className="text-[var(--ice)]">${client.total_amount.toLocaleString('es-AR')} {client.currency || 'ARS'}</span>
               </div>
             )}
             {client.weeks && (
               <div>
-                <span className="text-gray-500 block text-xs">Plazo</span>
-                <span className="text-white">{client.weeks} semanas</span>
+                <span className="text-[var(--on-petrol-soft)] block text-xs">Plazo</span>
+                <span className="text-[var(--ice)]">{client.weeks} semanas</span>
               </div>
             )}
             <div>
-              <span className="text-gray-500 block text-xs">Código de Acceso Portal</span>
+              <span className="text-[var(--on-petrol-soft)] block text-xs">Código de Acceso Portal</span>
               <div className="flex items-center gap-2 mt-1">
                 {client.access_code ? (
                   <>
-                    <span className="text-green-400 font-mono font-bold bg-green-950/20 border border-green-800/30 px-2 py-0.5 text-xs">{client.access_code}</span>
+                    <span className="text-[var(--lime)] font-mono font-bold bg-[var(--petrol-deep)] border border-[var(--lime)] px-2 py-0.5 text-xs">{client.access_code}</span>
                     <button
                       onClick={copyPortalLink}
-                      className="text-xs text-gray-400 hover:text-white transition-colors flex items-center gap-1.5 bg-gray-800 hover:bg-gray-750 px-2 py-0.5"
+                      className="btn btn-ghost text-xs text-[var(--on-petrol-dim)]  transition-colors flex items-center gap-1.5   px-2 py-0.5"
                     >
                       <Copy className="w-3 h-3" />
                       {copiedLink ? 'Copiado' : 'Link'}
@@ -456,7 +457,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 ) : (
                   <button
                     onClick={handleGenerateAccessCode}
-                    className="text-xs bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:bg-blue-600/20 transition-colors px-2 py-1 uppercase tracking-wider font-semibold font-mono"
+                    className="btn btn-ghost text-xs  border border-[var(--line-petrol-strong)] text-[var(--on-petrol-soft)]  transition-colors px-2 py-1 uppercase tracking-wider font-semibold font-mono"
                   >
                     Generar Código
                   </button>
@@ -467,8 +468,8 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
         </div>
 
         {/* Fases */}
-        <div className="lg:col-span-2 bg-[#12121a] border border-gray-800 p-5">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-800 pb-2 mb-4">
+        <div className="lg:col-span-2 bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-5">
+          <h3 id={`${formId}-message-heading`} className="text-xs font-semibold text-[var(--on-petrol-dim)] uppercase tracking-wider border-b border-[var(--line-petrol)] pb-2 mb-4">
             Fases del proyecto
           </h3>
           <div className="space-y-3">
@@ -477,28 +478,28 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 key={phase.id}
                 className={`flex items-center gap-3 p-3 border ${
                   phase.status === 'completado' || phase.status === 'enviado'
-                    ? 'border-green-800/50 bg-green-900/10'
+                    ? 'border-[var(--lime)] bg-[var(--petrol-deep)]'
                     : phase.phase_number === client.current_phase
-                    ? 'border-blue-800/50 bg-blue-900/10'
-                    : 'border-gray-800'
+                    ? 'border-[var(--line-petrol-strong)] bg-[var(--petrol-raised)]'
+                    : 'border-[var(--line-petrol)]'
                 }`}
               >
                 <div className="flex-shrink-0">
                   {phase.status === 'completado' || phase.status === 'enviado' ? (
-                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <CheckCircle className="w-5 h-5 text-[var(--lime)]" />
                   ) : phase.phase_number === client.current_phase ? (
-                    <Clock className="w-5 h-5 text-blue-400" />
+                    <Clock className="w-5 h-5 text-[var(--on-petrol-soft)]" />
                   ) : (
-                    <AlertCircle className="w-5 h-5 text-gray-600" />
+                    <AlertCircle className="w-5 h-5 text-[var(--on-petrol-soft)]" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-gray-500">{phase.phase_number}</span>
-                    <span className="text-sm font-medium text-white">{phase.phase_name}</span>
+                    <span className="text-xs font-mono text-[var(--on-petrol-soft)]">{phase.phase_number}</span>
+                    <span className="text-sm font-medium text-[var(--ice)]">{phase.phase_name}</span>
                   </div>
                   {phase.sent_at && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-[var(--on-petrol-soft)]">
                       Enviado: {new Date(phase.sent_at).toLocaleDateString('es-AR')}
                     </span>
                   )}
@@ -506,12 +507,12 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 <span
                   className={`text-xs px-2 py-0.5 uppercase tracking-wider ${
                     phase.status === 'enviado'
-                      ? 'text-green-400 bg-green-900/20'
+                      ? 'text-[var(--lime)] bg-[var(--petrol-deep)]'
                       : phase.status === 'completado'
-                      ? 'text-green-400 bg-green-900/20'
+                      ? 'text-[var(--lime)] bg-[var(--petrol-deep)]'
                       : phase.status === 'en_progreso'
-                      ? 'text-blue-400 bg-blue-900/20'
-                      : 'text-gray-500 bg-gray-800'
+                      ? 'text-[var(--on-petrol-soft)] bg-[var(--petrol-raised)]'
+                      : 'text-[var(--on-petrol-soft)] bg-[var(--petrol-deep)]'
                   }`}
                 >
                   {phase.status}
@@ -523,16 +524,16 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       </div>
 
       {/* NEW: CLIENT PORTAL MATERIALS SECTION */}
-      <div className="bg-[#12121a] border border-gray-800 p-5 space-y-6">
-        <div className="flex items-center justify-between border-b border-gray-800 pb-3">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+      <div className="bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-5 space-y-6">
+        <div className="flex items-center justify-between border-b border-[var(--line-petrol)] pb-3">
+          <h3 className="text-xs font-semibold text-[var(--on-petrol-dim)] uppercase tracking-wider">
             Materiales del Cliente (Portal de Carga)
           </h3>
           {uploadedFiles.length > 0 && (
             <button
               onClick={handleDownloadZip}
               disabled={downloadingZip}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold py-1.5 px-3 uppercase tracking-wider transition-all cursor-pointer"
+              className="btn btn-ghost inline-flex items-center gap-2   disabled:opacity-50  text-xs font-semibold py-1.5 px-3 uppercase tracking-wider transition-all cursor-pointer"
             >
               <FileArchive className="w-3.5 h-3.5" />
               {downloadingZip ? 'Comprimiendo...' : 'Descargar Todo (.ZIP)'}
@@ -543,53 +544,53 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
         {/* Brand Profile Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Perfil de Marca
+            <h4 className="text-xs font-bold text-[var(--on-petrol-dim)] uppercase tracking-wider flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--petrol-raised)]" /> Perfil de Marca
             </h4>
             {brandInfo ? (
-              <div className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-3.5 text-sm">
+              <div className="bg-[var(--petrol)] border border-[var(--line-petrol)] p-4 space-y-3.5 text-sm">
                 <div>
-                  <span className="text-gray-500 block text-xs">Nombre de Marca</span>
-                  <span className="text-white font-semibold">{brandInfo.brand_name}</span>
+                  <span className="text-[var(--on-petrol-soft)] block text-xs">Nombre de Marca</span>
+                  <span className="text-[var(--ice)] font-semibold">{brandInfo.brand_name}</span>
                 </div>
                 {brandInfo.tagline && (
                   <div>
-                    <span className="text-gray-500 block text-xs">Slogan / Frase</span>
-                    <span className="text-gray-300 italic">"{brandInfo.tagline}"</span>
+                    <span className="text-[var(--on-petrol-soft)] block text-xs">Slogan / Frase</span>
+                    <span className="text-[var(--on-petrol-dim)] italic">"{brandInfo.tagline}"</span>
                   </div>
                 )}
                 {brandInfo.description && (
                   <div>
-                    <span className="text-gray-500 block text-xs">Descripción Comercial</span>
-                    <p className="text-gray-300 leading-relaxed mt-1 text-xs">{brandInfo.description}</p>
+                    <span className="text-[var(--on-petrol-soft)] block text-xs">Descripción Comercial</span>
+                    <p className="text-[var(--on-petrol-dim)] leading-relaxed mt-1 text-xs">{brandInfo.description}</p>
                   </div>
                 )}
                 <div className="grid grid-cols-2 gap-4">
                   {brandInfo.contact_email && (
                     <div>
-                      <span className="text-gray-500 block text-xs">Email Comercial</span>
-                      <span className="text-gray-300 font-mono text-xs">{brandInfo.contact_email}</span>
+                      <span className="text-[var(--on-petrol-soft)] block text-xs">Email Comercial</span>
+                      <span className="text-[var(--on-petrol-dim)] font-mono text-xs">{brandInfo.contact_email}</span>
                     </div>
                   )}
                   {brandInfo.contact_phone && (
                     <div>
-                      <span className="text-gray-500 block text-xs">Teléfono Comercial</span>
-                      <span className="text-gray-300 font-mono text-xs">{brandInfo.contact_phone}</span>
+                      <span className="text-[var(--on-petrol-soft)] block text-xs">Teléfono Comercial</span>
+                      <span className="text-[var(--on-petrol-dim)] font-mono text-xs">{brandInfo.contact_phone}</span>
                     </div>
                   )}
                 </div>
                 {brandInfo.brand_colors && (
                   <div>
-                    <span className="text-gray-500 block text-xs mb-1.5">Colores Especificados</span>
-                    <p className="text-gray-300 text-xs mb-2">{brandInfo.brand_colors}</p>
+                    <span className="text-[var(--on-petrol-soft)] block text-xs mb-1.5">Colores Especificados</span>
+                    <p className="text-[var(--on-petrol-dim)] text-xs mb-2">{brandInfo.brand_colors}</p>
                     <div className="flex flex-wrap gap-2">
                       {parseColors(brandInfo.brand_colors).map((color, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 px-2 py-0.5 bg-[#12121a] border border-gray-800 rounded-full text-[10px]">
+                        <div key={idx} className="flex items-center gap-1.5 px-2 py-0.5 bg-[var(--petrol-deep)] border border-[var(--line-petrol)] rounded-full text-[10px]">
                           <div
-                            className="w-3 h-3 rounded-full border border-gray-700"
+                            className="w-3 h-3 rounded-full border border-[var(--line-petrol)]"
                             style={{ backgroundColor: color }}
                           />
-                          <span className="font-mono text-gray-300">{color.toUpperCase()}</span>
+                          <span className="font-mono text-[var(--on-petrol-dim)]">{color.toUpperCase()}</span>
                         </div>
                       ))}
                     </div>
@@ -597,21 +598,21 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 )}
               </div>
             ) : (
-              <div className="bg-[#0a0a0f] border border-gray-800 p-6 text-center text-xs text-gray-500">
+              <div className="bg-[var(--petrol)] border border-[var(--line-petrol)] p-6 text-center text-xs text-[var(--on-petrol-soft)]">
                 El cliente aún no ha completado sus datos comerciales en el portal.
               </div>
             )}
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Sitios de Referencia y Redes
+            <h4 className="text-xs font-bold text-[var(--on-petrol-dim)] uppercase tracking-wider flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--petrol-raised)]" /> Sitios de Referencia y Redes
             </h4>
-            <div className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-4 text-sm min-h-[150px]">
+            <div className="bg-[var(--petrol)] border border-[var(--line-petrol)] p-4 space-y-4 text-sm min-h-[150px]">
               {brandInfo ? (
                 <>
                   <div>
-                    <span className="text-gray-500 block text-xs mb-1.5">Redes Sociales</span>
+                    <span className="text-[var(--on-petrol-soft)] block text-xs mb-1.5">Redes Sociales</span>
                     {Object.values(brandInfo.social_links).some(link => link) ? (
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         {Object.entries(brandInfo.social_links).map(([platform, link]) => link ? (
@@ -620,7 +621,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline flex items-center gap-1 capitalize"
+                            className="btn btn-ghost text-[var(--on-petrol-soft)] hover:underline flex items-center gap-1 capitalize"
                           >
                             <Globe className="w-3 h-3 shrink-0" />
                             {platform}
@@ -628,11 +629,11 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                         ) : null)}
                       </div>
                     ) : (
-                      <span className="text-gray-600 italic text-xs">Sin enlaces cargados</span>
+                      <span className="text-[var(--on-petrol-soft)] italic text-xs">Sin enlaces cargados</span>
                     )}
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-xs mb-1.5">Sitios Web de Referencia</span>
+                    <span className="text-[var(--on-petrol-soft)] block text-xs mb-1.5">Sitios Web de Referencia</span>
                     {brandInfo.reference_sites.length > 0 ? (
                       <div className="space-y-1.5">
                         {brandInfo.reference_sites.map((site, idx) => (
@@ -641,20 +642,20 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                             href={site}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline flex items-center gap-1.5 text-xs truncate"
+                            className="btn btn-ghost text-[var(--on-petrol-soft)] hover:underline flex items-center gap-1.5 text-xs truncate"
                           >
-                            <ExternalLink className="w-3 h-3 shrink-0 text-gray-500" />
+                            <ExternalLink className="w-3 h-3 shrink-0 text-[var(--on-petrol-soft)]" />
                             {site}
                           </a>
                         ))}
                       </div>
                     ) : (
-                      <span className="text-gray-600 italic text-xs">Sin referencias de sitios</span>
+                      <span className="text-[var(--on-petrol-soft)] italic text-xs">Sin referencias de sitios</span>
                     )}
                   </div>
                 </>
               ) : (
-                <div className="text-center py-6 text-xs text-gray-500">
+                <div className="text-center py-6 text-xs text-[var(--on-petrol-soft)]">
                   Sin redes ni referencias.
                 </div>
               )}
@@ -663,9 +664,9 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
         </div>
 
         {/* Uploaded Files Section */}
-        <div className="space-y-4 pt-4 border-t border-gray-800">
-          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> Archivos Subidos por el Cliente
+        <div className="space-y-4 pt-4 border-t border-[var(--line-petrol)]">
+          <h4 className="text-xs font-bold text-[var(--on-petrol-dim)] uppercase tracking-wider flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--petrol-raised)]" /> Archivos Subidos por el Cliente
           </h4>
           {uploadedFiles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -673,41 +674,41 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 const catFiles = uploadedFiles.filter(f => f.category === cat);
                 if (catFiles.length === 0) return null;
                 return (
-                  <div key={cat} className="bg-[#0a0a0f] border border-gray-800 p-4 space-y-3">
-                    <h5 className="text-xs font-semibold text-blue-400 uppercase tracking-wider border-b border-gray-900 pb-1.5">
+                  <div key={cat} className="bg-[var(--petrol)] border border-[var(--line-petrol)] p-4 space-y-3">
+                    <h5 className="text-xs font-semibold text-[var(--on-petrol-soft)] uppercase tracking-wider border-b border-[var(--line-petrol)] pb-1.5">
                       {categoryLabel(cat as UploadedFile['category'])} ({catFiles.length})
                     </h5>
                     <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
                       {catFiles.map(file => (
-                        <div key={file.id} className="flex items-center justify-between gap-3 p-2 bg-[#12121a] border border-gray-800/80 text-xs">
+                        <div key={file.id} className="flex items-center justify-between gap-3 p-2 bg-[var(--petrol-deep)] border border-[var(--line-petrol)] text-xs">
                           {file.file_type.startsWith('image/') ? (
-                            <div className="w-8 h-8 bg-slate-900 border border-gray-800 overflow-hidden shrink-0">
+                            <div className="w-8 h-8 bg-[var(--petrol-deep)] border border-[var(--line-petrol)] overflow-hidden shrink-0">
                               <img src={file.file_url} alt={file.file_name} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div className="w-8 h-8 bg-[#0a0a0f] border border-gray-800 flex items-center justify-center shrink-0">
-                              <FileText className="w-4 h-4 text-blue-500" />
+                            <div className="w-8 h-8 bg-[var(--petrol)] border border-[var(--line-petrol)] flex items-center justify-center shrink-0">
+                              <FileText className="w-4 h-4 text-[var(--on-petrol-soft)]" />
                             </div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="text-gray-300 font-semibold truncate leading-tight" title={file.file_name}>
+                            <p className="text-[var(--on-petrol-dim)] font-semibold truncate leading-tight" title={file.file_name}>
                               {file.file_name}
                             </p>
-                            <p className="text-[10px] text-gray-500 mt-0.5 font-mono">{formatBytes(file.file_size)}</p>
+                            <p className="text-[10px] text-[var(--on-petrol-soft)] mt-0.5 font-mono">{formatBytes(file.file_size)}</p>
                           </div>
                           <div className="flex items-center gap-1 shrink-0">
                             <a
                               href={file.file_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1 text-gray-400 hover:text-white hover:bg-gray-800"
+                              className="btn btn-ghost p-1 text-[var(--on-petrol-dim)]  "
                               title="Ver en pestaña nueva"
                             >
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                             <button
                               onClick={() => handleDownloadSingle(file)}
-                              className="p-1 text-gray-400 hover:text-white hover:bg-gray-800 cursor-pointer"
+                              className="btn btn-ghost p-1 text-[var(--on-petrol-dim)] hover:text-[var(--ice)] hover:bg-[var(--petrol-raised)] cursor-pointer"
                               title="Descargar archivo"
                             >
                               <Download className="w-3.5 h-3.5" />
@@ -721,7 +722,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
               })}
             </div>
           ) : (
-            <div className="bg-[#0a0a0f] border border-gray-800 p-6 text-center text-xs text-gray-500">
+            <div className="bg-[var(--petrol)] border border-[var(--line-petrol)] p-6 text-center text-xs text-[var(--on-petrol-soft)]">
               El cliente aún no ha subido archivos.
             </div>
           )}
@@ -729,21 +730,22 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
       </div>
 
       {/* Message Composer */}
-      <div className="bg-[#12121a] border border-gray-800 p-5">
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-800 pb-2 mb-4">
+      <div className="bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-5">
+        <h3 className="text-xs font-semibold text-[var(--on-petrol-dim)] uppercase tracking-wider border-b border-[var(--line-petrol)] pb-2 mb-4">
           Enviar mensaje
         </h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">
+              <label htmlFor={`${formId}-template`} className="block text-xs font-medium text-[var(--on-petrol-dim)] mb-1 uppercase tracking-wider">
                 Plantilla
               </label>
               <select
+                id={`${formId}-template`}
                 value={selectedTemplate}
                 onChange={(e) => setSelectedTemplate(e.target.value)}
-                className="w-full bg-[#0a0a0f] border border-gray-700 rounded-none px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-[var(--petrol)] border border-[var(--line-petrol)] rounded-none px-3 py-2 text-sm text-[var(--ice)]  focus:border-[var(--ice)] transition-colors"
               >
                 <option value="">Seleccionar plantilla...</option>
                 {messageTemplates.map((t) => (
@@ -755,21 +757,22 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
             </div>
 
             {selectedTemplate && (
-              <div className="text-xs text-gray-500 bg-[#0a0a0f] p-3 border border-gray-800">
+              <div className="text-xs text-[var(--on-petrol-soft)] bg-[var(--petrol)] p-3 border border-[var(--line-petrol)]">
                 {messageTemplates.find((t) => t.id === selectedTemplate)?.description}
               </div>
             )}
 
             {selectedTemplate && Object.keys(variables).length > 0 && (
               <div className="space-y-3">
-                <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Variables</p>
+                <p className="text-xs font-medium text-[var(--on-petrol-dim)] uppercase tracking-wider">Variables</p>
                 {Object.entries(variables).map(([key, value]) => (
                   <div key={key}>
-                    <label className="block text-xs text-gray-500 mb-1">{key}</label>
+                    <label htmlFor={`${formId}-variable-${key}`} className="block text-xs text-[var(--on-petrol-soft)] mb-1">{key}</label>
                     <input
+                      id={`${formId}-variable-${key}`}
                       value={value}
                       onChange={(e) => handleVariableChange(key, e.target.value)}
-                      className="w-full bg-[#0a0a0f] border border-gray-700 rounded-none px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full bg-[var(--petrol)] border border-[var(--line-petrol)] rounded-none px-3 py-2 text-sm text-[var(--ice)]  focus:border-[var(--ice)] transition-colors"
                     />
                   </div>
                 ))}
@@ -780,12 +783,12 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
           <div className="lg:col-span-2 space-y-4">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Vista previa</label>
+                <label htmlFor={`${formId}-preview`} className="text-xs font-medium text-[var(--on-petrol-dim)] uppercase tracking-wider">Vista previa</label>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={copyToClipboard}
-                    className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors"
+                    className="btn btn-ghost inline-flex items-center gap-1 text-xs text-[var(--on-petrol-dim)]  transition-colors"
                   >
                     <Copy className="w-3 h-3" />
                     {copied ? 'Copiado' : 'Copiar'}
@@ -793,18 +796,19 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
                 </div>
               </div>
               <textarea
+                id={`${formId}-preview`}
                 value={preview}
                 readOnly
                 rows={12}
-                className="w-full bg-[#0a0a0f] border border-gray-700 rounded-none px-4 py-3 text-sm text-gray-300 font-mono leading-relaxed focus:outline-none resize-none"
+                className="w-full bg-[var(--petrol)] border border-[var(--line-petrol)] rounded-none px-4 py-3 text-sm text-[var(--on-petrol-dim)] font-mono leading-relaxed  resize-none"
               />
             </div>
 
-            <div className="flex items-center gap-3">
+            <div role="group" aria-labelledby={`${formId}-message-heading`} className="flex items-center gap-3">
               <button
                 onClick={handleSend}
                 disabled={!preview || sending}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="btn btn-lime inline-flex items-center gap-2    text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 {sending ? 'Guardando...' : 'Guardar mensaje'}
@@ -812,7 +816,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
               <button
                 onClick={openWhatsApp}
                 disabled={!preview}
-                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="btn btn-ghost inline-flex items-center gap-2    text-sm font-medium py-2 px-6 rounded-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 Abrir WhatsApp

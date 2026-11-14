@@ -24,10 +24,10 @@ export default function AdminRouteGuard({ children }: AdminRouteGuardProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--petrol)] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Verificando sesión...</span>
+          <div className="w-8 h-8 border-2 border-[var(--line-petrol-strong)] border-t-transparent rounded-full animate-spin" role="status" aria-label="Cargando" />
+          <span className="text-xs text-[var(--on-petrol-soft)] uppercase tracking-wider">Verificando sesión...</span>
         </div>
       </div>
     );

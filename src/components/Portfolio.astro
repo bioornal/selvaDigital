@@ -1,21 +1,10 @@
 ---
-const accent = '#2BB673';
-const bg = '#0A0B0D';
-const surface = '#121316';
-const surface2 = '#1A1C20';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-
-// Orden: los proyectos de más peso primero (los 6 primeros son los que se ven sin desplegar).
 const projects = [
   {
     title: 'Impasto Pizzería', tag: 'Sistema',
     img: '/portfolio/impasto.webp',
     desc: 'Todo el negocio en un solo sistema: tienda online con Mercado Pago, promos y asistente con IA, caja para el mostrador, app Android de recetas y costos, comandas que se imprimen solas en cocina y servidor propio.',
     kpi: 'Web + caja + cocina', sub: 'Puerto Iguazú',
-    stack: ['Next.js','Mercado Pago','IA','Android','VPS'],
     url: 'https://www.impastopizzas.com/'
   },
   {
@@ -23,7 +12,6 @@ const projects = [
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/f_auto,q_auto,w_1200,h_630/v1781879164/ArumaLodge/Hero_bgsjtf.jpg',
     desc: 'Departamentos de autor en el centro de Puerto Iguazú con piscina, jacuzzi y motor de reservas directas.',
     kpi: 'Reserva directa 100%', sub: 'Puerto Iguazú',
-    stack: ['Next.js','Cloudinary','Supabase'],
     url: 'https://arumalodgeiguazu.com/'
   },
   {
@@ -31,7 +19,6 @@ const projects = [
     img: '/portfolio/casadellago.webp',
     desc: 'Cabañas frente al lago Urugua-í con reserva directa, pago con Mercado Pago y sitio en español, inglés y portugués.',
     kpi: 'Reservas sin comisiones', sub: 'Lago Urugua-í',
-    stack: ['Next.js','Supabase','Mercado Pago'],
     url: 'https://lacasadellagouruguai.com/'
   },
   {
@@ -39,7 +26,6 @@ const projects = [
     img: '/iguazuFalls.webp',
     desc: 'Reservas directas, galería premium y formulario optimizado para conversión de huéspedes premium.',
     kpi: '67% reservas sin OTAs', sub: 'antes era 12%',
-    stack: ['Next.js','Cloudinary','Ads'],
     url: 'https://www.iguazufallslodge.com/'
   },
   {
@@ -47,7 +33,6 @@ const projects = [
     img: '/portfolio/olietta.webp',
     desc: 'Joyería y relojería en plata 925 y oro 18k: catálogo por material y medida, alianzas y piezas personalizadas, consultas por WhatsApp y panel propio para cargar piezas y pedidos.',
     kpi: 'Catálogo + panel propio', sub: 'Puerto Iguazú',
-    stack: ['Next.js','Supabase','Netlify'],
     url: 'https://olietta-joyeria.netlify.app/'
   },
   {
@@ -55,7 +40,6 @@ const projects = [
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
     desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
     kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
-    stack: ['React','Cloudinary','GA4'],
     url: 'https://megamueblessommiers.online'
   },
   {
@@ -63,7 +47,6 @@ const projects = [
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
     desc: 'Dashboard multiusuario para gestionar 3 chatbots con IA corriendo en un VPS propio, en tiempo real.',
     kpi: '3 bots, 1 panel', sub: '+1.200 msgs/día',
-    stack: ['React','IA','VPS'],
     url: 'https://megabot-admin.cloud/login'
   },
   {
@@ -71,7 +54,6 @@ const projects = [
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1779842341/SelvaDigital/4ee423a3-f907-4d6e-9800-1ef9b4a7330e.png',
     desc: 'Dashboard multi-marca y planificador editorial con IA integrado para automatizar y diseñar la grilla de Instagram en segundos.',
     kpi: 'Grilla en minutos', sub: '100% automatizado',
-    stack: ['React','Vite','Fal.ai','Tailwind'],
     url: 'https://mk-panel.netlify.app/'
   },
   {
@@ -79,7 +61,6 @@ const projects = [
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
     desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
     kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
-    stack: ['React','Vite','Schema'],
     url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/'
   },
   {
@@ -87,177 +68,167 @@ const projects = [
     img: '/fogon.webp',
     desc: 'E-commerce gastronómico con MercadoPago, opciones sin TACC y carrito persistente entre dispositivos.',
     kpi: '×2.3 ticket promedio', sub: 'vs. pedidos por WhatsApp',
-    stack: ['Next.js','Tailwind','S3'],
     url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
   },
 ];
 
-const INITIAL_VISIBLE = 6;
-const extraCount = projects.length - INITIAL_VISIBLE;
+const projectDomain = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+
 ---
 
-<section id="portfolio" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
-  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
-    {/* Header */}
-    <div class="flex flex-wrap items-end justify-between gap-8 mb-12">
-      <div class="text-center md:text-left w-full md:w-auto">
-        <div class="inline-flex items-center gap-2.5 mb-[18px]">
-          <span class="w-3.5 h-px" style={{ background: accent }}></span>
-          <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-            02 ─── Portfolio
-          </span>
+<section id="portfolio" class="section on-deep" aria-labelledby="portfolio-title">
+  <div class="wrap">
+    <header class="portfolio-heading">
+      <h2 id="portfolio-title" class="h2">Trabajos reales.<br /><mark>Abrilos y probalos.</mark></h2>
+    </header>
+    <div class="portfolio-selector hidden lg:grid">
+      <ol class="project-list" aria-label="Seleccionar un trabajo">
+        {projects.map((p, i) => (
+          <li>
+            <button type="button" id={`portfolio-choice-${i}`} class="project-choice" data-project-choice={i}
+              aria-label={`${p.title}, ${p.tag}`}
+              aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`portfolio-image-${i} portfolio-panel-${i}`}>
+              <span class="project-name">{p.title}</span><span class="project-tag">{p.tag}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <div class="project-viewer">
+        <div class="project-screen">
+          {projects.map((p, i) => (
+            <img id={`portfolio-image-${i}`} class:list={['project-image', { 'is-active': i === 0 }]}
+              src={p.img} alt={`Sitio de ${p.title}`} width="1200" height="750"
+              loading={i === 0 ? 'eager' : 'lazy'} decoding="async" aria-hidden={i !== 0 ? 'true' : 'false'} />
+          ))}
         </div>
-        <h2 class="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
-          style="font-size:clamp(36px, 4.5vw, 56px); letter-spacing:-0.025em;">
-          Proyectos en producción.<br>
-          <span style={{ color: accent }}>Sin mockups, sin filtros.</span>
-        </h2>
-        <p class="section-sub text-[17px] leading-[1.55] max-w-[620px] mx-auto md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-          Cada uno con cliente real, métricas reales y sitio que podés visitar ahora mismo.
-        </p>
+        {projects.map((p, i) => (
+          <div id={`portfolio-panel-${i}`} class="project-panel" data-project-panel={i} role="region" aria-labelledby={`portfolio-choice-${i}`} hidden={i !== 0}>
+            <p class="project-description">{p.desc}</p>
+            <p class="mono project-meta"><span>{p.sub}</span><span>{p.kpi}</span></p>
+            <a class="btn btn-primary project-open" href={p.url} target="_blank" rel="noopener noreferrer"><span>Abrir {projectDomain(p.url)}</span><span class="project-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></span></a>
+          </div>
+        ))}
       </div>
     </div>
-
-    {/* Grid principal */}
-    <div id="portfolio-grid-container" class="portfolio-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8">
-      {projects.map((p, i) => (
-        <article
-          class={`portfolio-card flex flex-col overflow-hidden w-full min-w-0 transition-all duration-500 ease-in-out ${i >= INITIAL_VISIBLE ? 'portfolio-extra-card hidden' : ''}`}
-          style={{ background: surface, borderRadius: '14px', border: `1px solid ${line}` }}
-          data-index={i}
-        >
-          {/* Image */}
-          <div class="relative overflow-hidden" style={{ aspectRatio: '16/10', background: '#000' }}>
-            <img src={p.img} alt={p.title} class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
-            {/* Tag */}
-            <div class="absolute top-3.5 left-3.5 text-[9px] tracking-[2px] uppercase px-2.5 py-1"
-              style={{
-                background: 'rgba(10,11,13,0.8)',
-                backdropFilter: 'blur(8px)',
-                color: white,
-                border: `1px solid ${line}`,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '999px'
-              }}>
-              {p.tag}
-            </div>
-            {/* KPI */}
-            <div class="absolute top-3.5 right-3.5 text-[11px] font-semibold px-2.5 py-1"
-              style={{
-                background: 'rgba(43,182,115,0.16)',
-                color: accent,
-                border: `1px solid rgba(43,182,115,0.4)`,
-                fontFamily: "'Inter', system-ui, sans-serif",
-                borderRadius: '999px',
-                backdropFilter: 'blur(8px)'
-              }}>
-              ● {p.kpi}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div class="flex flex-col flex-1 p-5 md:p-6">
-            <div class="flex items-baseline justify-between gap-3 mb-2">
-              <h3 class="font-geist font-semibold text-white text-[22px] tracking-tight" style={{ letterSpacing: '-0.02em' }}>
-                {p.title}
-              </h3>
-              <span class="text-[10px] tracking-wide whitespace-nowrap" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-                {p.sub}
-              </span>
-            </div>
-            <p class="text-[13.5px] leading-relaxed mb-4 flex-1" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-              {p.desc}
-            </p>
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              {p.stack.map(t => (
-                <span class="text-[10px] tracking-[1px] px-2 py-1" style={{
-                  color: textSoft,
-                  background: surface2,
-                  border: `1px solid ${line}`,
-                  fontFamily: "'JetBrains Mono', monospace",
-                  borderRadius: '6px'
-                }}>{t}</span>
-              ))}
-            </div>
-            <div class="flex justify-between items-center pt-3.5" style={{ borderTop: `1px solid ${line}` }}>
-              <a href={p.url} target="_blank" rel="noopener noreferrer" class="text-[13px] font-medium inline-flex items-center gap-1.5 group" style={{ color: white, fontFamily: "'Inter', system-ui, sans-serif", textDecoration: 'none' }}>
-                Ver sitio <span style={{ color: accent }} class="transition-transform group-hover:translate-x-1">→</span>
-              </a>
-              <span class="text-[10px] tracking-[0.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>↗ LIVE</span>
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-
-    {/* Botón desplegable moderno */}
-    <div class="flex justify-center mt-12">
-      <button
-        type="button"
-        id="portfolio-toggle-btn"
-        class="group relative inline-flex items-center gap-3 px-8 py-4 text-[13px] font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer"
-        style={{
-          background: surface,
-          color: white,
-          border: `1px solid ${line}`,
-          fontFamily: "'JetBrains Mono', monospace"
-        }}
-        data-expanded="false"
-        data-extra-count={extraCount}
-      >
-        <span id="portfolio-btn-text" class="transition-colors group-hover:text-[#2BB673]">
-          Ver todos los proyectos ({projects.length}) ↓
-        </span>
-        <span
-          id="portfolio-btn-icon"
-          class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-transform duration-300"
-          style={{ background: 'rgba(43,182,115,0.15)', color: accent }}
-        >
-          ↓
-        </span>
-      </button>
+    <div class="portfolio-mobile lg:hidden">
+      <ol class="project-cards snap-row" aria-label={`Trabajos: deslizá para ver los ${projects.length}`}>
+        {projects.map((p, i) => (
+          <li class="project-card">
+            <a class="project-card-link" href={p.url} target="_blank" rel="noopener noreferrer">
+              <span class="project-screen"><img src={p.img} alt={`Sitio de ${p.title}`} width="1200" height="750" loading={i < 2 ? "eager" : "lazy"} decoding="async" /></span>
+              <span class="project-card-heading"><span class="h3">{p.title}</span><span class="project-tag">{p.tag}</span></span>
+              <span class="project-description">{p.desc}</span>
+              <span class="mono project-meta"><span>{p.sub}</span><span>{p.kpi}</span></span>
+              <span class="btn btn-primary project-visit"><span>Abrir {projectDomain(p.url)}</span><span class="project-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></span></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <div class="project-nav">
+        <div class="project-nav-buttons">
+          <button type="button" class="project-step" data-step="-1" aria-label="Trabajo anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg></button>
+          <button type="button" class="project-step" data-step="1" aria-label="Trabajo siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg></button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
-  const toggleBtn = document.getElementById('portfolio-toggle-btn');
-  const btnText = document.getElementById('portfolio-btn-text');
-  const btnIcon = document.getElementById('portfolio-btn-icon');
-  const extraCards = document.querySelectorAll('.portfolio-extra-card');
+  const portfolio = document.getElementById('portfolio');
+  if (portfolio) {
+    const choices = Array.from(portfolio.querySelectorAll<HTMLButtonElement>('[data-project-choice]'));
+    const images = Array.from(portfolio.querySelectorAll<HTMLImageElement>('.project-image'));
+    const panels = Array.from(portfolio.querySelectorAll<HTMLElement>('[data-project-panel]'));
+    const hoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let active = 0;
 
-  if (toggleBtn && btnText && btnIcon) {
-    toggleBtn.addEventListener('click', () => {
-      const isExpanded = toggleBtn.getAttribute('data-expanded') === 'true';
+    function selectProject(index: number) {
+      if (index === active) return;
+      const previous = active;
+      active = index;
+      choices.forEach((choice, i) => choice.setAttribute('aria-pressed', String(i === active)));
+      images.forEach((image, i) => {
+        image.classList.toggle('is-active', i === active);
+        image.classList.toggle('is-previous', i === previous);
+        image.setAttribute('aria-hidden', String(i !== active));
+      });
+      panels.forEach((panel, i) => { panel.hidden = i !== active; });
+    }
 
-      if (isExpanded) {
-        // Colapsar
-        extraCards.forEach(card => card.classList.add('hidden'));
-        toggleBtn.setAttribute('data-expanded', 'false');
-        btnText.textContent = `Ver todos los proyectos (${document.querySelectorAll('.portfolio-card').length}) ↓`;
-        btnIcon.textContent = '↓';
-        btnIcon.style.transform = 'rotate(0deg)';
-        
-        // Scroll suave de regreso al portfolio header
-        const portfolioSection = document.getElementById('portfolio');
-        if (portfolioSection) {
-          portfolioSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // Desplegar
-        extraCards.forEach(card => card.classList.remove('hidden'));
-        toggleBtn.setAttribute('data-expanded', 'true');
-        btnText.textContent = 'Mostrar menos ↑';
-        btnIcon.textContent = '↑';
-        btnIcon.style.transform = 'rotate(180deg)';
-      }
+    choices.forEach((choice, index) => {
+      choice.addEventListener('mouseenter', () => {
+        if (hoverPointer.matches) selectProject(index);
+      });
+      choice.addEventListener('focus', () => selectProject(index));
+      choice.addEventListener('click', () => selectProject(index));
+      choice.addEventListener('keydown', (event) => {
+        let next: number;
+        if (event.key === 'ArrowDown') next = (index + 1) % choices.length;
+        else if (event.key === 'ArrowUp') next = (index - 1 + choices.length) % choices.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = choices.length - 1;
+        else return;
+        event.preventDefault();
+        choices[next].focus();
+      });
+    });
+
+    const row = portfolio.querySelector<HTMLElement>(".project-cards");
+    portfolio.querySelectorAll<HTMLButtonElement>(".project-step").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (!row) return;
+        const card = row.querySelector<HTMLElement>(".project-card");
+        const step = (card ? card.offsetWidth + 12 : row.clientWidth * 0.8) * Number(btn.dataset.step);
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        row.scrollBy({ left: step, behavior: reduce ? "auto" : "smooth" });
+      });
     });
   }
 </script>
 
 <style>
-  #portfolio-toggle-btn:hover {
-    border-color: rgba(43,182,115,0.4);
-    box-shadow: 0 0 20px rgba(43,182,115,0.15);
-  }
+  #portfolio { position: relative; isolation: isolate; --portfolio-band-height: 70px; }
+  @media (min-width: 1024px) { #portfolio { --portfolio-band-height: 140px; } }
+  .portfolio-heading { margin-bottom: clamp(36px, 5vw, 64px); }
+  .portfolio-heading .h2 { margin: 0; font-size: var(--fs-h2-work); }
+  .portfolio-heading mark { background: var(--lime); color: var(--petrol); padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .portfolio-selector { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+  .project-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-petrol); }
+  .project-list li { border-bottom: 1px solid var(--line-petrol); }
+  .project-choice { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; min-height: 84px; padding: 20px 0; border: 0; border-radius: 0; background: transparent; color: var(--on-petrol-dim); text-align: left; cursor: pointer; }
+  .project-name { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; overflow-wrap: anywhere; }
+  .project-choice[aria-pressed='true'] .project-name { color: var(--ice); }
+  .project-tag { font-size: var(--fs-small); color: var(--on-petrol-dim); }
+  .project-viewer { position: sticky; top: 100px; min-width: 0; }
+  .project-screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--petrol-raised); }
+  .project-screen::after { content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none; box-shadow: inset 0 0 0 1px var(--line-petrol-strong); }
+  .project-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .project-image { position: absolute; inset: 0; z-index: 0; opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 550ms var(--ease-out), clip-path 550ms var(--ease-out); }
+  .project-image.is-previous { z-index: 1; }
+  .project-image.is-active { z-index: 2; opacity: 1; clip-path: inset(0); }
+  .project-open { max-width: 100%; padding-block: 14px; }
+  .project-open span { min-width: 0; overflow-wrap: anywhere; }
+  .project-arrow { display: inline-flex; flex-shrink: 0; color: var(--petrol); }
+  .project-open svg, .project-visit svg { flex-shrink: 0; }
+  .project-panel { padding-top: 24px; }
+  .project-panel[hidden] { display: none; }
+  .project-description { margin: 0 0 20px; color: var(--on-petrol-soft); font-size: var(--fs-body); line-height: 1.55; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 20px; color: var(--on-petrol-dim); }
+  .project-meta span:last-child { color: var(--on-petrol-soft); }
+  .portfolio-mobile { margin-inline: calc(var(--gutter) * -1); }
+  .project-cards { list-style: none; margin: 0; padding-bottom: 4px; }
+  .project-card { width: min(84vw, 420px); min-width: 0; }
+  .project-card-link { display: flex; flex-direction: column; color: var(--ice); text-decoration: none; }
+  .project-card .project-screen { display: block; }
+  .project-card-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; margin: 18px 0 10px; }
+  .project-card .project-description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: var(--fs-small); margin-bottom: 14px; }
+  .project-card .project-meta { margin-bottom: 14px; }
+  .project-visit { align-self: flex-start; max-width: 100%; gap: 8px; padding: 12px 14px; font-size: var(--fs-small); }
+  .project-visit span { min-width: 0; overflow-wrap: anywhere; }
+  .project-nav { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-top: 16px; padding-inline: var(--gutter) max(var(--gutter), 84px); }
+  .project-nav-buttons { display: flex; gap: 8px; }
+  .project-step { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--line-petrol-strong); border-radius: 0; background: transparent; color: var(--ice); cursor: pointer; }
+  .project-step:hover { border-color: var(--ice); }
+  @media (prefers-reduced-motion: reduce) { .project-image { transition: none; } }
 </style>

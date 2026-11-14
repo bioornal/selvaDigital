@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useId } from 'react'
 import { Plus, Trash2, ArrowRight, Building2, Phone, Share2, Compass } from 'lucide-react'
 import { supabaseDb } from '../../lib/supabase'
 import type { ClientBrandInfo } from '../../types/admin'
@@ -27,6 +27,7 @@ export default function BusinessInfoForm({
   onSaveSuccess,
   onNext
 }: BusinessInfoFormProps) {
+  const formId = useId()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const toast = useToast()
@@ -103,28 +104,28 @@ export default function BusinessInfoForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 stagger-children">
+    <form aria-describedby={error ? `${formId}-error` : undefined} onSubmit={handleSubmit} className="space-y-8 stagger-children">
       {error && (
-        <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-red-50 border border-red-200">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 shrink-0" />
-          <p className="text-xs text-red-700 leading-relaxed">{error}</p>
+        <div id={`${formId}-error`} role="alert" className="flex items-start gap-2.5 p-3.5 rounded-none bg-[var(--petrol-deep)] border border-[#FFB4A8]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--petrol-deep)] mt-1.5 shrink-0" />
+          <p className="text-xs text-[#FFB4A8] leading-relaxed">{error}</p>
         </div>
       )}
 
       {/* Section 1: Brand */}
       <section className="space-y-5">
-        <header className="flex items-center gap-3 pb-3 border-b border-slate-200">
-          <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-selva-emerald">
+        <header className="flex items-center gap-3 pb-3 border-b border-[var(--line-petrol)]">
+          <div className="w-9 h-9 rounded-none bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] flex items-center justify-center text-[var(--on-petrol-soft)]">
             {sectionIcons.brand}
           </div>
           <div>
-            <h3 className="text-[15px] font-bold text-slate-900 tracking-tight font-heading">Perfil de la Marca</h3>
-            <p className="text-[12px] text-slate-500 mt-0.5">Cuéntanos sobre tu empresa y a qué se dedica</p>
+            <h3 className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">Perfil de la Marca</h3>
+            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Cuéntanos sobre tu empresa y a qué se dedica</p>
           </div>
         </header>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <Input label="Nombre de la Marca" required value={brandName} onChange={(e) => setBrandName(e.target.value)} placeholder="Ej: Selva Café" disabled={loading} />
+          <Input label="Nombre de la Marca" aria-invalid={error === 'El nombre de la marca es obligatorio.' ? true : undefined} aria-describedby={error === 'El nombre de la marca es obligatorio.' ? `${formId}-error` : undefined} required value={brandName} onChange={(e) => setBrandName(e.target.value)} placeholder="Ej: Selva Café" disabled={loading} />
           <Input label="Slogan o Frase" value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="Ej: El sabor más puro de la naturaleza" disabled={loading} hint="Una frase corta que identifique tu marca (opcional)" />
         </div>
 
@@ -133,31 +134,31 @@ export default function BusinessInfoForm({
 
       {/* Section 2: Contact */}
       <section className="space-y-5">
-        <header className="flex items-center gap-3 pb-3 border-b border-slate-200">
-          <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-selva-emerald">
+        <header className="flex items-center gap-3 pb-3 border-b border-[var(--line-petrol)]">
+          <div className="w-9 h-9 rounded-none bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] flex items-center justify-center text-[var(--on-petrol-soft)]">
             {sectionIcons.contact}
           </div>
           <div>
-            <h3 className="text-[15px] font-bold text-slate-900 tracking-tight font-heading">Información de Contacto</h3>
-            <p className="text-[12px] text-slate-500 mt-0.5">Estos datos aparecerán en tu sitio y formularios</p>
+            <h3 className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">Información de Contacto</h3>
+            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Estos datos aparecerán en tu sitio y formularios</p>
           </div>
         </header>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <Input label="Correo Electrónico" type="email" value={contactEmail} onChange={(e) => { setContactEmail(e.target.value); if (error) setError('') }} placeholder="contacto@tuempresa.com" disabled={loading} />
+          <Input label="Correo Electrónico" aria-invalid={error === 'Correo inválido' ? true : undefined} aria-describedby={error === 'Correo inválido' ? `${formId}-error` : undefined} type="email" value={contactEmail} onChange={(e) => { setContactEmail(e.target.value); if (error) setError('') }} placeholder="contacto@tuempresa.com" disabled={loading} />
           <Input label="Teléfono o WhatsApp" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="+56 9 1234 5678" disabled={loading} />
         </div>
       </section>
 
       {/* Section 3: Social */}
       <section className="space-y-5">
-        <header className="flex items-center gap-3 pb-3 border-b border-slate-200">
-          <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-selva-emerald">
+        <header className="flex items-center gap-3 pb-3 border-b border-[var(--line-petrol)]">
+          <div className="w-9 h-9 rounded-none bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] flex items-center justify-center text-[var(--on-petrol-soft)]">
             {sectionIcons.social}
           </div>
           <div>
-            <h3 className="text-[15px] font-bold text-slate-900 tracking-tight font-heading">Redes Sociales</h3>
-            <p className="text-[12px] text-slate-500 mt-0.5">Enlaces completos a tus perfiles (opcional)</p>
+            <h3 className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">Redes Sociales</h3>
+            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Enlaces completos a tus perfiles (opcional)</p>
           </div>
         </header>
 
@@ -171,24 +172,24 @@ export default function BusinessInfoForm({
 
       {/* Section 4: Reference Sites */}
       <section className="space-y-5">
-        <header className="flex items-center gap-3 pb-3 border-b border-slate-200">
-          <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-selva-emerald">
+        <header className="flex items-center gap-3 pb-3 border-b border-[var(--line-petrol)]">
+          <div className="w-9 h-9 rounded-none bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] flex items-center justify-center text-[var(--on-petrol-soft)]">
             {sectionIcons.refs}
           </div>
           <div>
-            <h3 className="text-[15px] font-bold text-slate-900 tracking-tight font-heading">Sitios de Referencia</h3>
-            <p className="text-[12px] text-slate-500 mt-0.5">Webs que te gusten por su estética o funcionalidades</p>
+            <h3 className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">Sitios de Referencia</h3>
+            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Webs que te gusten por su estética o funcionalidades</p>
           </div>
         </header>
 
         <div className="space-y-3">
           {referenceSites.map((site, index) => (
             <div key={index} className="flex gap-2.5 items-stretch">
-              <Input value={site} onChange={(e) => handleRefSiteChange(index, e.target.value)} placeholder="https://sitio-ejemplo.com" disabled={loading} className="flex-1" />
+              <Input aria-label={`Sitio de referencia ${index + 1}`} value={site} onChange={(e) => handleRefSiteChange(index, e.target.value)} placeholder="https://sitio-ejemplo.com" disabled={loading} className="flex-1" />
               <button
                 type="button"
                 onClick={() => handleRemoveRefSite(index)}
-                className="px-3.5 rounded-xl border border-slate-200 hover:border-red-300 hover:bg-red-50 hover:text-red-500 transition-all text-slate-400 shrink-0 cursor-pointer disabled:opacity-40"
+                className="btn btn-ghost px-3.5 rounded-none border border-[var(--line-petrol)] hover:border-[var(--ice)] hover:bg-[var(--petrol-deep)] hover:text-[var(--ice)] transition-all text-[var(--on-petrol-dim)] shrink-0 cursor-pointer disabled:opacity-40"
                 title="Eliminar sitio"
                 disabled={loading}
                 aria-label="Eliminar sitio de referencia"
@@ -204,7 +205,7 @@ export default function BusinessInfoForm({
       </section>
 
       {/* Submit */}
-      <div className="flex justify-end pt-6 border-t border-slate-200">
+      <div className="flex justify-end pt-6 border-t border-[var(--line-petrol)]">
         <Button type="submit" variant="primary" size="lg" loading={loading} iconRight={!loading ? <ArrowRight className="w-4 h-4" /> : undefined}>
           {loading ? 'Guardando...' : 'Guardar y Continuar'}
         </Button>

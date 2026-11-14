@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T18:41:35.930Z",
+  "title": "Design System: Selva Digital",
+  "extensions": {
+    "colorMeta": {
+      "petrol": {
+        "role": "primary",
+        "displayName": "Petrol Blue",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "petrol-deep": {
+        "role": "neutral",
+        "displayName": "petrol-deep",
+        "tonalRamp": [
+          "oklch(15% 0.0086 221.39)",
+          "oklch(26% 0.0222 221.39)",
+          "oklch(38% 0.0308 221.39)",
+          "oklch(49% 0.0308 221.39)",
+          "oklch(61% 0.0308 221.39)",
+          "oklch(72% 0.0308 221.39)",
+          "oklch(84% 0.0197 221.39)",
+          "oklch(95% 0.0062 221.39)"
+        ]
+      },
+      "petrol-raised": {
+        "role": "neutral",
+        "displayName": "petrol-raised",
+        "tonalRamp": [
+          "oklch(15% 0.0127 218.33)",
+          "oklch(26% 0.0326 218.33)",
+          "oklch(38% 0.0453 218.33)",
+          "oklch(49% 0.0453 218.33)",
+          "oklch(61% 0.0453 218.33)",
+          "oklch(72% 0.0453 218.33)",
+          "oklch(84% 0.0290 218.33)",
+          "oklch(95% 0.0091 218.33)"
+        ]
+      },
+      "ice": {
+        "role": "neutral",
+        "displayName": "Ice White",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "lime": {
+        "role": "primary",
+        "displayName": "Signal Lime",
+        "tonalRamp": [
+          "oklch(15% 0.0524 120.02)",
+          "oklch(26% 0.1347 120.02)",
+          "oklch(38% 0.1871 120.02)",
+          "oklch(49% 0.1871 120.02)",
+          "oklch(61% 0.1871 120.02)",
+          "oklch(72% 0.1871 120.02)",
+          "oklch(84% 0.1198 120.02)",
+          "oklch(95% 0.0374 120.02)"
+        ]
+      },
+      "lime-press": {
+        "role": "primary",
+        "displayName": "lime-press",
+        "tonalRamp": [
+          "oklch(15% 0.0540 120.95)",
+          "oklch(26% 0.1387 120.95)",
+          "oklch(38% 0.1927 120.95)",
+          "oklch(49% 0.1927 120.95)",
+          "oklch(61% 0.1927 120.95)",
+          "oklch(72% 0.1927 120.95)",
+          "oklch(84% 0.1233 120.95)",
+          "oklch(95% 0.0385 120.95)"
+        ]
+      },
+      "on-petrol": {
+        "role": "neutral",
+        "displayName": "on-petrol",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "on-petrol-soft": {
+        "role": "neutral",
+        "displayName": "on-petrol-soft",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "on-petrol-dim": {
+        "role": "neutral",
+        "displayName": "on-petrol-dim",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "line-petrol": {
+        "role": "neutral",
+        "displayName": "line-petrol",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "line-petrol-strong": {
+        "role": "neutral",
+        "displayName": "line-petrol-strong",
+        "tonalRamp": [
+          "oklch(15% 0.0045 187.34)",
+          "oklch(26% 0.0115 187.34)",
+          "oklch(38% 0.0160 187.34)",
+          "oklch(49% 0.0160 187.34)",
+          "oklch(61% 0.0160 187.34)",
+          "oklch(72% 0.0160 187.34)",
+          "oklch(84% 0.0102 187.34)",
+          "oklch(95% 0.0032 187.34)"
+        ]
+      },
+      "on-ice": {
+        "role": "neutral",
+        "displayName": "on-ice",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "on-ice-soft": {
+        "role": "neutral",
+        "displayName": "on-ice-soft",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "on-ice-dim": {
+        "role": "neutral",
+        "displayName": "on-ice-dim",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "line-ice": {
+        "role": "neutral",
+        "displayName": "line-ice",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "line-ice-strong": {
+        "role": "neutral",
+        "displayName": "line-ice-strong",
+        "tonalRamp": [
+          "oklch(15% 0.0105 218.58)",
+          "oklch(26% 0.0270 218.58)",
+          "oklch(38% 0.0374 218.58)",
+          "oklch(49% 0.0374 218.58)",
+          "oklch(61% 0.0374 218.58)",
+          "oklch(72% 0.0374 218.58)",
+          "oklch(84% 0.0240 218.58)",
+          "oklch(95% 0.0075 218.58)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "error",
+        "tonalRamp": [
+          "oklch(15% 0.0252 29.23)",
+          "oklch(26% 0.0647 29.23)",
+          "oklch(38% 0.0898 29.23)",
+          "oklch(49% 0.0898 29.23)",
+          "oklch(61% 0.0898 29.23)",
+          "oklch(72% 0.0898 29.23)",
+          "oklch(84% 0.0575 29.23)",
+          "oklch(95% 0.0180 29.23)"
+        ]
+      },
+      "warning": {
+        "role": "neutral",
+        "displayName": "warning",
+        "tonalRamp": [
+          "oklch(15% 0.0342 83.11)",
+          "oklch(26% 0.0879 83.11)",
+          "oklch(38% 0.1221 83.11)",
+          "oklch(49% 0.1221 83.11)",
+          "oklch(61% 0.1221 83.11)",
+          "oklch(72% 0.1221 83.11)",
+          "oklch(84% 0.0782 83.11)",
+          "oklch(95% 0.0244 83.11)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "hero": {
+        "displayName": "hero",
+        "purpose": "var(--fs-hero): Titular del Hero con verbo rotativo. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "display": {
+        "displayName": "display",
+        "purpose": "var(--fs-display): Titular fotográfico de WhyWeb. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "display-compact": {
+        "displayName": "display-compact",
+        "purpose": "var(--fs-display-compact): Frases de VisualBreak. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "h2": {
+        "displayName": "h2",
+        "purpose": "var(--fs-h2): Títulos de sección. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "h2-compact": {
+        "displayName": "h2-compact",
+        "purpose": "var(--fs-h2-compact): Sobre mí, Contacto y cierre del Footer. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "h2-work": {
+        "displayName": "h2-work",
+        "purpose": "var(--fs-h2-work): Heading de Trabajos. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "h3": {
+        "displayName": "h3",
+        "purpose": "var(--fs-h3): Subtítulos y nombres de proyectos. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "statement": {
+        "displayName": "statement",
+        "purpose": "var(--fs-statement): Frases «Con tu web». Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "feature": {
+        "displayName": "feature",
+        "purpose": "var(--fs-feature): Trato directo y servicios desktop. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "service": {
+        "displayName": "service",
+        "purpose": "var(--fs-service): Nombres de servicios mobile. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "quote": {
+        "displayName": "quote",
+        "purpose": "var(--fs-quote): Cita destacada y extra de chatbot web. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "stat": {
+        "displayName": "stat",
+        "purpose": "var(--fs-stat): Numerales de la lista Hoy → Con tu web. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "price": {
+        "displayName": "price",
+        "purpose": "var(--fs-price): Precios desktop en Doto. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "price-mobile": {
+        "displayName": "price-mobile",
+        "purpose": "var(--fs-price-mobile): Precios mobile en Doto. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "nav": {
+        "displayName": "nav",
+        "purpose": "var(--fs-nav): Navegación mobile. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "var(--fs-title): Títulos breves de planes, proceso y formulario. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "brand": {
+        "displayName": "brand",
+        "purpose": "var(--fs-brand): Marca tipográfica. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "lede": {
+        "displayName": "lede",
+        "purpose": "var(--fs-lede): Bajadas y preguntas FAQ. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "var(--fs-body): Texto principal y títulos menores. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "control": {
+        "displayName": "control",
+        "purpose": "var(--fs-control): Botones, campos y respuestas FAQ. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "small": {
+        "displayName": "small",
+        "purpose": "var(--fs-small): Texto secundario y navegación desktop. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "var(--fs-label): Etiquetas y metadatos mono. Valor normativo en DESIGN.md y :root de global.css."
+      },
+      "button": {
+        "displayName": "button",
+        "purpose": "Consume --fs-control; Archivo 700."
+      },
+      "operate-body": {
+        "displayName": "operate-body",
+        "purpose": "Admin/portal sin migrar."
+      },
+      "operate-heading": {
+        "displayName": "operate-heading",
+        "purpose": "Admin/portal sin migrar."
+      }
+    },
+    "shadows": [
+      {
+        "name": "whatsapp-floating",
+        "value": "0 10px 30px rgba(0,0,0,.3)",
+        "purpose": "Excepción funcional del botón flotante."
+      },
+      {
+        "name": "ghost-hairline",
+        "value": "inset 0 0 0 1px var(--line-petrol-strong)",
+        "purpose": "Borde óptico, sin elevación."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Curva compartida."
+      },
+      {
+        "name": "button-state",
+        "value": "200ms",
+        "purpose": "Transición de botones."
+      },
+      {
+        "name": "hero-mask",
+        "value": "1s",
+        "purpose": "Máscara del titular; segunda línea +90ms."
+      },
+      {
+        "name": "hero-fade",
+        "value": "900ms",
+        "purpose": "Demora 350ms."
+      },
+      {
+        "name": "work-selector",
+        "value": "550ms",
+        "purpose": "Opacidad y máscara."
+      },
+      {
+        "name": "faq-panel",
+        "value": "300ms",
+        "purpose": "Expansión de grilla."
+      },
+      {
+        "name": "chat-step",
+        "value": "2400ms",
+        "purpose": "Secuencia de demo; se detiene con reduced motion."
+      },
+      {
+        "name": "hero-rotor",
+        "value": "2400ms / 700ms",
+        "purpose": "Intervalo / transición del verbo rotativo; fijo con reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "475px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "testimonials-local",
+        "value": "1200px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "2xl",
+        "value": "1400px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción Ice/Petrol sobre oscuro; Petrol/Ice dentro de .on-ice. Hover sutil y foco según superficie.",
+      "html": "<button class=\"ds-btn-primary\">Escribime</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;font-family:var(--font-body);font-size:var(--fs-control);font-weight:700;font-variation-settings:\"wdth\" 104;letter-spacing:-.005em;border:0;border-radius:0;cursor:pointer;transition:background-color .2s var(--ease-out),color .2s var(--ease-out),border-color .2s var(--ease-out),transform .2s var(--ease-out);background:var(--ice);color:var(--petrol);}.ds-btn-primary:hover{background:rgba(232,247,245,.92);}.ds-btn-primary:focus-visible{outline:2px solid var(--lime);outline-offset:3px}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none}.on-ice .ds-btn-primary{background:var(--petrol);color:var(--ice)}.on-ice .ds-btn-primary:hover{background:var(--petrol-raised)}.on-ice .ds-btn-primary:focus-visible{outline-color:var(--petrol)}.on-ice .on-petrol .ds-btn-primary{background:var(--ice);color:var(--petrol)}.on-ice .on-petrol .ds-btn-primary:hover{background:rgba(232,247,245,.92)}.on-ice .on-petrol .ds-btn-primary:focus-visible{outline-color:var(--lime)}"
+    },
+    {
+      "name": "Botón ghost",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Acción rectangular; foco visible y presión de 1px.",
+      "html": "<button class=\"ds-btn-ghost\">Escribime</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;font-family:var(--font-body);font-size:var(--fs-control);font-weight:700;font-variation-settings:\"wdth\" 104;letter-spacing:-.005em;border:0;border-radius:0;cursor:pointer;transition:background-color .2s var(--ease-out),color .2s var(--ease-out),border-color .2s var(--ease-out),transform .2s var(--ease-out);background:transparent;color:var(--on-petrol);box-shadow:inset 0 0 0 1px var(--line-petrol-strong);}.ds-btn-ghost:hover{box-shadow:inset 0 0 0 1px var(--on-petrol);}.ds-btn-ghost:focus-visible{outline:2px solid var(--lime);outline-offset:3px}.ds-btn-ghost:active{transform:translateY(1px)}.ds-btn-ghost:disabled{opacity:.45;cursor:not-allowed;transform:none}"
+    },
+    {
+      "name": "Botón petrol",
+      "kind": "button",
+      "refersTo": "button-petrol",
+      "description": "Acción rectangular; foco visible y presión de 1px.",
+      "html": "<button class=\"ds-btn-petrol\">Escribime</button>",
+      "css": ".ds-btn-petrol{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;font-family:var(--font-body);font-size:var(--fs-control);font-weight:700;font-variation-settings:\"wdth\" 104;letter-spacing:-.005em;border:0;border-radius:0;cursor:pointer;transition:background-color .2s var(--ease-out),color .2s var(--ease-out),border-color .2s var(--ease-out),transform .2s var(--ease-out);background:var(--petrol);color:var(--ice);}.ds-btn-petrol:hover{background:var(--petrol-raised);}.ds-btn-petrol:focus-visible{outline:2px solid var(--lime);outline-offset:3px}.ds-btn-petrol:active{transform:translateY(1px)}.ds-btn-petrol:disabled{opacity:.45;cursor:not-allowed;transform:none}"
+    },
+    {
+      "name": "Campo de contacto",
+      "kind": "input",
+      "refersTo": "contact-input",
+      "description": "Campo público con etiqueta asociada.",
+      "html": "<label class=\"ds-label\" for=\"ds-name\">Nombre completo</label><input class=\"ds-input\" id=\"ds-name\" placeholder=\"Ej: Juan Pérez\">",
+      "css": ".ds-label{display:block;margin-bottom:10px;color:var(--ice);font-family:var(--font-mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.04em;text-transform:uppercase;line-height:1.4}.ds-input{display:block;width:100%;padding:14px;background:var(--petrol);color:var(--ice);border:1px solid var(--line-petrol-strong);border-radius:0;font-family:var(--font-body);font-size:var(--fs-control)}.ds-input::placeholder{color:var(--on-petrol-dim);opacity:1}.ds-input:focus{border-color:var(--ice)}.ds-input:focus-visible{outline:2px solid var(--lime);outline-offset:3px}"
+    },
+    {
+      "name": "Chip de necesidad",
+      "kind": "chip",
+      "refersTo": "contact-chip",
+      "description": "Se invierte por aria-pressed.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Sitio web</button>",
+      "css": ".ds-chip{padding:12px 14px;background:var(--petrol);color:var(--ice);border:1px solid var(--line-petrol-strong);border-radius:0;font-family:var(--font-body);font-size:var(--fs-small);cursor:pointer}.ds-chip:hover{border-color:var(--ice)}.ds-chip[aria-pressed=true]{background:var(--ice);color:var(--petrol);border-color:var(--ice)}.ds-chip:focus-visible{outline:2px solid var(--lime);outline-offset:3px}"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "description": "Enlaces del Header desktop.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a href=\"#portfolio\">Trabajos</a><a href=\"#servicios\">Servicios</a><a href=\"#planes\">Precios</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:32px;background:var(--petrol);font-family:var(--font-body)}.ds-nav a{font-size:var(--fs-small);font-weight:500;color:var(--on-petrol-soft);text-decoration:none;transition:color .15s cubic-bezier(.4,0,.2,1)}.ds-nav a:hover{color:var(--ice)}.ds-nav a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}"
+    },
+    {
+      "name": "Panel operativo",
+      "kind": "card",
+      "description": "panel-deep con padding md, tono y hairline.",
+      "html": "<div class=\"ds-panel\"><p>Completá los datos de tu proyecto.</p></div>",
+      "css": ".ds-panel{padding:24px;background:var(--petrol-deep);color:var(--ice);border:1px solid var(--line-petrol);border-radius:0;font-family:var(--font-body);font-size:14px;line-height:1.5}@media(min-width:640px){.ds-panel{padding:28px}}"
+    },
+    {
+      "name": "Fila de trabajo seleccionada",
+      "kind": "custom",
+      "description": "Nombre hielo del selector desktop con aria-pressed.",
+      "html": "<button class=\"ds-work\" aria-pressed=\"true\"><span class=\"ds-work-name\">Impasto Pizzería</span><span class=\"ds-tag\">Sistema</span></button>",
+      "css": ".ds-work{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;min-height:84px;padding:20px 0;background:var(--petrol-deep);color:var(--on-petrol-dim);border:0;border-bottom:1px solid var(--line-petrol);border-radius:0;text-align:left;cursor:pointer}.ds-work-name{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--ice)}.ds-tag{font-family:var(--font-mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.04em;text-transform:uppercase}.ds-work:focus-visible{outline:2px solid var(--lime);outline-offset:3px}"
+    },
+    {
+      "name": "WhyWeb.astro",
+      "kind": "custom",
+      "description": "Foto REAL de stock a sangre (derecha desktop, arriba mobile) y lista Hoy → Con tu web. Titular: «Sin web, tu negocio cierra cuando vos cerrás.».",
+      "html": "<section class=\"ds-why\"><h2>Sin web, tu negocio cierra cuando vos cerrás.</h2><p>Con tu web: <mark>seguís vendiendo.</mark></p></section>",
+      "css": ".ds-why{background:var(--ice);color:var(--petrol);padding:32px}.ds-why h2{font-family:var(--font-display);font-size:var(--fs-display);line-height:.88}.ds-why p{font-size:var(--fs-statement)}.ds-why mark{background:var(--lime);color:var(--petrol);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;font-weight:800}"
+    },
+    {
+      "name": "VisualBreak.astro",
+      "kind": "custom",
+      "description": "Render sep-live con frase y CTA btn-primary: «Todo lo que ves acá está funcionando.»",
+      "html": "<aside class=\"ds-break\"><p>Todo lo que ves acá está funcionando.</p></aside>",
+      "css": ".ds-break{background:var(--petrol-deep);color:var(--ice);padding:48px}.ds-break p{font-family:var(--font-display);font-size:var(--fs-display-compact);font-weight:800;line-height:.95}"
+    },
+    {
+      "name": "Marcador lima sobre hielo",
+      "kind": "custom",
+      "description": "mark con texto petróleo; conserva relleno al partir líneas.",
+      "html": "<p class=\"ds-marker\">Con tu web: <mark>aparecés vos en Google.</mark></p>",
+      "css": ".ds-marker{background:var(--ice);color:var(--petrol);padding:24px;font-size:var(--fs-statement)}.ds-marker mark{background:var(--lime);color:var(--petrol);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;font-weight:800}"
+    },
+    {
+      "name": "ui/WaIcon.tsx",
+      "kind": "custom",
+      "description": "Glifo SVG compartido de WhatsApp; currentColor y prop size. Acompaña CTAs con nombre accesible.",
+      "html": "<span>WhatsApp</span>",
+      "css": "span{font-family:var(--font-body);font-size:var(--fs-control);color:var(--petrol);background:var(--ice);padding:12px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Tech premium de producto",
+    "overview": "Selva Digital presenta el trabajo de un desarrollador freelance con la contundencia de un lanzamiento de producto: tipografía ancha, contraste petróleo/hielo y lima reservado para detalles con forma propia. La referencia confirmada es Nothing; las capturas reales y la marca tipográfica aportan identidad sin vidrio ni halos.\n\nLa home persuade con resultados y prueba visitable. Admin y portal permiten operar con mayor densidad, superficies estables y estados explícitos. Comparten paleta, fuentes y esquinas rectas; su jerarquía es compacta.\n\nPunto fuerte: sitios web y digitalización del negocio. Chatbots propios integrados en la web como extra con demo Impasto. Home: Hero tipográfico con verbo rotativo + hero-device → WhyWeb (foto REAL de stock, derecha desktop/arriba mobile; Hoy → Con tu web y mark lima) → Trabajos (selector, En vivo) → Qué resuelvo → Cómo trabajo (bloque raised/hairline de disponibilidad con sello WhatsApp lima) → Testimonios → VisualBreak «Todo lo que ves acá está funcionando.» → Precios ARS → FAQ → Contacto (armador WhatsApp + formulario).\n\nImágenes: renders de producto en Hero/separadores; fotografía REAL de Tim Douglas/Pexels en WhyWeb (public/visuals/shop-modern-wide.jpg.json); capturas reales en Trabajos. Nunca fotos de personas o lugares generadas por IA.",
+    "keyCharacteristics": [
+      "Archivo ancho para jerarquía, Martian Mono para etiquetas y Doto para cifras destacadas.",
+      "Bandas planas, hairlines y proyectos reales.",
+      "Controles rectos Ice/Petrol y lima en pocos gestos con forma.",
+      "Mobile con lectura corta, disclosures y scroll horizontal nativo."
+    ],
+    "rules": [
+      {
+        "name": "The Accent Rule",
+        "body": "El lima no rellena botones: firma, punto final y disco del Hero, disco de WhyWeb, marcadores WhyWeb/Portfolio y sellos de disponibilidad y plan destacado. Marcadores/sellos con texto petróleo; nunca texto lima sobre hielo. Foco y selección conservan su función accesible.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role Rule",
+        "body": "Archivo cuenta y explica; Martian Mono identifica y mide; Doto destaca numerales, no párrafos ni controles operativos.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Rule",
+        "body": "Las superficies se separan por tono y líneas; la sombra del WhatsApp flotante es una excepción funcional, no una receta para tarjetas.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do — Usar variables de global.css y los pares de contraste de cada superficie.",
+      "Do — Mantener foco visible, nombres accesibles y estados expresados también con texto.",
+      "Do — Mostrar trabajo real y resultado antes que stack; escribir en rioplatense y primera persona singular: «vos», «contame», «desarrollo», «desde Córdoba».",
+      "Do — Expresar precios en ARS, pago único, 50% inicio / 50% entrega y hosting/dominio aparte.",
+      "Do — Usar la escala --fs-* de global.css; valores normativos en DESIGN.md."
+    ],
+    "donts": [
+      "Don't — Agregar glows, glass, texto en gradiente ni sombras duras desplazadas.",
+      "Don't — Agregar kickers o eyebrows encima de títulos ni numerar secciones como decoración.",
+      "Don't — Usar emojis como iconos; usar SVG con currentColor.",
+      "Don't — Recuperar esmeralda, cian eléctrico, violeta o fuentes heredadas de Tailwind como identidad activa.",
+      "Don't — Pintar botones con lima o usar texto lima sobre claro; marcadores y sellos llevan texto petróleo.",
+      "Don't — Inventar testimonios, métricas, logos ni escasez; los testimonios y KPIs existentes requieren verificación del usuario.",
+      "Don't — Extender colores semánticos de error/advertencia a decoración o identidad de marca.",
+      "Don't — Usar fotos de personas o lugares generadas por IA."
+    ]
+  }
+}

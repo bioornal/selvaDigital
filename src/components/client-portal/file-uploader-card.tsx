@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useId } from 'react'
 import { UploadCloud, File, Image as ImageIcon, Trash2, X, FileText, FileVideo, FileArchive, AlertCircle, CheckCircle2, ExternalLink } from 'lucide-react'
 import { supabaseDb } from '../../lib/supabase'
 import type { UploadedFile } from '../../types/admin'
@@ -39,10 +39,16 @@ export default function FileUploaderCard({
   onUploadSuccess,
   onDeleteSuccess
 }: FileUploaderCardProps) {
+  const fieldId = useId()
   const [dragActive, setDragActive] = useState(false)
   const [uploading, setUploading] = useState<UploadingFile[]>([])
   const [error, setError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const errorIds = [
+    ...(error ? [`${fieldId}-error`] : []),
+    ...uploading.filter((u) => u.error).map((u) => `${fieldId}-${u.id}-error`)
+  ].join(' ') || undefined
 
   const categoryFiles = existingFiles.filter((f) => f.category === category)
 
@@ -161,19 +167,19 @@ export default function FileUploaderCard({
   }
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith('image/')) return <ImageIcon className="w-4 h-4 text-emerald-600" />
-    if (type.startsWith('video/')) return <FileVideo className="w-4 h-4 text-indigo-600" />
-    if (type.includes('pdf')) return <FileText className="w-4 h-4 text-red-500" />
-    if (type.includes('zip') || type.includes('rar')) return <FileArchive className="w-4 h-4 text-amber-600" />
-    return <File className="w-4 h-4 text-sky-600" />
+    if (type.startsWith('image/')) return <ImageIcon className="w-4 h-4 text-[var(--ice)]" />
+    if (type.startsWith('video/')) return <FileVideo className="w-4 h-4 text-[var(--on-petrol-soft)]" />
+    if (type.includes('pdf')) return <FileText className="w-4 h-4 text-[var(--ice)]" />
+    if (type.includes('zip') || type.includes('rar')) return <FileArchive className="w-4 h-4 text-[var(--ice)]" />
+    return <File className="w-4 h-4 text-[var(--on-petrol-soft)]" />
   }
 
   return (
     <div className="space-y-5">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] font-bold text-slate-900 tracking-tight font-heading">{title}</h3>
-          <p className="text-[13px] text-slate-500 mt-1.5 leading-relaxed">{description}</p>
+          <h3 id={`${fieldId}-label`} className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">{title}</h3>
+          <p className="text-[13px] text-[var(--on-petrol-soft)] mt-1.5 leading-relaxed">{description}</p>
         </div>
         <Badge variant="brand" size="sm">
           {categoryFiles.length} archivos
@@ -187,12 +193,15 @@ export default function FileUploaderCard({
         onDragLeave={handleDrag}
         onDrop={handleDrop}
         onClick={triggerFileInput}
-        className={`relative group rounded-2xl p-8 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 overflow-hidden ${
+        className={`relative group rounded-none p-8 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 overflow-hidden ${
           dragActive
-            ? 'border-2 border-solid border-selva-emerald bg-indigo-50 shadow-[0_0_40px_-10px_rgba(79,70,229,0.25)] scale-[1.01]'
-            : 'border-2 border-dashed border-slate-300 hover:border-selva-emerald hover:bg-slate-50'
+            ? 'border-2 border-solid border-[var(--line-petrol-strong)] bg-[var(--petrol-raised)]  '
+            : 'border-2 border-dashed border-[var(--line-petrol)] hover:border-[var(--line-petrol-strong)] hover:bg-[var(--petrol-raised)]'
         }`}
         role="button"
+        aria-labelledby={`${fieldId}-label`}
+        aria-invalid={errorIds ? true : undefined}
+        aria-describedby={errorIds}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -201,12 +210,13 @@ export default function FileUploaderCard({
           }
         }}
       >
-        {dragActive && (
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-100/50 via-violet-100/50 to-cyan-100/50 animate-shimmer" />
-        )}
 
         <input
           ref={fileInputRef}
+          id={fieldId}
+          aria-labelledby={`${fieldId}-label`}
+          aria-invalid={errorIds ? true : undefined}
+          aria-describedby={errorIds}
           type="file"
           className="hidden"
           onChange={handleFileChange}
@@ -215,62 +225,62 @@ export default function FileUploaderCard({
         />
 
         <div className="relative z-10 flex flex-col items-center gap-4">
-          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+          <div className={`w-16 h-16 rounded-none flex items-center justify-center transition-all duration-300 ${
             dragActive
-              ? 'bg-indigo-100 border border-selva-emerald scale-110'
-              : 'bg-indigo-50 border border-indigo-100 group-hover:border-selva-emerald group-hover:bg-indigo-100 group-hover:scale-105'
+              ? 'bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] '
+              : 'bg-[var(--petrol-raised)] border border-[var(--line-petrol-strong)] group-hover:border-[var(--line-petrol-strong)] group-hover:bg-[var(--petrol-raised)] '
           }`}>
             <UploadCloud className={`w-7 h-7 transition-colors ${
-              dragActive ? 'text-selva-emerald' : 'text-slate-500 group-hover:text-selva-emerald'
+              dragActive ? 'text-[var(--on-petrol-soft)]' : 'text-[var(--on-petrol-soft)] group-hover:text-[var(--on-petrol-soft)]'
             }`} strokeWidth={2} />
           </div>
           <div className="space-y-1.5">
-            <p className="text-sm text-slate-700">
+            <p className="text-sm text-[var(--ice)]">
               {dragActive ? (
-                <span className="font-bold text-selva-emerald">Suelta para subir</span>
+                <span className="font-bold text-[var(--on-petrol-soft)]">Suelta para subir</span>
               ) : (
                 <>
-                  <span className="font-bold text-selva-emerald hover:underline">Haz clic para buscar</span>
-                  <span className="text-slate-500"> o arrastra tus archivos aquí</span>
+                  <span className="font-bold text-[var(--on-petrol-soft)] hover:underline">Hacé clic para buscar</span>
+                  <span className="text-[var(--on-petrol-soft)]"> o arrastra tus archivos aquí</span>
                 </>
               )}
             </p>
-            <p className="text-[11px] text-slate-500 font-medium">{allowedExtensionsLabel}</p>
+            <p className="text-[11px] text-[var(--on-petrol-soft)] font-medium">{allowedExtensionsLabel}</p>
           </div>
         </div>
       </div>
 
       {/* Upload progress (multiple) */}
       {uploading.length > 0 && (
-        <div className="space-y-2.5 animate-fade-in-up">
+        <div className="space-y-2.5 ">
           {uploading.map((u) => (
             <div
               key={u.id}
-              className={`p-3.5 rounded-xl border ${
+              className={`p-3.5 rounded-none border ${
                 u.error
-                  ? 'bg-red-50 border-red-200'
+                  ? 'bg-[var(--petrol-deep)] border-[#FFB4A8]'
                   : u.success
-                    ? 'bg-emerald-50 border-emerald-200'
-                    : 'bg-slate-50 border-slate-200'
+                    ? 'bg-[var(--petrol-deep)] border-[var(--lime)]'
+                    : 'bg-[var(--petrol-raised)] border-[var(--line-petrol)]'
               }`}
             >
               <div className="flex items-center justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   {u.error ? (
-                    <X className="w-4 h-4 text-red-500 shrink-0" />
+                    <X className="w-4 h-4 text-[#FFB4A8] shrink-0" />
                   ) : u.success ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[var(--lime)] shrink-0" />
                   ) : (
-                    <UploadCloud className="w-4 h-4 text-selva-emerald shrink-0 animate-pulse" />
+                    <UploadCloud className="w-4 h-4 text-[var(--on-petrol-soft)] shrink-0 " />
                   )}
-                  <span className="text-xs font-medium text-slate-900 truncate">{u.name}</span>
+                  <span className="text-xs font-medium text-[var(--ice)] truncate">{u.name}</span>
                 </div>
-                <span className="text-[11px] font-mono text-slate-500 shrink-0">
+                <span className="text-[11px] font-mono text-[var(--on-petrol-soft)] shrink-0">
                   {u.error ? 'Error' : `${u.progress}%`}
                 </span>
               </div>
               {!u.error && !u.success && <Progress value={u.progress} size="sm" />}
-              {u.error && <p className="text-[11px] text-red-600 mt-1">{u.error}</p>}
+              {u.error && <p id={`${fieldId}-${u.id}-error`} role="alert" className="text-[11px] text-[#FFB4A8] mt-1">{u.error}</p>}
             </div>
           ))}
         </div>
@@ -278,26 +288,26 @@ export default function FileUploaderCard({
 
       {/* Error */}
       {error && (
-        <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-red-50 border border-red-200 animate-fade-in">
-          <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-          <p className="text-xs text-red-700 leading-relaxed">{error}</p>
+        <div id={`${fieldId}-error`} role="alert" className="flex items-start gap-2.5 p-3.5 rounded-none bg-[var(--petrol-deep)] border border-[#FFB4A8] ">
+          <AlertCircle className="w-4 h-4 text-[#FFB4A8] shrink-0 mt-0.5" />
+          <p className="text-xs text-[#FFB4A8] leading-relaxed">{error}</p>
         </div>
       )}
 
       {/* Files list */}
       {categoryFiles.length > 0 && (
         <div className="space-y-3">
-          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest font-heading">
+          <p className="text-[11px] font-bold text-[var(--on-petrol-soft)] uppercase tracking-widest font-heading">
             Archivos subidos
           </p>
           <div className="grid gap-2.5 sm:grid-cols-2">
             {categoryFiles.map((file) => (
               <div
                 key={file.id}
-                className="group/file flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all"
+                className="group/file flex items-center gap-3 p-3 rounded-none bg-[var(--petrol-deep)] border border-[var(--line-petrol)] hover:border-[var(--line-petrol)]  transition-all"
               >
                 {file.file_type.startsWith('image/') ? (
-                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 shrink-0 relative">
+                  <div className="w-12 h-12 rounded-none overflow-hidden bg-[var(--petrol-raised)] border border-[var(--line-petrol)] shrink-0 relative">
                     <img
                       src={file.file_url}
                       alt={file.file_name}
@@ -308,16 +318,16 @@ export default function FileUploaderCard({
                     />
                   </div>
                 ) : (
-                  <div className="w-12 h-12 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-none bg-[var(--petrol-raised)] border border-[var(--line-petrol)] flex items-center justify-center shrink-0">
                     {getFileIcon(file.file_type)}
                   </div>
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-semibold text-slate-900 truncate leading-tight">
+                  <p className="text-[13px] font-semibold text-[var(--ice)] truncate leading-tight">
                     {file.file_name}
                   </p>
-                  <p className="text-[11px] text-slate-500 mt-0.5 font-mono">
+                  <p className="text-[11px] text-[var(--on-petrol-soft)] mt-0.5 font-mono">
                     {formatBytes(file.file_size)}
                   </p>
                 </div>
@@ -327,14 +337,14 @@ export default function FileUploaderCard({
                     href={file.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
+                    className="p-1.5 rounded-none text-[var(--on-petrol-soft)] hover:text-[var(--ice)] hover:bg-[var(--petrol-raised)] transition-all"
                     title="Ver archivo"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                   <button
                     onClick={() => handleDelete(file.id)}
-                    className="p-1.5 rounded-md text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all"
+                    className="btn btn-ghost p-1.5 rounded-none text-[var(--on-petrol-soft)] hover:text-[var(--ice)] hover:bg-[var(--petrol-deep)] transition-all"
                     title="Eliminar archivo"
                     aria-label="Eliminar archivo"
                   >

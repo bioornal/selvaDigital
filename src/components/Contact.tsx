@@ -1,25 +1,16 @@
 import { useState } from 'react';
-import { CheckCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, Mail, Phone, MapPin, ChevronDown } from 'lucide-react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { sendAnalyticsEvent } from '../utils/analytics';
-import { CONTACT_PHONE, CONTACT_EMAIL, WHATSAPP_URL } from '../lib/constants';
+import { CONTACT_PHONE, CONTACT_EMAIL, whatsappLink } from '../lib/constants';
+import WaIcon from './ui/WaIcon';
 
-const accent = '#2BB673';
-const surface = '#121316';
-const surface2 = '#1A1C20';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const textFaint = 'rgba(250,250,250,0.28)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
-
+const needOptions = ['Sitio web', 'Tienda online', 'Sistema a medida', 'Chatbot con IA', 'App a medida', 'No estoy seguro'];
 const endpoints = [
-  { icon: '✉', label: 'Email',    value: CONTACT_EMAIL },
-  { icon: '☎', label: 'Teléfono', value: CONTACT_PHONE },
-  { icon: '⌖', label: 'Ubicación',value: 'Córdoba, Argentina · UTC−3' },
-  { icon: '⏱', label: 'Respuesta',value: '< 24 hs en horario laboral' },
+  { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { icon: Phone, label: 'Teléfono', value: CONTACT_PHONE, href: `tel:${CONTACT_PHONE.replace(/\s/g, '')}` },
+  { icon: MapPin, label: 'Ubicación', value: 'Córdoba, Argentina · UTC−3' },
 ];
 
 const projectTypes = [
@@ -35,7 +26,7 @@ const projectTypes = [
   { value: 'otro', label: 'Otro / No estoy seguro' }
 ];
 
-const presupuestos = ['< $500', '$500–$1.200', '$1.200–$1.500', '+$1.500'];
+const presupuestos = ['< $400.000', '$400.000–$800.000', '$800.000–$1.500.000', '+$1.500.000'];
 
 const validationSchema = Yup.object({
   nombre: Yup.string()
@@ -59,7 +50,7 @@ interface FormValues {
 const Contact = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [formMessage, setFormMessage] = useState('');
-  const [tipo, setTipo] = useState('');
+  const [needs, setNeeds] = useState<string[]>([]);
 
   const initialValues: FormValues = { nombre: '', email: '', tipoProyecto: '', presupuesto: '', mensaje: '' };
 
@@ -78,9 +69,9 @@ const Contact = () => {
       }
       sendAnalyticsEvent('form_submission', 'Contact', 'Contact Form Success');
       setFormStatus('success');
-      setFormMessage('¡Mensaje enviado con éxito! Te respondemos en menos de 24 horas.');
+      setFormMessage('¡Mensaje enviado! Te voy a responder al email que dejaste.');
       resetForm();
-      setTipo('');
+
     } catch (error) {
       sendAnalyticsEvent('form_error', 'Contact', 'Contact Form Error');
       setFormMessage(error instanceof Error ? error.message : 'Hubo un error al enviar el mensaje.');
@@ -90,164 +81,144 @@ const Contact = () => {
     }
   };
 
+  const whatsappMessage = needs.length
+    ? `¡Hola Christian! Necesito: ${needs.join(', ')}. ¿Me pasás un presupuesto?`
+    : '¡Hola Christian! Quiero consultarte por un proyecto. ¿Me pasás un presupuesto?';
+
   return (
-    <section id="contacto" className="relative" style={{ background: '#0A0B0D', padding: 'clamp(64px, 8vw, 120px) 0', borderTop: `1px solid ${line}` }}>
-      {/* Dot grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.08]"
-        style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
-
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-10">
-        {/* Heading */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2.5 mb-[18px] justify-center">
-            <span className="w-3.5 h-px" style={{ background: accent }} />
-            <span className="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-              10 ─── Contacto
-            </span>
-          </div>
-          <h2 className="section-h2 font-geist font-semibold text-white leading-[1.02] tracking-tight mb-[18px]"
-            style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', letterSpacing: '-0.025em' }}>
-            Hablemos del próximo<br /><span style={{ color: accent }}>proyecto.</span>
-          </h2>
-          <p className="section-sub text-base md:text-[17px] leading-relaxed max-w-[640px] mx-auto" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Respondo presupuestos en menos de 24 horas. Si tu proyecto entra en la próxima ventana, arrancamos en menos de 2 semanas.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-[0.85fr_1.15fr] gap-6">
-          {/* Left: contact info */}
-          <div className="flex flex-col gap-3.5">
-            <div className="p-5 md:p-6" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '12px' }}>
-              <div className="text-[10.5px] tracking-[2px] mb-4" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>// ENDPOINTS</div>
-              {endpoints.map((r, i) => (
-                <div key={i} className="flex items-center gap-3.5 py-3.5"
-                  style={{ borderBottom: i < 3 ? `1px solid ${line}` : 'none' }}>
-                  <span className="w-[38px] h-[38px] flex items-center justify-center text-base"
-                    style={{
-                      background: 'rgba(43,182,115,0.12)',
-                      border: `1px solid rgba(43,182,115,0.3)`,
-                      color: accent,
-                      borderRadius: '9px'
-                    }}>{r.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[10px] tracking-[1.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>{r.label.toUpperCase()}</div>
-                    <div className="text-sm font-medium text-white mt-0.5 truncate" style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>{r.value}</div>
-                  </div>
-                </div>
+    <section id="contacto" className="section on-deep contact-section" aria-labelledby="contact-title">
+      <div className="wrap contact-grid">
+        <div className="contact-primary">
+          <h2 id="contact-title" className="h2">Contame qué necesitás.</h2>
+          <p className="lede">Elegí qué necesitás y mandame tu consulta por WhatsApp.</p>
+          <fieldset className="needs-builder">
+            <legend>¿Qué necesitás?</legend>
+            <div className="contact-chips">
+              {needOptions.map(item => (
+                <button key={item} type="button" className="contact-chip" aria-pressed={needs.includes(item)}
+                  onClick={() => setNeeds(current => current.includes(item) ? current.filter(value => value !== item) : [...current, item])}>{item}</button>
               ))}
             </div>
-
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3.5 p-5 md:p-6 transition-all hover:brightness-110"
-              style={{ background: 'rgba(43,182,115,0.1)', border: `1px solid rgba(43,182,115,0.35)`, borderRadius: '12px' }}>
-              <div>
-                <div className="text-[15px] font-semibold text-white tracking-tight" style={{ fontFamily: "'Geist', 'Inter', system-ui, sans-serif" }}>Preferís WhatsApp?</div>
-                <div className="text-[12.5px] mt-0.5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>Respondo todos los días, en general en menos de 1 hora</div>
-              </div>
-              <span className="px-3.5 py-2.5 text-xs font-semibold flex-shrink-0" style={{ background: accent, color: '#06140C', borderRadius: '8px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-                Escribir →
-              </span>
-            </a>
-          </div>
-
-          {/* Right: form */}
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ errors, touched, isSubmitting, isValid, dirty, setFieldValue, values }) => (
-              <Form className="flex flex-col gap-4 p-6 md:p-7" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '12px' }}>
-                <div className="text-[10.5px] tracking-[2px] mb-0" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>// SUBMIT_REQUEST</div>
-
-                {formStatus === 'success' && (
-                  <div className="flex items-start gap-2 p-3 text-sm" style={{ background: 'rgba(43,182,115,0.1)', border: `1px solid rgba(43,182,115,0.3)`, color: accent, borderRadius: '8px' }}>
-                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                    <span>{formMessage}</span>
-                  </div>
-                )}
-                {formStatus === 'error' && (
-                  <div className="flex items-start gap-2 p-3 text-sm" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', borderRadius: '8px' }}>
-                    <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                    <span>{formMessage}</span>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  <div>
-                    <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>NOMBRE COMPLETO *</label>
-                    <Field name="nombre" type="text" placeholder="Ej: Juan Pérez"
-                      className="w-full px-3.5 py-3 text-sm text-white placeholder:text-[rgba(250,250,250,0.25)] outline-none focus:border-[rgba(43,182,115,0.5)] transition-colors"
-                      style={{ background: surface2, border: `1px solid ${line}`, borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }} />
-                    {errors.nombre && touched.nombre && <span className="text-red-400 text-xs mt-1 block">{errors.nombre}</span>}
-                  </div>
-                  <div>
-                    <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>EMAIL *</label>
-                    <Field name="email" type="email" placeholder="tu@email.com"
-                      className="w-full px-3.5 py-3 text-sm text-white placeholder:text-[rgba(250,250,250,0.25)] outline-none focus:border-[rgba(43,182,115,0.5)] transition-colors"
-                      style={{ background: surface2, border: `1px solid ${line}`, borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }} />
-                    {errors.email && touched.email && <span className="text-red-400 text-xs mt-1 block">{errors.email}</span>}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>TIPO DE PROYECTO *</label>
-                  <Field as="select" name="tipoProyecto"
-                    onChange={(e: any) => { setFieldValue('tipoProyecto', e.target.value); setTipo(e.target.value); }}
-                    className="w-full px-3.5 py-3 text-sm text-white outline-none focus:border-[rgba(43,182,115,0.5)] transition-colors appearance-none"
-                    style={{ background: surface2, border: `1px solid ${line}`, borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-                    {projectTypes.map(t => <option key={t.value} value={t.value} style={{ background: surface2 }}>{t.label}</option>)}
-                  </Field>
-                  {errors.tipoProyecto && touched.tipoProyecto && <span className="text-red-400 text-xs mt-1 block">{errors.tipoProyecto}</span>}
-                </div>
-
-                <div>
-                  <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>PRESUPUESTO ESTIMADO (USD)</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {presupuestos.map(p => {
-                      const selected = values.presupuesto === p;
-                      return (
-                        <button
-                          type="button"
-                          key={p}
-                          onClick={() => setFieldValue('presupuesto', selected ? '' : p)}
-                          aria-pressed={selected}
-                          className="py-2.5 text-xs font-medium transition-all"
-                          style={{
-                            background: selected ? 'rgba(43,182,115,0.15)' : surface2,
-                            color: selected ? accent : textSoft,
-                            border: `1px solid ${selected ? 'rgba(43,182,115,0.55)' : line}`,
-                            borderRadius: '8px',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: selected ? 600 : 500,
-                            boxShadow: selected ? '0 0 12px -2px rgba(43,182,115,0.25)' : 'none'
-                          }}>
-                          {p}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[10.5px] tracking-[1.5px] mb-2" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>MENSAJE *</label>
-                  <Field as="textarea" name="mensaje" rows={4} placeholder="Contame sobre tu proyecto, objetivos y cualquier duda que tengas."
-                    className="w-full px-3.5 py-3 text-sm text-white placeholder:text-[rgba(250,250,250,0.25)] outline-none focus:border-[rgba(43,182,115,0.5)] transition-colors resize-y"
-                    style={{ background: surface2, border: `1px solid ${line}`, borderRadius: '9px', fontFamily: "'Inter', system-ui, sans-serif" }} />
-                  {errors.mensaje && touched.mensaje && <span className="text-red-400 text-xs mt-1 block">{errors.mensaje}</span>}
-                </div>
-
-                <button type="submit" disabled={isSubmitting || !(isValid && dirty)}
-                  className="w-full py-4 text-sm font-semibold flex items-center justify-center gap-2.5 transition-all hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ background: accent, color: '#06140C', borderRadius: '10px', fontFamily: "'Inter', system-ui, sans-serif" }}>
-                  {isSubmitting ? 'Enviando...' : 'Enviar mensaje →'}
-                </button>
-
-                <p className="text-[10px] tracking-[1px] text-center" style={{ color: textFaint, fontFamily: "'JetBrains Mono', monospace" }}>
-                  AL ENVIAR, ACEPTÁS QUE TE CONTACTEMOS POR EMAIL O WHATSAPP.
-                </p>
-              </Form>
-            )}
-          </Formik>
+          </fieldset>
+          <a className="btn btn-primary contact-wa" href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer"
+            onClick={() => sendAnalyticsEvent('whatsapp_click', 'Contact', 'WhatsApp Message Builder')}>
+            <WaIcon size={21} />Mandar por WhatsApp
+          </a>
+          <p className="contact-direct">Te respondo yo, en menos de 24 h en horario laboral.</p>
+          <ul className="contact-details mono">
+            {endpoints.map(({ icon: Icon, label, value, href }) => (
+              <li key={label}><Icon size={16} aria-hidden="true" /><div><span className="detail-label">{label}</span>{href ? <a href={href}>{value}</a> : <span>{value}</span>}</div></li>
+            ))}
+          </ul>
         </div>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+          {({ errors, touched, isSubmitting, isValid, dirty, setFieldValue, values }) => {
+            const fieldA11y = (name: keyof FormValues) => ({
+              'aria-invalid': Boolean(touched[name] && errors[name]),
+              'aria-describedby': touched[name] && errors[name] ? `contact-${name}-error` : undefined,
+            });
+            const errorFor = (name: keyof FormValues) => touched[name] && errors[name]
+              ? <span id={`contact-${name}-error`} className="contact-error">{errors[name]}</span> : null;
+            return (
+              <Form className="contact-form" noValidate aria-label="Contacto por email">
+                <h3 className="mono form-heading">¿Preferís email?</h3>
+                {formStatus !== 'idle' && (
+                  <div className={`contact-feedback ${formStatus}`} role={formStatus === 'error' ? 'alert' : 'status'}>
+                    {formStatus === 'success' ? <CheckCircle size={20} aria-hidden="true" /> : <AlertCircle size={20} aria-hidden="true" />}
+                    <span>{formMessage}</span>
+                  </div>
+                )}
+                <div className="contact-field-pair">
+                  <div>
+                    <label className="mono" htmlFor="contact-nombre">Nombre completo *</label>
+                    <Field id="contact-nombre" name="nombre" type="text" autoComplete="name" placeholder="Ej: Juan Pérez" required className="contact-input" {...fieldA11y('nombre')} />
+                    {errorFor('nombre')}
+                  </div>
+                  <div>
+                    <label className="mono" htmlFor="contact-email">Email *</label>
+                    <Field id="contact-email" name="email" type="email" autoComplete="email" placeholder="tu@email.com" required className="contact-input" {...fieldA11y('email')} />
+                    {errorFor('email')}
+                  </div>
+                </div>
+                <div>
+                  <label className="mono" htmlFor="contact-tipoProyecto">Tipo de proyecto *</label>
+                  <div className="contact-select">
+                    <Field as="select" id="contact-tipoProyecto" name="tipoProyecto" required className="contact-input" {...fieldA11y('tipoProyecto')}>
+                      {projectTypes.map(type => <option key={type.value} value={type.value}>{type.label}</option>)}
+                    </Field>
+                    <ChevronDown size={18} aria-hidden="true" />
+                  </div>
+                  {errorFor('tipoProyecto')}
+                </div>
+                <fieldset>
+                  <legend className="mono">Presupuesto estimado (ARS)</legend>
+                  <div className="contact-chips budget-chips">
+                    {presupuestos.map(price => <button type="button" key={price} className="contact-chip mono" aria-pressed={values.presupuesto === price}
+                      onClick={() => setFieldValue('presupuesto', values.presupuesto === price ? '' : price)}>{price}</button>)}
+                  </div>
+                </fieldset>
+                <div>
+                  <label className="mono" htmlFor="contact-mensaje">Mensaje *</label>
+                  <Field as="textarea" id="contact-mensaje" name="mensaje" rows={5} required placeholder="Contame sobre tu proyecto, objetivos y cualquier duda que tengas." className="contact-input" {...fieldA11y('mensaje')} />
+                  {errorFor('mensaje')}
+                </div>
+                <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="btn btn-ghost contact-submit" aria-busy={isSubmitting}>{isSubmitting ? 'Enviando…' : 'Enviar mensaje'}</button>
+                <p className="mono contact-consent">Al enviar, aceptás que te contacte por email o WhatsApp.</p>
+              </Form>
+            );
+          }}
+        </Formik>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .contact-section .contact-grid { display: grid; gap: 56px; }
+        .contact-section .contact-primary, .contact-section .contact-form { min-width: 0; }
+        .contact-section h2 { margin: 0 0 24px; }
+        .contact-section .lede { color: var(--on-petrol-soft); }
+        .contact-section .needs-builder { margin-top: 36px; }
+        .contact-section fieldset { border: 0; padding: 0; min-width: 0; }
+        .contact-section legend { margin-bottom: 14px; }
+        .contact-section .needs-builder legend { font-size: var(--fs-title); font-weight: 700; }
+        .contact-section .contact-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .contact-section .contact-chip { border: 1px solid var(--line-petrol-strong); border-radius: 0; padding: 12px 14px; background: var(--petrol); color: var(--ice); font-size: var(--fs-small); }
+        .contact-section .contact-chip:hover { border-color: var(--ice); }
+        .contact-section .contact-chip[aria-pressed="true"] { background: var(--ice); color: var(--petrol); border-color: var(--ice); }
+        .contact-section .contact-wa { margin-top: 24px; width: 100%; min-height: 60px; }
+        .contact-section .contact-direct { display: flex; align-items: center; gap: 10px; margin: 16px 0 0; color: var(--on-petrol-soft); font-size: var(--fs-small); line-height: 1.5; }
+        .contact-section .contact-details { list-style: none; margin: 36px 0 0; padding: 0; text-transform: none; letter-spacing: .02em; }
+        .contact-section .contact-details li { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-top: 1px solid var(--line-petrol); }
+        .contact-section .contact-details svg { flex-shrink: 0; margin-top: 3px; }
+        .contact-section .contact-details a, .contact-section .contact-details span { overflow-wrap: anywhere; }
+        .contact-section .detail-label { display: block; color: var(--on-petrol-dim); margin-bottom: 5px; text-transform: uppercase; }
+        .contact-section .contact-details a:hover { text-decoration: underline; }
+        .contact-section .contact-form { display: flex; flex-direction: column; gap: 24px; border-top: 1px solid var(--line-petrol-strong); padding-top: 24px; }
+        .contact-section .form-heading { margin: 0; }
+        .contact-section label { display: block; margin-bottom: 10px; }
+        .contact-section .contact-field-pair { display: grid; gap: 20px; }
+        .contact-section .contact-input { display: block; width: 100%; min-width: 0; padding: 14px; border: 1px solid var(--line-petrol-strong); border-radius: 0; background: var(--petrol); color: var(--ice); font: inherit; font-size: var(--fs-control); }
+        .contact-section .contact-input::placeholder { color: var(--on-petrol-dim); opacity: 1; }
+        .contact-section .contact-input:focus { border-color: var(--ice); }
+        .contact-section textarea { resize: vertical; }
+        .contact-section .contact-select { position: relative; }
+        .contact-section select { appearance: none; padding-right: 44px; color-scheme: dark; }
+        .contact-section option { background: var(--petrol); color: var(--ice); }
+        .contact-section .contact-select svg { position: absolute; right: 14px; top: 18px; pointer-events: none; }
+        .contact-section .budget-chips .contact-chip { font-size: var(--fs-label); padding: 12px; }
+        .contact-section .contact-error { display: block; margin-top: 8px; font-size: var(--fs-small); color: #FFB4A8; }
+        .contact-section .contact-feedback { display: flex; gap: 10px; padding: 16px; border: 1px solid var(--lime); color: var(--ice); }
+        .contact-section .contact-feedback svg { flex-shrink: 0; margin-top: 2px; }
+        .contact-section .contact-feedback.error { border-color: #FFB4A8; color: #FFB4A8; }
+        .contact-section .contact-submit { width: 100%; }
+        .contact-section .contact-consent { color: var(--on-petrol-dim); margin: 0; }
+        @media (min-width: 640px) { .contact-section .contact-field-pair { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) {
+          /* A separate lower zone keeps the sheet clear of both columns, including validation messages. */
+          .contact-section { position: relative; isolation: isolate; padding-bottom: 340px; }
+          .contact-section .contact-grid { grid-template-columns: 1.1fr 1fr; gap: clamp(48px, 7vw, 100px); }
+          .contact-section .contact-form { border-top: 0; border-left: 1px solid var(--line-petrol-strong); padding-top: 0; padding-left: 40px; }
+          .contact-section h2 { font-size: var(--fs-h2-compact); }
+        }
+      ` }} />
     </section>
   );
 };
-
 export default Contact;

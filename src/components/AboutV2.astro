@@ -1,20 +1,7 @@
 ---
-const accent = '#2BB673';
-const bg = '#0A0B0D';
-const surface = '#121316';
-const white = '#FAFAFA';
-const textSoft = 'rgba(250,250,250,0.72)';
-const textDim = 'rgba(250,250,250,0.46)';
-const line = 'rgba(250,250,250,0.08)';
-const lineStr = 'rgba(250,250,250,0.18)';
+import { whatsappLink } from '../lib/constants';
+import WaIcon from './ui/WaIcon';
 
-const kpi = [
-  { n: '15+', k: 'proyectos en producción', s: 'Argentina' },
-  { n: '6',   k: 'años desarrollando', s: 'full-stack' },
-  { n: '100%',k: 'código propio', s: 'sin templates' },
-];
-
-const stack = ['React','Next.js','Astro','TypeScript','Node.js','PostgreSQL','MongoDB','Firebase','Tailwind','Vercel','VPS','MercadoPago','OpenAI','Anthropic'];
 
 const steps = [
   { n: '01', t: 'Hablamos de tu idea',            d: 'Me contás qué vendés y a quién. Salís de la llamada sabiendo si esto te sirve, sin compromiso ni "te confirmo después".' },
@@ -22,239 +9,87 @@ const steps = [
   { n: '03', t: 'Construyo con avances semanales', d: 'Ves el sitio crecer cada semana y pedís cambios cuando los necesitás. No esperás 6 semanas para descubrir que algo no era lo que pensabas.' },
   { n: '04', t: 'Lanzamos y quedás operando',     d: 'Tu negocio queda online y vendiendo. Te muestro cómo recibir las consultas y a quién contactar si algo necesita atención.' },
 ];
+const WA_ABOUT = whatsappLink('¡Hola Christian! Quiero hablar con vos sobre mi proyecto.');
 ---
-
-<section id="sobre" class="relative" style={`background:${bg}; padding:clamp(64px, 8vw, 120px) 0;`}>
-  <div class="max-w-[1320px] mx-auto px-6 md:px-10">
-    <div class="grid md:grid-cols-[1.2fr_0.85fr] gap-8 md:gap-16 items-start">
-      {/* Left content */}
-      <div>
-        <div class="text-left section-heading reveal reveal-slide-up">
-          <div class="inline-flex items-center gap-2.5 mb-[18px]">
-            <span class="w-3.5 h-px" style={{ background: accent }}></span>
-            <span class="text-[11px] tracking-[2.5px] uppercase" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-              03 ─── Sobre mí
-            </span>
-          </div>
-
-          <h2 class="section-h2 font-geist font-semibold text-white leading-[1] tracking-tight mb-4"
-            style="font-size:clamp(36px, 4vw, 64px); letter-spacing:-0.03em;">
-            Un solo interlocutor.<br>
-            <span style={{ color: accent }}>De la idea al deploy.</span>
-          </h2>
-
-          {/* Desktop: bajada extendida */}
-          <p class="hidden md:block text-[17px] leading-[1.55] mb-8 max-w-[620px] md:mx-0" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Soy Christian Speziali, desarrollador web freelance desde Córdoba. Hace 6 años que ayudo a dueños de PyMEs argentinas a dejar de perder ventas online, recuperar horas de su semana y aparecer primeros en Google — sin tarifas mensuales escondidas.
-          </p>
-
-          {/* Mobile: bajada compacta */}
-          <p class="section-sub md:hidden text-[15px] leading-[1.55] mb-6" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Desarrollador freelance desde Córdoba. Hablás directo conmigo de principio a fin — sin agencias ni intermediarios. <strong class="text-white font-semibold">Tomo máximo 3 proyectos a la vez.</strong>
-          </p>
+<section id="sobre" class="section on-deep" aria-labelledby="about-title">
+  <div class="wrap">
+    <h2 id="about-title" class="h2 about-title">Hablás conmigo de punta a punta.</h2>
+    <div class="about-grid">
+      <figure class="about-photo">
+        <img src="https://res.cloudinary.com/djtvjkcu6/image/upload/c_fill,g_face,w_800,h_1000,q_auto,f_auto/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg" alt="Christian Speziali" width="800" height="1000" loading="lazy" decoding="async" />
+      </figure>
+      <div class="about-content">
+        <h3 class="h3 about-name">Soy Christian Speziali.</h3>
+        <p class="about-bio hidden md:block">Soy desarrollador web freelance desde Córdoba. Ayudo a dueños de PyMEs argentinas a dejar de perder ventas online y recuperar horas de su semana con herramientas hechas para su negocio.</p>
+        <p class="about-bio md:hidden">Desarrollador freelance desde Córdoba. Hago webs y sistemas para que tu negocio venda más y te ocupe menos.</p>
+        <div class="about-direct" aria-label="Disponibilidad">
+          <p>Te respondo en menos de 24 h.</p>
+          <p class="direct-capacity">Tomo máximo 3 proyectos a la vez.</p>
+          <a href={WA_ABOUT} target="_blank" rel="noopener noreferrer" class="btn btn-primary about-cta"><WaIcon size={18} /> Hablemos de tu proyecto</a>
         </div>
-
-        {/* Desktop only: párrafos secundarios */}
-        <div class="hidden md:flex flex-col gap-3.5 mb-10 reveal reveal-slide-up delay-75">
-          <p class="text-[15.5px] leading-relaxed max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Trabajo solo. Eso significa que vos hablás conmigo de principio a fin —
-            presupuesto, diseño, programación, deploy y soporte. Sin agencia
-            intermediando, sin equipos rotando, sin mensajes que rebotan entre
-            cinco personas distintas.
-          </p>
-          <p class="text-[15.5px] leading-relaxed max-w-[620px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-            Pero también significa que <strong class="text-white font-semibold">no tomo más de 3
-            proyectos en simultáneo</strong>. Si te interesa trabajar conmigo,
-            conversemos rápido para ver si entrás en la próxima ventana.
-          </p>
-        </div>
-
-        {/* Process */}
-        <div class="reveal reveal-slide-up delay-150">
-          <div class="text-[11px] tracking-[2px] mb-4" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>CÓMO TRABAJO</div>
-          <div class="flex flex-col process-steps" style={{ border: `1px solid ${line}`, borderRadius: '10px', overflow: 'hidden' }}>
-            {steps.map((s, i) => (
-              <>
-                {/* Mobile: accordion <details> nativo */}
-                <details
-                  class="md:hidden process-step-mobile"
-                  open={i === 0}
-                  style={{
-                    background: surface,
-                    borderBottom: i < 3 ? `1px solid ${line}` : 'none'
-                  }}
-                >
-                  <summary class="grid grid-cols-[44px_1fr_auto] gap-4 items-center px-5 py-3.5 cursor-pointer list-none">
-                    <span class="text-xs tracking-[1px]" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>{s.n}</span>
-                    <span class="font-geist font-semibold text-white text-sm">{s.t}</span>
-                    <span class="process-step-chevron text-xs transition-transform" style={{ color: textDim }}>▾</span>
-                  </summary>
-                  <div class="card-body px-5 pb-3.5 pl-[68px] text-[13px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>
-                    {s.d}
-                  </div>
-                </details>
-
-                {/* Desktop: tabla con 3 columnas, idéntico al estado previo */}
-                <div class="hidden md:grid grid-cols-[60px_1fr_1.6fr] gap-6 items-center px-6 py-3.5" style={{
-                  background: surface,
-                  borderBottom: i < 3 ? `1px solid ${line}` : 'none'
-                }}>
-                  <span class="text-xs tracking-[1px]" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>{s.n}</span>
-                  <span class="font-geist font-semibold text-white text-base">{s.t}</span>
-                  <span class="text-[13px]" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>{s.d}</span>
-                </div>
-              </>
-            ))}
-          </div>
-        </div>
-
-        <div class="hidden md:flex gap-3 mt-8 justify-center md:justify-start reveal reveal-slide-up delay-200">
-          <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-none transition-all hover:brightness-110"
-            style={{ background: accent, color: '#06140C', fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
-            Conversemos →
-          </a>
-          <a href="#portfolio" class="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-medium rounded-none transition-all"
-            style={{ background: surface, color: white, border: `1px solid ${lineStr}`, fontFamily: "'Inter', system-ui, sans-serif", borderRadius: '0px' }}>
-            Ver portfolio →
-          </a>
-        </div>
+        <ul class="about-commitments" aria-label="Mis compromisos">
+          <li>Aprobás la propuesta visual antes de que empiece a programar.</li>
+          <li>El sitio es tuyo, sin quedar atado a mí.</li>
+        </ul>
       </div>
-
-      {/* Right: Photo + KPIs + Stack — desktop only */}
-      <div class="hidden md:flex relative flex-col gap-7">
-        {/* Green halo */}
-        <div class="absolute pointer-events-none" style="inset:-30px; background:radial-gradient(circle at 30% 40%, rgba(43,182,115,0.12), transparent 65%); filter:blur(8px); z-index:0;"></div>
-
-        <div class="relative w-full overflow-hidden reveal reveal-slide-up reveal-zoom-out delay-75" style={{ aspectRatio: '4/5', background: surface, border: `1px solid ${lineStr}`, borderRadius: '18px' }}>
-          <img
-            src="https://res.cloudinary.com/djtvjkcu6/image/upload/c_fill,w_900,h_1100,g_face,q_auto,f_auto/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg"
-            alt="Christian A. Speziali"
-            class="w-full h-full object-cover"
-          />
-          <div class="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 55%, rgba(10,11,13,0.75))' }}></div>
-
-          {/* Top badge */}
-          <div class="absolute top-4 left-4 right-4 flex justify-between items-center">
-            <span class="inline-flex items-center gap-1.5 text-[10px] tracking-[1.5px] px-2.5 py-1.5" style={{
-              color: accent,
-              background: 'rgba(10,11,13,0.8)',
-              backdropFilter: 'blur(8px)',
-              border: `1px solid ${lineStr}`,
-              fontFamily: "'JetBrains Mono', monospace",
-              borderRadius: '999px'
-            }}>
-              <span class="w-1.5 h-1.5 inline-block" style={{ background: accent, borderRadius: '50%', boxShadow: `0 0 8px ${accent}` }}></span>
-              ONLINE
-            </span>
-            <span class="text-[9px] tracking-[1.5px]" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>FOUNDER // SELVA</span>
-          </div>
-
-          {/* Bottom badge */}
-          <div class="absolute flex justify-between items-end" style="left:24px; bottom:24px; right:24px;">
-            <div>
-              <div class="text-[10px] tracking-[2px] mb-1.5" style={{ color: accent, fontFamily: "'JetBrains Mono', monospace" }}>
-                <span class="w-1.5 h-1.5 inline-block mr-2" style={{ background: accent, borderRadius: '50%', boxShadow: `0 0 8px ${accent}`, verticalAlign: 'middle' }}></span>
-                ONLINE
-              </div>
-              <div class="font-geist font-semibold text-white tracking-tight" style="font-size:22px; letter-spacing:-0.01em;">Christian A.<br/>Speziali</div>
-              <div class="text-[12.5px] mt-1.5" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>Founder & Developer · Selva Digital</div>
-              <div class="text-[10px] tracking-[1px] mt-0.5" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>CÓRDOBA, AR</div>
-            </div>
-            <a href="https://wa.me/5493548403786" target="_blank" class="text-xs font-medium px-3.5 py-2" style={{
-              background: 'rgba(10,11,13,0.8)',
-              backdropFilter: 'blur(8px)',
-              border: `1px solid ${lineStr}`,
-              color: white,
-              fontFamily: "'Inter', system-ui, sans-serif",
-              borderRadius: '999px',
-              textDecoration: 'none'
-            }}>WhatsApp →</a>
-          </div>
-        </div>
-
-        {/* KPIs en columna derecha — desktop only */}
-        <div class="hidden md:grid grid-cols-3 gap-2 md:gap-2.5 reveal reveal-slide-up delay-150">
-          {kpi.map(s => (
-            <div class="kpi-card" style={{ background: surface, border: `1px solid ${line}`, borderRadius: '10px' }}>
-              <div class="font-geist font-semibold text-white leading-none kpi-num" style={{ letterSpacing: '-0.025em' }}>
-                {s.n}
-              </div>
-              <div class="text-[10.5px] md:text-[11.5px] mt-1.5 leading-tight" style={{ color: textSoft, fontFamily: "'Inter', system-ui, sans-serif" }}>{s.k}</div>
-              <div class="text-[9px] tracking-[1px] mt-1" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>{s.s.toUpperCase()}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stack en columna derecha — desktop only */}
-        <div class="hidden md:block relative reveal reveal-slide-up delay-200">
-          <div class="text-[10.5px] tracking-[2px] mb-3" style={{ color: textDim, fontFamily: "'JetBrains Mono', monospace" }}>STACK PRINCIPAL // 2026</div>
-          <div class="flex flex-wrap gap-1.5" data-stack-wrap>
-            {stack.map((t, i) => (
-              <span class={`text-[11px] tracking-wide px-2.5 py-1.5 ${i >= 6 ? 'stack-extra' : ''}`} style={{
-                color: textSoft,
-                background: surface,
-                border: `1px solid ${line}`,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '7px'
-              }}>{t}</span>
-            ))}
-            <button
-              type="button"
-              class="md:hidden stack-toggle text-[11px] tracking-wide px-2.5 py-1.5"
-              style={{
-                color: accent,
-                background: 'rgba(43,182,115,0.08)',
-                border: `1px solid rgba(43,182,115,0.3)`,
-                fontFamily: "'JetBrains Mono', monospace",
-                borderRadius: '7px',
-                cursor: 'pointer'
-              }}
-              data-stack-toggle
-              aria-expanded="false"
-            >
-              Ver todo (+{stack.length - 6}) →
-            </button>
-          </div>
-        </div>
+    </div>
+    <div class="about-process" aria-labelledby="process-title">
+      <h3 id="process-title" class="h3">De la idea al lanzamiento, en cuatro pasos.</h3>
+      <ol class="process-desktop">
+        {steps.map(s => (
+          <li><span class="mono process-number">{s.n}</span><h4>{s.t}</h4><p>{s.d}</p></li>
+        ))}
+      </ol>
+      <div class="process-mobile">
+        {steps.map((s, i) => (
+          <details open={i === 0}>
+            <summary><span class="mono process-number">{s.n}</span><span class="process-label">{s.t}</span><span class="process-icon" aria-hidden="true"></span></summary>
+            <p>{s.d}</p>
+          </details>
+        ))}
       </div>
     </div>
   </div>
 </section>
-
 <style>
-  /* En mobile, ocultamos los tags >6 hasta que el usuario toque "Ver todo" */
-  @media (max-width: 767px) {
-    .stack-extra { display: none; }
-    [data-stack-wrap].is-expanded .stack-extra { display: inline-flex; }
-    [data-stack-wrap].is-expanded .stack-toggle { display: none; }
-  }
-
-  /* Process steps accordion (mobile) — chevron rota cuando expande */
-  .process-step-mobile summary::-webkit-details-marker { display: none; }
-  .process-step-mobile[open] .process-step-chevron {
-    transform: rotate(180deg);
-  }
-  .process-step-mobile summary:hover .process-step-chevron {
-    color: #2BB673;
-  }
-
-  /* KPIs compactos en mobile */
-  .kpi-card { padding: 12px 10px; }
-  .kpi-num { font-size: clamp(22px, 6vw, 28px); }
+  .about-title { margin: 0 0 clamp(32px, 4vw, 56px); max-width: 20ch; font-size: var(--fs-h2-compact); }
+  .about-grid { display: grid; gap: 24px; }
+  .about-content { min-width: 0; }
+  .about-photo { margin: 0; }
+  .about-photo img { display: block; width: 112px; height: 140px; object-fit: cover; border: 1px solid var(--line-petrol-strong); border-radius: 0; }
+  .about-name { margin: 0 0 16px; }
+  .about-bio { margin: 0 0 28px; font-size: var(--fs-body); line-height: 1.55; color: var(--on-petrol-soft); max-width: 62ch; }
+  .about-direct { padding: clamp(24px, 3vw, 40px); background: var(--petrol-raised); color: var(--ice); border: 1px solid var(--line-petrol-strong); }
+  .about-direct p { margin: 0; max-width: 45ch; font-size: var(--fs-body); line-height: 1.5; }
+  .about-direct .direct-capacity { margin-top: 12px; font-size: var(--fs-small); font-weight: 700; }
+  .about-cta { margin-top: 28px; width: 100%; padding: 12px 16px; text-align: center; }
+  .about-cta:focus-visible { outline-color: var(--petrol); }
+  .about-commitments { list-style: none; padding: 0; margin: 24px 0; }
+  .about-commitments li { padding-block: 14px; border-bottom: 1px solid var(--line-petrol); font-size: var(--fs-small); line-height: 1.5; color: var(--on-petrol-soft); }
+  .about-process { margin-top: clamp(56px, 7vw, 96px); }
+  .about-process > h3 { margin: 0 0 28px; }
+  .process-desktop { display: none; list-style: none; padding: 0; margin: 0; }
+  .process-number { color: var(--on-petrol-dim); }
+  .process-desktop h4 { font-size: var(--fs-title); font-weight: 700; line-height: 1.2; margin: 20px 0 14px; }
+  .process-desktop p, .process-mobile p { font-size: var(--fs-small); line-height: 1.6; color: var(--on-petrol-soft); margin: 0; }
+  .process-mobile details { border-top: 1px solid var(--line-petrol-strong); }
+  .process-mobile details:last-child { border-bottom: 1px solid var(--line-petrol-strong); }
+  .process-mobile summary { display: grid; grid-template-columns: 26px minmax(0, 1fr) 16px; gap: 12px; align-items: center; cursor: pointer; list-style: none; padding: 20px 0; }
+  .process-mobile summary::-webkit-details-marker { display: none; }
+  .process-label { font-size: var(--fs-body); font-weight: 700; line-height: 1.25; }
+  .process-mobile p { padding: 0 0 24px 38px; }
+  .process-icon { position: relative; width: 16px; height: 16px; }
+  .process-icon::before, .process-icon::after { content: ''; position: absolute; background: currentColor; width: 14px; height: 1px; top: 7px; left: 1px; }
+  .process-icon::after { transform: rotate(90deg); }
+  details[open] .process-icon::after { transform: rotate(0); }
   @media (min-width: 768px) {
-    .kpi-card { padding: 14px 14px; }
-    .kpi-num { font-size: 28px; }
+    .about-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); align-items: start; }
+    .about-photo { grid-column: span 4; }
+    .about-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; }
+    .about-content { grid-column: span 8; }
+    .about-cta { width: auto; }
+    .process-desktop { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+    .process-desktop li { border-top: 1px solid var(--line-petrol-strong); padding-top: 20px; }
+    .process-mobile { display: none; }
   }
 </style>
-
-<script>
-  // Stack tags collapse — mobile only
-  document.querySelectorAll<HTMLElement>('[data-stack-wrap]').forEach(wrap => {
-    const btn = wrap.querySelector<HTMLButtonElement>('[data-stack-toggle]');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      wrap.classList.add('is-expanded');
-      btn.setAttribute('aria-expanded', 'true');
-    });
-  });
-</script>

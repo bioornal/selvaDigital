@@ -1,0 +1,176 @@
+---
+import WaIcon from './ui/WaIcon';
+import { whatsappLink } from '../lib/constants';
+
+const WA_WEB = whatsappLink('¡Hola Christian! Quiero una web para mi negocio. ¿Me contás cómo arrancamos?');
+
+// Hoy → Con tu web. La frase marcada (hl) es lo que el dueño tiene que llevarse.
+const shifts = [
+  {
+    today: 'Te encuentran sólo los que ya te conocen.',
+    pre: 'Cuando alguien busca lo que vendés en tu zona, ',
+    hl: 'aparecés vos en Google.',
+  },
+  {
+    today: 'Contestás las mismas preguntas todo el día por WhatsApp.',
+    pre: 'Precios, horarios y formas de pago a un clic. ',
+    hl: 'Te escriben los que ya quieren comprar.',
+  },
+  {
+    today: 'Cuando cerrás el local, dejás de vender.',
+    pre: 'Tu catálogo, tus reservas y tus cobros ',
+    hl: 'siguen abiertos las 24 horas.',
+  },
+  {
+    today: 'Cada venta por una app o plataforma te deja una comisión.',
+    pre: 'Tenés un canal propio: ',
+    hl: 'los pedidos directos son tuyos.',
+  },
+  {
+    today: 'Un perfil de Instagram no alcanza para dar confianza.',
+    pre: 'Una web propia muestra que ',
+    hl: 'sos un negocio serio.',
+  },
+];
+---
+
+<section id="por-que-web" class="why" aria-labelledby="why-title">
+  <!-- Banda fotográfica a sangre: cerraste, pero tu web sigue vendiendo -->
+  <div class="why-band on-petrol">
+    <picture class="why-photo" aria-hidden="true">
+      <source media="(max-width: 767px)" srcset="/visuals/shop-modern-tall.webp" type="image/webp" />
+      <source media="(max-width: 1600px)" srcset="/visuals/shop-modern-wide-1600.webp" type="image/webp" />
+      <source srcset="/visuals/shop-modern-wide.webp" type="image/webp" />
+      <img src="/visuals/shop-modern-wide.jpg" alt="" width="2400" height="1350" loading="lazy" decoding="async" />
+    </picture>
+    <div class="wrap why-band-copy">
+      <h2 id="why-title" class="why-title">Sin web, tu negocio cierra cuando vos cerrás.</h2>
+      <p class="why-lede">
+        Cuando bajás la persiana, se apaga todo. Con una web propia, tu negocio sigue
+        atendiendo, mostrando y vendiendo mientras vos descansás.
+      </p>
+      <a href={WA_WEB} target="_blank" rel="noopener noreferrer" class="btn btn-primary why-btn">
+        <WaIcon size={20} />
+        Quiero mi web
+      </a>
+    </div>
+  </div>
+
+  <!-- Lo que cambia: frases grandes, la clave marcada en lima -->
+  <div class="why-shifts on-ice section">
+    <div class="wrap">
+      <ol class="shifts">
+        {shifts.map((s) => (
+          <li class="shift">
+            <div class="shift-body">
+              <p class="shift-today"><span class="sr-only">Hoy: </span><s>{s.today}</s></p>
+              <p class="shift-web"><span class="sr-only">Con tu web: </span>{s.pre}<mark>{s.hl}</mark></p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---------- Banda fotográfica ---------- */
+  .why-band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: clamp(560px, 92vh, 960px);
+    display: flex;
+    align-items: center;
+    padding-block: clamp(80px, 10vw, 140px);
+  }
+  .why-photo { position: absolute; inset: 0; z-index: -1; display: block; }
+  @media (min-width: 1024px) {
+    /* Desktop: la foto ocupa la mitad derecha hasta el borde; el titular vive sobre petróleo */
+    .why-photo { left: 44%; overflow: hidden; }
+    .why-photo img { object-position: 45% 30% !important; }
+  }
+  .why-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 35%; display: block; }
+  .why-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(16, 45, 53, 1) 0%, rgba(16, 45, 53, .55) 18%, rgba(16, 45, 53, 0) 45%);
+  }
+  .why-band-copy { position: relative; }
+  .why-title {
+    margin: 0 0 28px;
+    max-width: 9ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 118;
+    font-size: var(--fs-display);
+    line-height: .88;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    color: var(--ice);
+  }
+  .why-lede {
+    margin: 0 0 36px;
+    max-width: 40ch;
+    font-size: var(--fs-lede);
+    line-height: 1.5;
+    color: var(--on-petrol-soft);
+  }
+  .why-btn { min-height: 60px; padding-inline: 30px; font-size: var(--fs-body); }
+
+  /* ---------- Lo que cambia ---------- */
+  .shifts { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--petrol); }
+  .shift {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(16px, 3vw, 48px);
+    align-items: start;
+    padding: clamp(24px, 3.4vw, 44px) 0;
+    border-bottom: 1px solid var(--line-ice-strong);
+  }
+  .shift-today { margin: 0 0 12px; font-size: var(--fs-body); line-height: 1.45; color: var(--on-ice-dim); }
+  .shift-today s { text-decoration-thickness: 1px; text-decoration-color: var(--on-ice-dim); }
+  .shift-web {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 108;
+    font-size: var(--fs-statement);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--on-ice);
+  }
+  /* Marcador lima: relleno lima con texto petróleo (nunca texto lima sobre claro) */
+  .shift-web mark {
+    background: var(--lime);
+    color: var(--petrol);
+    padding: 0 .12em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    font-weight: 800;
+  }
+
+  @media (min-width: 1024px) {
+    .shift-body { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 4vw, 64px); align-items: baseline; }
+    .shift-today { margin: 0; }
+  }
+
+  /* Mobile: foto vertical arriba, texto sobre el tercio inferior oscuro */
+  @media (max-width: 767px) {
+    /* Mobile: foto arriba como bloque, texto debajo sobre petróleo (no tapa la cara) */
+    .why-band { display: block; min-height: 0; padding: 0 0 56px; }
+    .why-photo { position: relative; inset: auto; z-index: 0; height: 58svh; min-height: 340px; }
+    .why-photo img { object-position: 50% 25%; }
+    .why-photo::after { background: linear-gradient(180deg, rgba(16, 45, 53, 0) 55%, rgba(16, 45, 53, 1) 100%); }
+    .why-band-copy { margin-top: -40px; }
+    .why-btn { width: 100%; }
+  }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+</style>

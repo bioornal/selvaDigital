@@ -9,8 +9,8 @@
 - Commercial model: pago único, 50% inicio + 50% contra entrega. NO hosting/dominio incluido — el cliente lo contrata a su nombre (recomendamos Hostinger, ~AR$ 9.300/mes). Esto evita atar al cliente al freelancer y baja la fricción de venta.
 
 ## Contact Info
-- Phone: `+54 9 3548 403786`
-- WhatsApp: `5493548403786`
+- Phone: `+54 9 3757 652003`
+- WhatsApp: `5493757652003`
 - Email: `info.selvadigital@gmail.com`
 - Logo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png`
 - Profile photo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg`
@@ -30,46 +30,37 @@
 - `npm run preview` — preview build
 
 ## Design System
-- Typography: Geist (headings) + Inter (body) + JetBrains Mono (code/kickers)
-- Colors:
-  - Accent principal: **Emerald `#2BB673`** (CTAs, kickers, highlights de texto y "featured")
-  - Acento secundario: **Electric Cyan `#00E5FF` / `rgba(0, 229, 255, 0.45)`** — separadores globales entre secciones, barra de progreso de scroll, líneas sutiles
-  - Background: `#0A0B0D` (body) / `#121316` (surface)
-  - Text: `white #FAFAFA` / `textSoft rgba(250,250,250,0.72)` / `textDim rgba(250,250,250,0.58)` (boosted vía global.css para cumplir WCAG AA)
-  - NOTA: las clases Tailwind legacy `azure-radiance` y `ai-violet` quedaron del design system anterior y NO se usan en componentes activos (sólo en el config de Tailwind por compatibilidad).
-- Buttons: ALL CTA/action buttons use `rounded-none` (90° rectangular corners)
-- Decorative elements (badges, tags, orbs, profile photo, WhatsApp float) retain `rounded-full`
-- All prices in ARS, one-time payment (50/50 inicio/entrega)
-- Copy style: outcome-led (dolor → solución → resultado → precio). Avoid provider-jargon (Core Web Vitals, agéntico, multi-bot multiusuario, etc.) in customer-facing surfaces.
-- User communicates in Spanish (rioplatense — usar "desde" not "basado en", "vos" not "tú", etc.)
+- Fuente de verdad: [DESIGN.md](DESIGN.md); tokens implementados en src/styles/global.css.
+- Petrol #102D35 / Ice #E8F7F5 / Lime #D9FA57; estilo tech premium tipo Nothing, superficies planas y hairlines.
+- Archivo (titulares/cuerpo), Martian Mono (etiquetas), Doto (cifras). Escala compartida --fs-* en :root; no agregar font-size sueltos.
+- Controles rectos; lima para CTAs, marcador mark sobre hielo y bloque «Trato directo conmigo», siempre con texto petróleo.
+- Renders de producto en Hero/separadores; foto REAL de stock en WhyWeb. Nunca fotos de personas o lugares generadas por IA.
+- Punto fuerte: sitios web y digitalización; chatbot integrado en la web como extra. Copy rioplatense en primera persona, precios ARS, pago único 50/50, hosting/dominio aparte.
 
 ## File Structure
 ```
 src/
 ├── components/
-│   ├── Header.tsx          — max-w-[1320px], 5 menu items, "Pedir presupuesto →" CTA emerald
-│   ├── Hero.astro          — Video bg desktop / dot grid mobile, eyebrow cupos, stats grid, microcopy
-│   ├── ServicesV2.astro    — 5 service cards (sitios, e-commerce, sistemas, chatbots, SEO)
+│   ├── Header.tsx          — Marca tipográfica, navegación responsive, Portal y CTA lima
+│   ├── Hero.astro          — Titular tipográfico con verbo rotativo + render hero-device + WhatsApp
+│   ├── WhyWeb.astro        — Foto real a sangre + argumento web + lista Hoy → Con tu web con mark lima
+│   ├── VisualBreak.astro   — Separador con render de producto, frase y CTA (dos usos)
+│   ├── ServicesV2.astro    — Qué resuelvo: sitios web principal; chatbot web extra con demo Impasto
 │   ├── Portfolio.astro     — 9 proyectos con KPI y stack visible (inline, sin sub-component)
-│   ├── AboutV2.astro       — Foto perfil + bio + KPIs + stack + tabla "cómo trabajo" (mobile accordion)
-│   ├── Manifiesto.astro    — 3 pilares con íconos (precio fijo / respuesta directa / pago único)
+│   ├── AboutV2.astro       — Cómo trabajo: foto real, bloque lima «Trato directo conmigo» y proceso
 │   ├── Testimonios.astro   — 6 testimonios reales con avatares iniciales + KPI badge
-│   ├── AIChatbots.astro    — 2-col: kicker+title+6 cards+CTAs (izq) + ChatPreview React (der, md+)
 │   ├── ChatPreview.tsx     — Animated chat demo (client:visible)
-│   ├── Apps.astro          — Static AI image con gradient glow, feature list, CTA
 │   ├── Precios.astro       — 7 planes con tabs (Webs / Sistemas), pricing inline (sin PlanCard)
 │   ├── FAQ.astro           — 9 preguntas, vanilla JS accordion, aria-controls + focus visible
-│   ├── Contact.tsx         — Form (Formik+Yup) + presupuesto toggle, Resend email
-│   ├── Banner.tsx          — 20% OFF discount banner (localStorage, sin fake countdown)
-│   ├── Footer.astro        — Menu, email, phone, logo, socials
+│   ├── Contact.tsx         — Armador de mensaje WhatsApp + formulario Resend secundario
+│   ├── Footer.astro        — Marca tipográfica, invitación, enlaces y contacto
 │   ├── WhatsAppButton.tsx  — Floating WhatsApp button
-│   ├── SectionDivider.astro — Divisor cian sutil entre secciones
 │   ├── admin/
 │   │   ├── AdminLogin.tsx     — Supabase auth login form
 │   │   ├── AdminDashboard.tsx — Stats + clients table + navigation
 │   │   ├── ClientForm.tsx     — Create/edit client with project details
 │   │   └── ClientDetail.tsx   — Client info, phases, message composer
-│   └── ui/                 — button, card, input, textarea (all use cn())
+│   └── ui/                 — WaIcon.tsx (SVG WhatsApp compartido), button, card, input, textarea
 ├── lib/
 │   ├── utils.ts            — cn() helper (clsx + tailwind-merge)
 │   ├── constants.ts        — WHATSAPP_NUMBER, WHATSAPP_URL, CONTACT_PHONE, CONTACT_EMAIL
@@ -85,7 +76,7 @@ src/
 │   ├── Layout.astro        — Schema.org Person, security headers, font preload, SEO
 │   └── AdminLayout.astro   — Minimal dark layout for admin panel
 ├── pages/
-│   ├── index.astro         — Hero → Services(01) → Portfolio(02) → AboutV2(03) → Manifiesto(04) → Testimonios(05) → AIChatbots(06) → Apps(07) → Precios(08) → FAQ(09) → Contact(10). Prerender estático.
+│   ├── index.astro         — Hero → WhyWeb → Portfolio → ServicesV2 → VisualBreak (trato directo) → AboutV2 → Testimonios → VisualBreak (en vivo) → Precios → FAQ → Contact. Prerender estático.
 │   ├── admin/
 │   │   ├── login.astro        — Admin login page
 │   │   ├── index.astro        — Admin dashboard
@@ -215,6 +206,13 @@ Premisa: en mobile cada sección tenía su propio tamaño de H2 (26–36px), su 
 - 📏 **FAQ grid restructurado para que las columnas tengan el mismo alto**: pasó de `items-start` → `items-stretch`. La columna izquierda dejó de ser `md:sticky` y ahora es `flex flex-col` — heading/sub/CTA apilados arriba y la imagen toma `flex-1 min-h-[420px]` para rellenar exactamente el alto de la lista de FAQs de la derecha.
 
 Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre en 1 línea (los `<br>` lo garantizan), subtítulos uniformes. En desktop el FAQ ya no tiene hueco vertical en la columna izquierda.
+
+## Phase 11 (Rediseño Impeccable — nov 2026)
+- Nueva identidad Petrol/Ice/Lime, estilo tech premium tipo Nothing; composición de home «Muro de trabajos» elegida por el usuario.
+- Home: Hero (titular + muro de 4 capturas reales) → Trabajos (selector: lista + visor en desktop, fila deslizable en mobile) → Servicios (6, incluye Apps) → Chatbots → Sobre mí → Manifiesto → Testimonios → Precios (ARS) → FAQ → Contacto (armador de mensaje de WhatsApp + formulario) → Footer.
+- Eliminados: `Apps.astro` (integrado en Servicios), `SectionDivider.astro`, `Banner.tsx` (popup 20% off), barra de progreso, video del hero, Framer Motion en Header.
+- Admin y portal re-tematizados (modo operar), portal en voseo y primera persona.
+- Pendiente del usuario: verificar testimonios y KPIs; el logo PNG de Cloudinary sigue en esmeralda (header/footer usan marca tipográfica).
 
 ## Phase 10 (Future)
 - Blog with Astro content collections

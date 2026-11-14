@@ -1,4 +1,5 @@
 ---
+import '../styles/global.css';
 interface Props {
   title?: string;
 }
@@ -15,16 +16,53 @@ const { title = 'Panel Admin | Selva Digital' } = Astro.props;
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@87.5..112.5,400..500&display=swap" rel="stylesheet" />
   <style is:global>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0f;
-      color: #e5e7eb;
-    }
+    
+/* Internal tools: compact controls, stable surfaces and explicit states. */
+.admin-body { background: var(--petrol); color: var(--ice); font-family: var(--font-body); font-size: 14px; line-height: 1.5; font-variation-settings: 'wdth' 100; font-variant-numeric: tabular-nums; }
+.admin-body h1, .admin-body h2, .admin-body h3, .admin-body h4 { font-family: var(--font-display); font-variation-settings: 'wdth' 100; text-wrap: pretty; }
+.admin-body h1 { font-size: 1.75rem; line-height: 1.2; }
+.admin-body label, .admin-body th, .admin-body .font-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.admin-body label { font-size: 12px; letter-spacing: .03em; }
+.admin-body .btn { min-height: 36px; padding: 7px 14px; font-size: 14px; line-height: 1.4; font-variation-settings: 'wdth' 100; border-radius: 0; }
+.admin-body .btn-lime { color: var(--petrol); background: var(--lime); border-color: transparent; }
+.admin-body .btn-lime:hover { background: var(--lime-press); }
+.admin-body .btn-ghost { background: transparent; color: var(--ice); }
+.admin-body .btn-ghost:hover { background: var(--petrol-raised); }
+.admin-body input:not([type=checkbox]):not([type=radio]):not([type=file]), .admin-body textarea, .admin-body select { background: var(--petrol-deep); color: var(--ice); border: 1px solid var(--line-petrol-strong); border-radius: 0; box-shadow: none; min-height: 40px; }
+.admin-body input::placeholder, .admin-body textarea::placeholder { color: var(--on-petrol-dim); opacity: 1; }
+.admin-body input:focus, .admin-body textarea:focus, .admin-body select:focus { border-color: var(--ice); }
+.admin-body :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.admin-body :is(button,input,textarea,select):disabled, .admin-body [aria-disabled=true] { opacity: .5; cursor: not-allowed; }
+.admin-body input:read-only, .admin-body textarea:read-only { color: var(--on-petrol-soft); }
+.admin-body [aria-invalid=true] { border-color: #FFB4A8; }
+.admin-body :is(button,a,[role=button]) { -webkit-tap-highlight-color: transparent; }
+.admin-body table { font-variant-numeric: tabular-nums; }
+.admin-body th { color: var(--on-petrol-dim); font-size: 11px; font-weight: 500; letter-spacing: .06em; }
+.admin-body :is(th,td) { border-bottom: 1px solid var(--line-petrol); }
+.admin-body tbody tr:hover { background: var(--petrol-raised); }
+.admin-body td:not(:first-child) { font-family: var(--font-mono); font-size: 12px; }
+.admin-body .project-status { background: var(--petrol-raised); color: var(--ice); border: 1px solid var(--line-petrol-strong); font-family: var(--font-mono); }
+.admin-body .project-status-finalizado, .admin-body .project-status-deploy { color: var(--lime); }
+.admin-body .project-status-pausado, .admin-body .project-status-propuesta { color: #F5C76B; }
+.admin-body main { min-width: 0; }
+.admin-body :is(h1,h2,h3,p,label) { overflow-wrap: anywhere; }
+.admin-body .animate-spin { color: var(--ice); }
+@media (max-width: 639px) {
+ .admin-body header > div > div { flex-wrap: wrap; gap: 8px; height: auto; min-height: 64px; padding-block: 10px; }
+ .admin-body .btn { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .admin-body *, .admin-body *::before, .admin-body *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+
+.admin-body .btn-danger { color: #FFB4A8; }
+.admin-body :is(input,textarea)[aria-invalid=true] { border-color: #FFB4A8 !important; }
   </style>
 </head>
-<body class="min-h-screen bg-[#0a0a0f] text-gray-100">
+<body class="admin-body min-h-screen bg-[var(--petrol)] text-[var(--on-petrol-dim)]">
   <slot />
 </body>
 </html>

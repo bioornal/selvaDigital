@@ -8,7 +8,7 @@ const textSoft = 'rgba(250,250,250,0.72)';
 const textDim = 'rgba(250,250,250,0.46)';
 const line = 'rgba(250,250,250,0.08)';
 
-// Orden: los proyectos de más peso primero (los 3 primeros son los que se ven sin desplegar).
+// Orden: los proyectos de más peso primero (los 6 primeros son los que se ven sin desplegar).
 const projects = [
   {
     title: 'Impasto Pizzería', tag: 'Sistema',
@@ -51,20 +51,20 @@ const projects = [
     url: 'https://olietta-joyeria.netlify.app/'
   },
   {
-    title: 'Megabot Admin', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
-    desc: 'Dashboard multiusuario para gestionar 3 chatbots con IA corriendo en un VPS propio, en tiempo real.',
-    kpi: '3 bots, 1 panel', sub: '+1.200 msgs/día',
-    stack: ['React','IA','VPS'],
-    url: 'https://megabot-admin.cloud/login'
-  },
-  {
     title: 'MegaMuebles', tag: 'E-commerce',
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
     desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
     kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
     stack: ['React','Cloudinary','GA4'],
     url: 'https://megamueblessommiers.online'
+  },
+  {
+    title: 'Megabot Admin', tag: 'Sistema',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
+    desc: 'Dashboard multiusuario para gestionar 3 chatbots con IA corriendo en un VPS propio, en tiempo real.',
+    kpi: '3 bots, 1 panel', sub: '+1.200 msgs/día',
+    stack: ['React','IA','VPS'],
+    url: 'https://megabot-admin.cloud/login'
   },
   {
     title: 'Social Core', tag: 'Sistema',
@@ -92,7 +92,7 @@ const projects = [
   },
 ];
 
-const INITIAL_VISIBLE = 3;
+const INITIAL_VISIBLE = 6;
 const extraCount = projects.length - INITIAL_VISIBLE;
 ---
 
@@ -234,7 +234,7 @@ const extraCount = projects.length - INITIAL_VISIBLE;
         // Colapsar
         extraCards.forEach(card => card.classList.add('hidden'));
         toggleBtn.setAttribute('data-expanded', 'false');
-        btnText.textContent = `Ver todos los proyectos (${extraCards.length + 3}) ↓`;
+        btnText.textContent = `Ver todos los proyectos (${document.querySelectorAll('.portfolio-card').length}) ↓`;
         btnIcon.textContent = '↓';
         btnIcon.style.transform = 'rotate(0deg)';
         

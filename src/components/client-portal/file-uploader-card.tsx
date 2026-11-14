@@ -237,11 +237,11 @@ export default function FileUploaderCard({
           <div className="space-y-1.5">
             <p className="text-sm text-[var(--ice)]">
               {dragActive ? (
-                <span className="font-bold text-[var(--on-petrol-soft)]">Suelta para subir</span>
+                <span className="font-bold text-[var(--on-petrol-soft)]">Soltá para subir</span>
               ) : (
                 <>
                   <span className="font-bold text-[var(--on-petrol-soft)] hover:underline">Hacé clic para buscar</span>
-                  <span className="text-[var(--on-petrol-soft)]"> o arrastra tus archivos aquí</span>
+                  <span className="text-[var(--on-petrol-soft)]"> o arrastrá tus archivos acá</span>
                 </>
               )}
             </p>

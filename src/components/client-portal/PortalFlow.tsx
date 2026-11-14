@@ -61,7 +61,7 @@ function PortalFlowContent() {
         const files = await supabaseDb.getUploadedFiles(data.id)
         setUploadedFiles(files)
       } else {
-        setError('Código no encontrado. Verifica y vuelve a intentarlo.')
+        setError('Código no encontrado. Revisalo y volvé a intentar.')
         setActiveCode('')
         // Clear query param
         window.history.replaceState({}, '', window.location.pathname)
@@ -80,7 +80,7 @@ function PortalFlowContent() {
   const handleAccessSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!accessCodeInput.trim()) {
-      setError('Por favor ingresa un código de acceso.')
+      setError('Ingresá tu código de acceso.')
       return
     }
     const code = accessCodeInput.trim().toUpperCase()
@@ -283,7 +283,7 @@ function PortalFlowContent() {
                     size="lg"
                     iconRight={<ArrowRight className="w-4 h-4" />}
                   >
-                    Ingresar al Portal
+                    Ingresar al portal
                   </Button>
                 </form>
               </Card>
@@ -413,7 +413,7 @@ function PortalFlowContent() {
                   Paso 1 de 4
                 </Badge>
                 <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ice)] tracking-tight font-heading mt-3">
-                  Cuéntanos sobre tu negocio
+                  Contame sobre tu negocio
                 </h2>
                 <p className="text-sm text-[var(--on-petrol-soft)] mt-2 leading-relaxed max-w-2xl">
                   Esta información será la base de tu sitio web. Puedes guardar y volver cuando lo necesites.
@@ -595,7 +595,7 @@ function PortalFlowContent() {
                   Resumen y Envío Final
                 </h2>
                 <p className="text-sm text-[var(--on-petrol-soft)] mt-2 leading-relaxed max-w-2xl">
-                  Verifica los datos cargados antes del envío. Tu project manager recibirá una notificación automática.
+                  Revisá los datos cargados antes de enviar. Cuando envíes, me llega un aviso automático.
                 </p>
               </div>
 

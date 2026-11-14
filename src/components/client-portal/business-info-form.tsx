@@ -120,7 +120,7 @@ export default function BusinessInfoForm({
           </div>
           <div>
             <h3 className="text-[15px] font-bold text-[var(--ice)] tracking-tight font-heading">Perfil de la Marca</h3>
-            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Cuéntanos sobre tu empresa y a qué se dedica</p>
+            <p className="text-[12px] text-[var(--on-petrol-soft)] mt-0.5">Contame sobre tu negocio y a qué se dedica</p>
           </div>
         </header>
 
@@ -129,7 +129,7 @@ export default function BusinessInfoForm({
           <Input label="Slogan o Frase" value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="Ej: El sabor más puro de la naturaleza" disabled={loading} hint="Una frase corta que identifique tu marca (opcional)" />
         </div>
 
-        <Textarea label="Descripción Comercial" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Describe brevemente tus productos, servicios y público objetivo. Esta información nos ayuda a redactar los textos de tu sitio." disabled={loading} rows={4} />
+        <Textarea label="Descripción Comercial" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Describí brevemente tus productos, servicios y a quién le vendés. Me ayuda a escribir los textos de tu sitio." disabled={loading} rows={4} />
       </section>
 
       {/* Section 2: Contact */}

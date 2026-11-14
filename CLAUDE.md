@@ -50,7 +50,7 @@ src/
 │   ├── Header.tsx          — max-w-[1320px], 5 menu items, "Pedir presupuesto →" CTA emerald
 │   ├── Hero.astro          — Video bg desktop / dot grid mobile, eyebrow cupos, stats grid, microcopy
 │   ├── ServicesV2.astro    — 5 service cards (sitios, e-commerce, sistemas, chatbots, SEO)
-│   ├── Portfolio.astro     — 9 proyectos con KPI y stack visible (inline, sin sub-component)
+│   ├── Portfolio.astro     — 10 proyectos con KPI y stack visible (inline, sin sub-component); los de más peso primero, miniaturas propias en public/portfolio/
 │   ├── AboutV2.astro       — Foto perfil + bio + KPIs + stack + tabla "cómo trabajo" (mobile accordion)
 │   ├── Manifiesto.astro    — 3 pilares con íconos (precio fijo / respuesta directa / pago único)
 │   ├── Testimonios.astro   — 6 testimonios reales con avatares iniciales + KPI badge

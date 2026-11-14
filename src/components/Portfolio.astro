@@ -8,7 +8,16 @@ const textSoft = 'rgba(250,250,250,0.72)';
 const textDim = 'rgba(250,250,250,0.46)';
 const line = 'rgba(250,250,250,0.08)';
 
+// Orden: los proyectos de más peso primero (los 3 primeros son los que se ven sin desplegar).
 const projects = [
+  {
+    title: 'Impasto Pizzería', tag: 'Sistema',
+    img: '/portfolio/impasto.webp',
+    desc: 'Todo el negocio en un solo sistema: tienda online con Mercado Pago, promos y asistente con IA, caja para el mostrador, app Android de recetas y costos, comandas que se imprimen solas en cocina y servidor propio.',
+    kpi: 'Web + caja + cocina', sub: 'Puerto Iguazú',
+    stack: ['Next.js','Mercado Pago','IA','Android','VPS'],
+    url: 'https://www.impastopizzas.com/'
+  },
   {
     title: 'Aruma Lodge', tag: 'Turismo',
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/f_auto,q_auto,w_1200,h_630/v1781879164/ArumaLodge/Hero_bgsjtf.jpg',
@@ -16,6 +25,14 @@ const projects = [
     kpi: 'Reserva directa 100%', sub: 'Puerto Iguazú',
     stack: ['Next.js','Cloudinary','Supabase'],
     url: 'https://arumalodgeiguazu.com/'
+  },
+  {
+    title: 'La Casa del Lago', tag: 'Turismo',
+    img: '/portfolio/casadellago.webp',
+    desc: 'Cabañas frente al lago Urugua-í con reserva directa, pago con Mercado Pago y sitio en español, inglés y portugués.',
+    kpi: 'Reservas sin comisiones', sub: 'Lago Urugua-í',
+    stack: ['Next.js','Supabase','Mercado Pago'],
+    url: 'https://lacasadellagouruguai.com/'
   },
   {
     title: 'Iguazú Falls Lodge', tag: 'Turismo',
@@ -26,44 +43,12 @@ const projects = [
     url: 'https://www.iguazufallslodge.com/'
   },
   {
-    title: 'MegaMuebles', tag: 'E-commerce',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
-    desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
-    kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
-    stack: ['React','Cloudinary','GA4'],
-    url: 'https://megamueblessommiers.online'
-  },
-  {
-    title: 'La Casa del Lago', tag: 'Turismo',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1786442961/SelvaDigital/Captura_de_pantalla_2026-08-11_065622_dxbpek.png',
-    desc: 'Cabañas a orillas del lago Urugua-í con muelle propio, kayaks, parrilla y motor de reservas sin comisiones.',
-    kpi: 'Reservas 24/7', sub: 'Lago Urugua-í',
-    stack: ['Next.js','React','Tailwind'],
-    url: 'https://melodious-palmier-d4426c.netlify.app/'
-  },
-  {
-    title: 'Impasto Pizzería', tag: 'E-commerce',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1789825248/SelvaDigital/Hero_fw477h.png',
-    desc: 'Pizzería online con menú interactivo, combos, empanadas por caja y checkout integrado.',
-    kpi: 'Vendiendo online', sub: 'Puerto Iguazú',
-    stack: ['React','Netlify','SEO'],
-    url: 'https://www.impastopizzas.com/'
-  },
-  {
-    title: 'El Fogón Delivery', tag: 'Gastronomía',
-    img: '/fogon.webp',
-    desc: 'E-commerce gastronómico con MercadoPago, opciones sin TACC y carrito persistente entre dispositivos.',
-    kpi: '×2.3 ticket promedio', sub: 'vs. pedidos por WhatsApp',
-    stack: ['Next.js','Tailwind','S3'],
-    url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
-  },
-  {
-    title: 'Vip Traslados Iguazú', tag: 'Landing',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
-    desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
-    kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
-    stack: ['React','Vite','Schema'],
-    url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/'
+    title: 'Olietta Joyería', tag: 'E-commerce',
+    img: '/portfolio/olietta.webp',
+    desc: 'Joyería y relojería con catálogo por material y medida, canal para mayoristas, consultas por WhatsApp y panel propio para cargar piezas y pedidos.',
+    kpi: 'Minorista + mayorista', sub: 'Puerto Iguazú',
+    stack: ['Next.js','Supabase','Netlify'],
+    url: 'https://olietta-joyeria.netlify.app/'
   },
   {
     title: 'Megabot Admin', tag: 'Sistema',
@@ -74,6 +59,14 @@ const projects = [
     url: 'https://megabot-admin.cloud/login'
   },
   {
+    title: 'MegaMuebles', tag: 'E-commerce',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
+    desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
+    kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
+    stack: ['React','Cloudinary','GA4'],
+    url: 'https://megamueblessommiers.online'
+  },
+  {
     title: 'Social Core', tag: 'Sistema',
     img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1779842341/SelvaDigital/4ee423a3-f907-4d6e-9800-1ef9b4a7330e.png',
     desc: 'Dashboard multi-marca y planificador editorial con IA integrado para automatizar y diseñar la grilla de Instagram en segundos.',
@@ -82,20 +75,20 @@ const projects = [
     url: 'https://mk-panel.netlify.app/'
   },
   {
-    title: 'Carro Fogón', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonPedidos_npzdw3.png',
-    desc: 'Sistema gastronómico de toma de pedidos y gestión de clientes con dashboard en tiempo real.',
-    kpi: 'Pedidos automatizados', sub: 'en producción',
-    stack: ['React','Node.js','Firebase'],
-    url: 'https://carro-fogon-rcmgt8lva-bioornals-projects.vercel.app/login'
+    title: 'Vip Traslados Iguazú', tag: 'Landing',
+    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
+    desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
+    kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
+    stack: ['React','Vite','Schema'],
+    url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/'
   },
   {
-    title: 'Recetario Napolitano', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/FogonRecetario_vzfnfn.png',
-    desc: 'Sistema de recetas con calculadora de masa, gestión de costos y precios para pizzería artesanal.',
-    kpi: 'Costos optimizados', sub: 'en producción',
-    stack: ['React','Netlify','Node.js'],
-    url: 'https://recetarionapolitano.netlify.app/login/'
+    title: 'El Fogón Delivery', tag: 'Gastronomía',
+    img: '/fogon.webp',
+    desc: 'E-commerce gastronómico con MercadoPago, opciones sin TACC y carrito persistente entre dispositivos.',
+    kpi: '×2.3 ticket promedio', sub: 'vs. pedidos por WhatsApp',
+    stack: ['Next.js','Tailwind','S3'],
+    url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
   },
 ];
 

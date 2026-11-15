@@ -38,33 +38,32 @@ const Header = () => {
     <header
       className="fixed inset-x-0 top-0 z-50"
       style={{
-        // Arriba de todo: petróleo translúcido con desenfoque para que el menú no se pierda sobre el hero.
-        background: scrolled || open ? 'var(--petrol)' : 'rgba(16, 45, 53, .55)',
-        backdropFilter: scrolled || open ? 'none' : 'blur(10px)',
-        WebkitBackdropFilter: scrolled || open ? 'none' : 'blur(10px)',
-        boxShadow: open ? 'none' : 'inset 0 -1px 0 var(--line-petrol)',
+        background: scrolled || open ? 'var(--petrol)' : 'transparent',
+        boxShadow: scrolled && !open ? 'inset 0 -1px 0 var(--line-petrol)' : 'none',
         transition: 'background-color .25s var(--ease-out), box-shadow .25s var(--ease-out)',
       }}
     >
       <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
         <a href="/" className="flex shrink-0 items-center no-underline" aria-label="Selva Digital — inicio">
-          <img src={LOGO.horizontal} alt="Selva Digital" width={173} height={66} className="block h-[var(--logo-h)] w-auto" decoding="async" fetchPriority="high" />
+          <img src={LOGO.horizontal} alt="Selva Digital" width={173} height={66} className="block h-[var(--logo-h)] w-auto" decoding="async" {...{ fetchpriority: 'high' }} />
         </a>
 
-        <nav className="hidden items-center gap-9 lg:flex" aria-label="Principal">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Principal">
           {menuItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="nav-link text-[length:var(--fs-body)] font-semibold text-[var(--ice)] no-underline"
+              className="nav-link whitespace-nowrap text-[length:var(--fs-body)] font-semibold text-[var(--ice)] no-underline"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-7 lg:flex">
-          <a href="/portal" className="mono text-[var(--on-petrol-soft)] no-underline transition-colors hover:text-[var(--ice)]">
+        <div className="hidden items-center gap-5 lg:flex xl:gap-7">
+          {/* Entre 1024 y 1279 px no entra; queda en el pie y en el menú móvil */}
+          <a href="/portal" className="mono hidden whitespace-nowrap text-[var(--on-petrol-soft)] no-underline transition-colors hover:text-[var(--ice)] xl:inline">
+
             Portal clientes
           </a>
           <a href={WA_HEADER} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ minHeight: 52, padding: '0 24px', fontSize: 'var(--fs-body)' }}>

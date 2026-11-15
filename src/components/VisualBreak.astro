@@ -3,8 +3,10 @@
  * Separador visual de ancho completo: imagen de producto + frase y botón
  * que presenta los trabajos en vivo.
  */
+import { bg, bgSrcset } from '../lib/cloudinary';
+
 interface Props {
-  image: string;        // nombre base en /public/visuals, sin extensión
+  image: string;        // ruta en Cloudinary (usar IMG de lib/cloudinary)
   title: string;        // frase grande
   href: string;
   cta: string;
@@ -18,9 +20,12 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : 
 
 <aside class:list={['vbreak on-deep', { 'is-right': align === 'right' }]} aria-label={title}>
   <picture class="vbreak-media" aria-hidden="true">
-    <source media="(max-width: 767px)" srcset={`/visuals/${image}-1200.webp`} type="image/webp" />
-    <source srcset={`/visuals/${image}.webp`} type="image/webp" />
-    <img src={`/visuals/${image}.png`} alt="" width="2400" height="900" loading="lazy" decoding="async" />
+    <img
+      src={bg(image, 1600)}
+      srcset={bgSrcset(image)}
+      sizes="100vw"
+      alt="" width="2400" height="900" loading="lazy" decoding="async"
+    />
   </picture>
   <div class="wrap vbreak-copy">
     <p class="vbreak-title">{title}</p>

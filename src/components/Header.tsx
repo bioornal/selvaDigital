@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { whatsappLink } from '../lib/constants';
 import WaIcon from './ui/WaIcon';
+import { LOGO } from '../lib/cloudinary';
 
 const menuItems = [
   { href: '#portfolio', label: 'Trabajos' },
@@ -43,14 +44,8 @@ const Header = () => {
       }}
     >
       <div className="wrap flex h-[68px] items-center justify-between gap-6">
-        <a href="/" className="flex items-center gap-1.5 text-[var(--ice)] no-underline" aria-label="Selva Digital — inicio">
-          <span
-            className="text-[length:var(--fs-brand)] font-extrabold lowercase leading-none"
-            style={{ fontVariationSettings: "'wdth' 112", letterSpacing: '-0.03em' }}
-          >
-            selva digital
-          </span>
-          <span className="status-dot" aria-hidden="true" />
+        <a href="/" className="flex items-center no-underline" aria-label="Selva Digital — inicio">
+          <img src={LOGO.horizontal} alt="Selva Digital" width={131} height={50} className="block h-[50px] w-auto" decoding="async" />
         </a>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">

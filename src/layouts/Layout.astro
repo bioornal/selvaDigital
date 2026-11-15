@@ -4,6 +4,7 @@ import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton';
 import '../styles/global.css';
+import { LOGO } from '../lib/cloudinary';
 
 interface Props {
   title?: string;
@@ -44,7 +45,8 @@ const schemaOrgJSON = {
       "@id": "https://www.selvadigital.com/#service",
       "name": "Selva Digital",
       "url": "https://www.selvadigital.com",
-      "image": "https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png",
+      "image": LOGO.og,
+      "logo": LOGO.square,
       "telephone": "+54-9-3757-652003",
       "email": "info.selvadigital@gmail.com",
       "priceRange": "$250.000 - $1.500.000 ARS",
@@ -85,7 +87,9 @@ const schemaOrgJSON = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description}>
@@ -94,7 +98,9 @@ const schemaOrgJSON = {
     <meta name="author" content="Selva Digital">
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png">
+    <meta property="og:image" content={LOGO.og}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Selva Digital — desarrollo web freelance para PyMEs">
     <meta property="og:url" content={canonicalURL}>
     <meta property="og:type" content="website">

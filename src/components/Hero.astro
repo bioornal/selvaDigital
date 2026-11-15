@@ -1,6 +1,7 @@
 ---
 import WaIcon from './ui/WaIcon';
 import { whatsappLink } from '../lib/constants';
+import { IMG, bg, bgSrcset } from '../lib/cloudinary';
 
 const WA_HERO = whatsappLink('¡Hola Christian! Quiero que mi negocio venda online. ¿Me pasás un presupuesto?');
 
@@ -10,9 +11,12 @@ const verbs = ['vende', 'atiende', 'responde', 'cobra'];
 
 <section id="hero" class="hero on-petrol" aria-labelledby="hero-title">
   <picture class="hero-visual" aria-hidden="true">
-    <source media="(max-width: 767px)" srcset="/visuals/hero-device-1200.webp" type="image/webp" />
-    <source srcset="/visuals/hero-device.webp" type="image/webp" />
-    <img src="/visuals/hero-device.png" alt="" width="2400" height="1350" fetchpriority="high" decoding="async" />
+    <img
+      src={bg(IMG.heroDevice, 1600)}
+      srcset={bgSrcset(IMG.heroDevice)}
+      sizes="100vw"
+      alt="" width="2400" height="1350" fetchpriority="high" decoding="async"
+    />
   </picture>
 
   <div class="wrap hero-inner">

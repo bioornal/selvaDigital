@@ -12,7 +12,7 @@
 - Phone: `+54 9 3757 652003`
 - WhatsApp: `5493757652003`
 - Email: `info.selvadigital@gmail.com`
-- Logo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778510560/SelvaDigital/logoChico2_kg35ot.png`
+- Logo: Cloudinary `SelvaDigital/logo/` (logo horizontal e isotipo, claro/oscuro, SVG y PNG). En la web: `LOGO` de `src/lib/cloudinary.ts`
 - Profile photo: `https://res.cloudinary.com/djtvjkcu6/image/upload/v1778507882/SelvaDigital/yo_perfil_ekrrxc.jpg`
 
 ## Tech Stack
@@ -46,7 +46,7 @@ src/
 │   ├── WhyWeb.astro        — Foto real a sangre + argumento web + lista Hoy → Con tu web con mark lima
 │   ├── VisualBreak.astro   — Separador con render de producto, frase y CTA (dos usos)
 │   ├── ServicesV2.astro    — Qué resuelvo: sitios web principal; chatbot web extra con demo Impasto
-│   ├── Portfolio.astro     — 10 proyectos con KPI y stack visible (inline, sin sub-component); los de más peso primero, miniaturas propias en public/portfolio/
+│   ├── Portfolio.astro     — 10 proyectos con KPI y stack visible (inline, sin sub-component); los de más peso primero, capturas en Cloudinary recortadas 16:10
 │   ├── AboutV2.astro       — Cómo trabajo: foto real, bloque lima «Trato directo conmigo» y proceso
 │   ├── Testimonios.astro   — 6 testimonios reales con avatares iniciales + KPI badge
 │   ├── ChatPreview.tsx     — Animated chat demo (client:visible)
@@ -211,7 +211,8 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - Home: Hero (titular + muro de 4 capturas reales) → Trabajos (selector: lista + visor en desktop, fila deslizable en mobile) → Servicios (6, incluye Apps) → Chatbots → Sobre mí → Manifiesto → Testimonios → Precios (ARS) → FAQ → Contacto (armador de mensaje de WhatsApp + formulario) → Footer.
 - Eliminados: `Apps.astro` (integrado en Servicios), `SectionDivider.astro`, `Banner.tsx` (popup 20% off), barra de progreso, video del hero, Framer Motion en Header.
 - Admin y portal re-tematizados (modo operar), portal en voseo y primera persona.
-- Pendiente del usuario: verificar testimonios y KPIs; el logo PNG de Cloudinary sigue en esmeralda (header/footer usan marca tipográfica).
+- Pendiente del usuario: verificar testimonios y KPIs.
+- Logo nuevo (15/11/2026): encabezado, pie, portal, favicons y og:image usan el logo "oscuro" (para fondo petróleo). Favicon SVG adaptable a pestaña clara u oscura en `public/favicon.svg`.
 
 ## Phase 10 (Future)
 - Blog with Astro content collections
@@ -220,6 +221,12 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - Reemplazar Framer Motion en Header por CSS transitions (-80kB del bundle del index)
 - CSP header en `vercel.json`
 - A/B test del Banner modal 20% OFF (¿realmente convierte o sólo interrumpe?)
+
+## Imágenes (nov 2026)
+- Todas las imágenes de la web están en Cloudinary (cuenta `djtvjkcu6`): las propias en `SelvaDigital/web/`, el resto en `SelvaDigital/` y `ArumaLodge/`.
+- Se referencian sólo desde `src/lib/cloudinary.ts` (`IMG`, `cld`, `cldSrcset`): f_auto + q_auto + ancho por srcset. No volver a guardar imágenes en `public/` (sólo favicon, robots y sitemap).
+- Para agregar una: subirla a `SelvaDigital/web/`, sumar su ruta con versión a `IMG`.
+- Origen y licencia de renders y fotos de stock: `docs/imagenes-origen/`.
 
 ## Rules
 - NO push to GitHub unless explicitly requested

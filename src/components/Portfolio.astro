@@ -1,71 +1,78 @@
 ---
+import { IMG, cld, cldSrcset } from '../lib/cloudinary';
+
+// Capturas recortadas en Cloudinary a 16:10 desde arriba (igual que object-position: top).
+const SHOT = 'c_fill,g_north,ar_16:10';
+const SHOT_WIDTHS = [480, 800, 1200];
+const shotSrc = (path: string) => cld(path, 800, SHOT);
+const shotSrcset = (path: string) => cldSrcset(path, SHOT_WIDTHS, SHOT);
 const projects = [
   {
     title: 'Impasto Pizzería', tag: 'Sistema',
-    img: '/portfolio/impasto.webp',
+    img: IMG.impasto,
     desc: 'Todo el negocio en un solo sistema: tienda online con Mercado Pago, promos y asistente con IA, caja para el mostrador, app Android de recetas y costos, comandas que se imprimen solas en cocina y servidor propio.',
     kpi: 'Web + caja + cocina', sub: 'Puerto Iguazú',
     url: 'https://www.impastopizzas.com/'
   },
   {
     title: 'Aruma Lodge', tag: 'Turismo',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/f_auto,q_auto,w_1200,h_630/v1781879164/ArumaLodge/Hero_bgsjtf.jpg',
+    img: IMG.aruma,
     desc: 'Departamentos de autor en el centro de Puerto Iguazú con piscina, jacuzzi y motor de reservas directas.',
     kpi: 'Reserva directa 100%', sub: 'Puerto Iguazú',
     url: 'https://arumalodgeiguazu.com/'
   },
   {
     title: 'La Casa del Lago', tag: 'Turismo',
-    img: '/portfolio/casadellago.webp',
+    img: IMG.casaDelLago,
     desc: 'Cabañas frente al lago Urugua-í con reserva directa, pago con Mercado Pago y sitio en español, inglés y portugués.',
     kpi: 'Reservas sin comisiones', sub: 'Lago Urugua-í',
     url: 'https://lacasadellagouruguai.com/'
   },
   {
     title: 'Iguazú Falls Lodge', tag: 'Turismo',
-    img: '/iguazuFalls.webp',
+    img: IMG.iguazuFalls,
     desc: 'Reservas directas, galería premium y formulario optimizado para conversión de huéspedes premium.',
     kpi: '67% reservas sin OTAs', sub: 'antes era 12%',
     url: 'https://www.iguazufallslodge.com/'
   },
   {
     title: 'Olietta Joyería', tag: 'E-commerce',
-    img: '/portfolio/olietta.webp',
+    img: IMG.olietta,
     desc: 'Joyería y relojería en plata 925 y oro 18k: catálogo por material y medida, alianzas y piezas personalizadas, consultas por WhatsApp y panel propio para cargar piezas y pedidos.',
     kpi: 'Catálogo + panel propio', sub: 'Puerto Iguazú',
     url: 'https://olietta-joyeria.netlify.app/'
   },
   {
     title: 'MegaMuebles', tag: 'E-commerce',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503357/SelvaDigital/Mega_ospdo9.png',
+    img: IMG.megamuebles,
     desc: 'Catálogo completo + SEO local para una mueblería con 20 años de trayectoria en Argentina.',
     kpi: '+34% leads orgánicos', sub: '4 meses post-launch',
     url: 'https://megamueblessommiers.online'
   },
   {
     title: 'Megabot Admin', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778503356/SelvaDigital/Megabot_jczmp3.png',
+    img: IMG.megabot,
     desc: 'Dashboard multiusuario para gestionar 3 chatbots con IA corriendo en un VPS propio, en tiempo real.',
     kpi: '3 bots, 1 panel', sub: '+1.200 msgs/día',
     url: 'https://megabot-admin.cloud/login'
   },
   {
     title: 'Social Core', tag: 'Sistema',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1779842341/SelvaDigital/4ee423a3-f907-4d6e-9800-1ef9b4a7330e.png',
+    img: IMG.socialCore,
     desc: 'Dashboard multi-marca y planificador editorial con IA integrado para automatizar y diseñar la grilla de Instagram en segundos.',
     kpi: 'Grilla en minutos', sub: '100% automatizado',
     url: 'https://mk-panel.netlify.app/'
   },
   {
     title: 'Vip Traslados Iguazú', tag: 'Landing',
-    img: 'https://res.cloudinary.com/djtvjkcu6/image/upload/v1778505330/SelvaDigital/Vip_vvshcm.png',
+    img: IMG.vip,
     desc: 'Landing de traslados turísticos privados con Schema.org y campañas de Google Ads optimizadas.',
     kpi: 'CTR Ads ×2.1', sub: '$ por click bajó 40%',
     url: 'https://iguazu-taxi-maxi-landing-git-main-bioornals-projects.vercel.app/'
   },
   {
     title: 'El Fogón Delivery', tag: 'Gastronomía',
-    img: '/fogon.webp',
+    img: IMG.fogon,
     desc: 'E-commerce gastronómico con MercadoPago, opciones sin TACC y carrito persistente entre dispositivos.',
     kpi: '×2.3 ticket promedio', sub: 'vs. pedidos por WhatsApp',
     url: 'https://proyecto-f-git-main-bioornals-projects.vercel.app/'
@@ -97,7 +104,8 @@ const projectDomain = (url: string) => new URL(url).hostname.replace(/^www\./, '
         <div class="project-screen">
           {projects.map((p, i) => (
             <img id={`portfolio-image-${i}`} class:list={['project-image', { 'is-active': i === 0 }]}
-              src={p.img} alt={`Sitio de ${p.title}`} width="1200" height="750"
+              src={shotSrc(p.img)} srcset={shotSrcset(p.img)} sizes="(min-width: 1024px) 58vw, 100vw"
+              alt={`Sitio de ${p.title}`} width="1200" height="750"
               loading={i === 0 ? 'eager' : 'lazy'} decoding="async" aria-hidden={i !== 0 ? 'true' : 'false'} />
           ))}
         </div>
@@ -115,7 +123,7 @@ const projectDomain = (url: string) => new URL(url).hostname.replace(/^www\./, '
         {projects.map((p, i) => (
           <li class="project-card">
             <a class="project-card-link" href={p.url} target="_blank" rel="noopener noreferrer">
-              <span class="project-screen"><img src={p.img} alt={`Sitio de ${p.title}`} width="1200" height="750" loading={i < 2 ? "eager" : "lazy"} decoding="async" /></span>
+              <span class="project-screen"><img src={shotSrc(p.img)} srcset={shotSrcset(p.img)} sizes="85vw" alt={`Sitio de ${p.title}`} width="1200" height="750" loading="lazy" decoding="async" /></span>
               <span class="project-card-heading"><span class="h3">{p.title}</span><span class="project-tag">{p.tag}</span></span>
               <span class="project-description">{p.desc}</span>
               <span class="mono project-meta"><span>{p.sub}</span><span>{p.kpi}</span></span>

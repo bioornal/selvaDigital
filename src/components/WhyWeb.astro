@@ -1,6 +1,7 @@
 ---
 import WaIcon from './ui/WaIcon';
 import { whatsappLink } from '../lib/constants';
+import { IMG, bg, bgSrcset } from '../lib/cloudinary';
 
 const WA_WEB = whatsappLink('¡Hola Christian! Quiero una web para mi negocio. ¿Me contás cómo arrancamos?');
 
@@ -38,10 +39,14 @@ const shifts = [
   <!-- Banda fotográfica a sangre: cerraste, pero tu web sigue vendiendo -->
   <div class="why-band on-petrol">
     <picture class="why-photo" aria-hidden="true">
-      <source media="(max-width: 767px)" srcset="/visuals/shop-modern-tall.webp" type="image/webp" />
-      <source media="(max-width: 1600px)" srcset="/visuals/shop-modern-wide-1600.webp" type="image/webp" />
-      <source srcset="/visuals/shop-modern-wide.webp" type="image/webp" />
-      <img src="/visuals/shop-modern-wide.jpg" alt="" width="2400" height="1350" loading="lazy" decoding="async" />
+      <!-- Celular: foto vertical propia; escritorio: la apaisada (ocupa ~56% del ancho) -->
+      <source media="(max-width: 767px)" srcset={bgSrcset(IMG.shopTall, [480, 800, 1200])} sizes="100vw" width="1200" height="1600" />
+      <img
+        src={bg(IMG.shopWide, 1600)}
+        srcset={bgSrcset(IMG.shopWide)}
+        sizes="(min-width: 1024px) 56vw, 100vw"
+        alt="" width="2400" height="1350" loading="lazy" decoding="async"
+      />
     </picture>
     <div class="wrap why-band-copy">
       <h2 id="why-title" class="why-title">Sin web, tu negocio cierra cuando vos cerrás.</h2>

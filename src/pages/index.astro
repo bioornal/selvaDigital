@@ -11,6 +11,7 @@ import Precios from '../components/Precios.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact';
 import VisualBreak from '../components/VisualBreak.astro';
+import { IMG } from '../lib/cloudinary';
 import WhyWeb from '../components/WhyWeb.astro';
 ---
 
@@ -31,7 +32,7 @@ import WhyWeb from '../components/WhyWeb.astro';
   <!-- 5. Lo que dicen los clientes -->
   <Testimonios />
   <VisualBreak
-    image="sep-live"
+    image={IMG.sepLive}
     title="Todo lo que ves acá está funcionando."
     href="#portfolio"
     cta="Abrir los trabajos"

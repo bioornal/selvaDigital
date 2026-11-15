@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0088FF"/>
-  <text x="16" y="23" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="white" text-anchor="middle">SD</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Isotipo Selva Digital sobre cuadrado petróleo: se ve igual en pestañas claras y oscuras. -->
+  <rect width="256" height="256" rx="52" fill="#102D35"/>
+  <g transform="translate(128 130) scale(0.92) translate(-153.5 -124.5)">
+    <path fill="#EAF7F7" d="M43 221 C66 190 78 157 96 119 C112 85 137 69 184 68 C163 76 151 91 140 116 C125 152 113 190 94 221 Z"/>
+    <path fill="#36C2E2" d="M103 221 C127 185 139 147 157 112 C168 91 186 77 217 72 C202 85 192 102 184 123 C170 160 158 190 145 221 Z"/>
+    <path fill="#49D1EC" d="M158 221 C177 190 189 159 203 128 C216 101 229 83 248 75 C236 97 233 118 226 140 C216 173 207 200 198 221 Z"/>
+    <path fill="#A7F14B" d="M180 56 C194 32 218 28 264 29 C254 49 236 65 206 67 C195 68 186 64 180 56 Z"/>
+  </g>
 </svg>

@@ -38,34 +38,37 @@ const Header = () => {
     <header
       className="fixed inset-x-0 top-0 z-50"
       style={{
-        background: scrolled || open ? 'var(--petrol)' : 'transparent',
-        boxShadow: scrolled && !open ? 'inset 0 -1px 0 var(--line-petrol)' : 'none',
+        // Arriba de todo: petróleo translúcido con desenfoque para que el menú no se pierda sobre el hero.
+        background: scrolled || open ? 'var(--petrol)' : 'rgba(16, 45, 53, .55)',
+        backdropFilter: scrolled || open ? 'none' : 'blur(10px)',
+        WebkitBackdropFilter: scrolled || open ? 'none' : 'blur(10px)',
+        boxShadow: open ? 'none' : 'inset 0 -1px 0 var(--line-petrol)',
         transition: 'background-color .25s var(--ease-out), box-shadow .25s var(--ease-out)',
       }}
     >
-      <div className="wrap flex h-[68px] items-center justify-between gap-6">
-        <a href="/" className="flex items-center no-underline" aria-label="Selva Digital — inicio">
-          <img src={LOGO.horizontal} alt="Selva Digital" width={131} height={50} className="block h-[50px] w-auto" decoding="async" />
+      <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
+        <a href="/" className="flex shrink-0 items-center no-underline" aria-label="Selva Digital — inicio">
+          <img src={LOGO.horizontal} alt="Selva Digital" width={173} height={66} className="block h-[var(--logo-h)] w-auto" decoding="async" fetchPriority="high" />
         </a>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">
+        <nav className="hidden items-center gap-9 lg:flex" aria-label="Principal">
           {menuItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[length:var(--fs-small)] font-medium text-[var(--on-petrol-soft)] no-underline transition-colors hover:text-[var(--ice)]"
+              className="nav-link text-[length:var(--fs-body)] font-semibold text-[var(--ice)] no-underline"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-6 lg:flex">
-          <a href="/portal" className="mono text-[var(--on-petrol-dim)] no-underline transition-colors hover:text-[var(--ice)]">
+        <div className="hidden items-center gap-7 lg:flex">
+          <a href="/portal" className="mono text-[var(--on-petrol-soft)] no-underline transition-colors hover:text-[var(--ice)]">
             Portal clientes
           </a>
-          <a href={WA_HEADER} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ minHeight: 44, padding: '0 18px', fontSize: 'var(--fs-small)' }}>
-            <WaIcon size={17} />
+          <a href={WA_HEADER} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ minHeight: 52, padding: '0 24px', fontSize: 'var(--fs-body)' }}>
+            <WaIcon size={19} />
             Escribime
           </a>
         </div>
@@ -95,7 +98,7 @@ const Header = () => {
         id="mobile-menu"
         className="lg:hidden"
         hidden={!open}
-        style={{ height: 'calc(100svh - 68px)', background: 'var(--petrol)', borderTop: '1px solid var(--line-petrol)' }}
+        style={{ height: 'calc(100svh - var(--header-h))', background: 'var(--petrol)', borderTop: '1px solid var(--line-petrol)' }}
       >
         <nav className="wrap flex h-full flex-col pb-8 pt-4" aria-label="Menú móvil">
           {menuItems.map((item) => (

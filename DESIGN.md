@@ -267,7 +267,7 @@ Punto fuerte: sitios web y digitalización del negocio. El chatbot propio integr
 | Cómo trabajo / AboutV2 | profundo | Foto real, bloque raised/hairline de disponibilidad con sello circular lima, compromisos y cuatro pasos |
 | Testimonios | petróleo | Cita principal y secundarias; métricas pendientes de verificar |
 | VisualBreak / sep-live | render de producto | «Todo lo que ves acá está funcionando.» |
-| Precios | hielo | ARS, tabs Webs/Sistemas; 50/50 y hosting/dominio aparte |
+| Precios | hielo | ARS, tabs «Páginas web» / «Sistemas para tu negocio»; webs sólo alta + abono, condiciones plegadas en details; extra Asistente con IA; sistemas por problema con proceso en 4 pasos |
 | FAQ | petróleo | Heading y acordeón |
 | Contacto | profundo | Armador de mensaje WhatsApp primero; formulario secundario |
 | Footer | petróleo | Invitación, enlaces y contacto |
@@ -349,7 +349,7 @@ Campos públicos: fondo petróleo dentro de profundo, borde strong 1px, padding 
 
 ### Tabla de precios
 
-Tabs rectos Webs/Sistemas, borde strong, padding 14px 28px; activo petróleo/hielo. tablist/tab/tabpanel y teclado definidos. Columnas sin elevación, líneas verticales y hairlines entre atributos, CTA al pie. Desde md grilla igual según cantidad de planes; antes snap de ancho 84vw. Título 22px/700, precio Doto, moneda mono, cuerpo 15px/1.45, filas 12px 0. Destacado por sello circular lima con texto petróleo y CTA btn-primary; otras acciones ghost. ARS, pago único, condiciones 50/50 y hosting/dominio aparte.
+Tabs rectos Webs/Sistemas, borde strong, padding 14px 28px; activo petróleo/hielo. tablist/tab/tabpanel y teclado definidos. Columnas sin elevación, líneas verticales y hairlines entre atributos, CTA al pie. Desde md grilla igual según cantidad de planes; antes snap de ancho 84vw. Título 22px/700, precio Doto, moneda mono, cuerpo 15px/1.45, filas 12px 0. Destacado por sello circular lima con texto petróleo y CTA btn-primary; otras acciones ghost. ARS. Páginas web: sólo alta + abono (alta en Doto «para empezar», «después $X/mes», «Mínimo N meses»), etiqueta «Mi recomendación» petróleo en el destacado (primero en mobile), CTA «Quiero este plan» con WaIcon, línea de tranquilidad y condiciones plegadas en details. Extra «Asistente con IA en tu web» en fila hielo con borde superior petróleo 2px. Sistemas para tu negocio: tres opciones por problema (Hoy / Con un sistema / ejemplos / caso real / «Contame tu problema»), pasos numerados en Doto y «Proyectos desde» en etapas. Datos sólo desde src/lib/pricing.ts.
 
 ### Modo Operate: admin y portal
 
@@ -368,7 +368,7 @@ Paneles portal panel-deep / panel-raised / panel-rule: tono y borde sutil, sin s
 - Do — Usar variables de global.css y los pares de contraste de cada superficie.
 - Do — Mantener foco visible, nombres accesibles y estados expresados también con texto.
 - Do — Mostrar trabajo real y resultado antes que stack; escribir en rioplatense y primera persona singular: «vos», «contame», «desarrollo», «desde Córdoba».
-- Do — Expresar precios en ARS, pago único, 50% inicio / 50% entrega y hosting/dominio aparte.
+- Do — Expresar precios en ARS desde src/lib/pricing.ts: sólo alta + abono en webs (el pago único no se publica), con permanencia, baja y ajuste accesibles; software a medida por problema, no por tecnología.
 
 ### Don't:
 

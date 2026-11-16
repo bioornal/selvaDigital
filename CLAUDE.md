@@ -228,6 +228,14 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - Para agregar una: subirla a `SelvaDigital/web/`, sumar su ruta con versión a `IMG`.
 - Origen y licencia de renders y fotos de stock: `docs/imagenes-origen/`.
 
+## Precios y modalidades (nov 2026)
+- Fuente única: `src/lib/pricing.ts`. La leen Precios.astro, el schema de Layout, FAQ, el formulario y los mensajes de WhatsApp. No escribir importes en componentes.
+- Webs: en la web SÓLO alta + abono mensual (hosting en servidor propio, 2 cambios chicos/mes, máx. 1 h). El pago único 50/50 no se publica: el dueño lo ofrece por privado (valor de referencia en `unico` de pricing.ts). Decisión del 15/11/2026.
+- Permanencia mínima 3 meses (tienda 6); después baja libre y el sitio se apaga, salvo que el cliente lo compre descontando lo ya pagado. Dominio a nombre y cargo del cliente. Ajuste del abono cada 3 meses por IPC con aviso de 30 días.
+- Chatbot: sólo dentro de la web (no WhatsApp ni Meta). Es el extra "Asistente con IA en tu web", incluido en el abono de la tienda. Ya no es un plan a medida.
+- Pestañas "Páginas web" / "Sistemas para tu negocio". Sistemas se presenta por problema (ordenar la gestión, app para clientes/equipo, automatizar), con casos reales (Impasto, Megabot), proceso en 4 pasos y "Proyectos desde $1.200.000, en etapas" (`SOFTWARE` en pricing.ts).
+- Chequeo: `playwright-test-selva-precios-v4.js` (scripts en %TEMP%, armados con Codex) con playwright-skill.
+
 ## Rules
 - NO push to GitHub unless explicitly requested
 - NO commit unless explicitly asked

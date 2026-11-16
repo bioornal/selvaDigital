@@ -1,55 +1,111 @@
----
-import { whatsappLink } from '../lib/constants';
-const planesWeb = [
-  { t: 'Landing Page', price: '$250.000',
-    features: ['Página única con scroll','Diseño web responsive','Formulario de contacto','Integración con redes sociales','Optimización para móviles','SEO básico on-page','Entrega lista para hostear'] },
-  { t: 'Sitio Web Corporativo', price: '$350.000', sub: '3 a 5 páginas', featured: true,
-    features: ['3 a 5 páginas personalizadas','Diseño responsive premium','Formulario avanzado','Galería de imágenes','Mapa de ubicación','Animaciones suaves','Entrega lista para hostear'] },
-  { t: 'Sitio Web Extendido', price: '$450.000', sub: 'Más de 5 páginas',
-    features: ['Más de 5 páginas personalizadas','Diseño premium único','Formularios avanzados','Galería multimedia','Optimización SEO completa','Animaciones suaves','Soporte post-lanzamiento'] },
-  { t: 'Tienda E-commerce', price: '$1.300.000',
-    features: ['Catálogo de productos ilimitado','Carrito + MercadoPago','Sistema de login','Panel de administración','Gestión de stock automática','Descuentos y promos','SEO y estadísticas de visitas'] },
-];
+﻿---
+import WaIcon from './ui/WaIcon';
+import {
+  PLANES_WEB, SOFTWARE, CONDICIONES, EXTRA_IA, TRANQUILIDAD,
+  formatARS, linkPlan, linkExtraIA, linkSoftware,
+} from '../lib/pricing';
 
-const planesSistemas = [
-  { t: 'Sistema a medida', price: '$1.200.000',
-    features: ['Panel de administración','Usuarios con distintos permisos','Cargá, editá y buscá tus datos','Reportes y métricas','Tus datos guardados y respaldados','Se conecta con tus otras herramientas','Online y accesible desde cualquier lugar'] },
-  { t: 'Chatbot con IA', price: '$1.500.000', featured: true,
-    features: ['Bot inteligente con IA','Chats que venden 24/7','Panel con todas las conversaciones','Varios bots en un solo panel','Base de conocimiento','Integrado en tu web','Funcionando en un servidor dedicado'] },
-  { t: 'App a medida', price: 'Consultar',
-    features: ['App web o mobile','Hecha a la medida de tu operación','Tus datos guardados y respaldados','Autenticación de usuarios','Notificaciones push','Panel de administración','Soporte post-lanzamiento'] },
-];
-const groups = [
-  { id: 'web', label: 'Webs', plans: planesWeb },
-  { id: 'sistemas', label: 'Sistemas', plans: planesSistemas },
-];
+// En la web se muestra una sola forma de pago: alta + abono mensual.
+// El pago único se ofrece por privado (ver pricing.ts).
+const groups = [{ id: 'web', label: 'Páginas web' }, { id: 'sistemas', label: SOFTWARE.nombre }];
+const iaIncluidaEn = PLANES_WEB.filter(p => p.iaIncluidaEnAbono).map(p => p.nombre).join(' y ');
 ---
 <section id="planes" class="section on-ice" aria-labelledby="planes-title">
   <div class="wrap">
     <header class="pricing-heading">
-      <h2 id="planes-title" class="h2">Un precio. Una vez.</h2>
-      <p class="lede">Pagás el desarrollo una sola vez: <strong>50% al inicio y 50% contra entrega</strong>. Hosting y dominio no están incluidos: los contratás aparte, a tu nombre. Te recomiendo Hostinger, con hosting de alrededor de <strong>AR$ 9.300/mes</strong>; el dominio se paga por separado. No me pagás una cuota mensual por el desarrollo y podés elegir tu proveedor: el sitio es tuyo desde el día uno.</p>
+      <h2 id="planes-title" class="h2">Empezá con poco. Crecé sin sorpresas.</h2>
+      <p class="lede">Arrancás con una entrada baja y después pagás un abono mensual que incluye el hosting, las copias de seguridad y los cambios chicos. Si lo que necesitás es ordenar tu negocio, mirá los sistemas a medida.</p>
     </header>
     <div class="plan-tabs" role="tablist" aria-label="Tipo de proyecto">
       {groups.map((group, i) => <button type="button" id={`tab-${group.id}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`plans-${group.id}`} tabindex={i === 0 ? 0 : -1}>{group.label}</button>)}
     </div>
   </div>
-  {groups.map((group, i) => (
-    <div id={`plans-${group.id}`} role="tabpanel" aria-labelledby={`tab-${group.id}`} hidden={i !== 0} tabindex="0" class="plan-panel">
-      <div class="specs snap-row" style={`--plan-count:${group.plans.length}`}>
-        {group.plans.map(p => (
-          <article class:list={['spec-column', { 'is-featured': p.featured }]}>
-            <h3>{p.t}</h3>
-            <p class="plan-price"><span class="dot-num">{p.price}</span>{p.price !== 'Consultar' && <span class="mono">ARS</span>}</p>
-            <p class="mono plan-sub">{p.sub ?? ""}</p>
-            <ul>{p.features.map(feature => <li>{feature}</li>)}</ul>
-            <a class={`btn ${p.featured ? 'btn-primary' : 'btn-ghost'}`} href={whatsappLink(`¡Hola Christian! Me interesa el plan ${p.t}. ¿Me pasás más info?`)} target="_blank" rel="noopener noreferrer">{p.featured ? 'Iniciar pedido' : 'Solicitar presupuesto'}</a>
+
+  <div id="plans-web" role="tabpanel" aria-labelledby="tab-web" class="plan-panel">
+    <div id="web-specs" class="specs snap-row" style={`--plan-count:${PLANES_WEB.length}`}>
+      {PLANES_WEB.map(plan => (
+        <article class:list={['spec-column', { 'is-featured': plan.destacado }]}>
+          {plan.destacado && <p class="mono plan-flag">Mi recomendación</p>}
+          <h3>{plan.nombre}</h3>
+          <p class="mono plan-sub">{plan.sub ?? ''}</p>
+          <div class="price-stack">
+            <p class="plan-price"><span class="dot-num">{formatARS(plan.abono.alta)}</span><span class="mono">ARS para empezar</span></p>
+            <p class="monthly-price">después {formatARS(plan.abono.mensual)}<span>/mes</span></p>
+            <p class="plan-total">Mínimo {plan.abono.permanenciaMeses} meses</p>
+          </div>
+          <ul class="plan-features">{plan.features.map(feature => <li>{feature}</li>)}</ul>
+          {plan.iaIncluidaEnAbono && <p class="plan-extra"><mark>Asistente con IA incluido</mark></p>}
+          <a class={`btn ${plan.destacado ? 'btn-primary' : 'btn-ghost'}`} href={linkPlan(plan, 'abono')} target="_blank" rel="noopener noreferrer">
+            <WaIcon size={18} />Quiero este plan<span class="sr-only">: {plan.nombre}</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <div class="wrap">
+      <p class="plan-reassurance">{TRANQUILIDAD}</p>
+
+      <details id="web-conditions" class="conditions">
+        <summary>¿Qué incluye el abono y cómo me doy de baja?</summary>
+        <div class="conditions-body">
+          <div class="conditions-columns">
+            <div><h3>Incluye</h3><ul>{CONDICIONES.abono.incluye.map(condicion => <li>{condicion}</li>)}</ul></div>
+            <div><h3>No incluye</h3><ul>{CONDICIONES.abono.excluye.map(condicion => <li>{condicion}</li>)}</ul></div>
+          </div>
+          <p>{CONDICIONES.abono.baja} {CONDICIONES.abono.pasarAUnico}</p>
+          <p>{CONDICIONES.abono.dominio}</p>
+          <p>{CONDICIONES.abono.ajuste}</p>
+          <p>{CONDICIONES.abono.noPromete}</p>
+        </div>
+      </details>
+
+      <aside class="ia-extra" aria-labelledby="ia-extra-title">
+        <div class="ia-extra-copy">
+          <h3 id="ia-extra-title">{EXTRA_IA.nombre}</h3>
+          <p>{EXTRA_IA.descripcion}</p>
+          <ul>{EXTRA_IA.incluye.map(item => <li>{item}</li>)}</ul>
+          <p class="ia-extra-note">{EXTRA_IA.aclaracion}</p>
+        </div>
+        <div class="ia-extra-price">
+          <p class="plan-price"><span class="dot-num">+{formatARS(EXTRA_IA.abono.alta)}</span><span class="mono">ARS de alta</span></p>
+          <p class="monthly-price">+ {formatARS(EXTRA_IA.abono.mensual)}<span>/mes</span></p>
+          {iaIncluidaEn && <p class="mono price-detail">Ya incluido en {iaIncluidaEn}</p>}
+          <a class="btn btn-ghost" href={linkExtraIA('abono')} target="_blank" rel="noopener noreferrer"><WaIcon size={18} />Sumar asistente</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="plans-sistemas" role="tabpanel" aria-labelledby="tab-sistemas" hidden class="plan-panel">
+    <div class="wrap">
+      <p class="software-intro">{SOFTWARE.intro}</p>
+      <div class="software-options">
+        {SOFTWARE.opciones.map(opcion => (
+          <article class="software-option" aria-labelledby={`software-${opcion.id}`}>
+            <h3 id={`software-${opcion.id}`}>{opcion.titulo}</h3>
+            <p class="software-hoy"><span class="mono">Hoy</span>{opcion.hoy}</p>
+            <p class="software-solucion"><span class="mono">Con un sistema</span>{opcion.solucion}</p>
+            <ul class="software-ejemplos" aria-label="Ejemplos">{opcion.ejemplos.map(ejemplo => <li>{ejemplo}</li>)}</ul>
+            <p class="software-caso"><strong>Ya lo hice:</strong> {opcion.caso}</p>
+            <a class="btn btn-ghost" href={linkSoftware(opcion)} target="_blank" rel="noopener noreferrer"><WaIcon size={18} />Contame tu problema<span class="sr-only">: {opcion.titulo}</span></a>
           </article>
         ))}
       </div>
+
+      <div class="software-proceso">
+        <h3 class="software-proceso-title">Cómo trabajamos</h3>
+        <ol class="software-pasos">
+          {SOFTWARE.pasos.map((paso, i) => (
+            <li><span class="dot-num" aria-hidden="true">{i + 1}</span><strong>{paso.titulo}</strong><span>{paso.detalle}</span></li>
+          ))}
+        </ol>
+        <p class="software-precio">Proyectos desde <strong>{formatARS(SOFTWARE.desde)}</strong>, pagados en etapas. El precio queda cerrado por escrito antes de empezar.</p>
+        <p class="plan-reassurance">{TRANQUILIDAD}</p>
+      </div>
     </div>
-  ))}
+  </div>
 </section>
+
 <script>
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('#planes [role="tab"]'));
   function activateTab(index: number, focus = false) {
@@ -74,31 +130,125 @@ const groups = [
       event.preventDefault(); activateTab(next, true);
     });
   });
+
+  // Celular: al tabular dentro del carrusel, la tarjeta enfocada entra entera.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLElement>('#planes .snap-row').forEach(row => {
+    row.addEventListener('focusin', event => {
+      if (row.scrollWidth <= row.clientWidth) return;
+      const card = (event.target as HTMLElement).closest<HTMLElement>('.spec-column');
+      if (!card) return;
+      const padding = parseFloat(getComputedStyle(row).scrollPaddingInlineStart) || 0;
+      row.scrollTo({ left: card.offsetLeft - row.offsetLeft - padding, behavior: reduce.matches ? 'auto' : 'smooth' });
+    });
+  });
 </script>
+
 <style>
   #planes { position: relative; isolation: isolate; }
-  @media (min-width: 1024px) { .pricing-heading { padding-right: 200px; min-height: 400px; } }
-  .pricing-heading { max-width: 1050px; margin-bottom: 36px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .pricing-heading { max-width: 860px; margin-bottom: 36px; }
   .pricing-heading h2 { margin: 0 0 24px; }
-  .pricing-heading p { color: var(--on-ice-soft); }
-  .plan-tabs { display: inline-flex; border: 1px solid var(--line-ice-strong); margin-bottom: 40px; }
-  .plan-tabs button { border-radius: 0; padding: 14px 28px; font-weight: 700; color: var(--on-ice); }
+  .pricing-heading p { color: var(--on-ice-soft); max-width: 62ch; }
+
+  .plan-tabs { display: inline-flex; border: 1px solid var(--line-ice-strong); margin-bottom: 32px; }
+  .plan-tabs button { border-radius: 0; padding: 14px 28px; font-weight: 700; color: var(--on-ice); transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out); }
   .plan-tabs button[aria-selected="true"] { background: var(--petrol); color: var(--ice); }
-  .plan-tabs button:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (hover: hover) and (pointer: fine) {
+    .plan-tabs button[aria-selected="false"]:hover { text-decoration: underline; text-underline-offset: 4px; }
+  }
   .plan-panel[hidden] { display: none; }
+
+  /* Columnas */
   .specs { gap: 0; }
-  .spec-column { position: relative; width: 84vw; display: flex; flex-direction: column; padding: 88px 24px 12px; border-left: 1px solid var(--line-ice-strong); min-width: 0; }
+  .spec-column { position: relative; width: 84vw; display: flex; flex-direction: column; padding: 56px 24px 12px; border-left: 1px solid var(--line-ice-strong); min-width: 0; }
   .spec-column:last-child { border-right: 1px solid var(--line-ice-strong); }
-  .spec-column h3 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 700; line-height: 1.15; min-height: 51px; margin: 0 0 24px; }
-  .plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 0 0 12px; }
+  .plan-flag { position: absolute; top: 20px; left: 24px; margin: 0; padding: 4px 8px; background: var(--petrol); color: var(--ice); }
+  .spec-column h3 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 700; line-height: 1.15; min-height: 51px; margin: 0 0 6px; text-wrap: balance; }
+  .plan-sub { color: var(--on-ice-soft); min-height: 18px; margin: 0 0 20px; }
+  .plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 0 0 8px; }
   .plan-price .dot-num { font-size: var(--fs-price-mobile); letter-spacing: -.02em; white-space: nowrap; }
-  .plan-sub { color: var(--on-ice-soft); min-height: 34px; margin-bottom: 20px; }
-  .spec-column ul { list-style: none; padding: 0; margin: 0 0 28px; flex: 1; }
-  .spec-column li { font-size: var(--fs-small); line-height: 1.45; padding: 12px 0; border-top: 1px solid var(--line-ice); }
-  .spec-column .btn { padding-inline: 12px; width: 100%; }
+  .plan-price .mono { flex-basis: 100%; }
+  .monthly-price { font-size: var(--fs-title); font-weight: 700; line-height: 1.3; margin: 0 0 8px; }
+  .monthly-price span { white-space: nowrap; }
+  .price-detail { margin: 0 0 8px; color: var(--on-ice-soft); }
+  .plan-total { margin: 0; font-size: var(--fs-small); line-height: 1.45; color: var(--on-ice-soft); }
+  .price-stack { margin-bottom: 24px; }
+  .plan-features { list-style: none; padding: 0; margin: 0 0 24px; flex: 1; }
+  .plan-features li { font-size: var(--fs-small); line-height: 1.45; padding: 12px 0; border-top: 1px solid var(--line-ice); text-wrap: pretty; }
+  .plan-extra { font-size: var(--fs-small); line-height: 1.45; margin: 0 0 20px; color: var(--on-ice); }
+  .plan-extra mark { background: var(--lime); color: var(--petrol); padding: 0 .2em; font-weight: 700; }
+  .spec-column .btn { padding: 12px; width: 100%; text-align: center; }
+  .plan-reassurance { margin: 28px 0 0; font-size: var(--fs-small); font-weight: 600; color: var(--on-ice); }
+
+  /* Condiciones: plegadas, para quien quiera leerlas */
+  .conditions { border-top: 1px solid var(--line-ice-strong); margin-top: 24px; padding-top: 4px; font-size: var(--fs-small); line-height: 1.55; color: var(--on-ice-soft); }
+  .conditions summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 52px; cursor: pointer; font-size: var(--fs-control); font-weight: 700; color: var(--petrol); list-style: none; }
+  .conditions summary::-webkit-details-marker { display: none; }
+  .conditions summary::after { content: '+'; font-family: var(--font-mono); font-size: var(--fs-title); line-height: 1; transition: transform 200ms var(--ease-out); }
+  .conditions[open] summary::after { transform: rotate(45deg); }
+  .conditions summary:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .conditions summary::after { transition: none; } }
+  .conditions-body { padding: 8px 0 8px; }
+  .conditions-static { padding-top: 24px; }
+  .conditions h3 { font-size: var(--fs-control); font-weight: 700; color: var(--petrol); margin: 0 0 12px; }
+  .conditions p { margin: 0 0 12px; max-width: 90ch; }
+  .conditions ul { list-style: disc; padding-left: 20px; margin: 0 0 20px; }
+  .conditions li { margin-bottom: 8px; }
+  .conditions-columns { display: grid; gap: 12px 32px; }
+
+  /* Extra: asistente con IA */
+  .ia-extra { display: grid; gap: 24px; margin-top: 48px; padding-top: 32px; border-top: 2px solid var(--petrol); }
+  .ia-extra h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 800; line-height: 1.1; margin: 0 0 12px; color: var(--petrol); }
+  .ia-extra-copy > p { margin: 0 0 16px; color: var(--on-ice-soft); font-size: var(--fs-small); line-height: 1.55; max-width: 62ch; }
+  .ia-extra ul { list-style: none; padding: 0; margin: 0 0 16px; font-size: var(--fs-small); line-height: 1.45; color: var(--on-ice); }
+  .ia-extra li { padding: 8px 0; border-top: 1px solid var(--line-ice); text-wrap: pretty; }
+  .ia-extra-note { margin: 0 !important; font-weight: 600; color: var(--on-ice) !important; }
+  .ia-extra .btn { width: 100%; }
+  @media (min-width: 900px) { .ia-extra { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; gap: 48px; } }
+
+  /* Sistemas para tu negocio: opciones por problema + proceso */
+  .software-intro { margin: 0 0 32px; max-width: 62ch; font-size: var(--fs-lede); line-height: 1.5; color: var(--on-ice); }
+  .software-options { display: grid; gap: 0; border-top: 1px solid var(--line-ice-strong); }
+  .software-option { display: flex; flex-direction: column; padding: 28px 0; border-bottom: 1px solid var(--line-ice-strong); min-width: 0; }
+  .software-option h3 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 700; line-height: 1.15; margin: 0 0 16px; text-wrap: balance; }
+  .software-hoy, .software-solucion { margin: 0 0 12px; font-size: var(--fs-small); line-height: 1.5; }
+  .software-hoy { color: var(--on-ice-soft); }
+  .software-solucion { color: var(--on-ice); }
+  .software-hoy .mono, .software-solucion .mono { display: block; margin-bottom: 4px; color: var(--on-ice-soft); }
+  .software-ejemplos { list-style: none; padding: 0; margin: 4px 0 16px; font-size: var(--fs-small); line-height: 1.45; }
+  .software-ejemplos li { padding: 10px 0; border-top: 1px solid var(--line-ice); text-wrap: pretty; }
+  .software-caso { margin: 0 0 20px; font-size: var(--fs-small); line-height: 1.5; color: var(--on-ice); flex: 1; }
+  .software-option .btn { width: 100%; }
+  .software-proceso { margin-top: 48px; }
+  .software-proceso-title { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 800; line-height: 1.1; margin: 0 0 20px; color: var(--petrol); }
+  .software-pasos { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 0; border-top: 1px solid var(--line-ice-strong); }
+  .software-pasos li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line-ice); font-size: var(--fs-small); line-height: 1.45; color: var(--on-ice-soft); }
+  .software-pasos li { align-content: start; }
+  .software-pasos .dot-num { grid-row: 1 / span 2; align-self: start; font-size: var(--fs-h3); line-height: 1; color: var(--petrol); }
+  .software-pasos strong { color: var(--petrol); font-size: var(--fs-control); }
+  .software-precio { margin: 0; font-size: var(--fs-control); line-height: 1.5; color: var(--on-ice); }
+  .software-precio strong { font-weight: 800; }
+  @media (min-width: 900px) {
+    .software-options { grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 0; }
+    .software-option { padding: 28px clamp(16px, 2vw, 28px); border-bottom: 0; border-left: 1px solid var(--line-ice-strong); }
+    .software-option:last-child { border-right: 1px solid var(--line-ice-strong); }
+    .software-pasos { grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 0; }
+    .software-pasos li { border-bottom: 0; border-top: 2px solid var(--petrol); padding: 16px 20px 0 0; }
+  }
+
+  @media (max-width: 767px) {
+    .plan-tabs { display: flex; }
+    .plan-tabs button { flex: 1 1 auto; padding: 12px 14px; }
+    /* El plan recomendado va primero en la fila deslizable */
+    .spec-column.is-featured { order: -1; }
+  }
   @media (min-width: 768px) {
     .specs { display: grid; grid-template-columns: repeat(var(--plan-count), minmax(0, 1fr)); max-width: var(--maxw); margin-inline: auto; overflow: visible; }
     .spec-column { width: auto; padding-inline: clamp(12px, 1.8vw, 24px); }
-    .plan-price .dot-num { font-size: var(--fs-price); }
+    .plan-flag { left: clamp(12px, 1.8vw, 24px); }
+    .plan-price .dot-num { font-size: var(--fs-h3); }
+    .conditions-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
+  @media (min-width: 1200px) { .plan-price .dot-num { font-size: var(--fs-price); } }
 </style>

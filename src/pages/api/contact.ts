@@ -7,7 +7,15 @@ interface ContactForm {
   mensaje: string;
   tipoProyecto: string;
   presupuesto?: string;
+  modalidad?: string;
 }
+
+// Cómo prefiere pagarlo el cliente (mismas opciones que el formulario).
+const modalidadLabels: Record<string, string> = {
+  abono: 'Entrada baja + abono',
+  unico: 'Pago único',
+  nose: 'Todavía no sabe',
+};
 
 function escapeHtml(text: string): string {
   const map: Record<string, string> = {
@@ -28,7 +36,7 @@ const projectTypeLabels: Record<string, string> = {
   ecommerce: 'Tienda Online / E-commerce',
   amedida: 'Sitio a Medida',
   sistema: 'Sistema a Medida',
-  chatbot: 'Chatbot con IA',
+  chatbot: 'Asistente con IA para su web',
   app: 'App a Medida',
   mantenimiento: 'Mantenimiento',
   otro: 'Otro / No estoy seguro'
@@ -71,7 +79,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const data = await request.json() as ContactForm;
-    const { nombre, email, mensaje, tipoProyecto, presupuesto } = data;
+    const { nombre, email, mensaje, tipoProyecto, presupuesto, modalidad } = data;
 
     if (!nombre || !email || !mensaje || !tipoProyecto) {
       return new Response(JSON.stringify({
@@ -106,7 +114,8 @@ export const POST: APIRoute = async ({ request }) => {
         <p><strong style="color: #4D6369;">Nombre:</strong> ${escapeHtml(nombre)}</p>
         <p><strong style="color: #4D6369;">Email:</strong> ${escapeHtml(email)}</p>
         <p><strong style="color: #4D6369;">Tipo de proyecto:</strong> ${escapeHtml(projectTypeLabels[tipoProyecto] || tipoProyecto)}</p>
-        <p><strong style="color: #4D6369;">Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' USD' : 'No especificado'}</p>
+        <p><strong style="color: #4D6369;">Presupuesto estimado:</strong> ${presupuesto ? escapeHtml(presupuesto) + ' ARS' : 'No especificado'}</p>
+        <p><strong style="color: #4D6369;">Cómo prefiere pagarlo:</strong> ${modalidad ? escapeHtml(modalidadLabels[modalidad] || modalidad) : 'No especificado'}</p>
         <p><strong style="color: #4D6369;">Mensaje:</strong></p>
         <p>${escapeHtml(mensaje)}</p>
                   </td>

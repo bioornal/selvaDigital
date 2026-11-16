@@ -20,21 +20,21 @@ Selva Digital es la marca de un desarrollador freelance (Christian) de Córdoba 
 
 **Punto fuerte (decisión del usuario, 2026-11-14): sitios web y digitalización del negocio.** El argumento principal del sitio es por qué una PyME necesita una web propia (encontrable en Google, responde lo de siempre, vende y cobra 24 h, canal propio sin comisiones, confianza). Los chatbots con IA son un extra, no el protagonista.
 
-Una sola persona que hace el sistema completo del negocio (web + cobro + caja + chatbot con IA), con precio fijo y pago único, sin cuotas ni agencia, y el hosting/dominio a nombre del cliente: "no quedás atado, el sitio es tuyo desde el día uno". Copy orientado a resultado (dolor → solución → resultado → precio), sin jerga técnica.
+Una sola persona que hace el sistema completo del negocio (web + cobro + caja + asistente con IA en la web), sin agencia. **Modelo comercial (decisión del usuario, 2026-11-15):** en la web se publica sólo "alta + abono mensual" (alta chica + abono con hosting en servidor propio, soporte y cambios chicos) para bajar la barrera de entrada y tener ingreso mensual. El pago único no se publica: el dueño lo ofrece por privado a quien lo pida. El software a medida se presenta por problema del negocio, no por tecnología. Copy orientado a resultado (dolor → solución → resultado → precio), sin jerga técnica.
 
 ## Operating Context
 
 - El visitante evalúa desde el celular; mobile escanea, no lee.
 - Proyectos reales visitables (dominios propios de los clientes) son la prueba central.
-- Pago: 50% al inicio, 50% contra entrega. Precios en ARS, pago único.
-- Hosting y dominio aparte, contratados por el cliente (se recomienda Hostinger, ~AR$ 9.300/mes).
+- Webs: entrada baja + abono (permanencia mínima 3 meses, tienda 6; después baja libre y el sitio se desactiva; dominio y contenidos son del cliente; ajuste cada 3 meses) Precios en ARS.
+- El hosting va en el servidor del freelancer; el dominio se registra a nombre del cliente y lo paga él.
 
 ## Capabilities and Constraints
 
 - Stack: Astro 5 + React 18 + TypeScript + Tailwind 3.4, adaptador Vercel; home prerenderizada. Formulario vía Resend. Admin y portal con Supabase.
 - **Chatbots con IA: SOLO chat propio integrado en la web del cliente.** No se hacen bots para WhatsApp ni Meta (API de Meta, bloqueos, complejidad). Ningún copy debe prometer un bot en WhatsApp; WhatsApp es sólo el canal de contacto con Christian.
-- Servicios: landing, sitio corporativo, sitio extendido, e-commerce, sistemas a medida, chatbots con IA, apps a medida, SEO.
-- Precios vigentes (confirmados por el usuario el 2026-11-14, ARS, pago único, etapa de lanzamiento competitiva): Landing $250.000 · Sitio Corporativo 3-5 pág $350.000 · Sitio Extendido +5 pág $450.000 · E-commerce $1.300.000 · Sistema a medida $1.200.000 · Chatbot IA $1.500.000 · App a medida: consultar. Sin popup de descuento (eliminado por decisión del usuario).
+- Servicios: landing, sitio corporativo, sitio extendido, e-commerce, sistemas a medida, apps a medida, SEO, y el extra "Asistente con IA en tu web".
+- Precios vigentes: la única fuente es `src/lib/pricing.ts` (no copiarlos acá). El pago único (referencia interna) no aparece en la web. Sin popup de descuento (eliminado por decisión del usuario).
 - Datos de contacto centralizados en `src/lib/constants.ts`. Teléfono/WhatsApp correcto: **+54 9 3757 652003** (`5493757652003`). Email: info.selvadigital@gmail.com.
 - Toda la comunicación en español rioplatense ("vos"), primera persona del singular (freelancer, no agencia).
 
@@ -56,7 +56,7 @@ Una sola persona que hace el sistema completo del negocio (web + cobro + caja + 
 
 1. Resultado del negocio primero, tecnología después.
 2. Mostrar trabajo real y visitable en lugar de afirmarlo.
-3. Transparencia comercial: precio fijo, pago único, el cliente es dueño de todo.
+3. Transparencia comercial: precios publicados, condiciones del abono (permanencia, baja, ajuste, qué incluye y qué no) visibles antes de contratar; dominio y contenidos siempre del cliente.
 4. Un camino corto a WhatsApp desde cualquier punto de la página.
 5. Mobile primero: cortar lo que no convierte.
 

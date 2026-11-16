@@ -5,6 +5,31 @@ import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton';
 import '../styles/global.css';
 import { LOGO } from '../lib/cloudinary';
+import { PLANES_WEB, SOFTWARE, EXTRA_IA } from '../lib/pricing';
+
+// Ofertas para Google, armadas desde la fuente única de precios.
+const ofertas = [
+  ...PLANES_WEB.flatMap((p) => [
+    {
+      "@type": "Offer", "name": `${p.nombre} — alta + abono mensual`, "price": String(p.abono.alta), "priceCurrency": "ARS",
+      "priceSpecification": [
+        { "@type": "UnitPriceSpecification", "name": "Alta", "price": p.abono.alta, "priceCurrency": "ARS" },
+        { "@type": "UnitPriceSpecification", "name": "Abono mensual", "price": p.abono.mensual, "priceCurrency": "ARS", "billingDuration": "P1M", "unitCode": "MON" },
+      ],
+    },
+  ]),
+  {
+    "@type": "Offer", "name": `${EXTRA_IA.nombre} (extra)`, "price": String(EXTRA_IA.abono.alta), "priceCurrency": "ARS",
+    "priceSpecification": [
+      { "@type": "UnitPriceSpecification", "name": "Alta", "price": EXTRA_IA.abono.alta, "priceCurrency": "ARS" },
+      { "@type": "UnitPriceSpecification", "name": "Abono mensual", "price": EXTRA_IA.abono.mensual, "priceCurrency": "ARS", "billingDuration": "P1M", "unitCode": "MON" },
+    ],
+  },
+  { "@type": "Offer", "name": SOFTWARE.nombre, "priceSpecification": { "@type": "PriceSpecification", "minPrice": SOFTWARE.desde, "priceCurrency": "ARS" } },
+];
+const montos = [...PLANES_WEB.map((p) => p.abono.alta), SOFTWARE.desde];
+const fmt = (n: number) => `$${n.toLocaleString('es-AR')}`;
+const priceRange = `${fmt(Math.min(...montos))} - ${fmt(Math.max(...montos))} ARS`;
 
 interface Props {
   title?: string;
@@ -49,7 +74,7 @@ const schemaOrgJSON = {
       "logo": LOGO.square,
       "telephone": "+54-9-3757-652003",
       "email": "info.selvadigital@gmail.com",
-      "priceRange": "$250.000 - $1.500.000 ARS",
+      "priceRange": priceRange,
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Córdoba",
@@ -60,15 +85,7 @@ const schemaOrgJSON = {
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Planes y servicios",
-        "itemListElement": [
-          { "@type": "Offer", "name": "Landing Page",           "price": "250000",  "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "Sitio Web Corporativo",  "price": "350000",  "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "Sitio Web Extendido",    "price": "450000",  "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "Tienda E-commerce",      "price": "1300000", "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "Sistema a medida",       "price": "1200000", "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "Chatbot con IA",         "price": "1500000", "priceCurrency": "ARS" },
-          { "@type": "Offer", "name": "App a medida" }
-        ]
+        "itemListElement": ofertas
       }
     },
     {

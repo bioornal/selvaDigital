@@ -6,7 +6,7 @@ import { sendAnalyticsEvent } from '../utils/analytics';
 import { CONTACT_PHONE, CONTACT_EMAIL, whatsappLink } from '../lib/constants';
 import WaIcon from './ui/WaIcon';
 
-const needOptions = ['Sitio web', 'Tienda online', 'Sistema a medida', 'Chatbot con IA', 'App a medida', 'No estoy seguro'];
+const needOptions = ['Sitio web', 'Tienda online', 'Asistente con IA para mi web', 'Un sistema para mi negocio', 'No estoy seguro'];
 const endpoints = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: Phone, label: 'Teléfono', value: CONTACT_PHONE, href: `tel:${CONTACT_PHONE.replace(/\s/g, '')}` },
@@ -20,7 +20,7 @@ const projectTypes = [
   { value: 'ecommerce', label: 'Tienda Online / E-commerce' },
   { value: 'amedida', label: 'Sitio a Medida' },
   { value: 'sistema', label: 'Sistema a Medida' },
-  { value: 'chatbot', label: 'Chatbot con IA' },
+  { value: 'chatbot', label: 'Asistente con IA para mi web' },
   { value: 'app', label: 'App a Medida' },
   { value: 'mantenimiento', label: 'Mantenimiento de sitio existente' },
   { value: 'otro', label: 'Otro / No estoy seguro' }

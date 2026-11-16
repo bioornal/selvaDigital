@@ -1,17 +1,25 @@
 ---
 import { whatsappLink } from '../lib/constants';
 import WaIcon from './ui/WaIcon';
+import { CONDICIONES, PLANES_WEB, formatARS } from '../lib/pricing';
+
+const landing = PLANES_WEB.find(p => p.id === 'landing')!;
+const tienda = PLANES_WEB.find(p => p.id === 'ecommerce')!;
 const qs = [
   { q: '¿Cuánto tarda un proyecto web?',
     a: 'Una landing page: 5 a 7 días hábiles. Un sitio completo: 2 a 3 semanas. Un e-commerce o sistema a medida: 4 a 8 semanas según alcance. Antes de arrancar te paso un cronograma por escrito con fechas tentativas semana a semana.' },
+  { q: '¿Cómo funciona la entrada baja + abono?',
+    a: `Pagás un alta (por ejemplo, ${formatARS(landing.abono.alta)} en una landing) y después un abono mensual que incluye el hosting, las copias de seguridad, el soporte y cambios chicos de contenido. La permanencia mínima es de ${landing.abono.permanenciaMeses} meses en webs y de ${tienda.abono.permanenciaMeses} en tiendas; después te das de baja cuando quieras. ${CONDICIONES.abono.ajuste}` },
+  { q: '¿Qué pasa si me doy de baja del abono?',
+    a: `${CONDICIONES.abono.baja} ${CONDICIONES.abono.pasarAUnico} ${CONDICIONES.abono.dominio}` },
   { q: '¿Y si después de la entrega necesito cambios o sumar funciones?',
-    a: 'Los ajustes menores los primeros 15 días después del lanzamiento van sin cargo (errores, retoques visuales). Cambios más grandes o funciones nuevas se cotizan aparte — siempre con presupuesto cerrado antes de arrancar, sin sorpresas.' },
+    a: 'Con el abono, los cambios chicos de contenido ya están incluidos. Los errores que aparezcan después del lanzamiento los corrijo sin cargo. Funciones nuevas, páginas nuevas o rediseños se cotizan aparte, siempre con presupuesto cerrado antes de arrancar.' },
   { q: '¿Qué pasa si no me gusta el diseño?',
     a: 'Antes de programar una sola línea de código te muestro una propuesta visual completa. Sobre esa propuesta hacemos hasta dos rondas de cambios sin costo hasta que estés conforme. Recién ahí arranca la programación: nunca te entrego algo que no aprobaste primero.' },
   { q: '¿Hago el diseño yo o lo hacés vos?',
     a: 'Lo hago yo. Diseño y programo cada proyecto desde cero — no son plantillas.' },
   { q: '¿Trabajás solo en Argentina?',
-    a: 'Sí, trabajo exclusivamente con clientes en Argentina. El foco está en PyMEs argentinas que quieren digitalizar su negocio sin tarifas mensuales escondidas.' },
+    a: 'Sí, trabajo exclusivamente con clientes en Argentina. El foco está en PyMEs argentinas que quieren digitalizar su negocio con precios y condiciones claras desde el primer día.' },
   { q: '¿Qué significa que una web "vende 24/7 y responde"?',
     a: 'Tu web puede atender aunque vos no estés conectado. En una tienda online, el cliente elige y paga. Si sumás un chatbot con IA, el chat está integrado en tu propia web: responde dudas y toma pedidos o reservas. Te deja el contacto listo para que vos sigas la conversación y cierres por WhatsApp.' },
 ];

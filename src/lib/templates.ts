@@ -193,7 +193,7 @@ No quiero que llegue a eso. Avisame cómo estás y retomamos cuando puedas 👌`
 
 1. "Vende 24/7": No significa que vas a estar cobrando de noche (a menos que hagamos tienda online). Significa captar clientes mientras dormís: la web recibe al prospecto, saca sus dudas y te deja el contacto listo en WhatsApp. Vos cerrás de día, pero la web hizo el laburo de no perder la consulta a las 2 AM.
 
-2. "Te responde": Según lo que necesite tu negocio, sumamos un Chatbot con IA que atiende al instante, respuestas automáticas en WhatsApp o agenda de turnos online.
+2. "Te responde": Según lo que necesite tu negocio, sumamos un asistente con IA dentro de tu web que atiende al instante, o una agenda de turnos online.
 
 El beneficio: El cliente de hoy quiere respuesta ya. Si te escriben tarde y no contestás hasta el otro día, se van con la competencia. Con esto, reciben respuesta al toque y quedan fidelizados.
 

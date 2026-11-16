@@ -111,6 +111,19 @@ export interface Database {
         };
         Update: Partial<Database['public']['Tables']['uploaded_files']['Insert']>;
       };
+      site_settings: {
+        Row: {
+          key: string;
+          value: unknown;
+          updated_at: string;
+        };
+        Insert: {
+          key: string;
+          value: unknown;
+          updated_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['site_settings']['Insert']>;
+      };
     };
   };
 }

@@ -183,3 +183,110 @@ export const linkPlan = (plan: Plan, modalidad: Exclude<Modalidad, 'proyecto'>) 
 export const linkExtraIA = (modalidad: 'abono' | 'unico') => whatsappLink(modalidad === 'abono'
   ? `¡Hola Christian! Quiero sumar el asistente con IA a mi web, con abono (${formatARS(EXTRA_IA.abono.alta)} de alta y ${formatARS(EXTRA_IA.abono.mensual)}/mes). ¿Me contás cómo funciona?`
   : `¡Hola Christian! Quiero sumar el asistente con IA a una web con pago único (${formatARS(EXTRA_IA.unico.instalacion)} de instalación y ${formatARS(EXTRA_IA.unico.mensual)}/mes de uso). ¿Me contás cómo funciona?`);
+
+// ─── Importes editables desde el panel (/admin/precios) ───────────────────────
+// Los textos siguen viviendo en este archivo; sólo los importes se pueden pisar
+// desde Supabase (tabla site_settings, key 'precios'). Los valores de arriba
+// quedan como respaldo si Supabase no responde al compilar.
+
+export interface PreciosPlan { alta: number; mensual: number; permanenciaMeses: number; unico: number }
+
+export interface PreciosEditables {
+  planes: Record<string, PreciosPlan>;
+  extraIa: { alta: number; mensual: number; instalacionUnico: number; mensualUnico: number };
+  softwareDesde: number;
+  mantenimientoMensual: number;
+}
+
+const MAX_IMPORTE = 1_000_000_000;
+const MAX_MESES = 36;
+
+/** Importes que tiene hoy el catálogo en memoria. */
+export function preciosActuales(): PreciosEditables {
+  return {
+    planes: Object.fromEntries(PLANES_WEB.map(p => [p.id, {
+      alta: p.abono.alta, mensual: p.abono.mensual, permanenciaMeses: p.abono.permanenciaMeses, unico: p.unico,
+    }])),
+    extraIa: {
+      alta: EXTRA_IA.abono.alta, mensual: EXTRA_IA.abono.mensual,
+      instalacionUnico: EXTRA_IA.unico.instalacion, mensualUnico: EXTRA_IA.unico.mensual,
+    },
+    softwareDesde: SOFTWARE.desde,
+    mantenimientoMensual: CONDICIONES.unico.mantenimiento.mensual,
+  };
+}
+
+const esImporte = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0 && (v as number) <= MAX_IMPORTE;
+const esMeses = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 1 && (v as number) <= MAX_MESES;
+const obj = (v: unknown): Record<string, unknown> => (v && typeof v === 'object' ? v as Record<string, unknown> : {});
+
+/** Pisa la base con los valores válidos de `parcial`; lo inválido o faltante queda como en la base. */
+export function combinarPrecios(base: PreciosEditables, parcial: unknown): PreciosEditables {
+  const p = obj(parcial);
+  const planes = obj(p.planes);
+  const ia = obj(p.extraIa);
+  const imp = (v: unknown, def: number) => (esImporte(v) ? v : def);
+  return {
+    planes: Object.fromEntries(Object.entries(base.planes).map(([id, def]) => {
+      const pl = obj(planes[id]);
+      return [id, {
+        alta: imp(pl.alta, def.alta),
+        mensual: imp(pl.mensual, def.mensual),
+        permanenciaMeses: esMeses(pl.permanenciaMeses) ? pl.permanenciaMeses : def.permanenciaMeses,
+        unico: imp(pl.unico, def.unico),
+      }];
+    })),
+    extraIa: {
+      alta: imp(ia.alta, base.extraIa.alta),
+      mensual: imp(ia.mensual, base.extraIa.mensual),
+      instalacionUnico: imp(ia.instalacionUnico, base.extraIa.instalacionUnico),
+      mensualUnico: imp(ia.mensualUnico, base.extraIa.mensualUnico),
+    },
+    softwareDesde: imp(p.softwareDesde, base.softwareDesde),
+    mantenimientoMensual: imp(p.mantenimientoMensual, base.mantenimientoMensual),
+  };
+}
+
+/** Validación estricta para guardar: devuelve el primer error en castellano. */
+export function validarPrecios(input: unknown): { ok: true; precios: PreciosEditables } | { ok: false; error: string } {
+  const base = preciosActuales();
+  const p = obj(input);
+  const planes = obj(p.planes);
+  const ia = obj(p.extraIa);
+  const fuera = (v: unknown) => !esImporte(v);
+  for (const plan of PLANES_WEB) {
+    const pl = obj(planes[plan.id]);
+    for (const campo of ['alta', 'mensual', 'unico'] as const) {
+      if (fuera(pl[campo])) return { ok: false, error: `${plan.nombre}: el importe "${campo}" tiene que ser un número entero entre 0 y ${MAX_IMPORTE.toLocaleString('es-AR')}.` };
+    }
+    if (!esMeses(pl.permanenciaMeses)) return { ok: false, error: `${plan.nombre}: la permanencia tiene que ser entre 1 y ${MAX_MESES} meses.` };
+  }
+  for (const campo of ['alta', 'mensual', 'instalacionUnico', 'mensualUnico'] as const) {
+    if (fuera(ia[campo])) return { ok: false, error: `Asistente con IA: el importe "${campo}" no es válido.` };
+  }
+  if (fuera(p.softwareDesde)) return { ok: false, error: 'Sistemas: el precio "desde" no es válido.' };
+  if (fuera(p.mantenimientoMensual)) return { ok: false, error: 'Mantenimiento: el importe no es válido.' };
+  return { ok: true, precios: combinarPrecios(base, input) };
+}
+
+/**
+ * Aplica los importes al catálogo en memoria. Sólo se usa al renderizar la home
+ * (ver pricing-remoto.ts): después de esto, Precios, FAQ y el schema leen los valores nuevos.
+ */
+export function aplicarPrecios(precios: PreciosEditables): void {
+  for (const plan of PLANES_WEB) {
+    const pl = precios.planes[plan.id];
+    if (!pl) continue;
+    plan.abono.alta = pl.alta;
+    plan.abono.mensual = pl.mensual;
+    plan.abono.permanenciaMeses = pl.permanenciaMeses;
+    plan.unico = pl.unico;
+  }
+  const ia = EXTRA_IA as unknown as { abono: { alta: number; mensual: number }; unico: { instalacion: number; mensual: number } };
+  ia.abono.alta = precios.extraIa.alta;
+  ia.abono.mensual = precios.extraIa.mensual;
+  ia.unico.instalacion = precios.extraIa.instalacionUnico;
+  ia.unico.mensual = precios.extraIa.mensualUnico;
+  (SOFTWARE as unknown as { desde: number }).desde = precios.softwareDesde;
+  (CONDICIONES.unico.mantenimiento as unknown as { mensual: number }).mensual = precios.mantenimientoMensual;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Client } from '../../types/admin';
 import { statusLabels } from '../../types/admin';
-import { Plus, LogOut, Users, Briefcase, CheckCircle, Clock, Pencil, Trash2 } from 'lucide-react';
+import { Plus, LogOut, Users, Briefcase, CheckCircle, Clock, Pencil, Trash2, Tag } from 'lucide-react';
 import { adminFetch } from '../../lib/admin-fetch';
 import { supabase } from '../../lib/supabase';
 
@@ -68,6 +68,13 @@ export default function AdminDashboard() {
               <span className="text-sm text-[var(--on-petrol-dim)]">Admin</span>
             </div>
             <div className="flex items-center gap-4">
+              <a
+                href="/admin/precios"
+                className="btn btn-ghost flex items-center gap-2 text-xs text-[var(--on-petrol-dim)] transition-colors uppercase tracking-wider"
+              >
+                <Tag className="w-4 h-4" aria-hidden="true" />
+                Precios
+              </a>
               <button
                 onClick={handleLogout}
                 className="btn btn-ghost flex items-center gap-2 text-xs text-[var(--on-petrol-dim)]  transition-colors uppercase tracking-wider"

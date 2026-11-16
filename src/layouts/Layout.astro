@@ -6,6 +6,10 @@ import WhatsAppButton from '../components/WhatsAppButton';
 import '../styles/global.css';
 import { LOGO } from '../lib/cloudinary';
 import { PLANES_WEB, SOFTWARE, EXTRA_IA } from '../lib/pricing';
+import { cargarPrecios } from '../lib/pricing-remoto';
+
+// Importes editados desde /admin/precios (si los hay) antes de armar el schema.
+await cargarPrecios();
 
 // Ofertas para Google, armadas desde la fuente única de precios.
 const ofertas = [

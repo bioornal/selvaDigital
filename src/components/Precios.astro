@@ -4,6 +4,10 @@ import {
   PLANES_WEB, SOFTWARE, CONDICIONES, EXTRA_IA, TRANQUILIDAD,
   formatARS, linkPlan, linkExtraIA, linkSoftware,
 } from '../lib/pricing';
+import { cargarPrecios } from '../lib/pricing-remoto';
+
+// Importes editados desde /admin/precios (si los hay).
+await cargarPrecios();
 
 // En la web se muestra una sola forma de pago: alta + abono mensual.
 // El pago único se ofrece por privado (ver pricing.ts).

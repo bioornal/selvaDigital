@@ -2,6 +2,9 @@
 import { whatsappLink } from '../lib/constants';
 import WaIcon from './ui/WaIcon';
 import { CONDICIONES, PLANES_WEB, formatARS } from '../lib/pricing';
+import { cargarPrecios } from '../lib/pricing-remoto';
+
+await cargarPrecios();
 
 const landing = PLANES_WEB.find(p => p.id === 'landing')!;
 const tienda = PLANES_WEB.find(p => p.id === 'ecommerce')!;

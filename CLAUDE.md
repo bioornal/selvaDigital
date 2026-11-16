@@ -230,6 +230,7 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 
 ## Precios y modalidades (nov 2026)
 - Fuente única: `src/lib/pricing.ts`. La leen Precios.astro, el schema de Layout, FAQ, el formulario y los mensajes de WhatsApp. No escribir importes en componentes.
+- Importes editables desde el panel `/admin/precios` (textos no). Se guardan en Supabase `site_settings` (key `precios`, migración `supabase/migration_site_settings.sql`); `pricing-remoto.ts` los aplica al compilar y, si Supabase falla, quedan los de pricing.ts. Al guardar, `/api/admin/precios` llama a `VERCEL_DEPLOY_HOOK_URL` para republicar (1-2 min).
 - Webs: en la web SÓLO alta + abono mensual (hosting en servidor propio, 2 cambios chicos/mes, máx. 1 h). El pago único 50/50 no se publica: el dueño lo ofrece por privado (valor de referencia en `unico` de pricing.ts). Decisión del 15/11/2026.
 - Permanencia mínima 3 meses (tienda 6); después baja libre y el sitio se apaga, salvo que el cliente lo compre descontando lo ya pagado. Dominio a nombre y cargo del cliente. Ajuste del abono cada 3 meses por IPC con aviso de 30 días.
 - Chatbot: sólo dentro de la web (no WhatsApp ni Meta). Es el extra "Asistente con IA en tu web", incluido en el abono de la tienda. Ya no es un plan a medida.

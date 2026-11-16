@@ -101,7 +101,7 @@ const Contact = () => {
             </div>
           </fieldset>
           <a className="btn btn-primary contact-wa" href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer"
-            onClick={() => sendAnalyticsEvent('whatsapp_click', 'Contact', 'WhatsApp Message Builder')}>
+            data-wa-origen="contacto-armador">
             <WaIcon size={21} />Mandar por WhatsApp
           </a>
           <p className="contact-direct">Te respondo yo, en menos de 24 h en horario laboral.</p>

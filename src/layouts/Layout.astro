@@ -38,15 +38,24 @@ const priceRange = `${fmt(Math.min(...montos))} - ${fmt(Math.max(...montos))} AR
 interface Props {
   title?: string;
   description?: string;
+  /** 'landing': página para anuncios, sin el menú del sitio (trae su propio encabezado y pie). */
+  variant?: 'home' | 'landing';
+  /** Mensaje con el que abre el botón flotante de WhatsApp. */
+  waMessage?: string;
 }
 
-const { 
+const {
   title = "Selva Digital - Desarrollo web freelance para PyMEs en Argentina",
-  description = "Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina."
+  description = "Desarrollo sitios web, e-commerce, sistemas a medida y chatbots con IA que convierten visitantes en clientes. Presupuesto gratis. Córdoba, Argentina.",
+  variant = 'home',
+  waMessage,
 } = Astro.props;
+const esLanding = variant === 'landing';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://www.selvadigital.com');
 const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
+// Pixel de Meta: sólo se carga si PUBLIC_META_PIXEL_ID está configurada (en Vercel).
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
 
 const schemaOrgJSON = {
   "@context": "https://schema.org",
@@ -157,14 +166,42 @@ const schemaOrgJSON = {
         </script>
       </>
     )}
+    {metaPixelId && (
+      <script is:inline define:vars={{ metaPixelId }}>
+        if (!window.fbq) {
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+          n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+          document,'script','https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', metaPixelId);
+          fbq('track', 'PageView');
+          // Navegación interna (View Transitions): cada página nueva cuenta como visita.
+          document.addEventListener('astro:after-swap', function () { fbq('track', 'PageView'); });
+        }
+      </script>
+    )}
+    <script is:inline>
+      // Cada clic a WhatsApp es la conversión del sitio: se avisa a Meta (Contact) y a Google Analytics.
+      if (!window.__sdWaTrack) {
+        window.__sdWaTrack = true;
+        document.addEventListener('click', function (e) {
+          var a = e.target instanceof Element ? e.target.closest('a[href*="wa.me/"]') : null;
+          if (!a) return;
+          var origen = a.getAttribute('data-wa-origen') || location.pathname;
+          if (window.fbq) window.fbq('track', 'Contact', { content_name: origen });
+          if (window.gtag) window.gtag('event', 'whatsapp_click', { event_category: 'Contact', event_label: origen });
+        });
+      }
+    </script>
   </head>
   <body>
-    <Header client:load transition:persist />
+    {esLanding ? <slot name="header" /> : <Header client:load transition:persist />}
     <main>
       <slot />
     </main>
-    <Footer />
-    <WhatsAppButton client:load transition:persist />
+    {esLanding ? <slot name="footer" /> : <Footer />}
+    <WhatsAppButton client:load message={waMessage} />
 
   </body>
 </html>

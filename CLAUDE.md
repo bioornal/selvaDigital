@@ -59,13 +59,16 @@ src/
 │   │   ├── AdminLogin.tsx     — Supabase auth login form
 │   │   ├── AdminDashboard.tsx — Stats + clients table + navigation
 │   │   ├── ClientForm.tsx     — Create/edit client with project details
-│   │   └── ClientDetail.tsx   — Client info, phases, message composer
+│   │   ├── ClientDetail.tsx   — Client info, phases, message composer
+│   │   └── AdminPrecios.tsx   — Editor de importes de Precios (guarda y republica)
 │   └── ui/                 — WaIcon.tsx (SVG WhatsApp compartido), button, card, input, textarea
 ├── lib/
 │   ├── utils.ts            — cn() helper (clsx + tailwind-merge)
 │   ├── constants.ts        — WHATSAPP_NUMBER, WHATSAPP_URL, CONTACT_PHONE, CONTACT_EMAIL
 │   ├── supabase.ts         — Browser Supabase client (anon key)
 │   ├── supabase-server.ts  — Server Supabase client (service role key)
+│   ├── pricing.ts          — Fuente única de precios + validarPrecios/aplicarPrecios
+│   ├── pricing-remoto.ts   — cargarPrecios(): importes de Supabase al compilar
 │   └── templates.ts        — 10 WhatsApp message templates with variable rendering
 ├── types/
 │   ├── admin.ts            — Client, ProjectPhase, Message types + status maps
@@ -80,6 +83,7 @@ src/
 │   ├── admin/
 │   │   ├── login.astro        — Admin login page
 │   │   ├── index.astro        — Admin dashboard
+│   │   ├── precios.astro      — Editor de precios
 │   │   └── clientes/
 │   │       ├── nuevo.astro    — New client form
 │   │       └── [id].astro     — Client detail page
@@ -90,6 +94,7 @@ src/
 │           ├── clients.ts              — GET/POST clients
 │           ├── clients/[id].ts         — GET/PUT/DELETE client
 │           ├── clients/[id]/phases.ts  — GET/POST phases
+│           ├── precios.ts              — GET/PUT precios + Deploy Hook
 │           └── send-message.ts         — POST message from template
 └── styles/
     └── global.css          — Typography rules + heroFade keyframe
@@ -214,6 +219,20 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - Pendiente del usuario: verificar testimonios y KPIs.
 - Logo nuevo (15/11/2026): encabezado, pie, portal, favicons y og:image usan el logo "oscuro" (para fondo petróleo). Favicon SVG adaptable a pestaña clara u oscura en `public/favicon.svg`.
 
+## Phase 12 (Precios editables + seguridad Supabase — 16/11/2026)
+- 💸 **Panel `/admin/precios`** (`AdminPrecios.tsx` + `pages/admin/precios.astro`, botón «Precios» en el dashboard): edita sólo importes (alta, abono, permanencia y pago único por plan; extra IA con abono y único; «desde» de Sistemas; mantenimiento). Muestra vista previa y el valor anterior de cada campo.
+- 🔌 **Flujo**: `/api/admin/precios` (GET/PUT, `requireAuth`) valida con `validarPrecios` y guarda en Supabase `site_settings` (key `precios`) con la service role → llama a `VERCEL_DEPLOY_HOOK_URL` → Vercel recompila. La home es estática: `pricing-remoto.ts` (`cargarPrecios()`, await en Layout, Precios y FAQ) lee los importes al compilar con la clave pública; si falla, quedan los de `pricing.ts`. Los cambios se ven en 1-2 min.
+- 🔑 **Env nueva**: `VERCEL_DEPLOY_HOOK_URL` (Vercel → Settings → Git → Deploy Hooks, rama main), cargada en Production. Es secreta: no va al repo.
+- 🗄 **Proyecto Supabase de la web**: `nbtnfdntsvjwkxmkbsfh`. MCP del proyecto en `.mcp.json` (`/mcp` para autenticar). La CLI local está logueada con otra cuenta (proyecto «Joyeria»): no usarla para este proyecto.
+- 🔒 **Seguridad aplicada** (migraciones en `supabase/`):
+  - `migration_site_settings.sql`: tabla `site_settings` con RLS; anon/authenticated sólo SELECT de `precios`; escribe sólo la service role. En este proyecto las tablas nuevas NO reciben grants por defecto: darlos a mano.
+  - `migration_clients_rls.sql`: RLS activada en `clients` (antes cualquiera con la clave pública leía y modificaba todos los clientes).
+  - `migration_admin_users.sql`: tabla `admin_users` + función `es_admin()`; las reglas de acceso total (`clients`, `messages`, `project_phases`, `client_brand_info`, `uploaded_files`) y las de storage exigen `es_admin()` en vez de «cualquier sesión». Para sumar un admin: insertar su `user_id` en `admin_users`.
+  - `migration_storage_sin_acceso_publico.sql`: borradas «Allow public read/upload/delete» de `client-assets` (cualquiera podía listar, subir y borrar todo). Quedan las reglas admin o cliente sobre su carpeta (header `x-client-code`, Storage lo reenvía a la RLS). El bucket sigue público para que `file_url` se vea.
+  - El portal (rol anon + `x-client-code`) sigue viendo y editando sólo lo suyo; las API del servidor usan la service role y no pasan por RLS.
+- ⚠️ **Pendientes**: apagar «Allow new users to sign up» en Supabase Auth (lo hace el dueño); códigos del portal adivinables (`SELVA-` + 4 dígitos); tabla `projects` abierta a todos (vacía, sin uso); 15 filas de `uploaded_files` apuntan a archivos que ya no existen; el rol `authenticated` no tiene UPDATE en `clients`, así que «generar código» en `ClientDetail.tsx` (desde el navegador) falla: pasarlo por la API; `src/types/database.ts` no coincide con supabase-js (errores de tsc en las API del admin, no frenan el build).
+- 🧪 **Notas de debug**: `npm run build` en Windows termina con `EPERM ... symlink` (paso final del adapter de Vercel; el prerender sí se completa, en Vercel no pasa). Si el sitio sale sin estilos sólo en un navegador (el CSS da 404 en Chrome y anda en incógnito o en Edge), es una cookie de ese perfil que fija un deploy viejo: borrar los datos del sitio. La URL de producción que responde es `selva-digital.vercel.app`; `selvadigital.com` hoy es un dominio en venta.
+
 ## Phase 10 (Future)
 - Blog with Astro content collections
 - Legal pages (términos, privacidad)
@@ -242,3 +261,11 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - NO commit unless explicitly asked
 - Language: Spanish for all communication
 - Run `npm run build` after changes to verify
+
+## Landing de anuncios + Pixel de Meta (16/11/2026)
+- 🎯 `src/pages/web-para-tu-negocio.astro` (prerender): destino de los anuncios de Meta. Continúa el flyer 01 («Tu web profesional, sin pagar todo de golpe.»). Hero con precio del plan Landing + visor que rota webs reales (pausable, quieto con movimiento reducido), Trabajos (4 sitios), Cómo funciona + qué incluye el abono, Planes (todos los de `PLANES_WEB`), 6 preguntas, cierre. Todos los WhatsApp dicen «Vengo del anuncio».
+- 🧩 `Layout.astro` acepta `variant="landing"` (sin Header/Footer del sitio; la página trae `slot="header"` y `slot="footer"`) y `waMessage` para el botón flotante. La landing vuelve a la home por el logo y el pie; la home no enlaza a la landing (no sacar visitantes de la home).
+- 📈 Pixel de Meta en `Layout.astro`: se carga sólo si existe `PUBLIC_META_PIXEL_ID` (cargarla en Vercel). PageView en cada página (también en navegación con View Transitions) y `Contact` en todo clic a `wa.me` (con `data-wa-origen` para saber qué botón); el mismo clic manda `whatsapp_click` a GA.
+- 🖼 Flyers en `marketing/flyers/` (HTML + PNG 1080×1350; `render.js` con `PLAYWRIGHT_MODULE` apuntando al Playwright de la skill).
+- 🎬 Reel 9:16 de 15 s en `marketing/video/reel-01/` (Remotion 4, proyecto aparte con su propio `npm install`): `npm run render` → `out/reel-01.mp4`, `npm run portada` → `out/portada-01.png`. Precios desde `src/lib/pricing.ts`; proyectos: La Casa del Lago e Impasto. Sin música (se agrega en Instagram).
+- Prueba: `playwright-test-landing.js` en el scratchpad de la sesión (rotación, pausa, WhatsApp, FAQ, overflow a 1440/820/390/320, movimiento reducido).

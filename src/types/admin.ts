@@ -1,3 +1,5 @@
+import type { Modalidad, ServicioEstado } from '../lib/cobros';
+
 export interface Client {
   id: string;
   name: string;
@@ -20,6 +22,70 @@ export interface Client {
   created_at: string;
   updated_at: string;
   current_phase: number;
+  modalidad: Modalidad | null;
+  plan_id: string | null;
+  abono_alta: number | null;
+  abono_mensual: number | null;
+  abono_inicio: string | null;
+  permanencia_meses: number | null;
+  abono_ajustado_at: string | null;
+  entregado_at: string | null;
+  condiciones_aceptadas_at: string | null;
+  servicio_estado: ServicioEstado;
+  baja_at: string | null;
+}
+
+export interface Payment {
+  id: string;
+  client_id: string;
+  tipo: 'alta' | 'abono' | 'anticipo' | 'saldo' | 'etapa' | 'otro';
+  periodo: string | null;
+  monto: number;
+  pagado_at: string;
+  medio: 'transferencia' | 'efectivo' | 'mercadopago' | 'otro';
+  nota: string | null;
+  created_at: string;
+}
+
+export const TIPOS_PAGO: Record<Payment['tipo'], string> = {
+  alta: 'Alta', abono: 'Abono', anticipo: 'Anticipo',
+  saldo: 'Saldo', etapa: 'Etapa', otro: 'Otro',
+};
+
+export const MEDIOS_PAGO: Record<Payment['medio'], string> = {
+  transferencia: 'Transferencia', efectivo: 'Efectivo',
+  mercadopago: 'Mercado Pago', otro: 'Otro',
+};
+
+// Tipado de las tablas usadas por estas API, incluidas las de la migración nueva.
+// Evita modificar database.ts mientras se integra el resto del panel en paralelo.
+export interface AdminDatabase {
+  public: {
+    Tables: {
+      clients: {
+        Row: Client;
+        Insert: Partial<Omit<Client, 'id' | 'created_at' | 'updated_at'>>;
+        Update: Partial<Omit<Client, 'id' | 'created_at' | 'updated_at'>>;
+        Relationships: [];
+      };
+      payments: {
+        Row: Payment;
+        Insert: Omit<Payment, 'id' | 'created_at'>;
+        Update: Partial<Omit<Payment, 'id' | 'created_at'>>;
+        Relationships: [];
+      };
+      admin_users: {
+        Row: { user_id: string; created_at: string };
+        Insert: { user_id: string };
+        Update: { user_id?: string };
+        Relationships: [];
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
 }
 
 export interface ProjectPhase {

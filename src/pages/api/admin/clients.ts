@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { supabaseAdmin } from '../../../lib/supabase-server';
 import { requireAuth } from '../../../lib/admin-auth';
+import { CAMPOS_CLIENTE, filtrarCampos } from '../../../lib/admin-campos';
 
 export const GET: APIRoute = async ({ request }) => {
   const unauthorized = await requireAuth(request);
@@ -30,9 +31,8 @@ export const POST: APIRoute = async ({ request }) => {
   if (unauthorized) return unauthorized;
 
   try {
-    const body = await request.json();
-    console.log('POST BODY:', body);
-    
+    const body = filtrarCampos(await request.json(), CAMPOS_CLIENTE);
+
     if (!body.access_code) {
       body.access_code = 'SELVA-' + Math.floor(1000 + Math.random() * 9000).toString();
     }

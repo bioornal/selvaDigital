@@ -3,6 +3,8 @@ import type { Client, ProjectPhase, ClientBrandInfo, UploadedFile } from '../../
 import { statusLabels } from '../../types/admin';
 import { messageTemplates, renderTemplate } from '../../lib/templates';
 import { adminFetch } from '../../lib/admin-fetch';
+import { variablesCliente } from '../../lib/mensajes-cobro';
+import ServicioCobros from './ServicioCobros';
 import {
   ArrowLeft, Send, MessageSquare, CheckCircle, Clock, AlertCircle,
   Copy, Pencil, Download, ExternalLink, FileArchive, Globe, Trash2, FileText
@@ -121,23 +123,11 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     if (client && selectedTemplate) {
       const template = messageTemplates.find((t) => t.id === selectedTemplate);
       if (template) {
+        const conocidas = variablesCliente(client);
         const vars: Record<string, string> = {};
-        template.variables.forEach((v) => {
-          if (v === 'NOMBRE') vars[v] = client.name;
-          else if (v === 'TIPO_PROYECTO') vars[v] = client.project_type;
-          else if (v === 'MONTO_TOTAL') vars[v] = client.total_amount?.toString() || '';
-          else if (v === 'MONTO_SEÑA') vars[v] = client.deposit_amount?.toString() || '';
-          else if (v === 'MONTO_DISENO') vars[v] = client.design_amount?.toString() || '';
-          else if (v === 'MONTO_FINAL') vars[v] = client.final_amount?.toString() || '';
-          else if (v === 'SEMANAS') vars[v] = client.weeks?.toString() || '';
-          else vars[v] = '';
-        });
+        template.variables.forEach((v) => { vars[v] = conocidas[v] ?? ''; });
         setVariables(vars);
-        let content = renderTemplate(template, vars);
-        if (client.currency === 'ARS') {
-          content = content.replace(/USD/g, 'ARS');
-        }
-        setPreview(content);
+        setPreview(renderTemplate(template, vars));
       }
     }
   }, [selectedTemplate, client]);
@@ -146,13 +136,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     const newVars = { ...variables, [key]: value };
     setVariables(newVars);
     const template = messageTemplates.find((t) => t.id === selectedTemplate);
-    if (template) {
-      let content = renderTemplate(template, newVars);
-      if (client?.currency === 'ARS') {
-        content = content.replace(/USD/g, 'ARS');
-      }
-      setPreview(content);
-    }
+    if (template) setPreview(renderTemplate(template, newVars));
   }
 
   async function handleSend() {
@@ -199,15 +183,12 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     if (!client) return;
     const generated = 'SELVA-' + Math.floor(1000 + Math.random() * 9000).toString();
     try {
-      const { data, error } = await supabase
-        .from('clients')
-        .update({ access_code: generated })
-        .eq('id', client.id)
-        .select()
-        .single();
-      
-      if (error) throw error;
-      setClient(data as unknown as Client);
+      const res = await adminFetch(`/api/admin/clients/${client.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ access_code: generated }),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      setClient((await res.json()) as Client);
     } catch (e) {
       console.error(e);
       alert('Error al generar código de acceso.');
@@ -246,7 +227,7 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
     setDownloadingZip(true);
     try {
       const zip = new JSZip();
-      
+
       const manifest = {
         project: client.name,
         exportedAt: new Date().toISOString(),
@@ -522,6 +503,8 @@ export default function ClientDetail({ clientId }: ClientDetailProps) {
           </div>
         </div>
       </div>
+
+      <ServicioCobros client={client} onClientChange={setClient} />
 
       {/* NEW: CLIENT PORTAL MATERIALS SECTION */}
       <div className="bg-[var(--petrol-deep)] border border-[var(--line-petrol)] p-5 space-y-6">

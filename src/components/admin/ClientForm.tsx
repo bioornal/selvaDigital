@@ -1,6 +1,8 @@
 import { useState, useMemo, useId } from 'react';
 import type { Client } from '../../types/admin';
 import { adminFetch } from '../../lib/admin-fetch';
+import { PLANES_WEB, MODALIDADES, formatARS, type Modalidad } from '../../lib/pricing';
+import { hoyAR } from '../../lib/cobros';
 
 interface ClientFormProps {
   client?: Client;
@@ -20,6 +22,12 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
     total_amount: client?.total_amount?.toString() || '',
     weeks: client?.weeks?.toString() || '',
     access_code: client?.access_code || '',
+    modalidad: (client?.modalidad || '') as Modalidad | '',
+    plan_id: client?.plan_id || '',
+    abono_alta: client?.abono_alta?.toString() || '',
+    abono_mensual: client?.abono_mensual?.toString() || '',
+    permanencia_meses: client?.permanencia_meses?.toString() || '',
+    abono_inicio: client?.abono_inicio?.slice(0, 10) || '',
   });
 
   const [saving, setSaving] = useState(false);
@@ -27,15 +35,34 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
   const calculated = useMemo(() => {
     const total = parseFloat(form.total_amount) || 0;
-    return {
-      deposit: Math.round(total * 0.5),
-      design: 0,
-      final: Math.round(total * 0.5),
-    };
+    const deposit = Math.round(total / 2);
+    return { deposit, final: total - deposit };
   }, [form.total_amount]);
 
+  /** Al elegir modalidad o plan, precarga los importes de pricing.ts (quedan editables). */
+  function precargar(next: typeof form): typeof form {
+    const plan = PLANES_WEB.find((pl) => pl.id === next.plan_id);
+    if (!plan) return next;
+    if (next.modalidad === 'abono') {
+      return {
+        ...next,
+        abono_alta: String(plan.abono.alta),
+        abono_mensual: String(plan.abono.mensual),
+        permanencia_meses: String(plan.abono.permanenciaMeses),
+        abono_inicio: next.abono_inicio || hoyAR(),
+      };
+    }
+    if (next.modalidad === 'unico') return { ...next, total_amount: String(plan.unico) };
+    return next;
+  }
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => {
+      const next = { ...prev, [name]: value };
+      if (name === 'modalidad' && value === 'proyecto') next.plan_id = '';
+      return name === 'modalidad' || name === 'plan_id' ? precargar(next) : next;
+    });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -44,6 +71,8 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
     setError('');
 
     const total = parseFloat(form.total_amount) || 0;
+    const num = (v: string) => (v.trim() === '' ? null : Number(v));
+    const esAbono = form.modalidad === 'abono';
 
     const payload = {
       name: form.name,
@@ -59,6 +88,12 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
       final_amount: total ? Math.round(total * 0.5) : null,
       weeks: form.weeks ? parseInt(form.weeks) : null,
       access_code: form.access_code || null,
+      modalidad: form.modalidad || null,
+      plan_id: form.modalidad === 'proyecto' ? null : form.plan_id || null,
+      abono_alta: esAbono ? num(form.abono_alta) : null,
+      abono_mensual: esAbono ? num(form.abono_mensual) : null,
+      permanencia_meses: esAbono ? num(form.permanencia_meses) : null,
+      abono_inicio: esAbono ? form.abono_inicio || null : null,
     };
 
     try {
@@ -161,37 +196,80 @@ export default function ClientForm({ client, onSuccess }: ClientFormProps) {
 
       <div className="space-y-4">
         <h3 className="text-sm font-semibold text-[var(--ice)] uppercase tracking-wider border-b border-[var(--line-petrol)] pb-2">
-          Financiero
+          Servicio y pago
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label htmlFor={`${formId}-currency`} className={labelClass}>Moneda *</label>
-            <select id={`${formId}-currency`} name="currency" value={form.currency} onChange={handleChange} className={inputClass}>
-              <option value="ARS">ARS (Pesos)</option>
-              <option value="USD">USD (Dólares)</option>
+            <label htmlFor={`${formId}-modalidad`} className={labelClass}>Modalidad</label>
+            <select id={`${formId}-modalidad`} name="modalidad" value={form.modalidad} onChange={handleChange} className={inputClass}>
+              <option value="">Sin definir (consulta)</option>
+              {(Object.keys(MODALIDADES) as Modalidad[]).map((m) => (
+                <option key={m} value={m}>{MODALIDADES[m].label}</option>
+              ))}
             </select>
           </div>
-          <div>
-            <label htmlFor={`${formId}-total_amount`} className={labelClass}>Monto total ({form.currency}) *</label>
-            <input id={`${formId}-total_amount`} name="total_amount" type="number" required min="0" value={form.total_amount} onChange={handleChange} className={inputClass} placeholder="250000" />
-          </div>
+          {form.modalidad !== 'proyecto' && (
+            <div>
+              <label htmlFor={`${formId}-plan_id`} className={labelClass}>Plan</label>
+              <select id={`${formId}-plan_id`} name="plan_id" value={form.plan_id} onChange={handleChange} className={inputClass}>
+                <option value="">Sin plan</option>
+                {PLANES_WEB.map((pl) => <option key={pl.id} value={pl.id}>{pl.nombre}</option>)}
+              </select>
+            </div>
+          )}
           <div>
             <label htmlFor={`${formId}-weeks`} className={labelClass}>Semanas estimadas</label>
-            <input id={`${formId}-weeks`} name="weeks" type="number" value={form.weeks} onChange={handleChange} className={inputClass} placeholder="4" />
+            <input id={`${formId}-weeks`} name="weeks" type="number" min="0" value={form.weeks} onChange={handleChange} className={inputClass} placeholder="4" />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor={`${formId}-deposit`} className={labelClass}>Seña (50% {form.currency})</label>
-            <input id={`${formId}-deposit`} value={calculated.deposit ? `$${calculated.deposit.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
+        {form.modalidad === 'abono' && (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div>
+                <label htmlFor={`${formId}-abono_alta`} className={labelClass}>Alta (ARS)</label>
+                <input id={`${formId}-abono_alta`} name="abono_alta" type="number" min="0" value={form.abono_alta} onChange={handleChange} className={inputClass} />
+              </div>
+              <div>
+                <label htmlFor={`${formId}-abono_mensual`} className={labelClass}>Abono mensual (ARS)</label>
+                <input id={`${formId}-abono_mensual`} name="abono_mensual" type="number" min="0" value={form.abono_mensual} onChange={handleChange} className={inputClass} />
+              </div>
+              <div>
+                <label htmlFor={`${formId}-permanencia_meses`} className={labelClass}>Permanencia (meses)</label>
+                <input id={`${formId}-permanencia_meses`} name="permanencia_meses" type="number" min="0" value={form.permanencia_meses} onChange={handleChange} className={inputClass} />
+              </div>
+              <div>
+                <label htmlFor={`${formId}-abono_inicio`} className={labelClass}>Inicio del abono</label>
+                <input id={`${formId}-abono_inicio`} name="abono_inicio" type="date" value={form.abono_inicio} onChange={handleChange} className={inputClass} />
+              </div>
+            </div>
+            <p className="text-xs text-[var(--on-petrol-dim)]">
+              El abono vence cada mes el mismo día que el inicio. Poné la fecha en que pagó el alta, o la de entrega si preferís contar desde ahí.
+            </p>
+          </>
+        )}
+
+        {form.modalidad !== 'abono' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor={`${formId}-total_amount`} className={labelClass}>Total (ARS)</label>
+              <input id={`${formId}-total_amount`} name="total_amount" type="number" min="0" value={form.total_amount} onChange={handleChange} className={inputClass} placeholder="Opcional" />
+            </div>
+            {form.modalidad === 'unico' && (
+              <>
+                <div>
+                  <label htmlFor={`${formId}-deposit`} className={labelClass}>Anticipo 50%</label>
+                  <input id={`${formId}-deposit`} value={calculated.deposit ? formatARS(calculated.deposit) : '—'} readOnly className={readonlyClass} />
+                </div>
+                <div>
+                  <label htmlFor={`${formId}-final`} className={labelClass}>Contra entrega 50%</label>
+                  <input id={`${formId}-final`} value={calculated.final ? formatARS(calculated.final) : '—'} readOnly className={readonlyClass} />
+                </div>
+              </>
+            )}
           </div>
-          <div>
-            <label htmlFor={`${formId}-final`} className={labelClass}>Final (50% {form.currency})</label>
-            <input id={`${formId}-final`} value={calculated.final ? `$${calculated.final.toLocaleString('es-AR')}` : '-'} readOnly className={readonlyClass} />
-          </div>
-        </div>
+        )}
       </div>
 
       <div className="flex items-center gap-4 pt-4 border-t border-[var(--line-petrol)]">

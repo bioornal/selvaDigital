@@ -1,0 +1,179 @@
+---
+// Condiciones del servicio. Es lo que el cliente acepta respondiendo «Acepto» por WhatsApp
+// (plantillas cierre-abono y cierre-unico). Textos e importes salen de pricing.ts.
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import WaIcon from '../components/ui/WaIcon';
+import { LOGO } from '../lib/cloudinary';
+import { whatsappLink, WHATSAPP_URL, CONTACT_EMAIL } from '../lib/constants';
+import { PLANES_WEB, CONDICIONES, formatARS } from '../lib/pricing';
+import { cargarPrecios } from '../lib/pricing-remoto';
+
+await cargarPrecios();
+
+const ACTUALIZADO = '16/11/2026';
+const WA = whatsappLink('¡Hola Christian! Leí las condiciones y tengo una consulta.');
+
+// "Landing Page, Sitio Web Corporativo y Sitio Web Extendido: 3 meses. Tienda E-commerce: 6 meses."
+const porPermanencia = new Map<number, string[]>();
+for (const plan of PLANES_WEB) {
+  const lista = porPermanencia.get(plan.abono.permanenciaMeses) ?? [];
+  lista.push(plan.nombre);
+  porPermanencia.set(plan.abono.permanenciaMeses, lista);
+}
+const unirNombres = (nombres: string[]) =>
+  nombres.length > 1 ? `${nombres.slice(0, -1).join(', ')} y ${nombres.at(-1)}` : nombres[0];
+const permanencias = [...porPermanencia].map(([meses, nombres]) => `${unirNombres(nombres)}: ${meses} meses.`);
+
+const indice = [
+  { id: 'abono', titulo: 'Web con alta + abono mensual' },
+  { id: 'unico', titulo: 'Web con pago único' },
+  { id: 'proyecto', titulo: 'Sistemas a medida' },
+  { id: 'todos', titulo: 'Para todos los trabajos' },
+];
+---
+
+<Layout
+  variant="landing"
+  title="Condiciones del servicio | Selva Digital"
+  description="Cómo trabajo, por escrito: pagos, vencimientos, permanencia, baja y qué incluye cada modalidad. Explicado simple."
+>
+  <header slot="header" class="cd-header on-petrol">
+    <div class="wrap cd-header-row">
+      <a href="/" class="cd-logo" aria-label="Selva Digital — ir al inicio">
+        <img src={LOGO.horizontal} alt="Selva Digital" width="173" height="66" decoding="async" />
+      </a>
+      <a href="/" class="link cd-back mono">← Inicio</a>
+    </div>
+  </header>
+
+  <main class="cd-main">
+    <div class="wrap cd-wrap">
+      <p class="mono cd-kicker">Condiciones del servicio</p>
+      <h1 class="cd-h1">Cómo trabajo, por escrito.</h1>
+      <p class="cd-lede">
+        Lo que hablamos por WhatsApp, explicado simple. Cuando me respondés «Acepto», estas son las reglas para los dos.
+      </p>
+      <p class="mono cd-updated">Última actualización: {ACTUALIZADO}</p>
+
+      <nav class="cd-index" aria-label="Secciones">
+        <ol>
+          {indice.map((s) => <li><a href={`#${s.id}`}>{s.titulo}</a></li>)}
+        </ol>
+      </nav>
+
+      <section id="abono" class="cd-section" aria-labelledby="t-abono">
+        <h2 id="t-abono">Web con alta + abono mensual</h2>
+
+        <h3>Cómo se paga</h3>
+        <p>Pagás un alta una sola vez para que arranque con tu web y después un abono mensual. {CONDICIONES.abono.vencimiento}</p>
+
+        <h3>Si un mes se atrasa el pago</h3>
+        <p class="cd-mark">{CONDICIONES.abono.aguante}</p>
+
+        <h3>Permanencia mínima</h3>
+        <ul>{permanencias.map((linea) => <li>{linea}</li>)}</ul>
+        <p>{CONDICIONES.abono.baja}</p>
+        <p>{CONDICIONES.abono.pasarAUnico}</p>
+
+        <h3>Qué incluye el abono</h3>
+        <ul>{CONDICIONES.abono.incluye.map((linea) => <li>{linea}</li>)}</ul>
+
+        <h3>Qué no incluye</h3>
+        <ul>{CONDICIONES.abono.excluye.map((linea) => <li>{linea}</li>)}</ul>
+
+        <h3>Actualización del precio</h3>
+        <p>{CONDICIONES.abono.ajuste}</p>
+
+        <h3>Dominio y contenido</h3>
+        <p>{CONDICIONES.abono.dominio}</p>
+      </section>
+
+      <section id="unico" class="cd-section" aria-labelledby="t-unico">
+        <h2 id="t-unico">Web con pago único</h2>
+        <h3>Cómo se paga</h3>
+        <p>{CONDICIONES.unico.pago} El anticipo no se devuelve: es lo que me asegura el tiempo para tu proyecto.</p>
+        <h3>Hosting y dominio</h3>
+        <p>{CONDICIONES.unico.hosting}</p>
+        <h3>Mantenimiento opcional</h3>
+        <p>Si querés que me siga ocupando después de la entrega: {formatARS(CONDICIONES.unico.mantenimiento.mensual)} por mes. {CONDICIONES.unico.mantenimiento.detalle}</p>
+        <h3>Si el proyecto queda frenado</h3>
+        <p>Si pasan más de 30 días sin respuesta de tu lado en medio del trabajo, el anticipo queda como pago por el tiempo ya dedicado.</p>
+      </section>
+
+      <section id="proyecto" class="cd-section" aria-labelledby="t-proyecto">
+        <h2 id="t-proyecto">Sistemas a medida</h2>
+        <p>{CONDICIONES.proyecto.pago}</p>
+        <p>{CONDICIONES.proyecto.operacion}</p>
+      </section>
+
+      <section id="todos" class="cd-section" aria-labelledby="t-todos">
+        <h2 id="t-todos">Para todos los trabajos</h2>
+        <ul>
+          <li>{CONDICIONES.abono.excluye[2]}.</li>
+          <li>{CONDICIONES.abono.noPromete}</li>
+          <li>Lo que acordamos por WhatsApp o por email vale como acuerdo entre los dos. Si algo de lo que hablamos no está acá, manda lo que acordamos por escrito.</li>
+          <li>Si algún día cambio estas condiciones, te aviso antes y no se aplican a lo que ya pagaste.</li>
+        </ul>
+      </section>
+
+      <aside class="cd-cta on-petrol" aria-labelledby="t-cta">
+        <h2 id="t-cta">¿Algo no quedó claro?</h2>
+        <p>Preguntame antes de arrancar. Prefiero explicarte dos veces a que haya sorpresas.</p>
+        <a href={WA} class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-wa-origen="condiciones">
+          <WaIcon size={18} />Escribime por WhatsApp
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <footer slot="footer" class="cd-footer on-petrol">
+    <div class="wrap cd-footer-row mono">
+      <p>© 2026 Selva Digital · Córdoba, Argentina</p>
+      <nav aria-label="Más de Selva Digital">
+        <a class="link" href="/">Inicio</a>
+        <a class="link" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-wa-origen="condiciones-footer">WhatsApp ↗</a>
+        <a class="link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </nav>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .cd-header { background: var(--petrol); border-bottom: 1px solid var(--line-petrol); }
+  .cd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--header-h); }
+  .cd-logo img { display: block; height: var(--logo-h); width: auto; }
+  .cd-back { font-size: var(--fs-label); letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-petrol-soft); white-space: nowrap; }
+
+  .cd-main { background: var(--ice); color: var(--on-ice); padding-block: clamp(48px, 8vw, 104px); }
+  .cd-wrap { max-width: 760px; }
+  .cd-kicker { font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-ice-dim); margin: 0 0 16px; }
+  .cd-h1 { font-family: var(--font-display); font-size: var(--fs-display-compact); line-height: 1; letter-spacing: -0.03em; margin: 0; }
+  .cd-lede { font-size: var(--fs-lede); line-height: 1.5; color: var(--on-ice-soft); margin: 24px 0 0; max-width: 60ch; }
+  .cd-updated { font-size: var(--fs-label); letter-spacing: 0.08em; color: var(--on-ice-dim); margin: 20px 0 0; }
+
+  .cd-index { margin-top: 40px; border-block: 1px solid var(--line-ice); padding-block: 16px; }
+  .cd-index ol { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; font-size: var(--fs-small); list-style: decimal; }
+  .cd-section ul { list-style: disc; }
+  .cd-index a { color: var(--on-ice); text-underline-offset: 3px; }
+
+  .cd-section { padding-top: 56px; scroll-margin-top: 24px; }
+  .cd-section h2 { font-family: var(--font-display); font-size: var(--fs-title); line-height: 1.2; margin: 0 0 8px; padding-bottom: 12px; border-bottom: 1px solid var(--line-ice-strong); }
+  .cd-section h3 { font-size: var(--fs-control); margin: 28px 0 8px; }
+  .cd-section p, .cd-section li { font-size: var(--fs-small); line-height: 1.6; color: var(--on-ice-soft); }
+  .cd-section p { margin: 0 0 10px; max-width: 65ch; }
+  .cd-section ul { margin: 0 0 10px; padding-left: 1.2em; display: grid; gap: 6px; }
+  .cd-mark { background: var(--lime); color: var(--on-ice) !important; padding: 12px 14px; }
+
+  .cd-cta { margin-top: 72px; background: var(--petrol); color: var(--on-petrol); padding: clamp(24px, 4vw, 40px); }
+  .cd-cta h2 { font-size: var(--fs-title); margin: 0 0 8px; }
+  .cd-cta p { color: var(--on-petrol-soft); margin: 0 0 20px; font-size: var(--fs-small); }
+  .cd-cta .btn { min-height: 48px; }
+
+  .cd-footer { border-top: 1px solid var(--line-petrol); }
+  .cd-footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 28px; padding-block: 28px 96px; color: var(--on-petrol-dim); font-size: var(--fs-label); }
+  .cd-footer-row p { margin: 0; }
+  .cd-footer-row nav { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+  .cd-footer-row a { overflow-wrap: anywhere; }
+</style>

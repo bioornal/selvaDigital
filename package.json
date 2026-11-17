@@ -10,6 +10,7 @@
     "start": "astro dev",
     "build": "astro build --verbose",
     "preview": "astro preview",
+    "test": "node --import ./scripts/ts-resolve.mjs --test \"src/lib/*.test.ts\"",
     "astro": "astro"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { supabaseAdmin } from '../../../../lib/supabase-server';
 import { requireAuth } from '../../../../lib/admin-auth';
+import { CAMPOS_CLIENTE, filtrarCampos } from '../../../../lib/admin-campos';
 
 export const GET: APIRoute = async ({ params, request }) => {
   const unauthorized = await requireAuth(request);
@@ -32,7 +33,13 @@ export const PUT: APIRoute = async ({ request, params }) => {
 
   const { id } = params;
   try {
-    const body = await request.json();
+    const body = filtrarCampos(await request.json(), CAMPOS_CLIENTE);
+    if (Object.keys(body).length === 0) {
+      return new Response(JSON.stringify({ error: 'No hay campos para actualizar' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     const { data, error } = await supabaseAdmin
       .from('clients')
       .update(body)

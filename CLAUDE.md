@@ -57,8 +57,12 @@ src/
 │   ├── WhatsAppButton.tsx  — Floating WhatsApp button
 │   ├── admin/
 │   │   ├── AdminLogin.tsx     — Supabase auth login form
-│   │   ├── AdminDashboard.tsx — Stats + clients table + navigation
-│   │   ├── ClientForm.tsx     — Create/edit client with project details
+│   │   ├── AdminDashboard.tsx — Bloque «Hoy» + stats + tabla de clientes con filtros (modalidad, plan, entrega, cobro)
+│   │   ├── HoyCobros.tsx      — Para dar de baja / en aguante / vencen en 3 días / consultas abiertas + botón WhatsApp
+│   │   ├── AdminCobros.tsx    — Grilla clientes con abono × 6 meses + total cobrado (mobile: un mes por vez)
+│   │   ├── ServicioCobros.tsx — Ficha: servicio, pagos, registrar pago, entregado, condiciones, baja/reactivar
+│   │   ├── cobros-ui.tsx      — usePagos() + EstadoCobroBadge
+│   │   ├── ClientForm.tsx     — Create/edit client: modalidad, plan e importes precargados desde pricing.ts
 │   │   ├── ClientDetail.tsx   — Client info, phases, message composer
 │   │   └── AdminPrecios.tsx   — Editor de importes de Precios (guarda y republica)
 │   └── ui/                 — WaIcon.tsx (SVG WhatsApp compartido), button, card, input, textarea
@@ -69,7 +73,10 @@ src/
 │   ├── supabase-server.ts  — Server Supabase client (service role key)
 │   ├── pricing.ts          — Fuente única de precios + validarPrecios/aplicarPrecios
 │   ├── pricing-remoto.ts   — cargarPrecios(): importes de Supabase al compilar
-│   └── templates.ts        — 10 WhatsApp message templates with variable rendering
+│   ├── cobros.ts           — Vencimientos del abono (puro): estadoCobro, primerPeriodoImpago, hoyAR
+│   ├── mensajes-cobro.ts   — variablesCliente, mensajeCobro, linkWhatsAppCliente (549…)
+│   ├── admin-db.ts / admin-campos.ts — adminDb tipado, json(), lista blanca de campos de clients
+│   └── templates.ts        — Plantillas de WhatsApp (cierre abono/único, cobros, entrega…)
 ├── types/
 │   ├── admin.ts            — Client, ProjectPhase, Message types + status maps
 │   └── database.ts         — Supabase Database TypeScript types
@@ -269,3 +276,13 @@ Resultado: en mobile todos los H2 al mismo tamaño y centrados, emerald siempre 
 - 🖼 Flyers en `marketing/flyers/` (HTML + PNG 1080×1350; `render.js` con `PLAYWRIGHT_MODULE` apuntando al Playwright de la skill).
 - 🎬 Reel 9:16 de 15 s en `marketing/video/reel-01/` (Remotion 4, proyecto aparte con su propio `npm install`): `npm run render` → `out/reel-01.mp4`, `npm run portada` → `out/portada-01.png`. Precios desde `src/lib/pricing.ts`; proyectos: La Casa del Lago e Impasto. Sin música (se agrega en Instagram).
 - Prueba: `playwright-test-landing.js` en el scratchpad de la sesión (rotación, pausa, WhatsApp, FAQ, overflow a 1440/820/390/320, movimiento reducido).
+
+## Phase 13 (Tablero de cobros + condiciones — 16/11/2026)
+- Spec y plan: `docs/superpowers/specs/2026-11-16-tablero-clientes-cobros-design.md`, `docs/superpowers/plans/2026-11-16-tablero-clientes-cobros.md`.
+- Regla de cobro (dueño): el abono vence cada mes el mismo día que `abono_inicio` (fin de mes si no existe); 10 días de aguante; día 11 = «para dar de baja». La baja la hace el dueño (apaga el sitio y marca «Dar de baja»). Cobro por transferencia, se registra a mano.
+- Datos: `supabase/migration_cobros.sql` (columnas de servicio en `clients` + tabla `payments` con RLS `es_admin()`). Se aplica a mano con el OK del dueño, ANTES de publicar el código.
+- API: `/api/admin/payments` (GET por cliente o rango, POST con período automático, 409 si el mes ya está pagado), `/api/admin/payments/[id]` (DELETE). `requireAuth` ahora exige estar en `admin_users` (403 si no). POST/PUT de clients filtran campos con `CAMPOS_CLIENTE`.
+- Panel: bloque «Hoy» en `/admin`, `/admin/cobros`, sección «Servicio y cobros» en la ficha. «Generar código» del portal pasa por la API.
+- Condiciones: `/condiciones` (prerender, textos de `CONDICIONES` en pricing.ts, enlazada desde el pie y Precios). El cliente acepta respondiendo «Acepto» por WhatsApp (`cierre-abono` / `cierre-unico`) y se registra la fecha en la ficha.
+- `SITE_URL` y `CONDICIONES_URL` en constants.ts (hoy `selva-digital.vercel.app`; cambiar cuando haya dominio propio).
+- Pruebas: `npm test` (node --test con `scripts/ts-resolve.mjs`, 17 casos). Playwright con API simulada: `playwright-test-cobros.js` en el scratchpad de la sesión (31 chequeos).

@@ -56,10 +56,12 @@ const iaIncluidaEn = PLANES_WEB.filter(p => p.iaIncluidaEnAbono).map(p => p.nomb
             <div><h3>Incluye</h3><ul>{CONDICIONES.abono.incluye.map(condicion => <li>{condicion}</li>)}</ul></div>
             <div><h3>No incluye</h3><ul>{CONDICIONES.abono.excluye.map(condicion => <li>{condicion}</li>)}</ul></div>
           </div>
+          <p>{CONDICIONES.abono.vencimiento} {CONDICIONES.abono.aguante}</p>
           <p>{CONDICIONES.abono.baja} {CONDICIONES.abono.pasarAUnico}</p>
           <p>{CONDICIONES.abono.dominio}</p>
           <p>{CONDICIONES.abono.ajuste}</p>
           <p>{CONDICIONES.abono.noPromete}</p>
+          <p><a class="link" href="/condiciones">Ver todas las condiciones del servicio →</a></p>
         </div>
       </details>
 

@@ -3,6 +3,7 @@
 // leen de acá: un importe se cambia en un solo lugar. Valores en ARS.
 
 import { whatsappLink } from './constants';
+import { DIAS_AGUANTE } from './cobros';
 
 /** Cómo se contrata: entrada baja + abono, pago único 50/50, o proyecto a medida por etapas. */
 export type Modalidad = 'abono' | 'unico' | 'proyecto';
@@ -138,7 +139,9 @@ export const CONDICIONES = {
       'Integraciones y carga masiva de productos',
       'Cualquier cambio de alcance: lo cotizo aparte y arranco solo con tu aprobación',
     ],
-    baja: 'Después de la permanencia mínima te das de baja cuando quieras, avisando antes del día 25 por WhatsApp o email. Al darte de baja el sitio se apaga, salvo que te lo quedes.',
+    vencimiento: 'El abono vence cada mes el mismo día en que arrancamos (si ese día no existe en el mes, el último día). Se paga por transferencia y me mandás el comprobante.',
+    aguante: `Si se pasa el vencimiento, tenés ${DIAS_AGUANTE} días de margen para pagar sin cortes. Desde el día ${DIAS_AGUANTE + 1} sin pago, el sitio se da de baja y se apaga. Para reactivarlo, pagás lo adeudado y vuelve a estar online.`,
+    baja: 'Después de la permanencia mínima te das de baja cuando quieras, avisando antes de tu próximo vencimiento por WhatsApp o email. Al darte de baja el sitio se apaga, salvo que te lo quedes.',
     /** Salida del abono: comprar el sitio descontando lo ya pagado. */
     pasarAUnico: 'Si querés quedarte con el sitio, te lo vendo y te descuento todo lo que ya pagaste de abono.',
     dominio: 'El dominio se registra a tu nombre y lo pagás vos. El dominio, los textos y las imágenes son siempre tuyos.',

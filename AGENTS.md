@@ -3,7 +3,7 @@
 ## Identity
 - Freelancer portfolio site (NOT agency/company). First-person singular throughout
 - Name: Selva Digital
-- Location: Córdoba, Argentina
+- Location: Puerto Iguazú, Misiones, Argentina
 - Market: National Argentina (PyMEs/negocios)
 - Differentiator: AI chatbots + outcome-led positioning ("less time lost, more sales", no jargon)
 - Commercial model: pago único, 50% inicio + 50% contra entrega. NO hosting/dominio incluido — el cliente lo contrata a su nombre (recomendamos Hostinger, ~AR$ 9.300/mes). Esto evita atar al cliente al freelancer y baja la fricción de venta.

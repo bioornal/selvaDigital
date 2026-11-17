@@ -367,7 +367,7 @@ Paneles portal panel-deep / panel-raised / panel-rule: tono y borde sutil, sin s
 
 - Do — Usar variables de global.css y los pares de contraste de cada superficie.
 - Do — Mantener foco visible, nombres accesibles y estados expresados también con texto.
-- Do — Mostrar trabajo real y resultado antes que stack; escribir en rioplatense y primera persona singular: «vos», «contame», «desarrollo», «desde Córdoba».
+- Do — Mostrar trabajo real y resultado antes que stack; escribir en rioplatense y primera persona singular: «vos», «contame», «desarrollo», «desde Iguazú».
 - Do — Expresar precios en ARS desde src/lib/pricing.ts: sólo alta + abono en webs (el pago único no se publica), con permanencia, baja y ajuste accesibles; software a medida por problema, no por tecnología.
 
 ### Don't:

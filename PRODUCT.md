@@ -8,13 +8,13 @@ web
 
 ## Users
 
-- **Primario (home pública):** dueños y socios de PyMEs y negocios de Argentina (turismo, gastronomía, retail, servicios), muchos del NEA/Córdoba, que hoy atienden todo por WhatsApp, pagan comisiones a plataformas (Booking, apps de delivery) o quedaron desconformes con una agencia. Llegan desde el celular, por recomendación, Google o Instagram. Su trabajo: decidir si este freelancer les resuelve el problema y a qué precio.
+- **Primario (home pública):** dueños y socios de PyMEs y negocios de Argentina (turismo, gastronomía, retail, servicios), muchos del NEA (Misiones), que hoy atienden todo por WhatsApp, pagan comisiones a plataformas (Booking, apps de delivery) o quedaron desconformes con una agencia. Llegan desde el celular, por recomendación, Google o Instagram. Su trabajo: decidir si este freelancer les resuelve el problema y a qué precio.
 - **Clientes activos (/portal):** el cliente ya contratado carga datos del negocio y archivos para su proyecto.
 - **Operador (/admin):** el propio freelancer gestiona clientes, fases del proyecto y mensajes de WhatsApp desde plantillas.
 
 ## Product Purpose
 
-Selva Digital es la marca de un desarrollador freelance (Christian) de Córdoba que construye sitios, e-commerce, sistemas a medida y chatbots con IA para PyMEs. La home tiene que convertir a un dueño de negocio escéptico en una conversación por WhatsApp. Éxito = mensajes de WhatsApp calificados (acción principal); el formulario de contacto es secundario.
+Selva Digital es la marca de un desarrollador freelance (Christian) de Puerto Iguazú, Misiones, que construye sitios, e-commerce, sistemas a medida y chatbots con IA para PyMEs. La home tiene que convertir a un dueño de negocio escéptico en una conversación por WhatsApp. Éxito = mensajes de WhatsApp calificados (acción principal); el formulario de contacto es secundario.
 
 ## Positioning
 

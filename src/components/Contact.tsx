@@ -10,7 +10,7 @@ const needOptions = ['Sitio web', 'Tienda online', 'Asistente con IA para mi web
 const endpoints = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: Phone, label: 'Teléfono', value: CONTACT_PHONE, href: `tel:${CONTACT_PHONE.replace(/\s/g, '')}` },
-  { icon: MapPin, label: 'Ubicación', value: 'Córdoba, Argentina · UTC−3' },
+  { icon: MapPin, label: 'Ubicación', value: 'Iguazú, Misiones, Argentina · UTC−3' },
 ];
 
 const projectTypes = [
